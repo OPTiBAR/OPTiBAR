@@ -24,4 +24,4 @@ exclude_patterns = []
 
 html_theme = 'sphinx_book_theme'
 html_static_path = ['_static']
-html_logo = 'logo.png'
+html_logo = "_static/logo.png"

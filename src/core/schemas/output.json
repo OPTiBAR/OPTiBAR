@@ -1,0 +1,925 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "output",
+    "title": "Drawing Output",
+    "description": "This data is passed to the autocad drawing service to generate the .dwg output.",
+    "definitions": {
+        "piece_list": {
+            "$id": "#piece-list",
+            "description": "Pieces list to be printed.",
+            "type": "array",
+            "items": {
+                "description": "bunch of rebar",
+                "type": "object",
+                "properties": {
+                    "diameter": {
+                        "description": "diameter in mm.",
+                        "type": "integer",
+                        "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
+                    },
+                    "length": {
+                        "description": "length of the piece in meter. ",
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                    },
+                    "number": {
+                        "description": "number of pieces in one bunch.",
+                        "type": "integer",
+                        "minimum": 1 
+                    },
+                    "bend": {
+                        "description": "number of pieces with different bend types.",
+                        "type": "object",
+                        "properties": {
+                            "no_side": {
+                                "type": "integer",
+                                "minimum": 0
+                            },
+                            "one_side": {
+                                "type": "integer",
+                                "minimum": 0
+                            },
+                            "two_side": {
+                                "type": "integer",
+                                "minimum": 0
+                            }
+                        },
+                        "required": [ "one_side", "two_side", "no_side" ]
+                    }
+                },
+                "required": [ "diameter", "length", "number", "bend" ]
+            }
+        },
+        "bunch_row": {
+            "description": "Pieces row to be drawn.",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "number": {
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "stations": {
+                        "description": "the bend length is added to the real stations and reported here.",
+                        "type": "array",
+                        "items": [
+                            {
+                                "description": "start station of the piece.",
+                                "type": "number"
+                            },
+                            {
+                                "description": "end station of the piece.",
+                                "type": "number"
+                            }
+                        ],
+                        "additionalItems": false
+                    },
+                    "bends": {
+                        "description": "the bend lengths of the start and end.",
+                        "type": "array",
+                        "items": [
+                            {
+                                "description": "start bend length.",
+                                "type": "number",
+                                "minimum": 0
+                            },
+                            {
+                                "description": "end bend length.",
+                                "type": "number",
+                                "minimum": 0
+                            }
+                        ],
+                        "additionalItems": false
+                    },
+                    "diameter": {
+                        "description": "diameter in mm",
+                        "type": "integer",
+                        "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
+                    }
+                },
+                "required": [ "number", "stations", "bends", "diameter" ]
+            }
+        }
+    },
+    "type": "object",
+    "properties": {
+        "data" : {
+            "type": "object",
+            "properties": {
+                "version": {
+                    "description": "version of the used scheme",
+                    "type": "integer"
+                },
+                "areas": {
+                    "description": "area of the slabs",
+                    "type": "object",
+                    "properties": {
+                        "union": {
+                            "type": "object",
+                            "properties": {
+                                "exteriors" : {
+                                    "description" : "each item is an exterior area.",
+                                    "type" : "array",
+                                    "items" : {
+                                        "description": "each item is a point of an exterior area." ,
+                                        "type": "array",
+                                        "items": {
+                                            "type": "array",
+                                            "items": [
+                                                {
+                                                    "description": "the x coordinate of the point.",
+                                                    "type": "number"
+                                                },
+                                                {
+                                                    "description": "the y coordinate of the point.",
+                                                    "type": "number"
+                                                }
+                                            ],
+                                            "additionalItems": false
+                                        }
+                                    }
+                                },
+                                "interiors" : {
+                                    "description": "each item is an interior area.",
+                                    "type": "array",
+                                    "items" : {
+                                        "description": "each item is a point of an interior area." ,
+                                        "type": "array",
+                                        "items": {
+                                            "type": "array",
+                                            "items": [
+                                                {
+                                                    "description": "the x coordinate of the point.",
+                                                    "type": "number"
+                                                },
+                                                {
+                                                    "description": "the y coordinate of the point.",
+                                                    "type": "number"
+                                                }
+                                            ],
+                                            "additionalItems": false
+                                        }
+                                    } 
+                                }
+                            },
+                            "required" : [ "exteriors", "interiors" ]
+                        },
+                        "individuals": {
+                            "description": "array of individual areas.",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "corners": {
+                                        "type": "array",
+                                        "items": {
+                                            "description": "each item is a point.",
+                                            "type": "array",
+                                            "items": [
+                                                {
+                                                    "description": "the x coordinate of the point.",
+                                                    "type": "number"
+                                                },
+                                                {
+                                                    "description": "the y coordinate of the point.",
+                                                    "type": "number"
+                                                }
+                                            ],
+                                            "additionalItems": false
+                                        },
+                                        "minItems": 3
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "thickness": {
+                                        "description": "depth of the area in m.",
+                                        "type": "number",
+                                        "exclusiveMinimum": 0
+                                    },
+                                    "is_opening": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [ "corners", "name", "is_opening" ]
+                            }
+                        }
+                    },
+                    "required": [ "union", "individuals" ]
+                },
+                "columns": {
+                    "description": "the area of the column bases",
+                    "type": "array",
+                    "items": {
+                        "description": "the center point of the column and it's dimensions.",
+                        "type": "object",
+                        "properties": {
+                            "point": {
+                                "description": "the center point of the column.",
+                                "type": "array",
+                                "items": [
+                                    {
+                                        "description": "the x coordinate of the point.",
+                                        "type": "number"
+                                    },
+                                    {
+                                        "description": "the y coordinate of the point.",
+                                        "type": "number"
+                                    }
+                                ],
+                                "additionalItems": false
+                            },
+                            "dim": {
+                                "description": "the dim of the column.",
+                                "type": "array",
+                                "items": [
+                                    {
+                                        "description": "the x dim of the column.",
+                                        "type": "number",
+                                        "exclusiveMinimum": 0
+                                    },
+                                    {
+                                        "description": "the y dim of the column.",
+                                        "type": "number",
+                                        "exclusiveMinimum": 0
+                                    }
+                                ],
+                                "additionalItems": false
+                            }
+                        },
+                        "required": ["point", "dim"]
+                    }
+                },
+                "technical_spec": {
+                    "description": "technical Specifications.",
+                    "type": "object",
+                    "properties": {
+                        "material": {
+                            "description": "the strength of the material.",
+                            "type": "object",
+                            "properties": {
+                                "fc": {
+                                    "description": "the strength of the concrete in ton/m^2",
+                                    "type": "number",
+                                    "exclusiveMinimum": 0
+                                },
+                                "fy": {
+                                    "description": "the yield strength of the steel.",
+                                    "type": "number",
+                                    "exclusiveMinimum": 0
+                                }
+                            },
+                            "required": [ "fc", "fy" ]
+                        },
+                        "covers": {
+                            "description": "side cover of the foundation.",
+                            "type": "object",
+                            "properties": {
+                                "side": {
+                                    "description": "side cover in cm",
+                                    "type": "number",
+                                    "minimum": 0
+                                },
+                                "top": {
+                                    "description": "top cover in cm",
+                                    "type": "number",
+                                    "minimum": 0
+                                },
+                                "bottom": {
+                                    "description": "top cover in cm",
+                                    "type": "number",
+                                    "minimum": 0
+                                }
+                            },
+                            "required": [ "side", "top", "bottom" ]
+                        },
+                        "rebars": {
+                            "description": "the bend, ovelap and ld  length of the rebars.",
+                            "type": "array",
+                            "items": {
+                                "description": "each item contains properties of one rebar size.",
+                                "type": "object",
+                                "properties": {
+                                    "diameter" : {
+                                        "description": "diameter in mm",
+                                        "type": "integer",
+                                        "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
+                                    },
+                                    "bend": {
+                                        "type": "object",
+                                        "properties": {
+                                            "B135": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0
+                                            },
+                                            "B90": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0
+                                            }
+                                        },
+                                        "required": ["B90", "B135"]
+                                    },
+                                    "Ld": {
+                                        "description": "length of ld in m.",
+                                        "type": "object",
+                                        "properties": {
+                                            "top": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0
+                                            },
+                                            "bottom": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0
+                                            }
+                                        },
+                                        "required": [ "top", "bottom" ]
+                                    },
+                                    "overlap": {
+                                        "description": "length of the overlapin m.",
+                                        "type": "object",
+                                        "properties": {
+                                            "top": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0
+                                            },
+                                            "bottom": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0
+                                            }
+                                        },
+                                        "required": [ "top", "bottom" ]
+                                    }
+                                },
+                                "required": [ "diameter", "bend_length", "Ld", "overlap"]
+                            }
+                        },
+                        "length_type": {
+                            "description": "number of the length types in a stack or total",
+                            "type": "object",
+                            "properties": {
+                                "stack": {
+                                    "type": "integer",
+                                    "minimum": 1
+                                },
+                                "total": {
+                                    "type": "integer",
+                                    "minimum": 1
+                                }
+                            }
+                        }
+                    },
+                    "required": [ "material", "covers", "rebars" , "length_type"]
+                },
+                "pieces": {
+                    "description": "this property is for list of pieces.",
+                    "type": "object",
+                    "properties": {
+                        "shear": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "diameter": {
+                                        "description": "diameter in mm.",
+                                        "type": "integer",
+                                        "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
+                                    },
+                                    "length": {
+                                        "description": "length of the piece in meter. ",
+                                        "type": "number",
+                                        "exclusiveMinimum": 0
+                                    },
+                                    "number": {
+                                        "description": "number of pieces in one bunch.",
+                                        "type": "integer",
+                                        "minimum": 1 
+                                    }
+                                },
+                                "required": [ "diameter", "length", "number" ]
+                            }
+                        },
+                        "general": {
+                            "$ref": "#/definitions/piece_list"
+                        },
+                        "reinforcement": {
+                            "$ref": "#/definitions/piece_list"
+                        },
+                        "cut": {
+                            "description": "the cutting pattern of the rebars",
+                            "type": "array",
+                            "items": {
+                                "description": "a cutting pattern and it's corresponding number",
+                                "type": "object",
+                                "properties": {
+                                    "base_length": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0
+                                    },
+                                    "diameter": {
+                                        "description": "diameter in mm.",
+                                        "type": "integer",
+                                        "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
+                                    },
+                                    "pattern": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "number",
+                                            "minItems": 1
+                                        }
+                                    },
+                                    "number": {
+                                        "type": "integer",
+                                        "minimum": 1
+                                    }
+                                },
+                                "required": ["base_length", "diameter", "pattern", "number"]
+                            }
+                        }
+                    },
+                    "required": [ "shear", "general", "reinforcement" ]
+                },
+                "summary": {
+                    "description": "summery of the rebar and concrete weights.",
+                    "type": "object",
+                    "properties": {
+                        "rebar": {
+                            "description": "summery of the weights of the rebars.",
+                            "type": "object",
+                            "properties": {
+                                "shear": {
+                                    "type": "number",
+                                    "minimum": 0
+                                },
+                                "general": {
+                                    "type": "object",
+                                    "properties": {
+                                        "top": {
+                                            "type": "number",
+                                            "minimum": 0
+                                        },
+                                        "bottom": {
+                                            "type": "number",
+                                            "minimum": 0
+                                        }
+                                    },
+                                    "required": [ "top", "bottom" ]
+                                },
+                                "reinforcement": {
+                                    "type": "object",
+                                    "properties": {
+                                        "top": {
+                                            "type": "number",
+                                            "minimum": 0
+                                        },
+                                        "bottom": {
+                                            "type": "number",
+                                            "minimum": 0
+                                        }
+                                    },
+                                    "required": [ "top", "bottom" ]
+                                },
+                                "thermal": {
+                                    "type": "object",
+                                    "properties": {
+                                        "top": {
+                                            "type": "number",
+                                            "minimum": 0
+                                        },
+                                        "bottom": {
+                                            "type": "number",
+                                            "minimum": 0
+                                        }
+                                    },
+                                    "required": [ "top", "bottom" ]
+                                }
+                            },
+                            "required": [ "shear", "general", "reinforcement" , "thermal" ]
+                        },
+                        "concrete": {
+                            "description": "total volum of the concrete in cubic meter.",
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                        }
+                    },
+                    "required": [ "rebar", "concrete" ]
+                },
+                "shear_types": {
+                    "description": "type of the sections",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "interval": {
+                                "description": "distance of two consecutive shear rebar",
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                            },
+                            "number": {
+                                "description": "number of shear rebars in each section",
+                                "type": "integer",
+                                "minimum": 1
+                            },
+                            "diameter": {
+                                "description": "the diameter of the rebar in mm.",
+                                "type": "integer",
+                                "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
+                            }
+                        },
+                        "required": ["id", "interval", "number", "diameter"]
+                    }
+                },
+                "strips": {
+                    "description": "the piece arrangement of of each strip",
+                    "type": "array",
+                    "items": {
+                        "description": "data of each strip",
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "geometry": {
+                                "type": "object",
+                                "properties": {
+                                    "mid_line": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "point": {
+                                                    "type": "array",
+                                                    "items": [
+                                                        {
+                                                            "description": "x coordinate of the point.",
+                                                            "type": "number"
+                                                        },
+                                                        {
+                                                            "description": "y coordinate of the point.",
+                                                            "type": "number"
+                                                        }
+                                                    ],
+                                                    "additionalItems": false
+                                                },
+                                                "width": {
+                                                    "type": "number",
+                                                    "exclusiveMinimum": 0
+                                                }
+                                            },
+                                            "required": [ "point", "width" ] 
+                                        },
+                                        "minItems": 2    
+                                    },
+                                    "covers": {
+                                        "description": "top and bottom cover of the strip.",
+                                        "type": "object",
+                                        "properties": {
+                                            "top": {
+                                                "description": "top cover in cm",
+                                                "type": "number",
+                                                "minimum": 0
+                                            },
+                                            "bottom": {
+                                                "description": "top cover in cm",
+                                                "type": "number",
+                                                "minimum": 0
+                                            }
+                                        },
+                                        "required": [ "top", "bottom" ]
+                                    }
+                                },
+                                "required": [ "mid_line" , "covers"]
+                            },
+                            "mesh": {
+                                "type": "object",
+                                "properties": {
+                                    "general": {
+                                        "type": "object",
+                                        "properties": {
+                                            "top": {
+                                                "$ref": "#/definitions/bunch_row"
+                                            },
+                                            "bottom": {
+                                                "$ref": "#/definitions/bunch_row"
+                                            }
+                                        },
+                                        "required": [ "top", "bottom" ]
+                                    },
+                                    "reinforcement": {
+                                        "type": "object",
+                                        "properties": {
+                                            "top": {
+                                                "type": "array",
+                                                "items": {
+                                                    "description": "rows of pieces",
+                                                    "type": "array",
+                                                    "itmes": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "$ref": "#/definitions/bunch_row"
+                                                        }  
+                                                    }
+                                                }
+                                            },
+                                            "bottom": {
+                                                "type": "array",
+                                                "items": {
+                                                    "description": "rows of pieces",
+                                                    "type": "array",
+                                                    "itmes": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "$ref": "#/definitions/bunch_row"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "required": [ "top", "bottom" ]
+                                    }
+                                },
+                                "required": [ "general", "reinforcement"]
+                            },
+                            "shear_zones": {
+                                "description": "all shear zones of the strip with their types",
+                                "type": "array",
+                                "itmes": {
+                                    "type": "objects",
+                                    "properties": {
+                                        "period": {
+                                            "type": "array",
+                                            "items": [
+                                                {
+                                                    "description": "start station of the period",
+                                                    "type": "number"
+                                                },
+                                                {
+                                                    "description": "end station of the period",
+                                                    "type": "number"
+                                                }
+                                            ]
+                                        },
+                                        "id": {
+                                            "description": "shear type id of the zone",
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "required": ["period", "id"]
+                                }
+                            },
+                            "moment": {
+                                "type": "object",
+                                "properties": {
+                                    "ultimate": {
+                                        "description": "the ultimate momentum that is needed in each station.",
+                                        "type": "object",
+                                        "properties": {
+                                            "top": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "stations": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "number"
+                                                        }
+                                                    },
+                                                    "values": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "number"
+                                                        }
+                                                    }
+                                                },
+                                                "required": ["stations", "values"]    
+                                            },
+                                            "bottom": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "stations": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "number"
+                                                        }
+                                                    },
+                                                    "values": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "number"
+                                                        }
+                                                    }
+                                                },
+                                                "required": ["stations", "values"]
+                                            }
+                                        },
+                                        "required": ["top", "bottom"]
+                                    },
+                                    "resistance": {
+                                        "description": "the resistance momentum provided by the rebars.",
+                                        "type": "object",
+                                        "properties": {
+                                            "top": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "stations": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "number"
+                                                        }
+                                                    },
+                                                    "values": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "number"
+                                                        }
+                                                    }
+                                                },
+                                                "required": ["stations", "values"]    
+                                            },
+                                            "bottom": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "stations": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "number"
+                                                        }
+                                                    },
+                                                    "values": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "number"
+                                                        }
+                                                    }
+                                                },
+                                                "required": ["stations", "values"]
+                                            }
+                                        },
+                                        "required": ["top", "bottom"]     
+                                    }
+                                },
+                                "required": [ "ultimate", "resistance" ]
+                            }
+                        },
+                        "required": [ "name", "geometry", "mesh", "shear_zones" , "moment" ]
+                    }
+                },
+                "grid": {
+                    "description": "x and y axes of the model.",
+                    "type": "object",
+                    "properties": {
+                        "X": {
+                            "description": "axes with different x value. the array is ascendingly sorted.",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "ordinate": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": [ "name", "ordinate" ]
+                            }
+                        },
+                        "Y": {
+                            "description": "axes with different y value. the array is ascendingly sorted.",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "ordinate": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": [ "name", "ordinate" ]
+                            }
+                        }
+                    },
+                    "required": [ "X", "Y" ]
+                }
+            },
+            "required": [ "version", "areas", "columns", "technical_spec", "pieces", "summary", "shear_types", "strips", "grid"]
+        },
+        "errors": {
+            "type": "object",
+            "properties": {
+                "total_type_num": {
+                    "type": "object",
+                    "properties": {
+                        "num": {
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "min_feasible_num": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    }
+                }
+            },
+            "required": []
+        },
+        "warnings":{
+            "type": "object",
+            "properties": {
+                "excess_stack": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "strip_name": {
+                                "type": "string"
+                            },
+                            "level": {
+                                "type": "string",
+                                "enum": ["top", "bottom"]
+                            },
+                            "excess_list": {
+                                "type": "array",
+                                "items": {
+                                    "type": "integer",
+                                    "minimum": 1
+                                }
+                            }
+                        },
+                        "required": ["strip_name", "excess_list"]
+                    }
+                },
+                "min_gap": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "strip_name": {
+                                "type": "string"
+                            },
+                            "level": {
+                                "type": "string",
+                                "enum": ["top", "bottom"]
+                            },
+                            "detail": {
+                                "type": "object",
+                                "properties": {
+                                    "min_gap":{
+                                        "type": "number",
+                                        "minimum": 0
+                                    },
+                                    "error_type": {
+                                        "type": "string",
+                                        "enum": ["MIN_GAP", "REBAR_DIAMETER"]
+                                    },
+                                    "value": {
+                                        "type": "number",
+                                        "minimum": 0
+                                    }
+                                },
+                                "required": ["min_gap", "error_type", "value"]
+                            }
+                        },
+                        "required": ["strip_name", "level", "detail"]
+                    }
+                },
+                "min_ratio": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "strip_name": {
+                                "type": "string"
+                            },
+                            "level": {
+                                "type": "string",
+                                "enum": ["top", "bottom"]
+                            },
+                            "detail": {
+                                "type": "object",
+                                "properties": {
+                                    "num":{
+                                        "type": "integer",
+                                        "minimum": 0
+                                    },
+                                    "min_num": {
+                                        "type": "integer",
+                                        "minimum": 1
+                                    }
+                                },
+                                "required": ["num", "min_num"]
+                            }
+                        },
+                        "required": ["strip_name", "level", "detail"]
+                    }
+                }
+            },
+            "required": ["excess_stack", "min_gap", "min_ratio"]
+        }
+    },
+    "required": [] 
+}

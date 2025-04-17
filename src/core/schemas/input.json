@@ -1,0 +1,281 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "input",
+    "title": "Parse Input",
+    "description": "This data is passed to the autocad drawing service to generate the .dwg output.",
+    "type": "object",
+    "properties": {
+        "version": {
+            "description": "version of the used scheme",
+            "type": "integer"
+        },
+        "strips": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "stations": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "design": {
+                        "type": "object",
+                        "properties": {
+                            "shear": {
+                                "description": "needed steel density for shear",
+                                "type": "array",
+                                "items": {
+                                    "type": "number",
+                                    "minimum": 0
+                                }    
+                            },
+                            "flexural": {
+                                "description": "the stteel area needed for flexure.",
+                                "type": "object",
+                                "properties": {
+                                    "top": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "number",
+                                            "minimum": 0
+                                        }
+                                    },
+                                    "bottom": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "number",
+                                            "minimum": 0
+                                        }
+                                    }
+                                },
+                                "required": [ "top", "bottom" ]        
+                            },
+                            "moment": {
+                                "description": "the moment if each station",
+                                "type": "object",
+                                "properties": {
+                                    "top": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "bottom": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "number"
+                                        }
+                                    }
+                                },
+                                "required": [ "top", "bottom" ]
+                            }
+                        },
+                        "required": [ "shear", "flexural", "moment"]
+                    },
+                    "geometry": {
+                        "type": "object",
+                        "properties": {
+                            "widths": {
+                                "type": "array",
+                                "items": {
+                                    "type": "number",
+                                    "minimum": 0
+                                }
+                            },
+                            "line_points": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "point": {
+                                            "type": "array",
+                                            "items": [
+                                                {
+                                                    "description": "x coordinate of the point.",
+                                                    "type": "number"
+                                                },
+                                                {
+                                                    "description": "y coordinate of the point.",
+                                                    "type": "number"
+                                                }
+                                            ],
+                                            "additionalItems": false
+                                        },
+                                        "margin": {
+                                            "type": "array",
+                                            "items": [
+                                                {
+                                                    "description": "left margin",
+                                                    "type": "number",
+                                                    "minimum": 0
+                                                },
+                                                {
+                                                    "description": "right margin",
+                                                    "type": "number",
+                                                    "minimum": 0
+                                                }
+                                            ],
+                                            "additionalItems": false
+                                        }
+                                    },
+                                    "required": [ "point", "margin" ] 
+                                },
+                                "minItems": 2    
+                            },
+                            "covers": {
+                                "type": "object",
+                                "properties": {
+                                    "top": {
+                                        "type": "number",
+                                        "minimum": 0
+                                    },
+                                    "bottom": {
+                                        "type": "number",
+                                        "minimum": 0
+                                    }
+                                }
+                            }
+                        },
+                        "required": [ "line_points", "widths" , "covers"]
+                    },
+                    "fy": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                    }
+                },
+                "required": [ "stations", "design", "geometry", "fy" ]
+            }
+
+        },
+        "areas": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "is_opening": {
+                        "type": "boolean"
+                    },
+                    "prop": {
+                        "description": "if area is not an opening this property is required",
+                        "type": "object",
+                        "properties": {
+                            "thickness": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                            },
+                            "fc": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                            }
+                        },
+                        "required": ["thickness", "fc"]
+                    },
+                    "corners": {
+                        "type": "array",
+                        "items": {
+                            "description": "each item is a point",
+                            "type": "array",
+                            "items":[
+                                {
+                                    "description": "the x coordinate of the point",
+                                    "type": "number"
+                                },
+                                {
+                                    "description": "the y coordinate of the point",
+                                    "type": "number"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "required": [ "name", "is_opening", "corners" ]
+            }
+        },
+        "columns": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "point": {
+                        "description": "the center point of the column",
+                        "type": "array",
+                        "items": [
+                            {
+                                "description": "x coordanate of the point",
+                                "type": "number"
+                            },
+                            {
+                                "description": "y coordinate of the point",
+                                "type": "number"
+                            }
+                        ]
+                    },
+                    "dim": {
+                        "description": "dimension of the column",
+                        "type": "array",
+                        "items": [
+                            {
+                                "description": "the xdim of the column",
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                            },
+                            {
+                                "description": "the ydim of the column",
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                            }
+                        ]
+                    }
+                },
+                "required": [ "point", "dim" ]
+            }
+        },
+        "grid": {
+            "type": "object",
+            "properties": {
+                "X": {
+                    "description": "the x value of the grid lines with constant x value.",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "ordinate": {
+                                "type": "number"
+                            }
+                        },
+                        "required": [ "name", "ordinate" ]
+                    }
+                },
+                "Y": {
+                    "description": "the y value of the grid lines with constant y value.",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "ordinate": {
+                                "type": "number"
+                            }
+                        },
+                        "required": [ "name", "ordinate" ]
+                    }
+                }
+            },
+            "required": [ "X", "Y" ]
+        }
+    },
+    "required": [ "version", "grid", "columns", "areas", "strips" ]
+}

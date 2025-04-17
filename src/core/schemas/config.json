@@ -1,0 +1,102 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "config",
+    "title": "Running Configuration",
+    "description": "Running Configuration",
+    "type": "object",
+    "properties": {
+        "diameter": {
+            "type": "object",
+            "properties": {
+                "typical": {
+                    "type": "integer",
+                    "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
+                },
+                "additional": {
+                    "type": "integer",
+                    "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
+                },
+                "shear": {
+                    "type": "integer",
+                    "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
+                },
+                "thermal": {
+                    "type": "integer",
+                    "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
+                }
+            },
+            "required": ["typical", "additional", "shear", "thermal"]
+        },
+        "type_number": {
+            "type": "object",
+            "properties": {
+                "total": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "stack": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "shear": {
+                    "type": "integer",
+                    "minimum": 1
+                }
+            },
+            "required": ["total", "stack", "shear"]
+        },
+        "elimination": {
+            "type": "object",
+            "properties": {
+                "reinforcement": {
+                    "type": "number",
+                    "minimum": 0
+                },
+                "shear": {
+                    "type": "number",
+                    "minimum": 0
+                }
+            },
+            "required": ["additional", "shear"]
+        },
+        "typical_arrangement": {
+            "type": "object",
+            "properties": {
+                "method": {
+                    "type": "string",
+                    "enum": ["SMART", "INTERVAL", "COUNT"]
+                },
+                "value": {
+                    "type": "number",
+                    "minimum": 0
+                },
+                "exceptions": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "strip_name": {
+                                "type": "string"
+                            },
+                            "method": {
+                                "type": "string",
+                                "enum": ["SMART", "INTERVAL", "COUNT"]
+                            },
+                            "value": {
+                                "type": "number",
+                                "minimum": 0
+                            },
+                            "diameter": {
+                                "type": "integer",
+                                "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
+                            }
+                        },
+                        "required": ["method", "value", "diameter"]
+                    }
+                }
+            },
+            "required": ["method", "value"]
+        }
+    },
+    "required": ["diameter", "type_number", "elimination", "typical_arrangement"]
+}

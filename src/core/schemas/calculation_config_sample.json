@@ -1,0 +1,21 @@
+{
+    "diameter": {
+        "general": 20,
+        "reinforcement": 25,
+        "thermal": 14,
+        "shear": 14
+    },
+    "type_number": {
+        "total": 15,
+        "stack": 3,
+        "shear": 4
+    },
+    "elimination": {
+        "reinforcement": 0.1,
+        "shear": 0.5
+    },
+    "general_arrangement": {
+        "method": "INTERVAL",
+        "interval": 0.2
+    }
+}

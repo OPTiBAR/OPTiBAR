@@ -1,0 +1,98 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "config",
+    "title": "Analysis Configuration",
+    "description": "Analysis Configuration",
+    "type": "object",
+    "properties": {
+        "diameter": {
+            "type": "object",
+            "properties": {
+                "general": {
+                    "type": "integer",
+                    "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
+                },
+                "reinforcement": {
+                    "type": "integer",
+                    "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
+                },
+                "shear": {
+                    "type": "integer",
+                    "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
+                },
+                "thermal": {
+                    "type": "integer",
+                    "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
+                }
+            },
+            "required": ["general", "reinforcement", "shear", "thermal"]
+        },
+        "type_number": {
+            "type": "object",
+            "properties": {
+                "total": {
+                    "description": "calculate all the types between these two numbers",
+                    "type": "object",
+                    "properties": {
+                        "from": {
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "to": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    }
+                },
+                "stack": {
+                    "description": "calculate all the types between these two numbers",
+                    "type": "object",
+                    "properties": {
+                        "from": {
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "to": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    }
+                },
+                "shear": {
+                    "type": "integer",
+                    "minimum": 1
+                }
+            },
+            "required": ["total", "stack", "shear"]
+        },
+        "elimination": {
+            "type": "object",
+            "properties": {
+                "reinforcement": {
+                    "type": "number",
+                    "minimum": 0
+                },
+                "shear": {
+                    "type": "number",
+                    "minimum": 0
+                }
+            },
+            "required": ["reinforcement", "shear"]
+        },
+        "general_arrangement": {
+            "type": "object",
+            "properties": {
+                "method": {
+                    "type": "string",
+                    "enum": ["SMART", "INTERVAL"]
+                },
+                "interval": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                }
+            },
+            "required": ["method"]
+        }
+    },
+    "required": ["diameter", "type_number", "elimination", "general_arrangement"]
+}

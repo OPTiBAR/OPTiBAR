@@ -1,3 +1,8 @@
+# OPTiBAR
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](./LICENSE)
+
+
 <p align="center">
   <img src="logo.png" alt="OPTiBAR Logo" width="150"/>
 </p>
@@ -8,9 +13,7 @@
 </p>
 
 
-# OPTiBAR
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](./LICENSE)
 
 [📚 Read the full documentation](https://optibar.readthedocs.io/)  
 

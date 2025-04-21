@@ -31,6 +31,12 @@ OPTiBAR is a Python package designed to automate and optimize the generation of 
 - Does not handle **3D visualization** of rebar placement; only 2D detailing maps.
 
 ## 🛠️ Installation
+
+### Prerequisites
+- Python 3.12 or higher
+- Autodesk Autocad (Full edition, LT doesn't work) for .dwg export (optional)
+- MS Excel for .xlsx export (optional)
+
 ```
 pip install optibar
 ```
@@ -42,11 +48,6 @@ cd optibar
 pip install .
 ```
 
-
-### Prerequisites
-- Python 3.12 or higher
-- Autodesk Autocad (Full edition, LT doesn't work) for .dwg export (optional)
-- MS Excel for .xlsx export (optional)
 
 ## How to use
 

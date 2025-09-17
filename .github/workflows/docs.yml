@@ -1,0 +1,36 @@
+name: Build and Deploy Sphinx Docs
+
+on:
+  push:
+    branches:
+      - main  
+
+permissions:
+  contents: write   # needed to push to gh-pages branch
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: |
+          pip install -U pip
+          pip install -r docs/requirements.txt
+
+      - name: Build documentation
+        run: |
+          make -C docs html
+
+      - name: Deploy to GitHub Pages
+        run: |
+          pip install ghp-import
+          ghp-import -n -p -f docs/_build/html

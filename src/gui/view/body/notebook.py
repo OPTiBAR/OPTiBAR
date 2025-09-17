@@ -3,12 +3,13 @@ from tkinter import ttk
 from .upload import UploadNote
 from .calculation.notebook import CalcNote
 from .results import ResultNote
-from src.view.utils.router import Router
+from ..utils.registery import Registry
 
-class NoteBook(ttk.Notebook, Router):
+class NoteBook(ttk.Notebook):
     def __init__(self, parent):
         ttk.Notebook.__init__(self, parent)
-        Router.__init__(self, 'notebook')    
+        registry = Registry()
+        registry.registery(self, 'notebook')    
 
         # widgets
         upload_note = UploadNote(self)

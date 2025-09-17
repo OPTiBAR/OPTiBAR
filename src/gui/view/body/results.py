@@ -3,10 +3,10 @@ from threading import stack_size
 import tkinter as tk
 from tkinter import ttk
 from typing import List, Dict
-from src.view.utils.router import Router
 from src.view.utils.common import LogWindow, Popup
 from pathlib import Path
 from PIL import Image, ImageTk
+from ..utils.registery import Registry
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 # Implement the default Matplotlib key bindings.
@@ -15,10 +15,11 @@ from matplotlib.figure import Figure
 import math
 
 
-class FileFrame(ttk.LabelFrame, Router):
+class FileFrame(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Files')
-        Router.__init__(self, 'files')
+        registry = Registry()
+        registry.registery(self, 'files')
         
         # widgets
         # exl_img = Image.open("./src/view/images/excel.png").convert("RGBA").resize((35,35))
@@ -122,10 +123,11 @@ class Diagram():
         self.canvas.draw()
         self.toolbar.update()
 
-class BugFrame(ttk.LabelFrame, Router):
+class BugFrame(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Bug Report')
-        Router.__init__(self, 'bug')
+        registry = Registry()
+        registry.registery(self, 'bug')
         self.button = ttk.Button(self, text='Report Bug', command=lambda: self.event_generate("<<report-bug-pressed>>"))
         self.button.grid(row=0, column=0, padx=10, pady=10, sticky='e')
         self.columnconfigure(0, weight=1)
@@ -165,10 +167,11 @@ class BugPopup(Popup):
         self.root.event_generate('<<bug-send-pressed>>')
 
 
-class ResultNote(ttk.Frame, Router):
+class ResultNote(ttk.Frame):
     def __init__(self, parent):
         ttk.Frame.__init__(self,parent)
-        Router.__init__(self, 'results')
+        registry = Registry()
+        registry.registery(self, 'results')
         file_frame = FileFrame(self)
         log_window = LogWindow(self)
         bug_frame = BugFrame(self)

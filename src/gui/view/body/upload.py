@@ -1,14 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter.filedialog import askopenfilename
-
-from ..utils.router import Router
+from ..utils.registery import Registry
 from ..utils.common import LogWindow
 
-class UploadNote(ttk.Frame, Router):
+class UploadNote(ttk.Frame):
     def __init__(self, parent):
         ttk.Frame.__init__(self,parent)
-        Router.__init__(self, 'upload')
+        registry = Registry()
+        registry.register(self, 'upload')
 
         file_browser = FileBrowser(self)
         upload_log = LogWindow(self)
@@ -24,10 +24,12 @@ class UploadNote(ttk.Frame, Router):
         self.rowconfigure(1, weight=1)
 
 
-class FileBrowser(ttk.Frame, Router):
+class FileBrowser(ttk.Frame):
     def __init__(self, parent):
         ttk.Frame.__init__(self, parent)
-        Router.__init__(self, 'browser')
+        registry = Registry()
+        registry.register(self, 'browser')
+        
         # variables
         self.path_var = tk.StringVar()
         self.status_var = tk.StringVar()

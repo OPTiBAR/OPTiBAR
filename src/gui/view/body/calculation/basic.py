@@ -1,15 +1,16 @@
 from src.view.body.tooltip import CreateToolTip
-from src.view.utils.router import Router
+from ...utils.registery import Registry
 import tkinter as tk
 from tkinter import ttk
 from src.view.utils.common import IntCombo, IntEntry
 from src.setting import REBAR_LIST
 from typing import Dict, List, Tuple
 
-class Typical(ttk.LabelFrame, Router):
+class Typical(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Typical Arrangement')
-        Router.__init__(self, 'typical')
+        registry = Registry()
+        registry.registery(self, 'typical')
 
         # widgets
         entry_label = ttk.Label(self, text='Interval(cm)'+ u' \u24BE')
@@ -31,10 +32,11 @@ class Typical(ttk.LabelFrame, Router):
             "value": self.entry.get_value()/100,
         }
 
-class Setting(ttk.Frame, Router):
+class Setting(ttk.Frame):
     def __init__(self, parent):
         ttk.Frame.__init__(self, parent)
-        Router.__init__(self, 'basic')
+        registry = Registry()
+        registry.registery(self, 'basic')
         self.diameter = Diameter(self)
         self.type_num_calc = TypeNumCalc(self)
         self.type_num_analysis = TypeNumAnalysis(self)
@@ -118,10 +120,11 @@ class Elimination(ttk.LabelFrame):
         }
 
 
-class Cover(ttk.LabelFrame, Router):
+class Cover(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Cover')
-        Router.__init__(self, 'cover')
+        registry = Registry()
+        registry.registery(self, 'cover')
         entry = IntEntry(self, 20)
         self.entry = entry
         label = ttk.Label(self, text='Side Cover(cm)' + u' \u24BE')

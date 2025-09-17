@@ -4,12 +4,14 @@ from src.view.body.tooltip import CreateToolTip
 from src.view.utils.router import Router
 from .basic import Setting as BasicSetting
 from .advanced import Setting as AdvancedSetting
+from ...utils.registery import Registry
 
 
-class CalcType(ttk.LabelFrame, Router):
+class CalcType(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Type of Request')
-        Router.__init__(self, 'type')
+        registry = Registry()
+        registry.registery(self, 'type')
         # variable and widget
         self.type_var = tk.StringVar()
         self.type_var.set('calculation')
@@ -61,10 +63,11 @@ class Setting(ttk.Notebook, Router):
         basic['special_lengths'] = advanced['special_lengths']
         return basic
 
-class CalcRequest(ttk.LabelFrame, Router):
+class CalcRequest(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Request')
-        Router.__init__(self, 'request')
+        registry = Registry()
+        registry.registery(self, 'request')
         
         #variables
         self.button_var = tk.StringVar()
@@ -117,10 +120,11 @@ class CalcRequest(ttk.LabelFrame, Router):
         self.event_generate('<<calc-pressed>>')
 
 
-class CalcNote(ttk.Frame, Router):
+class CalcNote(ttk.Frame):
     def __init__(self, parent):
         ttk.Frame.__init__(self, parent)
-        Router.__init__(self, 'calc')
+        registry = Registry()
+        registry.registery(self, 'calc')
         
         calc_type = CalcType(self)
         setting = Setting(self)

@@ -1,16 +1,15 @@
-from functools import update_wrapper
 import tkinter as tk
 from tkinter import ttk
 from typing import List
-from .router import Router
-import tkinter.messagebox as messagebox
+from .registery import Registry
 
 INDENT = 4
 
-class LogWindow(ttk.LabelFrame, Router):
+class LogWindow(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Report')
-        Router.__init__(self, 'log')
+        registry = Registry()
+        registry.register(self, 'log')
 
         text = tk.Text(self, wrap= "none", width=40)
         # text['state'] = 'disabled'

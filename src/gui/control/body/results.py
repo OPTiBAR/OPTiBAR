@@ -9,17 +9,15 @@ import subprocess
 # from src.control.utils.mprocessing import Subprocess
 from src.control.utils.urls import connection_error, get_header, get_url
 from src.view.utils.router import Router
-from src.control.utils.threading import tr_request, Monitor
 from tkinter.messagebox import showinfo, showerror
 from src.setting import STORAGE_PATH
-import requests
 import json
 import texttable
 
 TEMP_STORAGE_PATH = STORAGE_PATH.joinpath('temp')
 
 class Result():
-    def __init__(self, root: Router, token_var: tk.StringVar, result_data: Dict, acad_path: tk.StringVar) -> None:
+    def __init__(self, root: Router, result_data: Dict, acad_path: tk.StringVar) -> None:
         self.result_data = result_data
         self.acad_path = acad_path
         result_data['is_available'].trace_add('write', self.result_data_changed)
@@ -28,7 +26,7 @@ class Result():
         self.bug = result_note.get_child('bug')
         self.log:LogWindow  = result_note.get_child('log')
         self.root = root
-        self.token_var = token_var
+        # self.token_var = token_var
 
         self.files.bind('<<diagram-button-pressed>>', self.draw_diagram)
         self.files.bind('<<dwg-button-pressed>>', self.draw_dwg)
@@ -45,26 +43,26 @@ class Result():
     def bug_fun(self, *args):
         self.bug_popup = BugPopup(self.root)
 
-    def bug_send(self, *args):
-        def send_request():
-            data = {'description':self.bug_popup.get_report()}
-            url = get_url('report_bug', order_id = self.result_data['data']['order_id'])
-            thread = tr_request(method='post', url=url, json=data, headers=get_header(self.token_var))
-            Monitor(self.root).run(thread, handle)
+    # def bug_send(self, *args):
+    #     def send_request():
+    #         data = {'description':self.bug_popup.get_report()}
+    #         url = get_url('report_bug', order_id = self.result_data['data']['order_id'])
+    #         thread = tr_request(method='post', url=url, json=data, headers=get_header(self.token_var))
+    #         Monitor(self.root).run(thread, handle)
         
-        def handle(response: requests.Response):
-            if response is not None:
-                if  response.status_code == 201:
-                    showinfo('Report', 'Report sent successfuly. It will be investigated by the thechnical team.')
-                    self.bug_popup.close()
-                else:
-                    if response.status_code in (403,404):
-                        showerror(f'Error {response.status_code}', response.json()['detail'])
-                    else:
-                        raise ValueError(f'unhandled status code {response.status_code}')
-            else:
-                connection_error()
-        send_request()
+    #     def handle(response: requests.Response):
+    #         if response is not None:
+    #             if  response.status_code == 201:
+    #                 showinfo('Report', 'Report sent successfuly. It will be investigated by the thechnical team.')
+    #                 self.bug_popup.close()
+    #             else:
+    #                 if response.status_code in (403,404):
+    #                     showerror(f'Error {response.status_code}', response.json()['detail'])
+    #                 else:
+    #                     raise ValueError(f'unhandled status code {response.status_code}')
+    #         else:
+    #             connection_error()
+    #     send_request()
 
 
     def draw_diagram(self, *args):

@@ -8,8 +8,9 @@ Resistant Moment
 
 
 
-
+ACI-18 table 22.2.2.4.3
 .. math::
+
    \beta_1 = \left\{
    \begin{array}{lr}
    0.85, & 17 \leq f'_c \leq 28 \\
@@ -19,6 +20,8 @@ Resistant Moment
    \right.
 
 
+
+ACI-18 table 21.2.2
 .. math::
 
    \phi = \left\{

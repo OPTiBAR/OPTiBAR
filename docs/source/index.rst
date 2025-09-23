@@ -9,20 +9,6 @@ OPTiBAR is a concrete structure detailing software the gets the output of struct
 The unique feature of OPTiBAR is that it minimizes the steel consumption while keeping the drawing completely practical.
 The detailing process is highly automated but it is also possible to manually adjust the detailing parameters.
 
-.. _My target:
-.. code-block:: python
-   :emphasize-lines: 3,4
-
-   """
-   My Target
-   """
-   print("Hello World")
-   if sina:
-      print("Sina")
-
-
-Reference `My target`_.
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

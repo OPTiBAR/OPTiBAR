@@ -1,15 +1,14 @@
-from core.src.components.collections import Stack
+from core.components.collections import Stack
 from pyomo.environ import *
-from typing import List
 from pyomo.opt import SolverStatus, TerminationCondition
 
 class Minimization():
-    def __init__(self, selected_length: List[float], lengths: List[float], upper_bounds: List[float], num_pieces: List[int]):
+    def __init__(self, selected_length: list[float], lengths: list[float], upper_bounds: list[float], num_pieces: list[int]):
         self.lengths = lengths
         self.upper_bounds = upper_bounds
         self.num_pieces = num_pieces
         self.selected_lengths = selected_length
-    
+
     def run(self, p:int):
         I = range(len(self.lengths))
         J = range(len(self.selected_lengths))
@@ -17,12 +16,12 @@ class Minimization():
         self.I = I
         self.J = J
         self.M = M
-        
+
         LS = self.lengths
         LO = self.selected_lengths
         LU = self.upper_bounds
         NSUB = {}
-        
+
         for m in M:
             sublist = []
             for i,num in enumerate(self.num_pieces):
@@ -31,7 +30,7 @@ class Minimization():
             NSUB[m] = sublist
         # print(M)
         # print(NSUB)
-        
+
         C = [[0 for j in J] for i in I]
         for i in I:
             for j in J:
@@ -39,7 +38,7 @@ class Minimization():
                     C[i][j] = LO[j]-LS[i]
                 else:
                     C[i][j] = 0
-        
+
 
         model = ConcreteModel(name='Type Minimizer')
         self.model = model
@@ -95,7 +94,7 @@ class Minimization():
             # Something else is wrong
             # print('something eslse is wrong',results.solver.status)
             raise Exception("it should not happen please investigate the problem.")
-    
+
     def get_results(self):
         result_list = []
         for i in self.I:
@@ -111,7 +110,7 @@ class StackAlgorithmExact():
         Args:
             stack (Stack): stack of pieces
             selected_lengths (List[float]): list of awailable lengths
-            p (int): 
+            p (int):
 
         Returns:
             int: number of types of the lengths, it may be greater then the given value.
@@ -133,9 +132,8 @@ class StackAlgorithmExact():
                 break
             else:
                 p = p+1
-                
+
         new_lengths = minimization.get_results()
         for i,length in enumerate(new_lengths):
             pieces[i].shortest_piece_length = length
         return p
-        

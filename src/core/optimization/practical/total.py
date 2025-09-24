@@ -1,7 +1,5 @@
-from __future__ import annotations
-from typing import List, Dict, NoReturn
 from .errors import NotEnoughTypes
-from core.src.components.piece import Piece
+from core.components.piece import Piece
 STANDARD_LENGTH = 12
 
 class TotalAlgorithm():
@@ -10,7 +8,7 @@ class TotalAlgorithm():
         input_dict = self._get_inputs(self._get_bunch_dict(pieces))
         self._lengths = input_dict["lengths"]
         self._run(**input_dict)
-    
+
     class Pair():
         def __init__(self):
             self.value = None
@@ -36,7 +34,7 @@ class TotalAlgorithm():
                 bunch_dict[length] = bunch
         return bunch_dict
 
-    def _get_inputs(self, bunch_dict) -> Dict[str,List[float]]:  
+    def _get_inputs(self, bunch_dict) -> Dict[str,List[float]]:
         sorted_bunches = [bunch_dict[length] for length in sorted(bunch_dict.keys())]
         lengths = list(map(lambda bunch: bunch.get_length(),sorted_bunches))
         upper_bounds = list(map(lambda bunch: bunch.get_upper_bound(),sorted_bunches))
@@ -89,7 +87,7 @@ class TotalAlgorithm():
                             min_index = m
                     container[i][j].value = min_value
                     container[i][j].ref = min_index
-    
+
     def get_selected_lengths(self, number_of_types: int) -> List[float]:
         """selcted lengths in the total length type reduction algorithm
 
@@ -131,7 +129,6 @@ class Bunch():
     def get_count(self) -> int:
         return self._count
     def get_upper_bound(self) -> float:
-        return min(map(lambda piece: getattr(piece, "length_upper_bound"), self._pieces))    
+        return min(map(lambda piece: getattr(piece, "length_upper_bound"), self._pieces))
     def __str__(self) -> str:
         return (f"Bunch: [length: {self._length}, count: {self._count}]")
-    

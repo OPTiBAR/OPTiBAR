@@ -1,4 +1,4 @@
-from core.optimization.executive.errors import NotEnoughTypes
+from core.optimization.practical.errors import NotEnoughTypes
 from core.components.piece import Piece
 from core.components.collections import Stack
 

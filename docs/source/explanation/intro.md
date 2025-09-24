@@ -43,7 +43,7 @@ In the following chapters, each of these stages will be examined.
     title: Main stages of the algorithm
     ---
     flowchart LR
-        id1(Sparse the Analysis software output) --> id2(Theoretical Length) --> id3(Allowable Length) --> id4(Executable Length)
+        id1(Parse the Analysis software output) --> id2(Theoretical Length) --> id3(Allowable Length) --> id4(Calculate <br>Practical Length)
 ```
 
 

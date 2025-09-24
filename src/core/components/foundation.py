@@ -1,15 +1,14 @@
 from .config import Config
-# from optibar.src.con
 from .shear import ShearType, ShearZone
-from typing import Dict, Iterator, List
+from typing import Iterator
 from .rebar import RebarType, Rebar
 from .strip import Strip
 from .piece import Piece
 from .collections import Bunch
-from core.src.optimization.executive.executive import ExecutiveOptimization
-from core.src.optimization.executive.errors import NotEnoughTypes
-from core.src.optimization.shear import ShearOptimization, ShearType
-from core.src.io.input import InputInterpreter
+from core.optimization.practical.practical import ExecutiveOptimization
+from core.optimization.practical.errors import NotEnoughTypes
+from core.optimization.shear import ShearOptimization, ShearType
+from core.io.input import InputInterpreter
 from .utilities import round_up
 import math
 
@@ -25,7 +24,7 @@ class Foundation():
         self.warnings: Dict = {} # keys may be 'min_gap', 'min_ratio' and 'excess_stack'
         for strip_data in input.get_strips():
             strips.append(Strip(strip_data))
-    
+
     def _set_side_cover(self, side_cover: float) -> None:
         for strip in self._strips:
             strip.set_side_cover(side_cover)
@@ -60,7 +59,7 @@ class Foundation():
                         'thermal_rebar_type': thermal_rebar_type,
                     }
             strip.set_typical_rebar(strip_data)
-        
+
     def _set_additional_rebar(self, rebar_type: RebarType, elimination: float):
         for strip in self._strips:
             strip.set_additional_rebar(rebar_type, elimination)
@@ -78,13 +77,13 @@ class Foundation():
 
     def get_shear_types(self) -> List[ShearType]:
         return self._shear_types
-    
+
     def get_strip_shear_zones(self) -> List[List[ShearZone]]:
         shear_zones = []
         for strip in self._strips:
             shear_zones.append(strip.get_shear_zones())
         return shear_zones
-        
+
     def _set_length_type_num(self, total_num_of_types, stack_num_of_types):
         def get_pieces():
             for strip in self._strips:
@@ -120,7 +119,7 @@ class Foundation():
                     strip.refresh()
             else:
                 break
-    
+
     def get_additional_subpieces(self) -> Iterator[Piece]:
         strips = []
         for i,strip in enumerate(self._strips):
@@ -151,7 +150,7 @@ class Foundation():
                 }
             })
         return strips
-    
+
     def _get_min_gap_warning(self) -> List[Dict]:
         output = []
         for strip in self._strips:
@@ -164,12 +163,12 @@ class Foundation():
                         'detail': strip_min_gap_warning[level]
                     })
         return output
-    
+
     def _set_min_gap_warning(self) -> None:
         min_gap_warnings = self._get_min_gap_warning()
         if len(min_gap_warnings) > 0:
             self.warnings['min_gap'] = min_gap_warnings
-    
+
     def _get_min_ratio_warning(self) -> List[Dict]:
         output = []
         for strip in self._strips:
@@ -182,7 +181,7 @@ class Foundation():
                         'detail': strip_min_ratio_warning[level]
                     })
         return output
-    
+
     def _set_min_ratio_warning(self) -> None:
         min_ratio_warnings = self._get_min_ratio_warning()
         if len(min_ratio_warnings) > 0:
@@ -200,17 +199,17 @@ class Foundation():
                         'detail': strip_max_gap_warning[level]
                     })
         return output
-    
+
     def _set_max_gap_warning(self) -> None:
         max_gap_warnings = self._get_max_gap_warning()
         if len(max_gap_warnings) > 0:
             self.warnings['max_gap'] = max_gap_warnings
-            
+
     def _set_warning(self):
         self._set_max_gap_warning()
         self._set_min_gap_warning()
         self._set_min_ratio_warning()
-    
+
     def get_shear_piece_list(self):
         piece_list = []
         for shear_zones in self.get_strip_shear_zones():
@@ -225,13 +224,13 @@ class Foundation():
                     "length": length
                 })
         return piece_list
-    
+
     def get_strips_resistance_moment(self):
         strips = []
         for strip in self._strips:
             strips.append(strip.get_resistance_moment())
         return strips
-    
+
     def get_strips_ultimate_moment(self):
         strips = []
         for strip in self._strips:

@@ -1,17 +1,15 @@
-from __future__ import annotations
-from core.src.optimization.executive.errors import NotEnoughTypes
-from core.src.components.piece import Piece
-from core.src.components.collections import Stack
+from core.optimization.executive.errors import NotEnoughTypes
+from core.components.piece import Piece
+from core.components.collections import Stack
 
 from .exactstack import StackAlgorithmExact
 from .total import TotalAlgorithm
-from typing import List, Dict
 
 
 class ExecutiveOptimization():
     def __init__(self,
-            pieces: List[Piece],
-            stacks: Dict[str, List[Stack]],
+            pieces: list[Piece],
+            stacks: dict[str, list[Stack]],
             total_num_of_types: int,
             stack_num_of_types: int
         ):
@@ -27,7 +25,7 @@ class ExecutiveOptimization():
         self.stack_num_of_types = stack_num_of_types
         self.pieces = pieces
         self.stacks = stacks
-    
+
     def run(self):
         total_alg = TotalAlgorithm(pieces= self.pieces)
         try:
@@ -50,6 +48,3 @@ class ExecutiveOptimization():
                         'excess_list': excess_list
                     })
         return stack_excess_list
-                
-
-

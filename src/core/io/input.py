@@ -1,5 +1,5 @@
 from shapely.geometry import Polygon, LineString, Point
-from typing import List, Dict
+from typing import Any
 import math
 from core.setting import MIN_COLUMN_DIM
 from copy import deepcopy
@@ -13,13 +13,13 @@ class InputInterpreter():
         self._strip_polygons = self._get_strip_polygons()
         self._strip_props = self._get_strip_props()
         self._strip_line_strings = self._get_strip_line_strings()
-        
-    def _get_strip_polygons(self) -> List[Polygon]:
+
+    def _get_strip_polygons(self) -> list[Polygon]:
         def get_corners(line_points):
             pair_points = [] # list of pair of points
             for i in range(len(line_points)):
                 if i == 0:
-                    start_index = i 
+                    start_index = i
                     end_index = i + 1
                 else:
                     start_index = i-1
@@ -43,21 +43,21 @@ class InputInterpreter():
             for pair in reversed(pair_points):
                 corners.append(pair[1])
             return corners
-        
+
         polygons = []
         for strip in self.parsed_data["strips"]:
             line_points = strip["geometry"]["line_points"]
             corners = get_corners(line_points)
             polygons.append(Polygon(corners))
         return polygons
-        
-    def _get_area_polygons(self) -> List[Polygon]:
+
+    def _get_area_polygons(self) -> list[Polygon]:
         polygons = []
         for area in self.parsed_data["areas"]:
             polygons.append(Polygon(area["corners"]))
         return polygons
-        
-    def _get_strip_props(self) -> List[Dict]:
+
+    def _get_strip_props(self): #list[dict]
         props = []
         for i,strip_polygon in enumerate(self._strip_polygons):
             fy = self.parsed_data["strips"][i]["fy"]
@@ -78,7 +78,7 @@ class InputInterpreter():
                 "thickness": thickness
             })
         return props
-    
+
     def _get_strip_line_strings(self):
         line_strings = []
         for strip in self.parsed_data["strips"]:
@@ -114,7 +114,7 @@ class InputInterpreter():
                     column_sides.append((min(projections), max(projections)))
             strip_column_sides.append(column_sides)
         return strip_column_sides
-    
+
     def _get_strip_trim_sides(self):
         strip_trim_sides = []
         for i,line_string in enumerate(self._strip_line_strings):
@@ -129,7 +129,7 @@ class InputInterpreter():
                     trim_sides.append((station1,station2) if station1 < station2 else (station2,station1))
             strip_trim_sides.append(trim_sides)
         return strip_trim_sides
-    
+
     def get_strips(self):
         strips = deepcopy(self.parsed_data["strips"])
         strip_column_sides = self._get_strip_column_sides()
@@ -140,18 +140,6 @@ class InputInterpreter():
             strip["column_sides"] = strip_column_sides[i]
             strip["strip_sides"] = strip_trim_sides[i]
         return strips
-    
+
     def get_min_thickness(self):
         return min(prop["thickness"] for prop in self._strip_props)
-
-    
-        
-
-    
-
-
-
-
-
-
-

@@ -7,7 +7,7 @@ Explanation
 
    intro
    theoretical
-   allowable
+   required
    practical
    moment
    shear

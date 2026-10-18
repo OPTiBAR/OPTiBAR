@@ -19,14 +19,14 @@ dependencies = [
 ]
 
 [project.gui-scripts]
-optibar = "gui.app:main"
+optibar = "optibar.gui.app:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/core", "src/gui"]
+packages = ["src/optibar"]
 
 [dependency-groups]
 dev = [

@@ -81,10 +81,10 @@ Use it to choose the numbers of length types for the final computation.
 The engine can be used without the app. Parse the SAFE file, run the calculation, and write the drawings:
 
 ```python
-from core.parser.parse import V16Parser
-from core.run import run_calculation
-from core.sketch.dxf import DxfDrawing
-from core.sketch.sketch import Sketch
+from optibar.core.parser.parse import V16Parser
+from optibar.core.run import run_calculation
+from optibar.core.sketch.dxf import DxfDrawing
+from optibar.core.sketch.sketch import Sketch
 
 parser = V16Parser("foundation.accdb")
 foundation = parser.get_foundation()

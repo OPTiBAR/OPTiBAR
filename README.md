@@ -69,9 +69,9 @@ See the [quick start](https://optibar.readthedocs.io/en/latest/tutorial/quicksta
 ### 🐍 Python
 
 ```python
-from core.parser.parse import V16Parser
-from core.run import run_calculation
-from core.sketch.dxf import DxfDrawing
+from optibar.core.parser.parse import V16Parser
+from optibar.core.run import run_calculation
+from optibar.core.sketch.dxf import DxfDrawing
 
 parser = V16Parser("foundation.accdb")
 foundation = parser.get_foundation()
@@ -104,7 +104,7 @@ We welcome contributions! To get started:
 3. Create a new branch, make your changes, and **commit** them.
 4. **Push** your branch and open a **pull request**.
 
-Run the tests with `uv run pytest src/gui/tests src/core/tests/parser src/core/tests/sketch`.
+Run the tests with `uv run pytest src/optibar/gui/tests src/optibar/core/tests/parser src/optibar/core/tests/sketch`.
 
 ## 📄 License
 

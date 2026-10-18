@@ -5,6 +5,7 @@ description = "Automated, optimized rebar detailing for concrete foundations"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "ezdxf>=1.4.5",
     "highspy>=1.12.0",
     "matplotlib>=3.11.2",
     "packaging>=26.3",

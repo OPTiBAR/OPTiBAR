@@ -1,13 +1,20 @@
 import json
+import pathlib
+import ezdxf
+import pytest
 from pypdf import PdfReader
-from conftest import DATA_PATH, requires_driver
 import gui.control.body.upload as upload_module
+from core.parser.parse import has_access_driver
+
+# not imported from conftest: core/tests/parser has a conftest too, and only one is importable by that name
+DATA_PATH = pathlib.Path(__file__).parents[2].joinpath('core', 'tests', 'parser', 'data_files')
+requires_driver = pytest.mark.skipif(not has_access_driver(), reason='Microsoft Access ODBC driver is not installed')
 
 
 def test_startup(app):
     assert 'disabled' in app.request.calculate_button.state()
     assert app.request.status_var.get() == 'Status: Waiting for input file ...'
-    for name in ('save', 'pdf', 'diagram'):
+    for name in ('save', 'pdf', 'dxf', 'diagram'):
         assert 'disabled' in getattr(app.notebook.results.files, name + '_button').state()
 
 
@@ -81,6 +88,7 @@ def test_calculation(loaded_app):
     files = app.notebook.results.files
     assert 'disabled' not in files.save_button.state()
     assert 'disabled' not in files.pdf_button.state()
+    assert 'disabled' not in files.dxf_button.state()
     assert 'disabled' in files.diagram_button.state()
     assert app.errors() == []
 
@@ -113,6 +121,18 @@ def test_save_pdf(loaded_app):
 
 
 @requires_driver
+def test_save_dxf(loaded_app):
+    app = loaded_app
+    run_calculation(app)
+    path = app.tmp_path.joinpath('drawing.dxf')
+    app.press(app.notebook.results.files, '<<dxf-button-pressed>>', path)
+    doc = ezdxf.readfile(path)
+    assert doc.audit().errors == []
+    assert 'Top Additional Rebars Of X Direction' in [e.text for e in doc.modelspace().query('MTEXT')]
+    assert app.errors() == []
+
+
+@requires_driver
 def test_save_cancelled(loaded_app):
     app = loaded_app
     run_calculation(app)
@@ -133,6 +153,7 @@ def test_analysis(loaded_app):
     files = app.notebook.results.files
     assert 'disabled' not in files.diagram_button.state()
     assert 'disabled' in files.pdf_button.state()
+    assert 'disabled' in files.dxf_button.state()
     windows = len(app.root.winfo_children())
     app.press(files, '<<diagram-button-pressed>>')
     assert len(app.root.winfo_children()) == windows + 1

@@ -8,6 +8,7 @@ from typing import Dict
 from gui.view.body.results import ResultNote, Diagram
 from gui.setting import VERSION
 from core.sketch.sketch import Sketch
+from core.sketch.dxf import DxfDrawing
 from .report import calc_report, analysis_report, diagram_data, settings_report
 
 
@@ -20,7 +21,8 @@ class Result():
 
         self.files.bind('<<diagram-button-pressed>>', self.draw_diagram)
         self.files.bind('<<save-button-pressed>>', self.save_results)
-        self.files.bind('<<pdf-button-pressed>>', self.save_pdf)
+        self.files.bind('<<pdf-button-pressed>>', lambda *args: self.save_drawing('pdf'))
+        self.files.bind('<<dxf-button-pressed>>', lambda *args: self.save_drawing('dxf'))
         result_data['is_available'].trace_add('write', self.result_data_changed)
 
         # initialize
@@ -65,6 +67,7 @@ class Result():
         if data['calc_type'] == 'calculation':
             if 'data' in data['result_data']:
                 self.files.set_button_state('pdf', '!disabled')
+                self.files.set_button_state('dxf', '!disabled')
         elif data['calc_type'] == 'analysis':
             self.files.set_button_state('diagram', '!disabled')
         else:
@@ -124,28 +127,30 @@ class Result():
             lines.append(f'{tag}: {text}' if tag in ('WARNING', 'ERROR') and '\n' not in text else text)
         return '\n'.join(lines) + '\n'
 
-    def save_pdf(self, *args):
+    def save_drawing(self, kind: str):
+        """saves the calculation as a pdf sketch or a dxf detailing map"""
+        title, drawing = {'pdf': ('PDF Drawing', Sketch), 'dxf': ('DXF Drawing', DxfDrawing)}[kind]
         path = asksaveasfilename(
-            title='Save PDF Drawing',
-            initialfile=self._default_name() + '.pdf',
-            defaultextension='.pdf',
-            filetypes=[('PDF', '*.pdf')],
+            title=f'Save {title}',
+            initialfile=f'{self._default_name()}.{kind}',
+            defaultextension=f'.{kind}',
+            filetypes=[(kind.upper(), f'*.{kind}')],
         )
         if not path:
             return
         self.root.config(cursor='watch')
         self.root.update_idletasks()
         try:
-            Sketch(self.result_data['data']['result_data']['data']).save(path)
+            drawing(self.result_data['data']['result_data']['data']).save(path)
         except Exception as e:
-            # e.g. the file is open in a pdf viewer; cairo raises its own error types
-            showerror('PDF Drawing', f'The drawing could not be saved.\n\n{e}')
+            # e.g. the file is open in another program; cairo and ezdxf raise their own error types
+            showerror(title, f'The drawing could not be saved.\n\n{e}')
             return
         finally:
             self.root.config(cursor='')
-        showinfo('PDF Drawing', f'Saved:\n{path}')
+        showinfo(title, f'Saved:\n{path}')
 
     def __refresh(self):
         self.log.clear()
-        for name in ('save', 'pdf', 'diagram'):
+        for name in ('save', 'pdf', 'dxf', 'diagram'):
             self.files.set_button_state(name, 'disabled')

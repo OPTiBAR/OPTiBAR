@@ -81,6 +81,7 @@ class Calc():
             return
 
         calc_type = self.calc_type.get_value()
+        config = self.setting.get_values()
         self.result_data['is_available'].set(False)
         self.result_data['data'] = None
 
@@ -93,6 +94,8 @@ class Calc():
             self.request_frame.set_status('Finished')
             self.result_data['data'] = {
                 'calc_type': calc_type,
+                'config': config,
+                'input_file': self.project_data['data']['file_path'],
                 'result_data': result,
             }
             showinfo('Calculation', 'Calculated successfully. Go to the 3. Results tab to observe the results.')
@@ -111,7 +114,7 @@ class Calc():
             self.request_frame,
             calc_type,
             self.project_data['data']['input_data'],
-            self.setting.get_values(),
+            config,
             on_progress=on_progress,
             on_done=on_done,
             on_error=on_error,

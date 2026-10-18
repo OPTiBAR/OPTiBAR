@@ -92,5 +92,5 @@ class FileBrowser(ttk.Frame):
             ('Access File', '*.accdb'),
             ('Access File', '*.mdb'),
         ]
-        file_path = askopenfilename(filetypes = file_extentions, defaultextension = file_extentions)
+        file_path = askopenfilename(filetypes = file_extentions, defaultextension = ".accdb")
         self.path_var.set(file_path)

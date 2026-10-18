@@ -14,6 +14,10 @@ class FileFrame(ttk.LabelFrame):
         ttk.LabelFrame.__init__(self, parent, text='Files')
 
         # widgets
+        self.save_button = ttk.Button(self, text='Save Results', command=lambda: self.event_generate("<<save-button-pressed>>"))
+        self.pdf_button = ttk.Button(self, text='PDF Drawing', command=lambda: self.event_generate("<<pdf-button-pressed>>"))
+        separator = ttk.Separator(self, orient=tk.VERTICAL)
+
         dgr_img = Image.open(IMAGES_PATH.joinpath('diagram.png')).convert("RGBA").resize((35,35))
         self.dgr_image = ImageTk.PhotoImage(dgr_img)
         self.diagram_button = ttk.Button(self, text='Diagram', image=self.dgr_image, command=lambda: self.event_generate("<<diagram-button-pressed>>"), compound="left")
@@ -24,30 +28,36 @@ class FileFrame(ttk.LabelFrame):
         additional_radio = ttk.Radiobutton(self, text='Additional', variable=self.diagram_type_var, value='additional')
 
         # geometry
-        self.diagram_button.grid(rowspan=2, row=0, column=0)
-        total_radio.grid(row=0, column=1,sticky='nsw')
-        additional_radio.grid(row=1, column=1,sticky='nsw')
+        self.save_button.grid(rowspan=2, row=0, column=0)
+        self.pdf_button.grid(rowspan=2, row=0, column=1)
+        separator.grid(rowspan=2, row=0, column=2, sticky='ns')
+        self.diagram_button.grid(rowspan=2, row=0, column=3)
+        total_radio.grid(row=0, column=4,sticky='nsw')
+        additional_radio.grid(row=1, column=4,sticky='nsw')
 
-        self.columnconfigure(0, weight=1)
-        self.columnconfigure(1, weight=1)
+        for i in range(5):
+            self.columnconfigure(i, weight=1)
         for child in self.winfo_children():
             child.grid_configure(padx=10, pady=10)
 
     def get_diagram_type(self):
         return self.diagram_type_var.get()
 
-    def set_diagram_button_state(self, state: str):
-        """toggles the state of the diagram botton
+    def set_button_state(self, name: str, state: str):
+        """toggles the state of a button
 
         Args:
+            name (str): should be save, pdf or diagram
             state (str): should be disabled or !disabled
 
         Raises:
-            Exception: raises if the input value is not appropriate.
+            ValueError: raises if the input value is not appropriate.
         """
+        if name not in ('save', 'pdf', 'diagram'):
+            raise ValueError("button name should be save, pdf or diagram")
         if state not in ('disabled', '!disabled'):
             raise ValueError("state value should be disabled or !disabled")
-        self.diagram_button.state([state])
+        getattr(self, name + '_button').state([state])
 
 class Diagram():
     def __init__(self, root) -> None:

@@ -46,6 +46,11 @@ class LogWindow(ttk.LabelFrame):
     def write_warning(self, data_str: str, indent:int = 0) -> None:
         self._write(data_str, 'WARNING', indent)
 
+    def write_lines(self, lines: List) -> None:
+        """writes (tag, text) pairs, tag being one of SUCCESS, INFO, WARNING, ERROR"""
+        for tag, data_str in lines:
+            self._write(data_str, tag, 0)
+
     def _write(self, data_str: str, tag:str, indent: int):
         self.text['state'] = 'normal'
         info_str = indent * INDENT * ' ' + data_str

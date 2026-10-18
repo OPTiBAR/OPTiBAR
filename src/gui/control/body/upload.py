@@ -1,9 +1,9 @@
-import tkinter as tk
-from tkinter.messagebox import showerror, showinfo
+import webbrowser
+from tkinter.messagebox import showerror, showinfo, askyesno
 from typing import Dict
 from gui.view.body.upload import UploadNote
-from core.parser.parse import V16Parser
-from core.parser.errors import TableMissingError
+from core.parser.parse import V16Parser, has_access_driver
+from core.parser.errors import TableMissingError, DriverMissingError
 
 
 class Upload():
@@ -18,6 +18,12 @@ class Upload():
         self.path_var.set('')
         self.browser.bind('<<load-button-pressed>>', self.load_file)
 
+        # access files can't be read without the ODBC driver, say so before the user tries
+        if not has_access_driver():
+            error = DriverMissingError()
+            self.log.write_error(error.message)
+            self.log.write_info('Download: ' + error.url)
+
 
     def path_var_changed(self, *args):
         if self.path_var.get() == '':
@@ -31,12 +37,20 @@ class Upload():
         self.log.clear()
         self.browser.set_status('Parsing Database File')
         self.browser.update_idletasks()
+        file_path = self.path_var.get()
         parser = None
         try:
-            parser = V16Parser(self.path_var.get())
+            parser = V16Parser(file_path)
             input_data = parser.get_foundation()
             concrete_set = parser.get_concrete_set()
             steel_set = parser.get_steel_set()
+        except DriverMissingError as e:
+            self.browser.set_status('Failed')
+            self.log.write_error(e.message)
+            self.log.write_info('Download: ' + e.url)
+            if askyesno('Access Driver Missing', e.message + '\n\nOpen the download page?'):
+                webbrowser.open(e.url)
+            return
         except TableMissingError as e:
             self.browser.set_status('Failed')
             self.log.write_error(e.message)
@@ -61,6 +75,7 @@ class Upload():
 
         # update project_data
         self.project_data['data'] = {
+            'file_path': file_path,
             'input_data': input_data,
             'strip_names': [strip['name'] for strip in input_data['strips']],
             'materials': {'fc': next(iter(concrete_set)), 'fy': next(iter(steel_set))},

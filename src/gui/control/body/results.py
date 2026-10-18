@@ -1,7 +1,14 @@
+import json
 import tkinter as tk
+from datetime import datetime
+from pathlib import Path
+from tkinter.filedialog import asksaveasfilename
+from tkinter.messagebox import showinfo, showerror
 from typing import Dict
 from gui.view.body.results import ResultNote, Diagram
-import texttable
+from gui.setting import VERSION
+from core.sketch.sketch import Sketch
+from .report import calc_report, analysis_report, diagram_data, settings_report
 
 
 class Result():
@@ -12,6 +19,8 @@ class Result():
         self.log = result_note.log
 
         self.files.bind('<<diagram-button-pressed>>', self.draw_diagram)
+        self.files.bind('<<save-button-pressed>>', self.save_results)
+        self.files.bind('<<pdf-button-pressed>>', self.save_pdf)
         result_data['is_available'].trace_add('write', self.result_data_changed)
 
         # initialize
@@ -20,7 +29,7 @@ class Result():
     def draw_diagram(self, *args):
         diagram_type = self.files.get_diagram_type()
         diagram = Diagram(self.root)
-        data = self.get_diagram_data()
+        data = diagram_data(self.result_data['data']['result_data'])
         mass_dict = {}
         for stack_num in sorted(data.keys()):
             mass_dict[stack_num] = {
@@ -49,127 +58,94 @@ class Result():
     def result_data_changed(self, *args):
         if self.result_data['is_available'].get() == False:
             self.__refresh()
-        else:
-            if self.result_data['data']['calc_type'] == 'calculation':
-                self.write_calc_log()
-            elif self.result_data['data']['calc_type'] == 'analysis':
-                self.files.set_diagram_button_state('!disabled')
-                self.write_analysis_log()
-            else:
-                raise ValueError('type of result is not valid')
-
-    def write_calc_log(self):
-        output = self.result_data['data']['result_data']
-        log = self.log
-
-        if 'errors' in output:
-            log.write_error(f"The minimum feasible total number of length types is {output['errors']['min_feasible_num']}")
             return
+        data = self.result_data['data']
+        self.files.set_button_state('save', '!disabled')
+        self.log.write_lines(self._report())
+        if data['calc_type'] == 'calculation':
+            if 'data' in data['result_data']:
+                self.files.set_button_state('pdf', '!disabled')
+        elif data['calc_type'] == 'analysis':
+            self.files.set_button_state('diagram', '!disabled')
+        else:
+            raise ValueError('type of result is not valid')
 
-        # mass summary
-        log.write_info('Mass Summary', indent=0)
-        rebar = output['data']['summary']['rebar']
-        table = texttable.Texttable(max_width=0) # auto adjustable width
-        table.add_rows([
-            ["Type of Rebars", "Top(ton)", "Bottom(ton)", "Total(ton)"],
-            ["Typical", rebar['typical']['top'], rebar['typical']['bottom'], rebar['typical']['top'] + rebar['typical']['bottom']],
-            ["Thermal", rebar['thermal']['top'], rebar['thermal']['bottom'], rebar['thermal']['top'] + rebar['thermal']['bottom']],
-            ["Additional", rebar['additional']['top'], rebar['additional']['bottom'], rebar['additional']['top'] + rebar['additional']['bottom']],
-            ["Shear", '-', '-', rebar['shear']],
-            [
-                "Total",
-                rebar['typical']['top'] + rebar['thermal']['top'] + rebar['additional']['top'],
-                rebar['typical']['bottom'] + rebar['thermal']['bottom'] + rebar['additional']['bottom'],
-                rebar['typical']['top'] + rebar['typical']['bottom'] + rebar['thermal']['top'] + rebar['thermal']['bottom'] + rebar['additional']['top'] + rebar['additional']['bottom'] + rebar['shear'],
-            ]
-        ])
-        log.write_info(table.draw() + '\n')
+    def _report(self):
+        data = self.result_data['data']
+        if data['calc_type'] == 'calculation':
+            return calc_report(data['result_data'])
+        return analysis_report(data['result_data'])
 
-        # warnings
-        if 'warnings' in output:
-            warning_data = output['warnings']
-            if 'min_gap' in warning_data:
-                log.write_warning("Min Gap Warning")
-                table = texttable.Texttable(max_width=0) # auto adjustable width
-                data = [['#', 'Strip', 'Elevation', 'Gap(cm)', 'Min Gap(cm)']]
-                for i,mesh_data in enumerate(warning_data['min_gap']):
-                    data.append([i+1, mesh_data['strip_name'], mesh_data['level'], "{:.1f}".format(mesh_data['detail']['gap']*100), "{:.1f}".format(mesh_data['detail']['min_gap']*100)])
-                table.add_rows(data)
-                log.write_warning(table.draw() + '\n')
-            if 'min_ratio' in warning_data:
-                log.write_warning("Ratio Warning (0.0018)")
-                table = texttable.Texttable(max_width=0) # auto adjustable width
-                data = [['#', 'Strip', 'Elevation', 'Number', 'Min number']]
-                for i,mesh_data in enumerate(warning_data['min_ratio']):
-                    data.append([i+1, mesh_data['strip_name'], mesh_data['level'], mesh_data['detail']['num'], mesh_data['detail']['min_num']])
-                table.add_rows(data)
-                log.write_warning(table.draw() + '\n')
-            if 'max_gap' in warning_data:
-                log.write_warning("Max Gap Warning")
-                table = texttable.Texttable(max_width=0) # auto adjustable width
-                data = [['#', 'Strip', 'Elevation', 'Gap', 'Max Gap']]
-                for i,mesh_data in enumerate(warning_data['max_gap']):
-                    data.append([i+1, mesh_data['strip_name'], mesh_data['level'], mesh_data['detail']['gap'], mesh_data['detail']['max_gap']])
-                table.add_rows(data)
-                log.write_warning(table.draw() + '\n')
-            if 'excess_stack' in warning_data:
-                log.write_warning("Excess Stack number")
-                table = texttable.Texttable(max_width=0) # auto adjustable width
-                data = [['#', 'Strip', 'Elevation', 'Excess List']]
-                for i,mesh_data in enumerate(warning_data['excess_stack']):
-                    data.append([i+1, mesh_data['strip_name'], mesh_data['level'], ', '.join(map(str,mesh_data['excess_list']))])
-                table.add_rows(data)
-                log.write_warning(table.draw() + '\n')
+    def _default_name(self) -> str:
+        input_file = self.result_data['data'].get('input_file')
+        stem = Path(input_file).stem if input_file else 'optibar'
+        return f"{stem}_{self.result_data['data']['calc_type']}"
 
-    def write_analysis_log(self):
-        log = self.log
-        log.write_info("Mass Report")
-        data = self.get_diagram_data()
-        rows = [["#", 'stack', 'total', 'Thermal(ton)', 'Typical(ton)', 'Additional(ton)', 'Total(ton)'],]
-        i = 1
-        for stack_num in sorted(data.keys()):
-            for total_num in sorted(data[stack_num].keys()):
-                rows.append([
-                    i,
-                    stack_num,
-                    total_num,
-                    data[stack_num][total_num]['thermal'],
-                    data[stack_num][total_num]['typical'],
-                    data[stack_num][total_num]['additional'],
-                    data[stack_num][total_num]['thermal']+data[stack_num][total_num]['typical']+data[stack_num][total_num]['additional'],
-                ])
-                i += 1
-        table = texttable.Texttable(max_width=0)
-        table.add_rows(rows)
-        log.write_info(table.draw())
+    def save_results(self, *args):
+        """saves the full result as json and a readable summary next to it (<name>_summary.txt)"""
+        path = asksaveasfilename(
+            title='Save Results',
+            initialfile=self._default_name() + '.json',
+            defaultextension='.json',
+            filetypes=[('JSON', '*.json')],
+        )
+        if not path:
+            return
+        path = Path(path)
+        data = self.result_data['data']
+        summary_path = path.with_name(path.stem + '_summary.txt')
+        try:
+            with open(path, 'w', encoding='utf-8') as f:
+                json.dump({
+                    'optibar_version': VERSION,
+                    'created': datetime.now().isoformat(timespec='seconds'),
+                    'input_file': data.get('input_file'),
+                    'calc_type': data['calc_type'],
+                    'config': data.get('config'),
+                    'result': data['result_data'],
+                }, f, indent=2)
+            with open(summary_path, 'w', encoding='utf-8') as f:
+                f.write(self._summary_text())
+        except OSError as e:
+            showerror('Save Results', f'The results could not be saved.\n\n{e}')
+            return
+        showinfo('Save Results', f'Saved:\n{path}\n{summary_path}')
 
-    def get_diagram_data(self) -> Dict:
-        """returns data needed to plot analysis data
+    def _summary_text(self) -> str:
+        data = self.result_data['data']
+        lines = [
+            f"OPTiBAR {VERSION} {data['calc_type']} results",
+            f"Created: {datetime.now().isoformat(sep=' ', timespec='seconds')}",
+            f"Input file: {data.get('input_file') or '-'}",
+            '',
+        ]
+        report = (settings_report(data['config']) if data.get('config') else []) + self._report()
+        for tag, text in report:
+            lines.append(f'{tag}: {text}' if tag in ('WARNING', 'ERROR') and '\n' not in text else text)
+        return '\n'.join(lines) + '\n'
 
-        Returns:
-            Dict: data needed to plot analysis results
-        """
-        output = {}
-        results = self.result_data['data']['result_data']
-        for r in results:
-            if r != {}:
-                stack_num = r['technical_spec']['length_type']['stack']
-                total_num = r['technical_spec']['length_type']['total']
-                rebar = r['summary']['rebar']
-                additional = rebar['additional']['top'] + rebar['additional']['bottom']
-                typical = rebar['typical']['top'] + rebar['typical']['bottom']
-                thermal = rebar['thermal']['top'] + rebar['thermal']['bottom']
-                data = {
-                    'additional': additional,
-                    'typical': typical,
-                    'thermal': thermal
-                }
-                if stack_num not in output:
-                    output[stack_num] = {}
-                output[stack_num][total_num] = data
-
-        return output
+    def save_pdf(self, *args):
+        path = asksaveasfilename(
+            title='Save PDF Drawing',
+            initialfile=self._default_name() + '.pdf',
+            defaultextension='.pdf',
+            filetypes=[('PDF', '*.pdf')],
+        )
+        if not path:
+            return
+        self.root.config(cursor='watch')
+        self.root.update_idletasks()
+        try:
+            Sketch(self.result_data['data']['result_data']['data']).save(path)
+        except Exception as e:
+            # e.g. the file is open in a pdf viewer; cairo raises its own error types
+            showerror('PDF Drawing', f'The drawing could not be saved.\n\n{e}')
+            return
+        finally:
+            self.root.config(cursor='')
+        showinfo('PDF Drawing', f'Saved:\n{path}')
 
     def __refresh(self):
         self.log.clear()
-        self.files.set_diagram_button_state('disabled')
+        for name in ('save', 'pdf', 'diagram'):
+            self.files.set_button_state(name, 'disabled')

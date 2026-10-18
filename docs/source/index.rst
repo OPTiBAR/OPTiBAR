@@ -13,5 +13,5 @@ The detailing process is highly automated but it is also possible to manually ad
    :maxdepth: 2
    :caption: Contents:
 
-   dev/index
-   user/index
+   tutorial/index
+   explanation/index

@@ -13,7 +13,16 @@ author = 'Sina Hajikazemi, Amir Salar'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = [
+    "myst_parser",
+    "sphinxcontrib.mermaid",
+    "sphinx_proof",
+]
+
+myst_enable_extensions = [
+    "amsmath",
+    "dollarmath",
+]
 
 templates_path = ['_templates']
 exclude_patterns = []

@@ -4,22 +4,39 @@ from pprint import pprint
 from typing import Dict, Union, List, Tuple, Set
 import pyodbc
 import os
-from .errors import TableMissingError, MultipleMaterialError
+from .errors import TableMissingError, MultipleMaterialError, DriverMissingError
+
+ACCESS_DRIVER = 'Microsoft Access Driver (*.mdb, *.accdb)'
+
+
+def has_access_driver() -> bool:
+    """whether the ODBC driver needed to read SAFE access files is installed"""
+    return ACCESS_DRIVER in pyodbc.drivers()
 
 
 class V16Parser():
     def __init__(self, file_path: str) -> None:
+        if not has_access_driver():
+            raise DriverMissingError()
         if not os.path.isfile(file_path):
             raise IOError("database file is not available")
         # if not file_path.endswith('.accdb'):
         #     raise IOError('file format is not accdb')
-        self.conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=' +
+        self.conn = pyodbc.connect('Driver={' + ACCESS_DRIVER + '};DBQ=' +
             file_path  + ';')
         self.cursor = self.conn.cursor()
     
+    def close(self) -> None:
+        # safe to call twice, and after __init__ failed before connecting
+        if getattr(self, 'cursor', None) is not None:
+            self.cursor.close()
+            self.cursor = None
+        if getattr(self, 'conn', None) is not None:
+            self.conn.close()
+            self.conn = None
+
     def __del__(self):
-        self.cursor.close()
-        self.conn.close()
+        self.close()
         
     
     @lru_cache
@@ -557,8 +574,10 @@ class V16Parser():
         return output
     
     def get_foundation(self) -> Dict:
-        output = self._foundation = self._get_foundation()
-        return output
+        # parsed once, so the material and cover checks below can be called in any order
+        if getattr(self, '_foundation', None) is None:
+            self._foundation = self._get_foundation()
+        return self._foundation
 
     def get_steel_volume(self) -> float:
         """total flexural steel volumn in cubic meter
@@ -583,7 +602,7 @@ class V16Parser():
 
     def get_steel_set(self) -> Set[float]:
         """returns used fy"""
-        return set([strip["fy"] for strip in self._foundation["strips"]])
+        return set([strip["fy"] for strip in self.get_foundation()["strips"]])
 
     def get_concrete_set(self) -> bool:
         """does it use multiple concrete material
@@ -592,7 +611,7 @@ class V16Parser():
             bool: true of uses multiple concrete material
         """
         fc = []
-        for area in self._foundation["areas"]:
+        for area in self.get_foundation()["areas"]:
             if not area['is_opening']:
                 fc.append(area["prop"]["fc"])
         return set(fc)
@@ -605,7 +624,7 @@ class V16Parser():
         """
         top = []
         bottom = []
-        for strip in self._foundation["strips"]:
+        for strip in self.get_foundation()["strips"]:
             top.append(strip["geometry"]["covers"]["top"])
             bottom.append(strip["geometry"]["covers"]["bottom"])
         return {

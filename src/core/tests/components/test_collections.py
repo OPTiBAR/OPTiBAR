@@ -1,7 +1,7 @@
 import pytest
-from optibar_core.src.components.collections import Stack, Bunch, Container
-from optibar_core.src.components.piece import Piece
-from optibar_core.src.components.diagram import Diagram
+from core.components.collections import Stack, Bunch, Container
+from core.components.piece import Piece
+from core.components.diagram import Diagram
 
 @pytest.fixture
 def stack(short_piece, medium_piece, long_piece):
@@ -64,8 +64,8 @@ class TestContainer():
             periods = diagram.insert_additional(1)
             row = [Piece(rebar,period) for period in periods]
             for piece in row:
+                piece.required = piece.theoretical
                 piece.practical = piece.theoretical
-                piece.executive = piece.theoretical
             container.add_row(row)
             rows.append(row)
             # print(diagram.is_positive())
@@ -79,7 +79,7 @@ class TestContainer():
         assert len(list(container.get_pieces())) == 11
         
     def test_get_stacks(self, container):
-        stacks = container.get_stacks("executive")
+        stacks = container.get_stacks("practical")
         assert len(stacks) == 3
         assert len(stacks[2].get_pieces()) == 3 and stacks[2].peak_station == 0
         assert len(stacks[0].get_pieces()) == 5 and stacks[0].peak_station == 4

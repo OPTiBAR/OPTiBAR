@@ -1,108 +1,84 @@
-import tkinter as tk
-from tkinter.messagebox import showerror, showinfo
+import webbrowser
+from tkinter.messagebox import showerror, showinfo, askyesno
 from typing import Dict
-from src.view.utils.router import Router
-from ..utils.threading import tr_request, Monitor
-import requests
-from ..utils.urls import connection_error, get_header, get_url
-from src.control.parser.parse import V16Parser
-from src.control.parser.errors import TableMissingError
+from gui.view.body.upload import UploadNote
+from core.parser.parse import V16Parser, has_access_driver
+from core.parser.errors import TableMissingError, DriverMissingError
 
 
 class Upload():
-    def __init__(self, root: Router, token_var: tk.StringVar, project_data: Dict) -> None:
-        self.token_var = token_var
+    def __init__(self, upload_note: UploadNote, project_data: Dict) -> None:
         self.project_data = project_data
-        self.root = root
-        self.upload_note = root.get_child('notebook').get_child('upload')
-        self.browser = self.upload_note.get_child('browser')
-        self.log = self.upload_note.get_child('log')
+        self.browser = upload_note.browser
+        self.log = upload_note.log
         self.path_var = self.browser.path_var
-        self.monitor = Monitor(root)
-        
+
         # add trace and bind and initialize
         self.path_var.trace_add('write', self.path_var_changed)
         self.path_var.set('')
-        self.browser.bind('<<upload-button-pressed>>', self.upload_file)
-    
+        self.browser.bind('<<load-button-pressed>>', self.load_file)
+
+        # access files can't be read without the ODBC driver, say so before the user tries
+        if not has_access_driver():
+            error = DriverMissingError()
+            self.log.write_error(error.message)
+            self.log.write_info('Download: ' + error.url)
+
 
     def path_var_changed(self, *args):
         if self.path_var.get() == '':
-            self.browser.set_upload_button_state('disabled')
+            self.browser.set_load_button_state('disabled')
             self.browser.set_status('')
         else:
-            self.browser.set_upload_button_state('!disabled')
+            self.browser.set_load_button_state('!disabled')
             self.browser.set_status('Idle')
-    
-    def upload_file(self, *args):
-        def set_buttons_state(state):
-            self.browser.set_upload_button_state(state)
-            self.browser.set_browse_button_state(state)
 
-        def handle_upload(response: requests.Response):
-            set_buttons_state('!disabled')
-            if response is not None:
-                if  response.status_code in (200, 201):
-                    self.browser.set_status('Done')
-                    # update project_data
-                    project_data = self.project_data
-                    project_data['data'] = {
-                        'project_id' : response.json()['id'],
-                        'strip_names' : list(map(lambda strip: strip['name'], input_data['strips'])),
-                        'materials': {'fc':list(parser.get_concrete_set())[0], 'fy':list(parser.get_steel_set())[0]},
-                    }
-                    project_data['is_available'].set(True)
-
-                    # log
-                    self.log.write_success('File Uploaded Successfully.')
-                    showinfo('Upload', 'Project Uploaded successfuly. go to the 2. Calculation tab to perform the calculation.')
-                elif response.status_code == 401:
-                    self.browser.set_status('Upload Failed')
-                    showerror('Login Required', 'Please Login before uploading the project.')
-                elif response.status_code == 403:
-                    showerror('Service Level', response.json()['detail'])
-                else:
-                    raise ValueError(f'unhandled status code {response.status_code}')
-            else:
-                self.browser.set_status('Upload Failed')
-                connection_error()
-        
+    def load_file(self, *args):
         self.log.clear()
-        set_buttons_state('disabled')
         self.browser.set_status('Parsing Database File')
-        input_data = None
+        self.browser.update_idletasks()
+        file_path = self.path_var.get()
+        parser = None
         try:
-            parser = V16Parser(self.path_var.get())
+            parser = V16Parser(file_path)
             input_data = parser.get_foundation()
-            self.log.write_success('File Parsed Successfully.')
-            if len(parser.get_concrete_set()) > 1:
-                self.log.write_warning("You are using more than one concrete material. The output may not be reliable.")
-            if len(parser.get_steel_set()) > 1:
-                self.log.write_warning("You are using more than one steel material. The output may not be reliable.")
+            concrete_set = parser.get_concrete_set()
+            steel_set = parser.get_steel_set()
+        except DriverMissingError as e:
+            self.browser.set_status('Failed')
+            self.log.write_error(e.message)
+            self.log.write_info('Download: ' + e.url)
+            if askyesno('Access Driver Missing', e.message + '\n\nOpen the download page?'):
+                webbrowser.open(e.url)
+            return
         except TableMissingError as e:
+            self.browser.set_status('Failed')
             self.log.write_error(e.message)
             showerror('Missing Table', e.message)
-        except Exception as e:
-            self.log.write_error('There is some unknown error in parsing the access file. please contact the technical team.')
-            showerror('Unknown Error', 'There is some unknown error in parsing the access file. please contact the technical team.')
+            return
+        except Exception:
+            self.browser.set_status('Failed')
+            message = 'There is some unknown error in parsing the access file.'
+            self.log.write_error(message)
+            showerror('Unknown Error', message)
+            return
         finally:
-            parser.__del__()
+            if parser is not None:
+                parser.close()
 
-        if input_data is None:
-            set_buttons_state('!disabled')
-        else:
-            self.browser.set_status('Uploading')
-            thread = tr_request(method='post', url=get_url('projects'), json={'input_data':input_data}, headers=get_header(self.token_var))
-            self.monitor.run(thread, handle_upload)
+        self.log.write_success('File Parsed Successfully.')
+        if len(concrete_set) > 1:
+            self.log.write_warning("You are using more than one concrete material. The output may not be reliable.")
+        if len(steel_set) > 1:
+            self.log.write_warning("You are using more than one steel material. The output may not be reliable.")
+        self.browser.set_status('Done')
 
-        
-        
-        
-
-
-    
-
-
-
-
-
+        # update project_data
+        self.project_data['data'] = {
+            'file_path': file_path,
+            'input_data': input_data,
+            'strip_names': [strip['name'] for strip in input_data['strips']],
+            'materials': {'fc': next(iter(concrete_set)), 'fy': next(iter(steel_set))},
+        }
+        self.project_data['is_available'].set(True)
+        showinfo('Input File', 'Project loaded successfully. Go to the 2. Calculation tab to perform the calculation.')

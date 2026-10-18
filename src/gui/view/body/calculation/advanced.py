@@ -1,19 +1,15 @@
-from src.view.body.table import Excel
-from src.view.utils.router import Router
+from gui.view.body.table import Excel
 import tkinter as tk
 from tkinter import ttk
-from src.view.utils.common import IntEntry
+from gui.view.utils.common import IntEntry
 from typing import List, Dict
-from src.setting import REBAR_LIST
+from gui.setting import REBAR_LIST
 
-class Setting(ttk.Frame, Router):
+class Setting(ttk.Frame):
     def __init__(self, parent):
         ttk.Frame.__init__(self, parent)
-        Router.__init__(self, 'advanced')
         self.special_length = SpecialLength(self)
         self.typical = Typical(self)
-        self.add_child(self.special_length)
-        self.add_child(self.typical)
         self.special_length.grid(row=0, column=0, padx=10, pady=10, sticky='nswe')
         self.typical.grid(row=0, column=1, padx=10, pady=10, sticky='nswe')
 
@@ -27,10 +23,9 @@ class Setting(ttk.Frame, Router):
             'exceptions': self.typical.get_values()
         }
 
-class Typical(ttk.LabelFrame, Router):
+class Typical(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Typical Arrangement')
-        Router.__init__(self, 'typical')
         
         self.table = Excel(self)
         
@@ -60,10 +55,9 @@ class Typical(ttk.LabelFrame, Router):
         return exceptions
 
 
-class SpecialLength(ttk.LabelFrame, Router):
+class SpecialLength(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Special Lengths')
-        Router.__init__(self, 'special-lengths')
         column_names = (
             'Bottom',
             'Top',

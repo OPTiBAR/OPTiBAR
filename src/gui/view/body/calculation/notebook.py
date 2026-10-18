@@ -1,15 +1,13 @@
 import tkinter as tk
 from tkinter import ttk
-from src.view.body.tooltip import CreateToolTip
-from src.view.utils.router import Router
+from gui.view.body.tooltip import CreateToolTip
 from .basic import Setting as BasicSetting
 from .advanced import Setting as AdvancedSetting
 
 
-class CalcType(ttk.LabelFrame, Router):
+class CalcType(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Type of Request')
-        Router.__init__(self, 'type')
         # variable and widget
         self.type_var = tk.StringVar()
         self.type_var.set('calculation')
@@ -32,17 +30,13 @@ class CalcType(ttk.LabelFrame, Router):
     
 
 
-class Setting(ttk.Notebook, Router):
+class Setting(ttk.Notebook):
     def __init__(self, parent):
         ttk.Notebook.__init__(self, parent)
-        Router.__init__(self, 'setting')
         basic = BasicSetting(self)
         self.basic = basic
         advanced = AdvancedSetting(self)
         self.advanced = advanced
-
-        self.add_child(basic)
-        self.add_child(advanced)
 
         basic.grid(sticky='nswe')
         advanced.grid(sticky='nswe')
@@ -61,10 +55,9 @@ class Setting(ttk.Notebook, Router):
         basic['special_lengths'] = advanced['special_lengths']
         return basic
 
-class CalcRequest(ttk.LabelFrame, Router):
+class CalcRequest(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Request')
-        Router.__init__(self, 'request')
         
         #variables
         self.button_var = tk.StringVar()
@@ -117,23 +110,18 @@ class CalcRequest(ttk.LabelFrame, Router):
         self.event_generate('<<calc-pressed>>')
 
 
-class CalcNote(ttk.Frame, Router):
+class CalcNote(ttk.Frame):
     def __init__(self, parent):
         ttk.Frame.__init__(self, parent)
-        Router.__init__(self, 'calc')
         
-        calc_type = CalcType(self)
-        setting = Setting(self)
-        request = CalcRequest(self)
-        
-        self.add_child(calc_type)
-        self.add_child(setting)
-        self.add_child(request)
+        self.calc_type = CalcType(self)
+        self.setting = Setting(self)
+        self.request = CalcRequest(self)
 
         # geometry
-        calc_type.grid(row=0, column=0, sticky='news', padx=20, pady=10)
-        setting.grid(row=1, column=0, sticky='news', padx=20, pady=10)
-        request.grid(row=2, column=0, sticky='news', padx=20, pady=10)
+        self.calc_type.grid(row=0, column=0, sticky='news', padx=20, pady=10)
+        self.setting.grid(row=1, column=0, sticky='news', padx=20, pady=10)
+        self.request.grid(row=2, column=0, sticky='news', padx=20, pady=10)
         self.columnconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
 

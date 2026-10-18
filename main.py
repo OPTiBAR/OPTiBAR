@@ -1,5 +1,4 @@
-def main():
-    print("Hello from optibar!")
+from gui.app import main
 
 
 if __name__ == "__main__":

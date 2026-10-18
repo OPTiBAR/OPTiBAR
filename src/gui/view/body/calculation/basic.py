@@ -1,15 +1,13 @@
-from src.view.body.tooltip import CreateToolTip
-from src.view.utils.router import Router
+from gui.view.body.tooltip import CreateToolTip
 import tkinter as tk
 from tkinter import ttk
-from src.view.utils.common import IntCombo, IntEntry
-from src.setting import REBAR_LIST
+from gui.view.utils.common import IntCombo, IntEntry
+from gui.setting import REBAR_LIST
 from typing import Dict, List, Tuple
 
-class Typical(ttk.LabelFrame, Router):
+class Typical(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Typical Arrangement')
-        Router.__init__(self, 'typical')
 
         # widgets
         entry_label = ttk.Label(self, text='Interval(cm)'+ u' \u24BE')
@@ -31,17 +29,15 @@ class Typical(ttk.LabelFrame, Router):
             "value": self.entry.get_value()/100,
         }
 
-class Setting(ttk.Frame, Router):
+class Setting(ttk.Frame):
     def __init__(self, parent):
         ttk.Frame.__init__(self, parent)
-        Router.__init__(self, 'basic')
         self.diameter = Diameter(self)
         self.type_num_calc = TypeNumCalc(self)
         self.type_num_analysis = TypeNumAnalysis(self)
         self.elimination = Elimination(self)
         self.typical = Typical(self)
         self.cover = Cover(self)
-        self.add_child(self.typical)
 
         # geometry
         self.diameter.grid(row=0, column=0, rowspan=3, sticky='nwes',padx=(20,10), pady=10)
@@ -118,10 +114,9 @@ class Elimination(ttk.LabelFrame):
         }
 
 
-class Cover(ttk.LabelFrame, Router):
+class Cover(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Cover')
-        Router.__init__(self, 'cover')
         entry = IntEntry(self, 20)
         self.entry = entry
         label = ttk.Label(self, text='Side Cover(cm)' + u' \u24BE')
@@ -236,11 +231,11 @@ class TypeNumCalc(ttk.LabelFrame):
 
 class TypeNumAnalysis(ttk.LabelFrame):
     class Range(ttk.LabelFrame):
-        def __init__(self, parent, title: str, allowable_diff: int, allowable_range: List[int], initial_values: Tuple[int,int]):
+        def __init__(self, parent, title: str, max_diff: int, value_range: List[int], initial_values: Tuple[int,int]):
             super().__init__(parent, text=title)
-            self.allowable_diff = allowable_diff
-            self.combo_from = IntCombo(self, allowable_range)
-            self.combo_to = IntCombo(self, allowable_range)
+            self.max_diff = max_diff
+            self.combo_from = IntCombo(self, value_range)
+            self.combo_to = IntCombo(self, value_range)
             self.combo_from.set_value(initial_values[0])
             self.combo_to.set_value(initial_values[1])
             self.combo_from.bind('<<ComboboxSelected>>', self.from_fun)
@@ -264,14 +259,14 @@ class TypeNumAnalysis(ttk.LabelFrame):
         def from_fun(self, e):
             if self.combo_from.get_value() > self.combo_to.get_value():
                 self.combo_to.set_value(self.combo_from.get_value())
-            if self.combo_from.get_value() < self.combo_to.get_value() - self.allowable_diff:
-                self.combo_to.set_value(self.combo_from.get_value() + self.allowable_diff)
+            if self.combo_from.get_value() < self.combo_to.get_value() - self.max_diff:
+                self.combo_to.set_value(self.combo_from.get_value() + self.max_diff)
 
         def to_fun(self, e):
             if self.combo_to.get_value() < self.combo_from.get_value():
                 self.combo_from.set_value(self.combo_to.get_value())
-            if self.combo_to.get_value() > self.combo_from.get_value() + self.allowable_diff:
-                self.combo_from.set_value(self.combo_to.get_value() - self.allowable_diff)
+            if self.combo_to.get_value() > self.combo_from.get_value() + self.max_diff:
+                self.combo_from.set_value(self.combo_to.get_value() - self.max_diff)
         def get_values(self):
             return {
                 'from': self.combo_from.get_value(),
@@ -281,8 +276,8 @@ class TypeNumAnalysis(ttk.LabelFrame):
     def __init__(self, parent):
         super().__init__(parent, text='Number of Types')
 
-        self.total_frame = self.Range(self, title = 'Total', allowable_diff=10, allowable_range= range(10,41), initial_values=(10,20))
-        self.stack_frame = self.Range(self, title = 'Stack', allowable_diff=2, allowable_range= range(1,6), initial_values=(2,4))
+        self.total_frame = self.Range(self, title = 'Total', max_diff=10, value_range= range(10,41), initial_values=(10,20))
+        self.stack_frame = self.Range(self, title = 'Stack', max_diff=2, value_range= range(1,6), initial_values=(2,4))
 
         self.shear_combo = IntCombo(self, range(1,6))
         self.shear_combo.set_value(4)

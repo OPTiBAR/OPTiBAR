@@ -1,6 +1,6 @@
 import pytest
-from optibar_core.src.components.piece import Piece,Bend
-from optibar_core.src.components.period import Period
+from core.components.piece import Piece,Bend
+from core.components.period import Period
 
 
 class TestStatic():
@@ -33,36 +33,36 @@ class TestStatic():
 class TestShortestPiece():
     def test_long_piece(self,long_piece):
         checks = (
-            3.3 == round(long_piece.get_shortest_piece_length("practical"),3),
-            4.3 == round(long_piece.get_shortest_piece_length("executive"),3)
+            3.3 == round(long_piece.get_shortest_piece_length("required"),3),
+            4.3 == round(long_piece.get_shortest_piece_length("practical"),3)
         )
         assert all(checks)
     
     def test_short_piece(self, short_piece):
         checks = (
-            4 == short_piece.get_shortest_piece_length("practical"),
-            5 == short_piece.get_shortest_piece_length("executive")
+            4 == short_piece.get_shortest_piece_length("required"),
+            5 == short_piece.get_shortest_piece_length("practical")
         )
         assert all(checks)
 
 class TestNumOfPieces():
     def test_short_piece(self, short_piece):
         checks = (
-            1 == short_piece.get_num_of_pieces("practical"),
-            1 == short_piece.get_num_of_pieces("executive")
+            1 == short_piece.get_num_of_pieces("required"),
+            1 == short_piece.get_num_of_pieces("practical")
         )
         assert all(checks)
 
     def test_medium_piece(self, medium_piece):
         checks = (
-            1 == medium_piece.get_num_of_pieces("practical"),
-            2 == medium_piece.get_num_of_pieces("executive")
+            1 == medium_piece.get_num_of_pieces("required"),
+            2 == medium_piece.get_num_of_pieces("practical")
         )
         assert all(checks)
     def test_long_piece(self, long_piece):
         checks = (
+            2 == long_piece.get_num_of_pieces("required"),
             2 == long_piece.get_num_of_pieces("practical"),
-            2 == long_piece.get_num_of_pieces("executive"),
         )
 
 class TestBend():
@@ -85,14 +85,14 @@ class TestEquality():
     def test_true(self, rebar, short_piece):
         theoretical =  Period(5,8)
         piece = Piece(rebar,theoretical)
-        piece.practical = Period(4.5,8.5)
-        piece.executive = Period(4,9)
+        piece.required = Period(4.5,8.5)
+        piece.practical = Period(4,9)
         assert piece == short_piece
     def test_bend_diff(self, rebar, short_piece):
         theoretical =  Period(5,8)
         piece = Piece(rebar,theoretical)
-        piece.practical = Period(4.5,8.5)
-        piece.executive = Period(4,9)
+        piece.required = Period(4.5,8.5)
+        piece.practical = Period(4,9)
         piece.bend.start = 1
         assert piece != short_piece
 
@@ -104,26 +104,26 @@ class TestSubpieces():
         # first piece
         theoretical =  Period(5,16)
         piece_1 = Piece(rebar,theoretical)
-        piece_1.practical = Period(4.5,16)
-        piece_1.executive = Period(4,16)
+        piece_1.required = Period(4.5,16)
+        piece_1.practical = Period(4,16)
         # second piece
         theoretical =  Period(14.7,16)
         piece_2 = Piece(rebar,theoretical)
-        piece_2.practical = Period(14.7,16.5)
-        piece_2.executive = Period(14.7,17)
+        piece_2.required = Period(14.7,16.5)
+        piece_2.practical = Period(14.7,17)
         assert medium_piece.get_subpieces() == [piece_1,piece_2]
 
     def test_long_piece(self, rebar, long_piece):
         # first piece
         theoretical =  Period(5,16)
         piece_1 = Piece(rebar,theoretical)
-        piece_1.practical = Period(4.5,16)
-        piece_1.executive = Period(4,16)
+        piece_1.required = Period(4.5,16)
+        piece_1.practical = Period(4,16)
         # second piece
         theoretical =  Period(14.7,18)
         piece_2 = Piece(rebar,theoretical)
-        piece_2.practical = Period(14.7,18.5)
-        piece_2.executive = Period(14.7,19)
+        piece_2.required = Period(14.7,18.5)
+        piece_2.practical = Period(14.7,19)
         assert long_piece.get_subpieces() == [piece_1,piece_2]
     
     def test_long_start_bended_piece(self, rebar, long_piece):
@@ -131,13 +131,13 @@ class TestSubpieces():
         # first piece
         theoretical =  Period(5,16)
         piece_1 = Piece(rebar,theoretical)
-        piece_1.practical = Period(4.5,16)
-        piece_1.executive = Period(4,16)
+        piece_1.required = Period(4.5,16)
+        piece_1.practical = Period(4,16)
         # second piece
         theoretical =  Period(14.7,18)
         piece_2 = Piece(rebar,theoretical)
-        piece_2.practical = Period(14.7,18.5)
-        piece_2.executive = Period(14.7,19)
+        piece_2.required = Period(14.7,18.5)
+        piece_2.practical = Period(14.7,19)
         piece_2.bend.end = long_piece.rebar.get_bend_length()
         assert long_piece.get_subpieces() == [piece_1,piece_2]
 
@@ -146,13 +146,13 @@ class TestSubpieces():
         # first piece
         theoretical =  Period(5,16)
         piece_1 = Piece(rebar,theoretical)
-        piece_1.practical = Period(4.5,16)
-        piece_1.executive = Period(4,16)
+        piece_1.required = Period(4.5,16)
+        piece_1.practical = Period(4,16)
         # second piece
         theoretical =  Period(14.7,18)
         piece_2 = Piece(rebar,theoretical)
-        piece_2.practical = Period(14.7,18.5)
-        piece_2.executive = Period(14.7,19)
+        piece_2.required = Period(14.7,18.5)
+        piece_2.practical = Period(14.7,19)
         piece_2.bend.end = long_piece.rebar.get_bend_length()
         assert long_piece.get_subpieces() == [piece_1,piece_2]
 
@@ -162,14 +162,14 @@ class TestSubpieces():
         # first piece
         theoretical =  Period(5,16)
         piece_1 = Piece(rebar,theoretical)
-        piece_1.practical = Period(4.5,16)
-        piece_1.executive = Period(4,16)
+        piece_1.required = Period(4.5,16)
+        piece_1.practical = Period(4,16)
         piece_1.bend.start = long_piece.rebar.get_bend_length()
         # second piece
         theoretical =  Period(14.7,18)
         piece_2 = Piece(rebar,theoretical)
-        piece_2.practical = Period(14.7,18.5)
-        piece_2.executive = Period(14.7,19)
+        piece_2.required = Period(14.7,18.5)
+        piece_2.practical = Period(14.7,19)
         piece_2.bend.end = long_piece.rebar.get_bend_length()
         assert long_piece.get_subpieces() == [piece_1,piece_2]
 
@@ -177,18 +177,18 @@ class TestSubpieces():
         # first piece
         theoretical =  Period(5,16)
         piece_1 = Piece(rebar,theoretical)
-        piece_1.practical = Period(4.5,16)
-        piece_1.executive = Period(4,16)
+        piece_1.required = Period(4.5,16)
+        piece_1.practical = Period(4,16)
         # second piece
         theoretical =  Period(14.7,26.7)
         piece_2 = Piece(rebar,theoretical)
+        piece_2.required = Period(14.7,26.7)
         piece_2.practical = Period(14.7,26.7)
-        piece_2.executive = Period(14.7,26.7)
         # third piece
         theoretical =  Period(25.4,25.4)
         piece_3 = Piece(rebar,theoretical)
-        piece_3.practical = Period(25.4,26)
-        piece_3.executive = Period(25.4,27)
+        piece_3.required = Period(25.4,26)
+        piece_3.practical = Period(25.4,27)
         assert very_long_piece.get_subpieces() == [piece_1, piece_2, piece_3]
 
 class TestRefresh():
@@ -200,8 +200,8 @@ class TestRefresh():
         piece.length_upper_bound = 11
         piece.refresh()
         checks = (
+            piece.required is None,
             piece.practical is None,
-            piece.executive is None,
             piece.shortest_piece_length is None,
             piece.length_upper_bound is None,
             piece.bend == Bend(),

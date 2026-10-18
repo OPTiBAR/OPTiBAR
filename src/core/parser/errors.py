@@ -54,3 +54,21 @@ class MultipleMaterialError(Exception):
         self.material_name = material_name
         self.message = f"You have used more than one {material_name} material. Please Just use one type."
         super().__init__(self.message)
+
+ACCESS_DRIVER_URL = 'https://www.microsoft.com/en-us/download/details.aspx?id=54920'
+
+class DriverMissingError(Exception):
+    """Exception raised when the Microsoft Access ODBC driver is not installed.
+
+    Attributes:
+        url -- where to download the driver
+        message -- explanation of the error
+    """
+    def __init__(self):
+        self.url = ACCESS_DRIVER_URL
+        self.message = (
+            "The Microsoft Access ODBC driver is not installed, so access files can't be read. "
+            "Install the Microsoft Access Database Engine 2016 Redistributable "
+            "(the 64-bit version for 64-bit Python) and restart OPTiBAR."
+        )
+        super().__init__(self.message)

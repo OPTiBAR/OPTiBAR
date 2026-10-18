@@ -1,16 +1,12 @@
-from functools import update_wrapper
 import tkinter as tk
 from tkinter import ttk
 from typing import List
-from .router import Router
-import tkinter.messagebox as messagebox
 
 INDENT = 4
 
-class LogWindow(ttk.LabelFrame, Router):
+class LogWindow(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Report')
-        Router.__init__(self, 'log')
 
         text = tk.Text(self, wrap= "none", width=40)
         # text['state'] = 'disabled'
@@ -49,6 +45,11 @@ class LogWindow(ttk.LabelFrame, Router):
 
     def write_warning(self, data_str: str, indent:int = 0) -> None:
         self._write(data_str, 'WARNING', indent)
+
+    def write_lines(self, lines: List) -> None:
+        """writes (tag, text) pairs, tag being one of SUCCESS, INFO, WARNING, ERROR"""
+        for tag, data_str in lines:
+            self._write(data_str, tag, 0)
 
     def _write(self, data_str: str, tag:str, indent: int):
         self.text['state'] = 'normal'

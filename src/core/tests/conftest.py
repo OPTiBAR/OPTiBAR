@@ -1,14 +1,14 @@
 import pytest
-from optibar.src.components.period import Period
-from optibar.src.components.piece import Piece,Bend
-from optibar.src.components.rebar import Rebar, RebarType
-from optibar.src.components.diagram import Diagram, Point
-from optibar.src.components.config import Config
+from core.components.period import Period
+from core.components.piece import Piece,Bend
+from core.components.rebar import Rebar, RebarType
+from core.components.diagram import Diagram, Point
+from core.components.config import Config
 import pathlib
 import json
-from optibar.src.components.foundation import Foundation
-from optibar.src.io.input import InputInterpreter
-from optibar.src.io.output import Output
+from core.components.foundation import Foundation
+from core.io.input import InputInterpreter
+from core.io.output import Output
 
 
 @pytest.fixture
@@ -22,8 +22,8 @@ def piece_factory(rebar):
     def _factory(start, end):
         period = Period(start, end)
         piece = Piece(rebar, period)
+        piece.required = period
         piece.practical = period
-        piece.executive = period
         return piece
     return _factory
 
@@ -31,32 +31,32 @@ def piece_factory(rebar):
 def short_piece(rebar):
     theoretical =  Period(5,8)
     piece = Piece(rebar,theoretical)
-    piece.practical = Period(4.5,8.5)
-    piece.executive = Period(4,9)
+    piece.required = Period(4.5,8.5)
+    piece.practical = Period(4,9)
     return piece
 
 @pytest.fixture
 def medium_piece(rebar):
     theoretical =  Period(5,16)
     piece = Piece(rebar,theoretical)
-    piece.practical = Period(4.5,16.5)
-    piece.executive = Period(4,17)
+    piece.required = Period(4.5,16.5)
+    piece.practical = Period(4,17)
     return piece
 
 @pytest.fixture
 def long_piece(rebar):
     theoretical =  Period(5,18)
     piece = Piece(rebar,theoretical)
-    piece.practical = Period(4.5,18.5)
-    piece.executive = Period(4,19)
+    piece.required = Period(4.5,18.5)
+    piece.practical = Period(4,19)
     return piece
 
 @pytest.fixture
 def very_long_piece(rebar):
     theoretical =  Period(5,25)
     piece = Piece(rebar,theoretical)
-    piece.practical = Period(4.5,26)
-    piece.executive = Period(4,27)
+    piece.required = Period(4.5,26)
+    piece.practical = Period(4,27)
     return piece
 
 # path = pathlib.Path(__file__).parent.joinpath('io', 'data', 'accdb')

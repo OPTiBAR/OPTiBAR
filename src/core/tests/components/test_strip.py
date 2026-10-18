@@ -1,7 +1,7 @@
 import pytest
-from optibar_core.src.components.strip import Strip
-from optibar_core.src.io.input import InputInterpreter
-from optibar_core.src.components.rebar import RebarType
+from core.components.strip import Strip
+from core.io.input import InputInterpreter
+from core.components.rebar import RebarType
 
 @pytest.fixture(scope="class")
 def strip(input_interpreter : InputInterpreter):

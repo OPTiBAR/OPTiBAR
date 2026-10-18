@@ -1,6 +1,6 @@
-from optibar_core.src.components.period import Period
-from optibar_core.src.components.shear import ShearZone, ShearType
-from optibar_core.src.optimization.shear import ShearOptimization
+from core.components.period import Period
+from core.components.shear import ShearZone, ShearType
+from core.optimization.shear import ShearOptimization
 import pytest
 import math
 

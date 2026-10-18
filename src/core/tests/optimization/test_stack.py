@@ -1,8 +1,8 @@
 import pytest
 import copy
-from optibar_core.src.optimization.executive.stack import StackAlgorithm, TypeCounter, Cell
-from optibar_core.src.optimization.executive.errors import NotEnoughTypes
-from optibar_core.src.components.collections import Stack
+from core.optimization.practical.stack import StackAlgorithm, TypeCounter, Cell
+from core.optimization.practical.errors import NotEnoughTypes
+from core.components.collections import Stack
 
 @pytest.fixture
 def type_counter() -> TypeCounter:
@@ -14,15 +14,15 @@ def type_counter() -> TypeCounter:
     return tc
 
 @pytest.fixture
-def stack(piece_practical_factory):
+def stack(piece_required_factory):
     stack = Stack(5)
-    stack.add_piece(piece_practical_factory(4,8,5))
-    stack.add_piece(piece_practical_factory(2,8,10))
-    stack.add_piece(piece_practical_factory(2,8,10))
-    stack.add_piece(piece_practical_factory(0,8,10))
-    stack.add_piece(piece_practical_factory(0,15,5))
-    stack.add_piece(piece_practical_factory(0,15,5))
-    stack.add_piece(piece_practical_factory(0,15,5))
+    stack.add_piece(piece_required_factory(4,8,5))
+    stack.add_piece(piece_required_factory(2,8,10))
+    stack.add_piece(piece_required_factory(2,8,10))
+    stack.add_piece(piece_required_factory(0,8,10))
+    stack.add_piece(piece_required_factory(0,15,5))
+    stack.add_piece(piece_required_factory(0,15,5))
+    stack.add_piece(piece_required_factory(0,15,5))
     return stack
 
 @pytest.fixture

@@ -42,11 +42,12 @@ class TestPracticalOptimization():
     def test_not_enough_stack(self,stack_one, stack_two):
         """a stack that needs more types than allowed is reported, not an error"""
         pieces = stack_one.get_pieces()+stack_two.get_pieces()
-        excess = PracticalOptimization(pieces,stacks(stack_one,stack_two),5,2).run()
-        assert excess == [{'strip_name': 'S1', 'level': 'bottom', 'excess_list': [3, 3]}]
+        excess = PracticalOptimization(pieces,stacks(stack_one,stack_two),5,1).run()
+        # stack_one has one and two-subpiece pieces, each group needs its own type
+        assert excess == [{'strip_name': 'S1', 'level': 'bottom', 'excess_list': [2]}]
 
     def test_no_error(self,stack_one, stack_two):
         pieces = stack_one.get_pieces()+stack_two.get_pieces()
         assert PracticalOptimization(pieces,stacks(stack_one,stack_two),5,3).run() == []
-        assert shortest_lengths(stack_one) == [4.3,8,8,8,4.3,4.3,4.3]
+        assert shortest_lengths(stack_one) == [6,6,6,8,4.3,4.3,4.3]
         assert shortest_lengths(stack_two) == [2,2,4.3,12,12]

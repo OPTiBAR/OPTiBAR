@@ -36,8 +36,8 @@ class Minimization():
         C = [[0 for j in J] for i in I]
         for i in I:
             for j in J:
-                if LS[i] <= LO[j] + 1e-6:
-                    C[i][j] = max(0, LO[j]-LS[i])
+                if LS[i] <= LO[j]:
+                    C[i][j] = LO[j]-LS[i]
                 else:
                     C[i][j] = 0
 
@@ -54,19 +54,11 @@ class Minimization():
         model.service = Constraint(I, rule=service_rule)
 
         def not_shorter_rule(model,i,j):
-            if LS[i] > LO[j] + 1e-6:
+            if LS[i] > LO[j]:
                 return model.x[i,j] == 0
             else:
                 return Constraint.Skip
         model.not_shorter = Constraint(I, J, rule=not_shorter_rule)
-
-        # a piece can't be longer than its upper bound (e.g. the foundation length)
-        def not_longer_rule(model,i,j):
-            if LO[j] > LU[i] + 1e-6:
-                return model.x[i,j] == 0
-            else:
-                return Constraint.Skip
-        model.not_longer = Constraint(I, J, rule=not_longer_rule)
 
         def subset_lower_rule(model,i,j,m):
             if i in NSUB[m]:
@@ -132,13 +124,9 @@ class StackAlgorithmExact():
             [piece.length_upper_bound for piece in pieces],
             [piece.get_num_of_pieces("practical") for piece in pieces]
         )
-        # every (number of subpieces, length) pair as its own type is the most a stack can need
-        max_p = len(set(minimization.num_pieces)) * len(self.selected_lengths)
         while True:
             if minimization.run(p) == 'optimal':
                 break
-            elif p >= max_p:
-                raise ValueError("a piece of the stack fits none of the selected lengths")
             else:
                 p = p+1
 

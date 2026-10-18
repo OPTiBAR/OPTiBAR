@@ -1,5 +1,5 @@
-from optibar_core.src.components.config import Config
-from optibar_core.src.components.rebar import RebarType
+from core.components.config import Config
+from core.components.rebar import RebarType
 import pathlib
 import pytest
 from jsonschema import Draft7Validator

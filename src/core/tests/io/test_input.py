@@ -1,4 +1,4 @@
-from optibar_core.src.io.input import InputInterpreter
+from core.io.input import InputInterpreter
 from copy import deepcopy
 
 class TestInput():

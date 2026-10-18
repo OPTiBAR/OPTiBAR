@@ -1,6 +1,6 @@
 import pytest
-from optibar_core.src.rebar import RebarType
-from optibar_core.src.foundation import Foundation
+from core.components.rebar import RebarType
+from core.components.foundation import Foundation
 
 class TestFoundation():
     def test_set_general(self, foundation):

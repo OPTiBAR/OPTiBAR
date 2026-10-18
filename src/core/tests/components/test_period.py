@@ -1,5 +1,5 @@
 import pytest
-from optibar_core.src.components.period import Period
+from core.components.period import Period
 
 @pytest.fixture
 def period():

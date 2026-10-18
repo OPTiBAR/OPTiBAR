@@ -1,7 +1,7 @@
 import pytest
 import copy
-from optibar_core.src.optimization.executive.total import TotalAlgorithm, Bunch
-from optibar_core.src.optimization.executive.errors import NotEnoughTypes
+from core.optimization.practical.total import TotalAlgorithm, Bunch
+from core.optimization.practical.errors import NotEnoughTypes
 
 
 @pytest.fixture
@@ -14,30 +14,30 @@ def pair_factory():
     return _factory
 
 @pytest.fixture
-def pieces(piece_practical_factory):
+def pieces(piece_required_factory):
     pieces = [
-        piece_practical_factory(-1,0, 2),
-        piece_practical_factory(0,1, 3),
-        piece_practical_factory(0,2, 3),
-        piece_practical_factory(0,2, 3),
-        piece_practical_factory(0,2, 5),
-        piece_practical_factory(-1,3, 4),
-        piece_practical_factory(-1,3, 4),
-        piece_practical_factory(-2,4, 7),
+        piece_required_factory(-1,0, 2),
+        piece_required_factory(0,1, 3),
+        piece_required_factory(0,2, 3),
+        piece_required_factory(0,2, 3),
+        piece_required_factory(0,2, 5),
+        piece_required_factory(-1,3, 4),
+        piece_required_factory(-1,3, 4),
+        piece_required_factory(-2,4, 7),
     ]
     return pieces
 
 @pytest.fixture
-def pieces_no_bound(piece_practical_factory):
+def pieces_no_bound(piece_required_factory):
     pieces = [
-        piece_practical_factory(-1,0, 12),
-        piece_practical_factory(0,1, 12),
-        piece_practical_factory(0,2, 12),
-        piece_practical_factory(0,2, 12),
-        piece_practical_factory(0,2, 12),
-        piece_practical_factory(-1,3, 12),
-        piece_practical_factory(-1,3, 12),
-        piece_practical_factory(-2,4, 12),
+        piece_required_factory(-1,0, 12),
+        piece_required_factory(0,1, 12),
+        piece_required_factory(0,2, 12),
+        piece_required_factory(0,2, 12),
+        piece_required_factory(0,2, 12),
+        piece_required_factory(-1,3, 12),
+        piece_required_factory(-1,3, 12),
+        piece_required_factory(-2,4, 12),
     ]
     return pieces
 

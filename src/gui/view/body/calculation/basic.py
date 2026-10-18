@@ -231,11 +231,11 @@ class TypeNumCalc(ttk.LabelFrame):
 
 class TypeNumAnalysis(ttk.LabelFrame):
     class Range(ttk.LabelFrame):
-        def __init__(self, parent, title: str, allowable_diff: int, allowable_range: List[int], initial_values: Tuple[int,int]):
+        def __init__(self, parent, title: str, max_diff: int, value_range: List[int], initial_values: Tuple[int,int]):
             super().__init__(parent, text=title)
-            self.allowable_diff = allowable_diff
-            self.combo_from = IntCombo(self, allowable_range)
-            self.combo_to = IntCombo(self, allowable_range)
+            self.max_diff = max_diff
+            self.combo_from = IntCombo(self, value_range)
+            self.combo_to = IntCombo(self, value_range)
             self.combo_from.set_value(initial_values[0])
             self.combo_to.set_value(initial_values[1])
             self.combo_from.bind('<<ComboboxSelected>>', self.from_fun)
@@ -259,14 +259,14 @@ class TypeNumAnalysis(ttk.LabelFrame):
         def from_fun(self, e):
             if self.combo_from.get_value() > self.combo_to.get_value():
                 self.combo_to.set_value(self.combo_from.get_value())
-            if self.combo_from.get_value() < self.combo_to.get_value() - self.allowable_diff:
-                self.combo_to.set_value(self.combo_from.get_value() + self.allowable_diff)
+            if self.combo_from.get_value() < self.combo_to.get_value() - self.max_diff:
+                self.combo_to.set_value(self.combo_from.get_value() + self.max_diff)
 
         def to_fun(self, e):
             if self.combo_to.get_value() < self.combo_from.get_value():
                 self.combo_from.set_value(self.combo_to.get_value())
-            if self.combo_to.get_value() > self.combo_from.get_value() + self.allowable_diff:
-                self.combo_from.set_value(self.combo_to.get_value() - self.allowable_diff)
+            if self.combo_to.get_value() > self.combo_from.get_value() + self.max_diff:
+                self.combo_from.set_value(self.combo_to.get_value() - self.max_diff)
         def get_values(self):
             return {
                 'from': self.combo_from.get_value(),
@@ -276,8 +276,8 @@ class TypeNumAnalysis(ttk.LabelFrame):
     def __init__(self, parent):
         super().__init__(parent, text='Number of Types')
 
-        self.total_frame = self.Range(self, title = 'Total', allowable_diff=10, allowable_range= range(10,41), initial_values=(10,20))
-        self.stack_frame = self.Range(self, title = 'Stack', allowable_diff=2, allowable_range= range(1,6), initial_values=(2,4))
+        self.total_frame = self.Range(self, title = 'Total', max_diff=10, value_range= range(10,41), initial_values=(10,20))
+        self.stack_frame = self.Range(self, title = 'Stack', max_diff=2, value_range= range(1,6), initial_values=(2,4))
 
         self.shear_combo = IntCombo(self, range(1,6))
         self.shear_combo.set_value(4)

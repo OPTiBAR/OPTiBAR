@@ -1,5 +1,5 @@
-from optibar_core.src.components.utilities import round_up
-from optibar_core.src.components.rebar import Rebar, RebarType
+from core.components.utilities import round_up
+from core.components.rebar import Rebar, RebarType
 import math
 
 

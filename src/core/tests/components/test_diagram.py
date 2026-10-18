@@ -1,6 +1,6 @@
 import pytest
-from optibar_core.src.components.diagram import Diagram, Point
-from optibar_core.src.components.period import Period
+from core.components.diagram import Diagram, Point
+from core.components.period import Period
 
 @pytest.fixture(scope="class")
 def diagram():

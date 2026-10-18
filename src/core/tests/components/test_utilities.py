@@ -1,4 +1,4 @@
-from optibar_core.src.components.utilities import round_up, round_down
+from core.components.utilities import round_up, round_down
 
 def test_round_up():
     assert round_up(1.23, 0.05) == 1.25

@@ -67,12 +67,13 @@ class TestBasicOperations():
         assert periods == [Period(0,2/3), Period(3.2,7), Period(8.25,9)]
 
 
+@pytest.fixture(scope="class")
+def diagram_zero_start_end():
+    stations = list(range(9))+[12]
+    areas = [0, 0, 4, 5, 6, 5, 4, 1, 0, 0]
+    return Diagram(stations, areas)
+
 class TestSideDist():
-    @pytest.fixture(scope="class")
-    def diagram_zero_start_end(self):
-        stations = list(range(9))+[12]
-        areas = [0, 0, 4, 5, 6, 5, 4, 1, 0, 0]
-        return Diagram(stations, areas)
     def test_side_def(self, diagram_zero_start_end):
         assert  diagram_zero_start_end.get_side_distance() == 4
 

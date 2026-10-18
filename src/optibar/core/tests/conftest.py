@@ -59,7 +59,8 @@ def very_long_piece(rebar):
     piece.practical = Period(4,27)
     return piece
 
-# path = pathlib.Path(__file__).parent.joinpath('io', 'data', 'accdb')
+SCHEMA_PATH = pathlib.Path(__file__).parent.parent.joinpath('schemas')
+
 
 @pytest.fixture(scope='class')
 def input_interpreter():
@@ -69,22 +70,25 @@ def input_interpreter():
 
 
 @pytest.fixture(scope="class")
+def config_dict():
+    return {
+        "diameter": {"additional": 25, "shear": 14, "thermal": 12, "typical": 18},
+        "elimination": {"additional": 0.2, "shear": 2.0},
+        "type_number": {"shear": 4, "stack": 2, "total": 20},
+        "side_cover": 0.05,
+        "typical_arrangement": {"method": "INTERVAL", "value": 0.2, "exceptions": []},
+    }
+
+@pytest.fixture(scope="class")
 def config(config_dict):
     return Config(config_dict)
 
 @pytest.fixture(scope="class")
-def foundation(input_intepreter):
-    return Foundation(input_intepreter)
+def foundation(input_interpreter, config):
+    foundation = Foundation(input_interpreter)
+    foundation.run(config)
+    return foundation
 
-# @pytest.fixture(scope="class")
-# def output(foundation_dict, foundation, config):
-#     arrangment = {
-#             "method": "MIN_RATIO",
-#             "min_ratio": 0.0018
-#         }
-#     foundation.set_general_rebar(RebarType(20), RebarType(16), arrangment)
-#     foundation.set_reinforcement_rebar(RebarType(25), .1)
-#     foundation.set_shear_rebar(RebarType(18), .1, 2)
-#     foundation.set_length_type_num(2,2)
-#     return Output(foundation, foundation_dict, config)
-
+@pytest.fixture(scope="class")
+def output(foundation):
+    return Output(foundation)

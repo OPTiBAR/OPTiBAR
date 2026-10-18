@@ -109,15 +109,15 @@ class TestTotalAlgorithm():
                 None,
                 pair_factory(0,0),
                 pair_factory(2,1),
-                pair_factory(12,1),
-                pair_factory(26,2)
+                pair_factory(6,1),
+                pair_factory(18,2)
             ],
             [
                 None,
                 None,
                 pair_factory(0,1),
                 pair_factory(2,2),
-                pair_factory(12,2)
+                pair_factory(6,3)
             ],
             [
                 None,
@@ -201,7 +201,7 @@ class TestTotalAlgorithm():
                 None,
                 pair_factory(0,0),
                 pair_factory(1,1),
-                pair_factory(25,1),
+                pair_factory(13,1),
                 pair_factory(61,3),
             ],
             [
@@ -209,7 +209,7 @@ class TestTotalAlgorithm():
                 None,
                 pair_factory(0,1),
                 pair_factory(1,2),
-                pair_factory(25,3),
+                pair_factory(13,3),
             ],
             [
                 None,

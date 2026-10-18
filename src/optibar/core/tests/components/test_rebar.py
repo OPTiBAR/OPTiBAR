@@ -9,10 +9,12 @@ def test_area(rebar):
 def test_calc_ld():
     fc = 3000 # ton/m^2
     fy = 40000 # ton/m^2
+    to_mpa = 9.81 / 1000
     diameter = RebarType.T18.value
-    ld_bottom_18 = round_up((diameter/1000)*((fy/100)/(math.sqrt(fc/100) * 2.1)),0.01)
+    ld_bottom_18 = round_up((diameter/1000)*((fy*to_mpa)/(math.sqrt(fc*to_mpa) * 2.1)),0.01)
     diameter = RebarType.T22.value
-    ld_top_22 = round_up((diameter/1000)*((fy/100)/(math.sqrt(fc/100) * 1.7)) * 1.3, 0.01)
+    ld_top_22 = round_up((diameter/1000)*((fy*to_mpa)/(math.sqrt(fc*to_mpa) * 1.7)) * 1.3, 0.01)
+    assert (ld_bottom_18, ld_top_22) == (0.62, 1.22)
     assert ld_bottom_18 == Rebar.calc_ld(fc, fy, RebarType.T18, "bottom")
     assert ld_top_22 == Rebar.calc_ld(fc, fy, RebarType.T22, "top")
 

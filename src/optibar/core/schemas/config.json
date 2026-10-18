@@ -64,7 +64,7 @@
             "properties": {
                 "method": {
                     "type": "string",
-                    "enum": ["SMART", "INTERVAL", "COUNT"]
+                    "enum": ["MIN_RATIO", "SMART", "INTERVAL", "COUNT"]
                 },
                 "value": {
                     "type": "number",
@@ -78,9 +78,13 @@
                             "strip_name": {
                                 "type": "string"
                             },
+                            "level": {
+                                "type": "string",
+                                "enum": ["top", "bottom"]
+                            },
                             "method": {
                                 "type": "string",
-                                "enum": ["SMART", "INTERVAL", "COUNT"]
+                                "enum": ["MIN_RATIO", "SMART", "INTERVAL", "COUNT"]
                             },
                             "value": {
                                 "type": "number",
@@ -91,12 +95,17 @@
                                 "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
                             }
                         },
-                        "required": ["method", "value", "diameter"]
+                        "required": ["strip_name", "level", "method", "value", "diameter"]
                     }
                 }
             },
             "required": ["method", "value"]
+        },
+        "side_cover": {
+            "description": "cover of the rebars at the ends of the strips in m.",
+            "type": "number",
+            "minimum": 0
         }
     },
-    "required": ["diameter", "type_number", "elimination", "typical_arrangement"]
+    "required": ["diameter", "type_number", "elimination", "typical_arrangement", "side_cover"]
 }

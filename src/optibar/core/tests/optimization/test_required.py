@@ -113,10 +113,11 @@ class TestStackMinimization():
     
     def test_get_results(self):
         sm = StackMinimization(lengths=[1,1.5,2], d_length=.3, ld_length=1.4)
+        # groups [1] and [1.5, 2]: each group is cut at one station, 1.4 (Ld) and 2.4 (1 + Ld)
         increased_lengths = [
             IncreasedLength(.4, DominationType.LD),
             IncreasedLength(.9, DominationType.LD),
-            IncreasedLength(.9, DominationType.LD)
+            IncreasedLength(.4, DominationType.LD)
         ]
         assert increased_lengths == sm.get_results()
 
@@ -137,7 +138,7 @@ class TestRequiredOptimization():
             [piece.required for piece in stack.get_pieces()] == [
                 Period(-2.3,1.4),
                 Period(-3.8,2.4),
-                Period(-4.3,2.9)
+                Period(-3.8,2.4)
             ]
         )
 

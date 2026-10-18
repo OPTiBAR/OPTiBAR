@@ -14,6 +14,7 @@ def mesh():
     diagram = Diagram(stations, areas)
     section = Section(width=1, thickness=.9, effective_thickness=.8)
     mesh = Mesh(diagram, section)
+    mesh.set_side_cover(0.05)
     return mesh
 
 @pytest.fixture
@@ -50,7 +51,7 @@ class TestTypical():
         arrangment = {
             "method": "COUNT",
             "min_ratio": 0.0018,
-            "count": 5,
+            "value": 5,
         }
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
@@ -61,7 +62,7 @@ class TestTypical():
         arrangment = {
             "method": "COUNT",
             "min_ratio": 0.0018,
-            "count": 10,
+            "value": 10,
         }
         mesh.set_typical_rebar(rebar, rebar, arrangment)
         assert mesh.typical_rebar_num == 10
@@ -70,7 +71,7 @@ class TestTypical():
         arrangment = {
             "method": "INTERVAL",
             "min_ratio": 0.0018,
-            "interval": .4,
+            "value": .4,
         }
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
@@ -81,7 +82,7 @@ class TestTypical():
         arrangment = {
             "method": "INTERVAL",
             "min_ratio": 0.0018,
-            "interval": .1,
+            "value": .1,
         }
         mesh.set_typical_rebar(rebar, rebar, arrangment)
         assert mesh.typical_rebar_num == 10
@@ -117,6 +118,7 @@ class TestTypical():
         diagram = Diagram(stations, areas)
         section = Section(width=1, thickness=.9, effective_thickness=.8)
         mesh = Mesh(diagram, section)
+        mesh.set_side_cover(0.05)
         mesh.set_typical_rebar(rebar, rebar, method)
         piece = mesh.get_typical_piece()
         pieces = piece.get_subpieces()
@@ -246,7 +248,8 @@ class TestRound():
         piece.required = Period(0,8.96)
         piece.length_upper_bound = 8.99
         mesh._round_piece(piece)
-        assert piece.shortest_piece_length == 8.95
+        # 9.0 exceeds the bound, so it is rounded down to ROUND_UNIT (10 cm)
+        assert piece.shortest_piece_length == 8.9
 
 
 class TestUnifyPiece():
@@ -255,7 +258,7 @@ class TestUnifyPiece():
         piece_2 = Piece(rebar,Period(4,8))
         row = [piece_1, piece_2]
         mesh.additional_rebar = rebar
-        is_unified = mesh._unify_row(row, "theoretical", )
+        is_unified = mesh._unify_row(row, "theoretical", [[] for _ in row], [])
         assert row[0].theoretical == Period(1,8) and is_unified
     
     def test_four_piece(self, mesh, rebar):
@@ -265,7 +268,7 @@ class TestUnifyPiece():
         piece_4 = Piece(rebar,Period(6.5,8))
         row = [piece_1, piece_2, piece_3, piece_4]
         mesh.additional_rebar = rebar
-        mesh._unify_row(row, "theoretical")
+        mesh._unify_row(row, "theoretical", [[] for _ in row], [])
         assert row[0].theoretical == Period(1,8)
     
     def test_four_piece_splited(self, mesh, rebar):
@@ -275,7 +278,7 @@ class TestUnifyPiece():
         piece_4 = Piece(rebar,Period(6.5,13))
         row = [piece_1, piece_2, piece_3, piece_4]
         mesh.additional_rebar = rebar
-        mesh._unify_row(row, "theoretical")
+        mesh._unify_row(row, "theoretical", [[] for _ in row], [])
         assert row[0].theoretical == Period(0,4)
         assert row[1].theoretical == Period(4,13)
 

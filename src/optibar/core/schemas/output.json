@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/draft-07/schema",
     "$id": "output",
     "title": "Drawing Output",
-    "description": "This data is passed to the autocad drawing service to generate the .dwg output.",
+    "description": "The engine output (run_calculation): the data the PDF/DXF drawings, reports and saved results are made from.",
     "definitions": {
         "piece_list": {
             "$id": "#piece-list",
@@ -351,7 +351,7 @@
                                         "required": [ "top", "bottom" ]
                                     }
                                 },
-                                "required": [ "diameter", "bend_length", "Ld", "overlap"]
+                                "required": [ "diameter", "bend", "Ld", "overlap"]
                             }
                         },
                         "length_type": {
@@ -399,45 +399,91 @@
                                 "required": [ "diameter", "length", "number" ]
                             }
                         },
-                        "general": {
+                        "typical": {
                             "$ref": "#/definitions/piece_list"
                         },
-                        "reinforcement": {
+                        "thermal": {
                             "$ref": "#/definitions/piece_list"
                         },
-                        "cut": {
-                            "description": "the cutting pattern of the rebars",
-                            "type": "array",
-                            "items": {
-                                "description": "a cutting pattern and it's corresponding number",
-                                "type": "object",
-                                "properties": {
-                                    "base_length": {
-                                        "type": "number",
-                                        "exclusiveMinimum": 0
-                                    },
-                                    "diameter": {
-                                        "description": "diameter in mm.",
-                                        "type": "integer",
-                                        "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
-                                    },
-                                    "pattern": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "number",
-                                            "minItems": 1
-                                        }
-                                    },
-                                    "number": {
-                                        "type": "integer",
-                                        "minimum": 1
-                                    }
-                                },
-                                "required": ["base_length", "diameter", "pattern", "number"]
-                            }
+                        "additional": {
+                            "$ref": "#/definitions/piece_list"
                         }
                     },
-                    "required": [ "shear", "general", "reinforcement" ]
+                    "required": [ "typical", "thermal", "additional", "shear" ]
+                },
+                "cut": {
+                    "description": "cutting plans of the pieces, one per diameter. empty when cutting is skipped (analysis).",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "diameter": {
+                                "description": "diameter in mm.",
+                                "type": "integer",
+                                "enum": [ 8, 10, 12, 14, 16, 18, 20, 22, 25, 28, 32 ]
+                            },
+                            "stock_length": {
+                                "description": "length of the stock bars in meter.",
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                            },
+                            "bars": {
+                                "description": "number of stock bars to cut.",
+                                "type": "integer",
+                                "minimum": 0
+                            },
+                            "waste": {
+                                "description": "total waste length in meter.",
+                                "type": "number",
+                                "minimum": 0
+                            },
+                            "waste_ratio": {
+                                "description": "waste length over the total stock length.",
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                            },
+                            "patterns": {
+                                "type": "array",
+                                "items": {
+                                    "description": "a cutting pattern and the number of bars cut with it.",
+                                    "type": "object",
+                                    "properties": {
+                                        "number": {
+                                            "type": "integer",
+                                            "minimum": 1
+                                        },
+                                        "pieces": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "label": {
+                                                        "description": "piece list rows (T, Th, A, S plus row number) of the piece, or w for waste.",
+                                                        "type": "array",
+                                                        "items": { "type": "string" },
+                                                        "minItems": 1
+                                                    },
+                                                    "length": {
+                                                        "type": "number",
+                                                        "exclusiveMinimum": 0
+                                                    }
+                                                },
+                                                "required": [ "label", "length" ]
+                                            },
+                                            "minItems": 1
+                                        },
+                                        "waste": {
+                                            "type": "number",
+                                            "minimum": 0
+                                        }
+                                    },
+                                    "required": [ "number", "pieces", "waste" ]
+                                }
+                            }
+                        },
+                        "required": [ "diameter", "stock_length", "bars", "waste", "waste_ratio", "patterns" ]
+                    }
                 },
                 "summary": {
                     "description": "summery of the rebar and concrete weights.",
@@ -451,7 +497,7 @@
                                     "type": "number",
                                     "minimum": 0
                                 },
-                                "general": {
+                                "typical": {
                                     "type": "object",
                                     "properties": {
                                         "top": {
@@ -465,7 +511,7 @@
                                     },
                                     "required": [ "top", "bottom" ]
                                 },
-                                "reinforcement": {
+                                "additional": {
                                     "type": "object",
                                     "properties": {
                                         "top": {
@@ -494,7 +540,7 @@
                                     "required": [ "top", "bottom" ]
                                 }
                             },
-                            "required": [ "shear", "general", "reinforcement" , "thermal" ]
+                            "required": [ "shear", "typical", "additional" , "thermal" ]
                         },
                         "concrete": {
                             "description": "total volum of the concrete in cubic meter.",
@@ -596,7 +642,7 @@
                             "mesh": {
                                 "type": "object",
                                 "properties": {
-                                    "general": {
+                                    "typical": {
                                         "type": "object",
                                         "properties": {
                                             "top": {
@@ -608,32 +654,26 @@
                                         },
                                         "required": [ "top", "bottom" ]
                                     },
-                                    "reinforcement": {
+                                    "additional": {
                                         "type": "object",
                                         "properties": {
                                             "top": {
                                                 "type": "array",
                                                 "items": {
-                                                    "description": "rows of pieces",
+                                                    "description": "a row of pieces, each piece a bunch row",
                                                     "type": "array",
-                                                    "itmes": {
-                                                        "type": "array",
-                                                        "items": {
-                                                            "$ref": "#/definitions/bunch_row"
-                                                        }  
+                                                    "items": {
+                                                        "$ref": "#/definitions/bunch_row"
                                                     }
                                                 }
                                             },
                                             "bottom": {
                                                 "type": "array",
                                                 "items": {
-                                                    "description": "rows of pieces",
+                                                    "description": "a row of pieces, each piece a bunch row",
                                                     "type": "array",
-                                                    "itmes": {
-                                                        "type": "array",
-                                                        "items": {
-                                                            "$ref": "#/definitions/bunch_row"
-                                                        }
+                                                    "items": {
+                                                        "$ref": "#/definitions/bunch_row"
                                                     }
                                                 }
                                             }
@@ -641,13 +681,13 @@
                                         "required": [ "top", "bottom" ]
                                     }
                                 },
-                                "required": [ "general", "reinforcement"]
+                                "required": [ "typical", "additional"]
                             },
                             "shear_zones": {
                                 "description": "all shear zones of the strip with their types",
                                 "type": "array",
-                                "itmes": {
-                                    "type": "objects",
+                                "items": {
+                                    "type": "object",
                                     "properties": {
                                         "period": {
                                             "type": "array",
@@ -806,7 +846,7 @@
                     "required": [ "X", "Y" ]
                 }
             },
-            "required": [ "version", "areas", "columns", "technical_spec", "pieces", "summary", "shear_types", "strips", "grid"]
+            "required": [ "version", "areas", "columns", "technical_spec", "pieces", "summary", "shear_types", "strips", "grid", "cut"]
         },
         "errors": {
             "type": "object",
@@ -876,12 +916,41 @@
                                         "type": "string",
                                         "enum": ["MIN_GAP", "REBAR_DIAMETER"]
                                     },
-                                    "value": {
+                                    "gap": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": ["min_gap", "error_type", "gap"]
+                            }
+                        },
+                        "required": ["strip_name", "level", "detail"]
+                    }
+                },
+                "max_gap": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "strip_name": {
+                                "type": "string"
+                            },
+                            "level": {
+                                "type": "string",
+                                "enum": ["top", "bottom"]
+                            },
+                            "detail": {
+                                "type": "object",
+                                "properties": {
+                                    "gap":{
+                                        "type": "number",
+                                        "minimum": 0
+                                    },
+                                    "max_gap": {
                                         "type": "number",
                                         "minimum": 0
                                     }
                                 },
-                                "required": ["min_gap", "error_type", "value"]
+                                "required": ["gap", "max_gap"]
                             }
                         },
                         "required": ["strip_name", "level", "detail"]
@@ -918,7 +987,7 @@
                     }
                 }
             },
-            "required": ["excess_stack", "min_gap", "min_ratio"]
+            "required": []
         }
     },
     "required": [] 

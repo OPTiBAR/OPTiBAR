@@ -32,13 +32,8 @@ jobs:
       - name: Check the driver is visible to pyodbc
         run: uv run python -c "from optibar.core.parser.parse import has_access_driver; assert has_access_driver(), 'Access ODBC driver not found'"
 
-      - name: Parser, sketch and cutting tests
-        run: uv run pytest src/optibar/core/tests/parser src/optibar/core/tests/sketch src/optibar/core/tests/cutting -v -p no:cacheprovider
+      - name: Core tests
+        run: uv run pytest src/optibar/core/tests -v -p no:cacheprovider -W error
 
       - name: GUI tests
         run: uv run pytest src/optibar/gui/tests -v -p no:cacheprovider
-
-      # the legacy engine tests predate the refactor and have known failures; reported, not blocking
-      - name: Legacy engine tests
-        continue-on-error: true
-        run: uv run pytest src/optibar/core/tests/components src/optibar/core/tests/io src/optibar/core/tests/optimization -q -p no:cacheprovider

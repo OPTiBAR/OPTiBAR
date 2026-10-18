@@ -24,10 +24,11 @@ def test_intersection(period):
     period_intersection = Period(2.5,4)
     assert period.has_intersection_with(period_intersection)
 
-def test_intersection_start_order(period):
-    period_intersection = Period(2.5,4)
-    with pytest.raises(ValueError, match=r"^START_ORDER"):
-        period_intersection.has_intersection_with(period)
+def test_intersection_any_order(period):
+    assert Period(2.5,4).has_intersection_with(period)
+    assert Period(3,4).has_intersection_with(period)
+    assert not Period(5,6).has_intersection_with(period)
+    assert not period.has_intersection_with(Period(5,6))
 
 def test_equality(period):
     other = Period(1,3)

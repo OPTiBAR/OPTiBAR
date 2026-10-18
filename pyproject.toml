@@ -14,18 +14,19 @@ dependencies = [
     "pyodbc>=5.3.0",
     "pyomo>=6.9.5",
     "shapely>=2.1.2",
+    "sv-ttk>=2.6.1",
     "texttable>=1.7.1",
 ]
 
 [project.gui-scripts]
-optibar = "gui.app:main"
+optibar = "optibar.gui.app:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/core", "src/gui"]
+packages = ["src/optibar"]
 
 [dependency-groups]
 dev = [

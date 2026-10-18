@@ -28,15 +28,22 @@ followed by the tables: overlap lengths, number of length types, the piece list 
 
 Each kind of object is on its own layer, for example `Typical Rebar Top`, `Additional Rebar Bottom`, `Rebar Text`, `Dimension` or `moment`, so parts of the drawing can be hidden or restyled.
 
+Below the sheets are the **cutting plans**: one or more portrait sheets per bar diameter, saying how to cut the pieces from 12 m stock bars.
+Each row is a cutting pattern with the number of bars to cut that way, the pieces drawn to scale with their lengths, the waste (`w`), and the position of each piece in the piece lists, for example `A5` for the fifth row of the additional rebars.
+
+![A cutting plan](../_static/images/dxf_cutting.png)
+
+The plans use as few stock bars as possible: the patterns are found by column generation and the number of bars of each pattern by an integer program, so every piece is cut exactly as many times as needed.
+
 ## PDF drawing
 
-**PDF Drawing** saves an A4 sketch: one page per strip with its top and bottom additional rebars, followed by the mass summary, the technical specifications and the piece lists. It is meant for a quick check, the DXF is the detailing map.
+**PDF Drawing** saves an A4 sketch: one page per strip with its top and bottom additional rebars, followed by the mass summary, the technical specifications, the piece lists and the cutting plans. It is meant for a quick check, the DXF is the detailing map.
 
 ## Results file and summary
 
 **Save Results** writes two files, for example `foundation_calculation.json` and `foundation_calculation_summary.txt`.
 
-The **summary** is the text of the Report box, headed by the input file and the main settings. It is meant for reading and for attaching to a report.
+The **summary** is the text of the Report box, headed by the input file and the main settings, and ends with every pattern of the cutting plans. It is meant for reading and for attaching to a report.
 
 The **JSON file** holds everything needed to reproduce or post-process the result:
 
@@ -62,5 +69,6 @@ The main parts of `result["data"]` are:
 | `technical_spec` | Materials, covers, the special lengths per diameter, and the numbers of length types used. |
 | `shear_types` | The shear arrangements: diameter, number of legs and spacing. |
 | `areas`, `columns`, `grid` | The foundation outline, openings, columns and grid lines. |
+| `cut` | The cutting plan of every diameter: stock length, number of bars, waste, and the patterns with their pieces. |
 
 For an analysis, `result` is a list with the `data` part of every combination, or `{}` where a combination isn't feasible.

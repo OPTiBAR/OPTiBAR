@@ -3,29 +3,22 @@ from tkinter import ttk
 from .upload import UploadNote
 from .calculation.notebook import CalcNote
 from .results import ResultNote
-from ..utils.registery import Registry
 
 class NoteBook(ttk.Notebook):
     def __init__(self, parent):
         ttk.Notebook.__init__(self, parent)
-        registry = Registry()
-        registry.registery(self, 'notebook')    
 
         # widgets
-        upload_note = UploadNote(self)
-        calc_note = CalcNote(self)
-        result_note = ResultNote(self)
-
-        self.add_child(upload_note)
-        self.add_child(calc_note)
-        self.add_child(result_note)
+        self.upload = UploadNote(self)
+        self.calc = CalcNote(self)
+        self.results = ResultNote(self)
 
                 
         # geometry
-        upload_note.grid(sticky='ewns')
-        calc_note.grid(sticky='ewsn')
-        result_note.grid(sticky='ewns')
+        self.upload.grid(sticky='ewns')
+        self.calc.grid(sticky='ewsn')
+        self.results.grid(sticky='ewns')
         
-        self.add(upload_note, text='1. File Upload')
-        self.add(calc_note, text='2. Calculation')
-        self.add(result_note, text='3. Results')
+        self.add(self.upload, text='1. Input File')
+        self.add(self.calc, text='2. Calculation')
+        self.add(self.results, text='3. Results')

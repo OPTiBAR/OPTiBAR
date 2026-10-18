@@ -1,20 +1,16 @@
-import tkinter as tk
 from typing import Dict
-from src.control.utils.urls import connection_error, get_header, get_url
-from src.view.utils.registry import Registry
 from tkinter.messagebox import showinfo, showerror
+from gui.view.body.calculation.notebook import CalcNote
+from gui.control.utils.job import EngineJob
 from .special_lengths import Rebar
 
 class Calc():
-    def __init__(self, registry: Registry, project_data: Dict, result_data: Dict) -> None:
-        self.registry = registry
-        calc_note = registry.get('calc')
-        self.calc_type = registry.get('type')
-        self.setting = registry.get('setting')
-        self.request_frame = registry.get('request')
-        # self.special_lengths = self.setting.get_child('advanced').get_child('special-lengths')
-        self.special_lengths = registry.get('special-lengths')
-
+    def __init__(self, calc_note: CalcNote, project_data: Dict, result_data: Dict) -> None:
+        self.calc_type = calc_note.calc_type
+        self.setting = calc_note.setting
+        self.request_frame = calc_note.request
+        self.special_lengths = calc_note.setting.advanced.special_length
+        self.job = None
 
         # bind to events
         self.request_frame.bind('<<calc-pressed>>', self.calc_pressed)
@@ -28,11 +24,7 @@ class Calc():
         project_data['is_available'].trace_add('write', self.project_data_changed)
 
         # initialize
-        self._stop_monitor()
-        self.order_id = None
         self.request_frame.set_status("Waiting for input file ...")
-
-        # initialize
         project_data['is_available'].set(False)
 
     def check_changed(self, *args):
@@ -46,13 +38,14 @@ class Calc():
 
     def reset_pressed(self, *args):
         if self.project_data['is_available'].get():
-            self.special_lengths.set_material(fc=self.project_data['data']['materials']['fc'], fy=self.project_data['data']['materials']['fy'])
-            values = Rebar.get_values(fc=self.project_data['data']['materials']['fc'], fy=self.project_data['data']['materials']['fy'])
+            materials = self.project_data['data']['materials']
+            self.special_lengths.set_material(fc=materials['fc'], fy=materials['fy'])
+            values = Rebar.get_values(fc=materials['fc'], fy=materials['fy'])
             self.special_lengths.set_values(values)
-    
+
     def project_data_changed(self,*args):
-        self._stop_monitor()
-        
+        self._stop_job()
+
         # refesh results
         self.result_data['is_available'].set(False)
         self.result_data['data'] = None
@@ -61,30 +54,65 @@ class Calc():
         self.request_frame.set_button_label('Calculate')
         if self.project_data['is_available'].get() == False:
             self.request_frame.set_button_state('disabled')
-            self.setting.get_child('advanced').get_child('typical').set_strip_names([])
+            self.setting.advanced.typical.set_strip_names([])
         else:
             self.request_frame.set_status("Ready")
             self.request_frame.set_button_state('!disabled')
-            self.setting.get_child('advanced').get_child('typical').set_strip_names(self.project_data['data']['strip_names'])
+            self.setting.advanced.typical.set_strip_names(self.project_data['data']['strip_names'])
             self.reset_pressed()
-    
-    def calc_type_changed(self, *args):
-        # calc_widget = self.root.get_child('notebook').get_child('calc')
-        # calc_type_value = calc_widget.get_child('type').get_value()
-        calc_widget = self.registry.get('calc')
-        calc_type_value = self.registry.get('type').get_value()
-        if calc_type_value == 'analysis':
-            calc_widget.get_child('setting').get_child('basic').set_analysis_layout()
-        elif calc_type_value == 'calculation':
-            calc_widget.get_child('setting').get_child('basic').set_calc_layout()
 
+    def calc_type_changed(self, *args):
+        calc_type_value = self.calc_type.get_value()
+        if calc_type_value == 'analysis':
+            self.setting.basic.set_analysis_layout()
+        elif calc_type_value == 'calculation':
+            self.setting.basic.set_calc_layout()
+
+    def _stop_job(self):
+        if self.job is not None:
+            self.job.stop()
+            self.job = None
 
     def calc_pressed(self, *args):
-        calc_type = self.calc_type.get_value() 
-        stop_flag = self.stop_flag # a local copy of
-        iter_counter = 0
+        if self.job is not None:
+            self._stop_job()
+            self.request_frame.set_status("Stopped")
+            self.request_frame.set_button_label('Calculate')
+            return
 
+        calc_type = self.calc_type.get_value()
+        self.result_data['is_available'].set(False)
+        self.result_data['data'] = None
 
+        def on_progress(done: int, total: int):
+            self.request_frame.set_status(f'Running, {done} of {total} combinations done')
 
+        def on_done(result):
+            self.job = None
+            self.request_frame.set_button_label('Calculate')
+            self.request_frame.set_status('Finished')
+            self.result_data['data'] = {
+                'calc_type': calc_type,
+                'result_data': result,
+            }
+            showinfo('Calculation', 'Calculated successfully. Go to the 3. Results tab to observe the results.')
+            self.result_data['is_available'].set(True)
 
+        def on_error(message: str):
+            self.job = None
+            self.request_frame.set_button_label('Calculate')
+            self.request_frame.set_status('Failed')
+            showerror('Calculation Error', 'The calculation failed.\n\n' + message.strip().splitlines()[-1])
+            print(message)
 
+        self.request_frame.set_button_label('Stop')
+        self.request_frame.set_status('Running')
+        self.job = EngineJob(
+            self.request_frame,
+            calc_type,
+            self.project_data['data']['input_data'],
+            self.setting.get_values(),
+            on_progress=on_progress,
+            on_done=on_done,
+            on_error=on_error,
+        )

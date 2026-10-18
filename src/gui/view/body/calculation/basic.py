@@ -1,16 +1,13 @@
-from src.view.body.tooltip import CreateToolTip
-from ...utils.registery import Registry
+from gui.view.body.tooltip import CreateToolTip
 import tkinter as tk
 from tkinter import ttk
-from src.view.utils.common import IntCombo, IntEntry
-from src.setting import REBAR_LIST
+from gui.view.utils.common import IntCombo, IntEntry
+from gui.setting import REBAR_LIST
 from typing import Dict, List, Tuple
 
 class Typical(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Typical Arrangement')
-        registry = Registry()
-        registry.registery(self, 'typical')
 
         # widgets
         entry_label = ttk.Label(self, text='Interval(cm)'+ u' \u24BE')
@@ -35,15 +32,12 @@ class Typical(ttk.LabelFrame):
 class Setting(ttk.Frame):
     def __init__(self, parent):
         ttk.Frame.__init__(self, parent)
-        registry = Registry()
-        registry.registery(self, 'basic')
         self.diameter = Diameter(self)
         self.type_num_calc = TypeNumCalc(self)
         self.type_num_analysis = TypeNumAnalysis(self)
         self.elimination = Elimination(self)
         self.typical = Typical(self)
         self.cover = Cover(self)
-        self.add_child(self.typical)
 
         # geometry
         self.diameter.grid(row=0, column=0, rowspan=3, sticky='nwes',padx=(20,10), pady=10)
@@ -123,8 +117,6 @@ class Elimination(ttk.LabelFrame):
 class Cover(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Cover')
-        registry = Registry()
-        registry.registery(self, 'cover')
         entry = IntEntry(self, 20)
         self.entry = entry
         label = ttk.Label(self, text='Side Cover(cm)' + u' \u24BE')

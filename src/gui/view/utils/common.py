@@ -1,15 +1,12 @@
 import tkinter as tk
 from tkinter import ttk
 from typing import List
-from .registery import Registry
 
 INDENT = 4
 
 class LogWindow(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Report')
-        registry = Registry()
-        registry.register(self, 'log')
 
         text = tk.Text(self, wrap= "none", width=40)
         # text['state'] = 'disabled'

@@ -17,9 +17,17 @@ class V16Parser():
             file_path  + ';')
         self.cursor = self.conn.cursor()
     
+    def close(self) -> None:
+        # safe to call twice, and after __init__ failed before connecting
+        if getattr(self, 'cursor', None) is not None:
+            self.cursor.close()
+            self.cursor = None
+        if getattr(self, 'conn', None) is not None:
+            self.conn.close()
+            self.conn = None
+
     def __del__(self):
-        self.cursor.close()
-        self.conn.close()
+        self.close()
         
     
     @lru_cache

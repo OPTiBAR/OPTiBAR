@@ -5,14 +5,14 @@ def round_up(length, round_unit):
     coeff = 1/round_unit
     return math.ceil(length * coeff)/coeff
 
-from src.setting import (
+from core.setting import (
     REBAR_90_BEND_COEFFICIENT,
     REBAR_135_BEND_COEFFICIENT,
     REBAR_BEND_ROUND_UNIT,
     REBAR_LD_ROUND_UNIT,
     REBAR_OVERLAP_ROUND_UNIT,
-    REBAR_LIST
 )
+from gui.setting import REBAR_LIST
 
 
 class Rebar():

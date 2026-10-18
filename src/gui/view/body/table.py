@@ -2,8 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 from typing import List
 import tkinter.messagebox as messagebox
-from src.view.utils.common import IntCombo
-from src.setting import REBAR_LIST
+from gui.view.utils.common import IntCombo
+from gui.setting import REBAR_LIST
     
         
 class Excel(ttk.LabelFrame):

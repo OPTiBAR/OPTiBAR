@@ -2,8 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from typing import List, Dict
 from gui.view.utils.common import LogWindow
-from gui.setting import IMAGES_PATH
-from PIL import Image, ImageTk
+from gui.view.utils.styles import palette
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
@@ -19,9 +18,7 @@ class FileFrame(ttk.LabelFrame):
         self.dxf_button = ttk.Button(self, text='DXF Drawing', command=lambda: self.event_generate("<<dxf-button-pressed>>"))
         separator = ttk.Separator(self, orient=tk.VERTICAL)
 
-        dgr_img = Image.open(IMAGES_PATH.joinpath('diagram.png')).convert("RGBA").resize((35,35))
-        self.dgr_image = ImageTk.PhotoImage(dgr_img)
-        self.diagram_button = ttk.Button(self, text='Diagram', image=self.dgr_image, command=lambda: self.event_generate("<<diagram-button-pressed>>"), compound="left")
+        self.diagram_button = ttk.Button(self, text='Diagram', command=lambda: self.event_generate("<<diagram-button-pressed>>"))
 
         self.diagram_type_var = tk.StringVar()
         self.diagram_type_var.set('total')
@@ -69,6 +66,16 @@ class Diagram():
         main.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
         fig = Figure(figsize=(6, 4), dpi=100)
         self.sub = fig.add_subplot(1,1,1)
+        # match the app theme
+        colors = palette()
+        fig.set_facecolor(ttk.Style(window).lookup('TFrame', 'background') or colors['text_bg'])
+        self.sub.set_facecolor(colors['text_bg'])
+        self.sub.tick_params(colors=colors['text_fg'])
+        for item in (self.sub.xaxis.label, self.sub.yaxis.label, self.sub.title):
+            item.set_color(colors['text_fg'])
+        for spine in self.sub.spines.values():
+            spine.set_color(colors['border'])
+        self.sub.grid(True, color=colors['border'], linewidth=0.6)
 
         canvas = FigureCanvasTkAgg(fig, master=main)  # A tk.DrawingArea.
         canvas.draw()

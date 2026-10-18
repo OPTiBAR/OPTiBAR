@@ -10,7 +10,7 @@ class Typical(ttk.LabelFrame):
         ttk.LabelFrame.__init__(self, parent, text='Typical Arrangement')
 
         # widgets
-        entry_label = ttk.Label(self, text='Interval(cm)'+ u' \u24BE')
+        entry_label = ttk.Label(self, text='Interval(cm)'+ u' \u24D8')
         CreateToolTip(entry_label, 'interval')
         self.entry = IntEntry(self, 100)
         self.entry.set_value('20')
@@ -48,9 +48,8 @@ class Setting(ttk.Frame):
         self.columnconfigure(0,weight=1)
         self.columnconfigure(1,weight=1)
         self.columnconfigure(2,weight=1)
-        self.rowconfigure(0,weight=1)
-        self.rowconfigure(1,weight=1)
-        self.rowconfigure(2,weight=1)
+        # groups keep their natural height, the space left over stays below them
+        self.rowconfigure(3, weight=1)
 
     def set_analysis_layout(self):
         self.type_num_calc.grid_remove()
@@ -90,9 +89,9 @@ class Elimination(ttk.LabelFrame):
         additional_spinbox.state(['readonly'])
         shear_spinbox = ttk.Spinbox(self, width=10, from_=0, to=5, increment=0.5, textvariable=self.shear_var)
         shear_spinbox.state(['readonly'])
-        additional_label = ttk.Label(self, text='Additional(m)'+ u' \u24BE')
+        additional_label = ttk.Label(self, text='Additional(m)'+ u' \u24D8')
         CreateToolTip(additional_label, 'elim-additional')
-        shear_label = ttk.Label(self, text='Shear(m)'+ u' \u24BE')
+        shear_label = ttk.Label(self, text='Shear(m)'+ u' \u24D8')
         CreateToolTip(shear_label, 'elim-shear')
 
         # geometry
@@ -119,7 +118,7 @@ class Cover(ttk.LabelFrame):
         ttk.LabelFrame.__init__(self, parent, text='Cover')
         entry = IntEntry(self, 20)
         self.entry = entry
-        label = ttk.Label(self, text='Side Cover(cm)' + u' \u24BE')
+        label = ttk.Label(self, text='Side Cover(cm)' + u' \u24D8')
         CreateToolTip(label, 'side-cover')
         label.grid(row=0, column=0, sticky='w')
         entry.grid(row=0,column=1, sticky='w')
@@ -148,13 +147,13 @@ class Diameter(ttk.LabelFrame):
         self.shear_combo = IntCombo(self, values)
         self.shear_combo.set_value(14)
 
-        typical_label = ttk.Label(self, text='Typical'+ u' \u24BE')
+        typical_label = ttk.Label(self, text='Typical'+ u' \u24D8')
         CreateToolTip(typical_label, 'typical')
-        additional_label = ttk.Label(self, text='Additional'+ u' \u24BE')
+        additional_label = ttk.Label(self, text='Additional'+ u' \u24D8')
         CreateToolTip(additional_label, 'additional')
-        thermal_label = ttk.Label(self, text='Thermal'+ u' \u24BE')
+        thermal_label = ttk.Label(self, text='Thermal'+ u' \u24D8')
         CreateToolTip(thermal_label, 'thermal')
-        shear_label = ttk.Label(self, text='Shear'+ u' \u24BE')
+        shear_label = ttk.Label(self, text='Shear'+ u' \u24D8')
         CreateToolTip(shear_label, 'shear')
 
         # geometry
@@ -197,11 +196,11 @@ class TypeNumCalc(ttk.LabelFrame):
         self.stack_combo.set_value(2)
         self.shear_combo.set_value(4)
 
-        total_label = ttk.Label(self, text='Total'+ u' \u24BE')
+        total_label = ttk.Label(self, text='Total'+ u' \u24D8')
         CreateToolTip(total_label, 'total')
-        stack_label = ttk.Label(self, text='Stack'+ u' \u24BE')
+        stack_label = ttk.Label(self, text='Stack'+ u' \u24D8')
         CreateToolTip(stack_label, 'stack')
-        shear_label = ttk.Label(self, text='Shear'+ u' \u24BE')
+        shear_label = ttk.Label(self, text='Shear'+ u' \u24D8')
         CreateToolTip(shear_label, 'type-shear')
 
         # geometry

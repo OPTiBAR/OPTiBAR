@@ -1,4 +1,5 @@
 import tkinter as tk
+from gui.view.utils.styles import palette
 
 class CreateToolTip(object):
     """
@@ -6,7 +7,7 @@ class CreateToolTip(object):
     """
     def __init__(self, widget, widget_key: str):
         self.waittime = 500     #miliseconds
-        self.wraplength = 180   #pixels
+        self.wraplength = 320   #pixels
         self.widget = widget
         self.text = tooltips_dict[widget_key]
         self.widget.bind("<Enter>", self.enter)
@@ -42,10 +43,12 @@ class CreateToolTip(object):
         # Leaves only the label and removes the app window
         self.tw.wm_overrideredirect(True)
         self.tw.wm_geometry("+%d+%d" % (x, y))
-        label = tk.Label(self.tw, text=self.text, justify='right',
-                       background="#ffffff", relief='solid', borderwidth=1,
-                       wraplength = self.wraplength)
-        label.pack(ipadx=1)
+        colors = palette()
+        label = tk.Label(self.tw, text=self.text, justify='left',
+                       background=colors['tooltip_bg'], foreground=colors['text_fg'],
+                       highlightthickness=1, highlightbackground=colors['border'], borderwidth=0,
+                       font='SunValleyCaptionFont', wraplength = self.wraplength)
+        label.pack(ipadx=8, ipady=5)
     
     def hidetip(self):
         tw = self.tw

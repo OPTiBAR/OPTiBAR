@@ -1,33 +1,40 @@
 import tkinter as tk
 from tkinter import ttk
 from typing import List
+from gui.view.utils.styles import palette, report_font
 
 INDENT = 4
 
 class LogWindow(ttk.LabelFrame):
     def __init__(self, parent):
-        ttk.LabelFrame.__init__(self, parent, text='Report')
+        ttk.LabelFrame.__init__(self, parent, text='Report', padding=(12, 8))
 
-        text = tk.Text(self, wrap= "none", width=40)
-        # text['state'] = 'disabled'
+        text = tk.Text(self, wrap= "none", width=40, relief='flat', borderwidth=0, highlightthickness=1,
+            padx=10, pady=8, font=report_font(), state='disabled')
         self.text = text
         yscroll = ttk.Scrollbar(self, orient = 'vertical', command = text.yview)
         xscroll = ttk.Scrollbar(self, orient = 'horizontal', command = text.xview)
         text['yscrollcommand'] = yscroll.set
         text['xscrollcommand'] = xscroll.set
-        text.grid(column = 0, row = 0, sticky = 'nwes', pady=(20,0), padx=(20,0))
-        xscroll.grid(column = 0, row = 1, sticky = 'we', padx=(20,0), pady=(0,20))
-        yscroll.grid(column = 1, row = 0, sticky = 'ns', padx=(0,20), pady=(20,0))
+        text.grid(column = 0, row = 0, sticky = 'nwes')
+        xscroll.grid(column = 0, row = 1, sticky = 'we', pady=(4, 0))
+        yscroll.grid(column = 1, row = 0, sticky = 'ns', padx=(4, 0))
         self.grid_columnconfigure(0, weight = 1)
         self.grid_rowconfigure(0, weight = 1)
         self.grid_columnconfigure(1, weight = 0)
         self.grid_rowconfigure(1, weight = 0)
 
-        # tag configuration
-        text.tag_configure('ERROR', foreground='red')
-        text.tag_configure('WARNING', foreground='#9B870C')
-        text.tag_configure('SUCCESS', foreground='green')
-        text.tag_configure('INFO', foreground='black')
+        self._apply_colors()
+        self.bind('<<ThemeChanged>>', self._apply_colors)
+
+    def _apply_colors(self, *args) -> None:
+        colors = palette()
+        self.text.configure(background=colors['text_bg'], foreground=colors['text_fg'], insertbackground=colors['text_fg'],
+            highlightbackground=colors['border'], highlightcolor=colors['border'], selectbackground=colors['link'])
+        self.text.tag_configure('ERROR', foreground=colors['error'])
+        self.text.tag_configure('WARNING', foreground=colors['warning'])
+        self.text.tag_configure('SUCCESS', foreground=colors['success'])
+        self.text.tag_configure('INFO', foreground=colors['text_fg'])
     
     def clear(self) -> None:
         self.text['state'] = 'normal'

@@ -30,6 +30,7 @@ In **2. Calculation**, choose the **Type of Request**:
 ![The Basic settings](../_static/images/gui_calculation_basic.png)
 
 The **Basic** tab holds the main settings. Hover the ⓘ next to a setting for a short description.
+**View > Dark Theme** switches the app to a dark theme.
 
 | Setting | Meaning |
 | --- | --- |

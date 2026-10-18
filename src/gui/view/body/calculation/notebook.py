@@ -11,9 +11,9 @@ class CalcType(ttk.LabelFrame):
         # variable and widget
         self.type_var = tk.StringVar()
         self.type_var.set('calculation')
-        computation_radio = ttk.Radiobutton(self, text='Computation'+ u' \u24BE', variable=self.type_var, value='calculation', command=self.changed_fun)
+        computation_radio = ttk.Radiobutton(self, text='Computation'+ u' \u24D8', variable=self.type_var, value='calculation', command=self.changed_fun)
         CreateToolTip(computation_radio, 'computation')
-        analysis_radio = ttk.Radiobutton(self, text='Analysis'+ u' \u24BE', variable=self.type_var, value='analysis', command=self.changed_fun)
+        analysis_radio = ttk.Radiobutton(self, text='Analysis'+ u' \u24D8', variable=self.type_var, value='analysis', command=self.changed_fun)
         CreateToolTip(analysis_radio, 'analysis')
         self.analysis_radio = analysis_radio
         # geometry
@@ -69,16 +69,18 @@ class CalcRequest(ttk.LabelFrame):
         
         #widgets
         status_label = ttk.Label(self, textvariable=self.status_var)
-        self.calculate_button = ttk.Button(self, textvariable=self.button_var, command=self.calc_fun)
+        self.progress = ttk.Progressbar(self, mode='determinate', length=220)
+        self.calculate_button = ttk.Button(self, textvariable=self.button_var, command=self.calc_fun, style='Accent.TButton', width=12)
         
         #geometry
-        status_label.grid(row=1, column=0, sticky='w')
-        self.calculate_button.grid(row=1, column=1, sticky='e')
+        status_label.grid(row=0, column=0, sticky='w')
+        self.progress.grid(row=0, column=1, sticky='e')
+        self.calculate_button.grid(row=0, column=2, sticky='e')
+        self.progress.grid_remove()
 
         self.columnconfigure(0, weight=1)
-        self.columnconfigure(1, weight=10)
         for child in self.winfo_children(): 
-            child.grid_configure(padx=10, pady=10)
+            child.grid_configure(padx=10, pady=8)
     
     def set_status(self, value: str) -> None:
         self.status_var.set('Status: ' + value)
@@ -100,6 +102,21 @@ class CalcRequest(ttk.LabelFrame):
         else:
             raise Exception("state value should be disabled or !disabled")
     
+    def start_progress(self) -> None:
+        """a moving bar until the first progress report, or for runs that have none"""
+        self.progress.grid()
+        self.progress.configure(mode='indeterminate')
+        self.progress.start(15)
+
+    def set_progress(self, done: int, total: int) -> None:
+        self.progress.stop()
+        self.progress.configure(mode='determinate', maximum=total, value=done)
+
+    def stop_progress(self) -> None:
+        self.progress.stop()
+        self.progress.configure(value=0)
+        self.progress.grid_remove()
+
     def set_button_label(self, label: bool) -> None:
         self.button_var.set(label)
     

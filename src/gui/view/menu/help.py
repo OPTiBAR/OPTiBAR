@@ -22,7 +22,7 @@ class About(Popup):
         main.optibar_image = ImageTk.PhotoImage(optibar_img)
         logo_label = ttk.Label(main, image=main.optibar_image)
         version_label = ttk.Label(main, text='Software Version: ' + VERSION)
-        repo_link = ttk.Label(main, text=REPO_URL, cursor="hand2", style='link.TLabel')
+        repo_link = ttk.Label(main, text=REPO_URL, cursor="hand2", style='Link.TLabel')
         repo_link.bind('<Button-1>', lambda e: webbrowser.open(REPO_URL))
         ok_button = ttk.Button(main, text='OK', command=self.close)
 

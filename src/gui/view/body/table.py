@@ -3,6 +3,7 @@ from tkinter import ttk
 from typing import List
 import tkinter.messagebox as messagebox
 from gui.view.utils.common import IntCombo
+from gui.view.utils.styles import palette
 from gui.setting import REBAR_LIST
     
         
@@ -40,12 +41,13 @@ class Excel(ttk.LabelFrame):
             background=fixed_map("background")
         )
         
-        tree.tag_configure('oddrow', background='#EEEEEE')
+        self._apply_colors()
+        self.bind('<<ThemeChanged>>', self._apply_colors)
         tree.configure(yscrollcommand = verscrlbar.set)
-        tree.column('strip', anchor='center', width=50)
-        tree.column('level', anchor='center', width=50)
-        tree.column('number', anchor='center', width=50)
-        tree.column('diameter', anchor='center', width=50)
+        tree.column('strip', anchor='center', width=80)
+        tree.column('level', anchor='center', width=80)
+        tree.column('number', anchor='center', width=80)
+        tree.column('diameter', anchor='center', width=80)
         tree.heading('strip', text='Strip')
         tree.heading('level', text='Level')
         tree.heading('number', text='Number')
@@ -80,6 +82,9 @@ class Excel(ttk.LabelFrame):
         self.columnconfigure(3,weight=1)
         self.rowconfigure(0, weight=1)
         
+    def _apply_colors(self, *args) -> None:
+        self.tree.tag_configure('oddrow', background=palette()['stripe'])
+
     def set_labels(self, labels: List[str]):
         labels = sorted(labels)
         self.value_dict = {}

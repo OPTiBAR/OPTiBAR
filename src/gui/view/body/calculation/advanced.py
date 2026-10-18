@@ -90,9 +90,10 @@ class SpecialLength(ttk.LabelFrame):
             for subitem in entries[item]:
                 for rebar in REBAR_LIST:
                     entries[item][subitem][rebar] = IntEntry(self, upper_bound)
+                    entries[item][subitem][rebar].configure(width=5)
         
         self.material_var = tk.StringVar(self)
-        self.material_var.set(f"fc: {''.ljust(10)}, f'y:{''.ljust(10)}")
+        self.material_var.set("f'c: -     f'y: -")
         material_label = ttk.Label(self, textvariable=self.material_var)
         ld_label = ttk.Label(self, text='Ld(cm)')
         overlap_label = ttk.Label(self, text='Overlap(cm)')
@@ -111,11 +112,12 @@ class SpecialLength(ttk.LabelFrame):
         ld_label.grid(row=1, column=1, columnspan=2, pady=10)
         overlap_label.grid(row=1, column=3, columnspan=2, pady=10)
         bend_label.grid(row=1, column=5, columnspan=2, pady=10)
+        ttk.Label(self, text='Ø (mm)', style='Muted.TLabel').grid(row=2, column=0, padx=(10, 6), pady=2, sticky='e')
         for i, column in enumerate(column_names):
             ttk.Label(self, text=column).grid(row=2, column=i+1, pady=2)
         
         for i, rebar in enumerate(REBAR_LIST):
-            ttk.Label(self, text=str(rebar)).grid(row=i+3, column=0, padx=10, sticky='e')
+            ttk.Label(self, text=str(rebar)).grid(row=i+3, column=0, padx=(10, 6), sticky='e')
         
         for i,rebar in enumerate(REBAR_LIST):
             j = 0
@@ -133,7 +135,9 @@ class SpecialLength(ttk.LabelFrame):
 
         for i in range(len(REBAR_LIST)+4):
             self.rowconfigure(i,weight=1)
-        for j in range(len(column_names)+1):
+        # the diameter column keeps its width; the entry columns share the rest
+        self.columnconfigure(0, weight=0)
+        for j in range(1, len(column_names)+1):
             self.columnconfigure(j,weight=1)
             
     def get_checked(self):
@@ -163,4 +167,4 @@ class SpecialLength(ttk.LabelFrame):
                 self.entries[item][subitem][rebar]['state'] = state
     
     def set_material(self, fy:float, fc:float) -> None:
-        self.material_var.set(f"fc: {str(round(fc)).ljust(10)}(tonf/m^2),\t f'y:{str(round(fy)).ljust(10)}(tonf/m^2)")
+        self.material_var.set(f"f'c: {round(fc)} tonf/m²     f'y: {round(fy)} tonf/m²")

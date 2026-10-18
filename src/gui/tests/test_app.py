@@ -179,6 +179,56 @@ def test_stop(loaded_app):
 
 
 @requires_driver
+def test_progress_bar(loaded_app):
+    app = loaded_app
+    progress = app.request.progress # shown = placed in the grid; the tab itself may be hidden
+    assert not progress.grid_info()
+    app.request.event_generate('<<calc-pressed>>')
+    app.update(0.2)
+    assert progress.grid_info()
+    app.wait_until(lambda: app.request.get_button_label() == 'Calculate')
+    app.update()
+    assert not progress.grid_info()
+
+    values = []
+    app.set_calc_type('analysis')
+    analysis = app.notebook.calc.setting.basic.type_num_analysis
+    analysis.total_frame.combo_from.set_value(10)
+    analysis.total_frame.combo_to.set_value(11)
+    analysis.stack_frame.combo_from.set_value(2)
+    analysis.stack_frame.combo_to.set_value(2)
+    app.request.status_var.trace_add('write', lambda *args: values.append((float(progress['value']), float(progress['maximum']))))
+    app.calculate()
+    assert (2.0, 2.0) in values # determinate once the analysis reports progress
+    assert not progress.grid_info()
+
+
+@requires_driver
+def test_dark_theme(loaded_app):
+    from gui.view.utils.styles import PALETTES
+    app = loaded_app
+    log = app.notebook.results.log.text
+    assert log.cget('background') == PALETTES['light']['text_bg']
+    app.root.menu.view.dark_var.set(True)
+    app.root.event_generate('<<toggle-theme>>')
+    app.update()
+    assert log.cget('background') == PALETTES['dark']['text_bg']
+    assert log.tag_cget('INFO', 'foreground') == PALETTES['dark']['text_fg']
+    tree = app.notebook.calc.setting.advanced.typical.table.tree
+    assert str(tree.tag_configure('oddrow', 'background')) == PALETTES['dark']['stripe']
+    # results still work and the diagram follows the theme
+    run_analysis(app)
+    windows = len(app.root.winfo_children())
+    app.press(app.notebook.results.files, '<<diagram-button-pressed>>')
+    assert len(app.root.winfo_children()) == windows + 1
+    app.root.menu.view.dark_var.set(False)
+    app.root.event_generate('<<toggle-theme>>')
+    app.update()
+    assert log.cget('background') == PALETTES['light']['text_bg']
+    assert app.errors() == []
+
+
+@requires_driver
 def test_new_file_clears_results(loaded_app):
     app = loaded_app
     run_calculation(app)

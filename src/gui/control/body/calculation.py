@@ -72,6 +72,7 @@ class Calc():
         if self.job is not None:
             self.job.stop()
             self.job = None
+        self.request_frame.stop_progress()
 
     def calc_pressed(self, *args):
         if self.job is not None:
@@ -86,10 +87,12 @@ class Calc():
         self.result_data['data'] = None
 
         def on_progress(done: int, total: int):
+            self.request_frame.set_progress(done, total)
             self.request_frame.set_status(f'Running, {done} of {total} combinations done')
 
         def on_done(result):
             self.job = None
+            self.request_frame.stop_progress()
             self.request_frame.set_button_label('Calculate')
             self.request_frame.set_status('Finished')
             self.result_data['data'] = {
@@ -103,6 +106,7 @@ class Calc():
 
         def on_error(message: str):
             self.job = None
+            self.request_frame.stop_progress()
             self.request_frame.set_button_label('Calculate')
             self.request_frame.set_status('Failed')
             showerror('Calculation Error', 'The calculation failed.\n\n' + message.strip().splitlines()[-1])
@@ -110,6 +114,7 @@ class Calc():
 
         self.request_frame.set_button_label('Stop')
         self.request_frame.set_status('Running')
+        self.request_frame.start_progress()
         self.job = EngineJob(
             self.request_frame,
             calc_type,

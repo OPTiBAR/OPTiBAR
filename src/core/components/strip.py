@@ -1,3 +1,5 @@
+from __future__ import annotations
+from typing import Iterator, List
 from .period import Period
 from .mesh import Mesh, Section
 from core.optimization.practical.stack import Stack

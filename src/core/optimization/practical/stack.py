@@ -1,3 +1,4 @@
+from __future__ import annotations
 from core.components.period import Period
 from core.components.collections import Stack
 from .errors import NotEnoughTypes

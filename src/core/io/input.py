@@ -1,3 +1,5 @@
+from __future__ import annotations
+from typing import Dict
 from shapely.geometry import Polygon, LineString, Point
 from typing import Any
 import math

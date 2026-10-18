@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import final, override
 from .period import Period
 from .rebar import Rebar
@@ -11,10 +12,10 @@ class Piece():
         self.refresh()
 
     def refresh(self) -> 0:
-        self.practical: Period = None
+        self.required: Period = None
         self.domination = None
 
-        self.executive: Period = None
+        self.practical: Period = None
 
         self.shortest_piece_length: float = None
         self.length_upper_bound: float = None
@@ -25,8 +26,8 @@ class Piece():
     def __eq__(self, other: Piece):
         checks = (
             self.theoretical == other.theoretical,
+            self.required == other.required,
             self.practical == other.practical,
-            self.executive == other.executive,
             self.bend == other.bend,
         )
         return all(checks)
@@ -36,8 +37,8 @@ class Piece():
         return (
             "Piece:\n"
             f"\t theoretical: {self.theoretical}\n"
+            f"\t required: {self.required}\n"
             f"\t practical: {self.practical}\n"
-            f"\t executive: {self.executive}\n"
             f"\t bend: {self.bend}"
         )
 
@@ -71,7 +72,7 @@ class Piece():
             return net_length - ((num_of_pieces - 1) * STANDARD_LENGTH)
 
     def get_shortest_piece_length(self, by:str) -> float:
-        """returns the shortest piece length based on practical period.
+        """returns the shortest piece length based on required period.
         Returns:
             float: the length.
         """
@@ -93,7 +94,7 @@ class Piece():
         Returns:
             List[Piece]: list of pieces
         """
-        if round(self.executive.get_length(),3) <= STANDARD_LENGTH:
+        if round(self.practical.get_length(),3) <= STANDARD_LENGTH:
             return [self]
         else: # multiple pieces
             short_piece_side = None
@@ -107,38 +108,38 @@ class Piece():
 
             # typical rebars shortest_piece_length is None
             if self.shortest_piece_length is None:
-                shortest_piece_length = self.get_shortest_piece_length("executive")
+                shortest_piece_length = self.get_shortest_piece_length("practical")
             else:
                 shortest_piece_length = self.shortest_piece_length
 
             if short_piece_side == "start":
                 # build start piece
-                end = self.executive.start + shortest_piece_length
+                end = self.practical.start + shortest_piece_length
                 if self.theoretical.start < end:
                     theoretical = Period(self.theoretical.start,end)
                 else:
                     theoretical = Period(end,end)
                 piece = Piece(rebar = self.rebar, theoretical=theoretical)
-                if self.practical.start < end:
-                    practical = Period(self.practical.start,end)
+                if self.required.start < end:
+                    required = Period(self.required.start,end)
                 else:
-                    practical = Period(end,end)
-                piece.practical = practical
-                piece.executive = Period(self.executive.start,end)
+                    required = Period(end,end)
+                piece.required = required
+                piece.practical = Period(self.practical.start,end)
                 piece.bend = Bend(self.bend.start, 0)
                 pieces.append(piece)
 
                 # this new end the overlap of the shortest piece will be longer than the standard length
-                end = self.executive.start + self.get_shortest_piece_length("executive")
+                end = self.practical.start + self.get_shortest_piece_length("practical")
 
                 # middle pieces
-                for i in range(self.get_num_of_pieces(by="executive")-2):
+                for i in range(self.get_num_of_pieces(by="practical")-2):
                     start = end - self.rebar.get_overlap_length()
                     end = start + STANDARD_LENGTH
                     theoretical = Period(start,end)
                     piece = Piece(rebar=self.rebar, theoretical=theoretical)
+                    piece.required = theoretical
                     piece.practical = theoretical
-                    piece.executive = theoretical
                     pieces.append(piece)
 
                 # build end piece
@@ -146,48 +147,48 @@ class Piece():
                 end = start + STANDARD_LENGTH
                 theoretical = Period(start,self.theoretical.end)
                 piece = Piece(self.rebar, theoretical)
-                piece.practical = Period(start,self.practical.end)
-                piece.executive = Period(start,end)
+                piece.required = Period(start,self.required.end)
+                piece.practical = Period(start,end)
                 piece.bend = Bend(0,self.bend.end)
                 pieces.append(piece)
 
             else: # short_piece_side == "end"
                 # start piece
-                end = self.executive.start + STANDARD_LENGTH
+                end = self.practical.start + STANDARD_LENGTH
                 theoretical = Period(self.theoretical.start, end)
                 piece = Piece(self.rebar, theoretical)
+                piece.required = Period(self.required.start, end)
                 piece.practical = Period(self.practical.start, end)
-                piece.executive = Period(self.executive.start, end)
                 piece.bend = Bend(self.bend.start, 0)
                 pieces.append(piece)
 
                 # middle pieces
                 Piece.get_num_of_pieces
-                for i in range(self.get_num_of_pieces(by="executive")-2):
+                for i in range(self.get_num_of_pieces(by="practical")-2):
                     start = end - self.rebar.get_overlap_length()
                     end = start + STANDARD_LENGTH
                     theoretical = Period(start,end)
                     piece = Piece(rebar=self.rebar, theoretical=theoretical)
+                    piece.required = theoretical
                     piece.practical = theoretical
-                    piece.executive = theoretical
                     piece.bend = Bend(0,0)
                     pieces.append(piece)
 
                 # build end piece
                 # this new start the overlap of the shortest piece will be longer than the standard length
-                start = end - (shortest_piece_length - self.get_shortest_piece_length("executive")) - self.rebar.get_overlap_length()
+                start = end - (shortest_piece_length - self.get_shortest_piece_length("practical")) - self.rebar.get_overlap_length()
                 end = start + shortest_piece_length
                 if self.theoretical.end > start:
                     theoretical = Period(start,self.theoretical.end)
                 else:
                     theoretical = Period(start,start)
-                if self.practical.end > start:
-                    practical = Period(start, self.practical.end)
+                if self.required.end > start:
+                    required = Period(start, self.required.end)
                 else:
-                    practical = Period(start,start)
+                    required = Period(start,start)
                 piece = Piece(self.rebar, theoretical)
-                piece.practical = practical
-                piece.executive = Period(start,end)
+                piece.required = required
+                piece.practical = Period(start,end)
                 piece.bend = Bend(0,self.bend.end)
                 pieces.append(piece)
 

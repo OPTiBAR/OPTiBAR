@@ -1,3 +1,5 @@
+from __future__ import annotations
+from typing import Dict, Iterator, List
 from .piece import Piece
 from .diagram import Diagram
 
@@ -97,7 +99,7 @@ class Container():
         """returns stacks of pieces in the container
 
         Args:
-            by (str): can be one of these values "theoretical", "practical" or "executive"
+            by (str): can be one of these values "theoretical", "required" or "practical"
 
         Returns:
             List[Stack]: list of stacks
@@ -137,7 +139,7 @@ class Container():
             row_index = 0
             for piece_dict in piece_list:
                 if piece_dict["bunch_ref"] is None:
-                    if len(bunch_list) > 0 and round(bunch_list[-1]["bunch"].get_pieces()[-1].executive.get_length(),3) == round(piece_dict["piece"].executive.get_length(),3):
+                    if len(bunch_list) > 0 and round(bunch_list[-1]["bunch"].get_pieces()[-1].practical.get_length(),3) == round(piece_dict["piece"].practical.get_length(),3):
                         bunch_list[-1]["bunch"].add(piece_dict["piece"])
                         piece_dict["bunch_ref"] = bunch_list[-1]["bunch"]
                     else:
@@ -164,7 +166,7 @@ class Container():
             })
         # initializing list of stack_dict
         stack_list = []
-        for stack in self.get_stacks("executive"):
+        for stack in self.get_stacks("practical"):
             stack_list.append({
                 "stack": stack, # ref to stack object
                 # list of piece_dicts of the stack
@@ -192,7 +194,7 @@ class Container():
                     row_dict[row_index] = [bunch_dict["bunch"]]
         # sort bunches of each row by their start station
         for row_index in row_dict:
-            row_dict[row_index] = sorted(row_dict[row_index], key=lambda bunch: bunch.get_pieces()[0].executive.start)
+            row_dict[row_index] = sorted(row_dict[row_index], key=lambda bunch: bunch.get_pieces()[0].practical.start)
         # initializing list of list of bunches, the first list belongs to the first row
         rows = []
         for row_index in sorted(row_dict.keys()):

@@ -1,3 +1,5 @@
+from __future__ import annotations
+from typing import Dict, List, NoReturn
 from .errors import NotEnoughTypes
 from core.components.piece import Piece
 STANDARD_LENGTH = 12

@@ -1,3 +1,5 @@
+from __future__ import annotations
+from typing import List, NoReturn
 from enum import Enum
 from core.components.collections import Stack
 from core.components.period import Period
@@ -160,7 +162,7 @@ class PieceDomination():
         return f"Piece Domination:({self.start}, {self.end})"
 
 
-class requiredOptimization():
+class RequiredOptimization():
     def __init__(self, stack: Stack, d_length: float, ld_length: float):
         self.stack = stack
         self.d_length = d_length

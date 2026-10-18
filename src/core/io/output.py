@@ -1,3 +1,5 @@
+from __future__ import annotations
+from typing import Dict, List
 from core.components.utilities import round_down
 from core.components.rebar import Rebar, RebarType
 from core.components.foundation import Foundation
@@ -45,10 +47,12 @@ class Output():
         union_polygon = unary_union(polygons) - unary_union(opening_polygons)
         interiors = []
         exteriors = []
-        # make union_polygon iterable
-        if isinstance(union_polygon,Polygon): # not iterable multipolygon
-            union_polygon = [union_polygon]
-        for polygon in union_polygon:
+        # shapely 2 multipolygons are not iterable; their parts are in .geoms
+        if isinstance(union_polygon,Polygon):
+            polygons = [union_polygon]
+        else:
+            polygons = union_polygon.geoms
+        for polygon in polygons:
             exteriors.append(list(map(list,polygon.exterior.coords[:])))
             for interior in polygon.interiors:
                 interiors.append(list(map(list,interior.coords[:])))
@@ -146,7 +150,7 @@ class Output():
             for piece_dict in (strip_dict["top"], strip_dict["bottom"]):
                 number = piece_dict["number"]
                 for subpiece in piece_dict["subpieces"]:
-                    length = round(subpiece.executive.get_length(),2)
+                    length = round(subpiece.practical.get_length(),2)
                     diameter = subpiece.rebar.get_diameter_mm()
                     no_side = 0
                     one_side = 0
@@ -198,7 +202,7 @@ class Output():
             for row in strip["top"]+strip["bottom"]:
                 for subpiece in row:
                     diameter = subpiece.rebar.rebar_type.value
-                    length = round(subpiece.executive.get_length(),2)
+                    length = round(subpiece.practical.get_length(),2)
                     no_side = 0
                     one_side = 0
                     two_side = 0
@@ -283,10 +287,10 @@ class Output():
         for strip_dict in self._reinforceent_subpieces:
             for row in strip_dict["top"]:
                 for piece in row:
-                    top_mass += piece.rebar.get_area() * piece.executive.get_length() * STEEL_DENSITY
+                    top_mass += piece.rebar.get_area() * piece.practical.get_length() * STEEL_DENSITY
             for row in strip_dict["bottom"]:
                 for piece in row:
-                    bottom_mass += piece.rebar.get_area() * piece.executive.get_length() * STEEL_DENSITY
+                    bottom_mass += piece.rebar.get_area() * piece.practical.get_length() * STEEL_DENSITY
         return {
             "top": round(top_mass,3),
             "bottom": round(bottom_mass,3)
@@ -315,7 +319,7 @@ class Output():
         }
         for strip_dict in self._typical_subpieces:
             for piece in strip_dict["top"]["subpieces"]:
-                piece_mass = piece.rebar.get_area() * piece.executive.get_length() * strip_dict["top"]["number"] * STEEL_DENSITY
+                piece_mass = piece.rebar.get_area() * piece.practical.get_length() * strip_dict["top"]["number"] * STEEL_DENSITY
                 if strip_dict["top"]["type"] == 'typical':
                     mass_dict["typical"]["top"] += piece_mass
                 elif strip_dict["top"]["type"] == 'thermal':
@@ -323,7 +327,7 @@ class Output():
                 else:
                     raise ValueError(f'not defined rebar type {strip_dict["top"]["type"]}')
             for piece in strip_dict["bottom"]["subpieces"]:
-                piece_mass = piece.rebar.get_area() * piece.executive.get_length() * strip_dict["bottom"]["number"] * STEEL_DENSITY
+                piece_mass = piece.rebar.get_area() * piece.practical.get_length() * strip_dict["bottom"]["number"] * STEEL_DENSITY
                 if strip_dict["bottom"]["type"] == 'typical':
                     mass_dict["typical"]["bottom"] += piece_mass
                 elif strip_dict["bottom"]["type"] == 'thermal':
@@ -440,7 +444,7 @@ class Output():
                         {
                             "diameter": subpiece.rebar.get_diameter_mm(),
                             "number": strip_typical["top"]["number"],
-                            "stations": [subpiece.executive.start, subpiece.executive.end],
+                            "stations": [subpiece.practical.start, subpiece.practical.end],
                             "bends": [subpiece.bend.start, subpiece.bend.end],
                         }
                         for subpiece in strip_typical["top"]["subpieces"]
@@ -449,7 +453,7 @@ class Output():
                         {
                             "diameter": subpiece.rebar.get_diameter_mm(),
                             "number": strip_typical["bottom"]["number"],
-                            "stations": [subpiece.executive.start, subpiece.executive.end],
+                            "stations": [subpiece.practical.start, subpiece.practical.end],
                             "bends": [subpiece.bend.start, subpiece.bend.end],
                         }
                         for subpiece in strip_typical["bottom"]["subpieces"]
@@ -471,7 +475,7 @@ class Output():
                                 {
                                     "number": bunch.get_count(),
                                     "diameter": bunch.get_pieces()[0].rebar.get_diameter_mm(),
-                                    "stations": [subpiece.executive.start, subpiece.executive.end],
+                                    "stations": [subpiece.practical.start, subpiece.practical.end],
                                     "bends": [subpiece.bend.start, subpiece.bend.end],
                                 } for subpiece in bunch.get_pieces()[0].get_subpieces()
                             ] for bunch in row
@@ -483,7 +487,7 @@ class Output():
                                 {
                                     "number": bunch.get_count(),
                                     "diameter": bunch.get_pieces()[0].rebar.get_diameter_mm(),
-                                    "stations": [subpiece.executive.start, subpiece.executive.end],
+                                    "stations": [subpiece.practical.start, subpiece.practical.end],
                                     "bends": [subpiece.bend.start, subpiece.bend.end],
                                 } for subpiece in bunch.get_pieces()[0].get_subpieces()
                             ] for bunch in row

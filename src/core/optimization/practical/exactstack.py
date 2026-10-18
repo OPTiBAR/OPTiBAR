@@ -1,3 +1,5 @@
+from __future__ import annotations
+from typing import List
 from core.components.collections import Stack
 from pyomo.environ import *
 from pyomo.opt import SolverStatus, TerminationCondition
@@ -71,18 +73,13 @@ class Minimization():
 
         model.obj = Objective(expr=sum(C[i][j]*model.x[i,j] for j in J for i in I))
 
-        solvername='glpk'
-        # solverpath_folder='D:\\winglpk-4.65\\glpk-4.65\\w64' #does not need to be directly on c drive
-        solverpath_exe='D:\\winglpk-4.65\\glpk-4.65\\w64\\glpsol' #does not need to be directly on c drive
-        # sys.path.append(solverpath_folder)
-
-        # solvername='cplex'
-        # solverpath_exe='C:\\Program Files\\IBM\\ILOG\\CPLEX_Studio1261\\cplex\\bin\\x64_win64\\cplex'
-
-        solver=SolverFactory(solvername)#, executable=solverpath_exe)
-        solver.options['mipgap'] = 0.1
-        results = solver.solve(model)
-        if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
+        # HiGHS ships with the highspy package, so no external solver install is needed
+        solver = SolverFactory('appsi_highs')
+        solver.options['mip_rel_gap'] = 0.1
+        # solutions are loaded only when optimal, so an infeasible model doesn't raise
+        results = solver.solve(model, load_solutions=False)
+        if results.solver.termination_condition == TerminationCondition.optimal:
+            model.solutions.load_from(results)
             # Do something when the solution in optimal and feasible
             # print('feasible optimal')
             return('optimal')
@@ -125,7 +122,7 @@ class StackAlgorithmExact():
             self.selected_lengths,
             [piece.shortest_piece_length for piece in pieces],
             [piece.length_upper_bound for piece in pieces],
-            [piece.get_num_of_pieces("executive") for piece in pieces]
+            [piece.get_num_of_pieces("practical") for piece in pieces]
         )
         while True:
             if minimization.run(p) == 'optimal':

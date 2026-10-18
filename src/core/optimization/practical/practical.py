@@ -6,7 +6,7 @@ from .exactstack import StackAlgorithmExact
 from .total import TotalAlgorithm
 
 
-class ExecutiveOptimization():
+class PracticalOptimization():
     def __init__(self,
             pieces: list[Piece],
             stacks: dict[str, list[Stack]],

@@ -1,3 +1,5 @@
+from __future__ import annotations
+from typing import Dict, List
 from .config import Config
 from .shear import ShearType, ShearZone
 from typing import Iterator
@@ -5,7 +7,7 @@ from .rebar import RebarType, Rebar
 from .strip import Strip
 from .piece import Piece
 from .collections import Bunch
-from core.optimization.practical.practical import ExecutiveOptimization
+from core.optimization.practical.practical import PracticalOptimization
 from core.optimization.practical.errors import NotEnoughTypes
 from core.optimization.shear import ShearOptimization, ShearType
 from core.io.input import InputInterpreter
@@ -96,7 +98,7 @@ class Foundation():
             return stack_dict
         while True:
             is_unified = False
-            eo = ExecutiveOptimization(get_pieces(), get_stacks(), total_num_of_types, stack_num_of_types)
+            eo = PracticalOptimization(get_pieces(), get_stacks(), total_num_of_types, stack_num_of_types)
             try:
                 stack_excess_list = eo.run()
                 if len(stack_excess_list) > 0:

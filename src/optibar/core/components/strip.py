@@ -93,8 +93,8 @@ class Strip():
         bottom_thermal_rebar = Rebar(data['bottom']['thermal_rebar_type'],material["fc"], material["fy"], "bottom")
         top_typical_rebar = Rebar(data['top']['typical_rebar_type'],material["fc"], material["fy"], "top")
         bottom_typical_rebar = Rebar(data['bottom']['typical_rebar_type'], material["fc"], material["fy"], "bottom")
-        self._top_mesh.set_typical_rebar(top_typical_rebar, top_thermal_rebar, data['bottom']['method'])
-        self._bottom_mesh.set_typical_rebar(bottom_typical_rebar, bottom_thermal_rebar, data['top']['method'])
+        self._top_mesh.set_typical_rebar(top_typical_rebar, top_thermal_rebar, data['top']['method'])
+        self._bottom_mesh.set_typical_rebar(bottom_typical_rebar, bottom_thermal_rebar, data['bottom']['method'])
 
     def set_additional_rebar(self, rebar_type: Rebar, elimination: float) -> None:
         material = self._material

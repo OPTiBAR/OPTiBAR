@@ -106,7 +106,7 @@ class TotalAlgorithm():
         # use value instead of ref == None for zero pieces and one length that is default 12
         if container[row_index][col_index].value == float('inf'):
             for r_index in range(row_index+1, len(lengths)):
-                if container[r_index][col_index].value == float('inf'):
+                if container[r_index][col_index].value != float('inf'):
                     raise NotEnoughTypes("total: not enough type number", r_index+1)
             raise ValueError("there is no feasible solution, actually it should not happen!")
         selected_lengths = []

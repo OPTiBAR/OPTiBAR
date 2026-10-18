@@ -5,7 +5,7 @@ from optibar.core.components.rebar import Rebar, RebarType
 from optibar.core.components.foundation import Foundation
 from shapely.geometry import Polygon, MultiPolygon
 from shapely.ops import unary_union
-from optibar.core.setting import SIDE_COVER, STEEL_DENSITY
+from optibar.core.setting import STEEL_DENSITY
 from optibar.core.components.config import Config
 import math
 
@@ -96,7 +96,7 @@ class Output():
             top = self._parsed_data["strips"][0]["geometry"]["covers"]["top"]
             bottom = self._parsed_data["strips"][0]["geometry"]["covers"]["bottom"]
         return {
-            "side": SIDE_COVER,
+            "side": self._config.side_cover,
             "top": top,
             "bottom": bottom,
         }

@@ -34,7 +34,7 @@ class Period():
 
     def has_intersection_with(self, other: Period) -> bool:
         """determines if this period has intersection with the other period
-        it is assumed that self.start < other.start
+        the inequalities are not strict and the order of the periods doesn't matter
 
         Args:
             other (Period): other period
@@ -42,8 +42,4 @@ class Period():
         Returns:
             bool: returns True if these two periods have intersection
         """
-        if self.start > other.start:
-            print(f'self: start {self.start} end {self.end} length {round(self.get_length(),3)}')
-            print(f'other: start {other.start} end {other.end} length {round(other.get_length(),3)}')
-        #     raise ValueError("START_ORDER:the first period should start befor the second one.")
-        return (round_down(self.end,.001) >= round_up(other.start,0.001))
+        return round_down(min(self.end, other.end),.001) >= round_up(max(self.start, other.start),0.001)

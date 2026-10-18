@@ -1,12 +1,10 @@
-from sys import flags, intern
-from core.src.components.shear import ShearZone, ShearType
-from core.src.components.rebar import Rebar
-from typing import List
+from core.components.shear import ShearZone, ShearType
+from core.components.rebar import Rebar
 import math
 from core.setting import MIN_SHEAR_INTERVAL
 
 class ShearOptimization():
-    def __init__(self, rebar: Rebar, max_interval: float, shear_zones: List[ShearZone], number_of_types: int) -> None:
+    def __init__(self, rebar: Rebar, max_interval: float, shear_zones: list[ShearZone], number_of_types: int) -> None:
         """finds the best shear types and assigns them to the shear zones
 
         Args:
@@ -21,7 +19,7 @@ class ShearOptimization():
         self._rebar = rebar
         self._container = None
         self._number_of_types = number_of_types
-    
+
     def run(self):
         """finds best shear types and assigne them to the shear zones
         """
@@ -30,7 +28,7 @@ class ShearOptimization():
         shear_types = self._get_shear_types(selected_densities)
         self._shear_types = shear_types
         self._set_shear_types(shear_types)
-    
+
     class Pair():
         def __init__(self) -> None:
             self.ref = None
@@ -42,7 +40,7 @@ class ShearOptimization():
             ))
         def __str__(self):
             return (f"Pair: [value: {self.value}, ref: {self.ref}]")
-    
+
     def _run(self, number_of_types: int) -> None:
         """filles the container of dynamic programming that will be used for finding the optimum point.
 
@@ -61,7 +59,7 @@ class ShearOptimization():
                     row.append(None)
                 else:
                     row.append(self.Pair())
-        
+
         # calculate container cells
         for i in range(number_of_types):
             if i == 0:
@@ -87,8 +85,8 @@ class ShearOptimization():
                             min_sum = sum
                     container[i][j].value = min_sum
                     container[i][j].ref = min_ref
-        
-    def _get_selected_densities(self, number_of_types: int) -> List[float]:
+
+    def _get_selected_densities(self, number_of_types: int) -> list[float]:
         """finds the best chosen points from the available densities.
 
         Args:
@@ -107,8 +105,8 @@ class ShearOptimization():
             col_index = container[row_index][col_index].ref
             row_index -= 1
         return sorted(selected_densities)
-    
-    def _get_shear_types(self, selected_densities: List[float]) -> List[ShearType]:
+
+    def _get_shear_types(self, selected_densities: list[float]) -> list[ShearType]:
         """returns shear types based on the selected denisties in optimization process.
 
         Args:
@@ -118,8 +116,8 @@ class ShearOptimization():
         """
         rebar = self._rebar
         max_interval = self._max_interval
-        shear_types = []
-        
+        shear_types:list[ShearType] = []
+
         i = 1 # counter for ID number
         for density in selected_densities:
             j = 1
@@ -136,7 +134,7 @@ class ShearOptimization():
                     break
         return shear_types
 
-    def _set_shear_types(self, shear_types: List[ShearType]) -> None:
+    def _set_shear_types(self, shear_types: list[ShearType]) -> None:
         """set shear type of each shear zone
 
         Args:
@@ -152,26 +150,11 @@ class ShearOptimization():
                 continue
             else:
                 j += 1
-    
-    def get_shear_types(self) -> List[ShearType]:
-        """returns generated shear types based on 
+
+    def get_shear_types(self) -> list[ShearType]:
+        """returns generated shear types based on
 
         Returns:
             List[ShearType]: list of shear types
         """
         return self._shear_types
-
-    
-
-
-
-
-
-
-            
-        
-    
-                    
-
-
-

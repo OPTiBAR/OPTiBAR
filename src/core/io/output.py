@@ -1,31 +1,32 @@
-from core.src.components.utilities import round_down
-from core.src.components.rebar import Rebar, RebarType
+from __future__ import annotations
 from typing import Dict, List
-from core.src.components.foundation import Foundation
+from core.components.utilities import round_down
+from core.components.rebar import Rebar, RebarType
+from core.components.foundation import Foundation
 from shapely.geometry import Polygon, MultiPolygon
 from shapely.ops import unary_union
 from core.setting import SIDE_COVER, STEEL_DENSITY
-from core.src.components.config import Config
-import math 
+from core.components.config import Config
+import math
 
 class Output():
     def __init__(self, foundation: Foundation) -> None:
         self._parsed_data = foundation.input.parsed_data
         self._config = foundation.config
         self._foundation = foundation
-        
+
         self._shear_piece_list = None
         self._reinforceent_subpieces = None
         self._typical_subpieces = None
         self._set_pieces()
-    
+
     def _set_pieces(self):
         self._shear_piece_list = self._foundation.get_shear_piece_list()
         self._reinforceent_subpieces = self._foundation.get_additional_subpieces()
         self._typical_subpieces = self._foundation.get_typical_subpieces()
 
     # areas
-    def _get_areas(self) -> Dict:
+    def _get_areas(self):# -> dict:
         individuals = []
         polygons = []
         opening_polygons = []
@@ -42,18 +43,20 @@ class Output():
             else:
                 opening_polygons.append(Polygon(area["corners"]))
                 individual["is_opening"] = True
-            
+
         union_polygon = unary_union(polygons) - unary_union(opening_polygons)
         interiors = []
         exteriors = []
-        # make union_polygon iterable
-        if isinstance(union_polygon,Polygon): # not iterable multipolygon
-            union_polygon = [union_polygon]
-        for polygon in union_polygon:
+        # shapely 2 multipolygons are not iterable; their parts are in .geoms
+        if isinstance(union_polygon,Polygon):
+            polygons = [union_polygon]
+        else:
+            polygons = union_polygon.geoms
+        for polygon in polygons:
             exteriors.append(list(map(list,polygon.exterior.coords[:])))
             for interior in polygon.interiors:
                 interiors.append(list(map(list,interior.coords[:])))
-        
+
         return {
             "individuals": individuals,
             "union": {
@@ -61,10 +64,10 @@ class Output():
                 "interiors": interiors
             }
         }
-    
+
     # columns
     def _get_columns(self) -> Dict:
-        
+
         return self._parsed_data["columns"]
 
     # technical_spec
@@ -72,7 +75,7 @@ class Output():
         fy = None
         if len(self._parsed_data["strips"]) > 0:
             fy = self._parsed_data["strips"][0]["fy"]
-            
+
         fc = None
         for area in self._parsed_data["areas"]:
             if not area['is_opening']:
@@ -95,7 +98,7 @@ class Output():
         return {
             "side": SIDE_COVER,
             "top": top,
-            "bottom": bottom, 
+            "bottom": bottom,
         }
 
     # technical_spec
@@ -129,7 +132,7 @@ class Output():
             "total": self._config.total_type_number,
             "stack": self._config.stack_type_number
         }
-    
+
     # technical_spec
     def _get_technical_spec(self) -> Dict:
         return {
@@ -138,7 +141,7 @@ class Output():
             "rebars": self._get_rebars(),
             "length_type": self._get_length_type()
         }
-    
+
     # pieces
     def _get_typical_thermal_piece_list(self) -> Dict:
         typical_dict = {}
@@ -147,7 +150,7 @@ class Output():
             for piece_dict in (strip_dict["top"], strip_dict["bottom"]):
                 number = piece_dict["number"]
                 for subpiece in piece_dict["subpieces"]:
-                    length = round(subpiece.executive.get_length(),2)
+                    length = round(subpiece.practical.get_length(),2)
                     diameter = subpiece.rebar.get_diameter_mm()
                     no_side = 0
                     one_side = 0
@@ -156,7 +159,7 @@ class Output():
                         two_side += number
                     elif (subpiece.bend.start > 0 and subpiece.bend.end == 0) or (subpiece.bend.start == 0 and subpiece.bend.end > 0):
                         one_side += number
-                    else: 
+                    else:
                         no_side += number
                     new_dict = {
                         "diameter": diameter,
@@ -174,7 +177,7 @@ class Output():
                         else:
                             typical_dict[length] = new_dict
                             selected_dict = new_dict
-                        
+
                     if piece_dict["type"] == 'thermal':
                         if length in thermal_dict:
                             selected_dict = thermal_dict[length]
@@ -191,7 +194,7 @@ class Output():
             "typical": [typical_dict[length] for length in sorted(typical_dict.keys())],
             "thermal": [thermal_dict[length] for length in sorted(thermal_dict.keys())]
         }
-    
+
     # pieces
     def _get_additional_piece_list(self) -> List:
         piece_dict = {}
@@ -199,7 +202,7 @@ class Output():
             for row in strip["top"]+strip["bottom"]:
                 for subpiece in row:
                     diameter = subpiece.rebar.rebar_type.value
-                    length = round(subpiece.executive.get_length(),2)
+                    length = round(subpiece.practical.get_length(),2)
                     no_side = 0
                     one_side = 0
                     two_side = 0
@@ -207,9 +210,9 @@ class Output():
                         two_side += 1
                     elif (subpiece.bend.start > 0 and subpiece.bend.end == 0) or (subpiece.bend.start == 0 and subpiece.bend.end > 0):
                         one_side = 1
-                    else: 
+                    else:
                         no_side += 1
-                    
+
                     new_dict = {
                         "diameter": diameter,
                         "length": length,
@@ -251,7 +254,7 @@ class Output():
                 selected_dict = new_dict
             selected_dict["number"] += number
         return list(piece_dict.values())
-    
+
     # pieces
     def _get_pieces(self) -> List:
         typical_thermal = self._get_typical_thermal_piece_list()
@@ -271,7 +274,7 @@ class Output():
             if not area["is_opening"]:
                 volume += Polygon(area["corners"]).area * area["prop"]["thickness"]
         return round(volume,1)
-    
+
     # summery
     def _get_additional_mass(self) -> Dict[str,float]:
         """returns mass in ton with three decimal digits
@@ -284,15 +287,15 @@ class Output():
         for strip_dict in self._reinforceent_subpieces:
             for row in strip_dict["top"]:
                 for piece in row:
-                    top_mass += piece.rebar.get_area() * piece.executive.get_length() * STEEL_DENSITY
+                    top_mass += piece.rebar.get_area() * piece.practical.get_length() * STEEL_DENSITY
             for row in strip_dict["bottom"]:
                 for piece in row:
-                    bottom_mass += piece.rebar.get_area() * piece.executive.get_length() * STEEL_DENSITY
+                    bottom_mass += piece.rebar.get_area() * piece.practical.get_length() * STEEL_DENSITY
         return {
             "top": round(top_mass,3),
             "bottom": round(bottom_mass,3)
         }
-    
+
     # summery
     def _get_shear_mass(self) -> float:
         """shear rebar mass in ton with three decimal digits
@@ -316,7 +319,7 @@ class Output():
         }
         for strip_dict in self._typical_subpieces:
             for piece in strip_dict["top"]["subpieces"]:
-                piece_mass = piece.rebar.get_area() * piece.executive.get_length() * strip_dict["top"]["number"] * STEEL_DENSITY
+                piece_mass = piece.rebar.get_area() * piece.practical.get_length() * strip_dict["top"]["number"] * STEEL_DENSITY
                 if strip_dict["top"]["type"] == 'typical':
                     mass_dict["typical"]["top"] += piece_mass
                 elif strip_dict["top"]["type"] == 'thermal':
@@ -324,21 +327,21 @@ class Output():
                 else:
                     raise ValueError(f'not defined rebar type {strip_dict["top"]["type"]}')
             for piece in strip_dict["bottom"]["subpieces"]:
-                piece_mass = piece.rebar.get_area() * piece.executive.get_length() * strip_dict["bottom"]["number"] * STEEL_DENSITY
+                piece_mass = piece.rebar.get_area() * piece.practical.get_length() * strip_dict["bottom"]["number"] * STEEL_DENSITY
                 if strip_dict["bottom"]["type"] == 'typical':
                     mass_dict["typical"]["bottom"] += piece_mass
                 elif strip_dict["bottom"]["type"] == 'thermal':
                     mass_dict["thermal"]["bottom"] += piece_mass
                 else:
                     raise ValueError(f'not defined rebar type {strip_dict["bottom"]["type"]}')
-            
+
             # round to kg
             mass_dict["typical"]["top"] = round(mass_dict["typical"]["top"],3)
             mass_dict["typical"]["bottom"] = round(mass_dict["typical"]["bottom"],3)
             mass_dict["thermal"]["top"] = round(mass_dict["thermal"]["top"],3)
             mass_dict["thermal"]["bottom"] = round(mass_dict["thermal"]["bottom"],3)
         return mass_dict
-    
+
     # summery
     def _get_rebar_mass(self):
         additional = self._get_additional_mass()
@@ -350,14 +353,14 @@ class Output():
             "additional": additional,
             "shear": shear
         }
-    
+
     # summery
     def _get_summary(self):
         return {
             "rebar": self._get_rebar_mass(),
             "concrete": self._get_concrete_volume()
         }
-    
+
     # shear_types
     def _get_shear_types(self) -> List[Dict]:
         shera_types = self._foundation.get_shear_types()
@@ -383,7 +386,7 @@ class Output():
         for strip in self._parsed_data["strips"]:
             strips.append(strip["geometry"]["covers"])
         return strips
-    
+
     #strips
     def _get_strips_midline(self):
         strips = []
@@ -392,7 +395,7 @@ class Output():
             mid_line = [] # list of pair of points
             for i in range(len(line_points)):
                 if i == 0:
-                    start_index = i 
+                    start_index = i
                     end_index = i + 1
                 else:
                     start_index = i-1
@@ -430,7 +433,7 @@ class Output():
                 "covers": covers[i]
             } for i in range(len(mid_lines))
         ]
-    
+
     #strips
     def _get_strips_typical_mesh(self):
         strips = []
@@ -441,7 +444,7 @@ class Output():
                         {
                             "diameter": subpiece.rebar.get_diameter_mm(),
                             "number": strip_typical["top"]["number"],
-                            "stations": [subpiece.executive.start, subpiece.executive.end],
+                            "stations": [subpiece.practical.start, subpiece.practical.end],
                             "bends": [subpiece.bend.start, subpiece.bend.end],
                         }
                         for subpiece in strip_typical["top"]["subpieces"]
@@ -450,7 +453,7 @@ class Output():
                         {
                             "diameter": subpiece.rebar.get_diameter_mm(),
                             "number": strip_typical["bottom"]["number"],
-                            "stations": [subpiece.executive.start, subpiece.executive.end],
+                            "stations": [subpiece.practical.start, subpiece.practical.end],
                             "bends": [subpiece.bend.start, subpiece.bend.end],
                         }
                         for subpiece in strip_typical["bottom"]["subpieces"]
@@ -458,21 +461,21 @@ class Output():
                 }
             )
         return strips
-    
+
     #strips
     def _get_strips_additional_mesh(self):
         strips = []
         for strip_drawing_data in self._foundation.get_drawing_data():
             strips.append(
                 {
-                    "top":[ 
-                        
+                    "top":[
+
                         [
                             [
                                 {
                                     "number": bunch.get_count(),
                                     "diameter": bunch.get_pieces()[0].rebar.get_diameter_mm(),
-                                    "stations": [subpiece.executive.start, subpiece.executive.end],
+                                    "stations": [subpiece.practical.start, subpiece.practical.end],
                                     "bends": [subpiece.bend.start, subpiece.bend.end],
                                 } for subpiece in bunch.get_pieces()[0].get_subpieces()
                             ] for bunch in row
@@ -484,7 +487,7 @@ class Output():
                                 {
                                     "number": bunch.get_count(),
                                     "diameter": bunch.get_pieces()[0].rebar.get_diameter_mm(),
-                                    "stations": [subpiece.executive.start, subpiece.executive.end],
+                                    "stations": [subpiece.practical.start, subpiece.practical.end],
                                     "bends": [subpiece.bend.start, subpiece.bend.end],
                                 } for subpiece in bunch.get_pieces()[0].get_subpieces()
                             ] for bunch in row
@@ -502,7 +505,7 @@ class Output():
         return [
             {
                 "typical": strips_typical[i],
-                "additional": strips_additional[i], 
+                "additional": strips_additional[i],
             }
             for i in range(len(strips_additional))
         ]
@@ -586,4 +589,3 @@ class Output():
             output['errors'] = self._foundation.errors
 
         return output
-        

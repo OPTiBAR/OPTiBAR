@@ -1,14 +1,14 @@
 from __future__ import annotations
-
+from typing import List
 from .diagram import Diagram
 from .collections import Container, Stack
 from .piece import Piece
 from .rebar import Rebar
-from core.src.optimization.practical import DominationType, PracticalOptimization
+from core.optimization.required import DominationType, RequiredOptimization
 from .period import Period
 from .utilities import round_down, round_up
 import math
-from typing import Dict, List, Union, Iterator
+from typing import Union, Iterator
 from core.setting import MAX_REBAR_GAP, MIN_RATIO, THERMAL_MIN_RATIO, ROUND_UNIT, STANDARD_LENGTH, MIN_REBAR_GAP
 import warnings
 import numpy as np
@@ -29,12 +29,12 @@ class Mesh():
 
     def set_side_cover(self, side_cover: float) -> None:
         self.side_cover = side_cover
-    
+
     def set_typical_rebar(
             self,
             typical_rebar: Rebar,
             thermal_rebar: Rebar,
-            arrangement: Dict[str,Union(str,float)]
+            arrangement: dict[str,str|float]
         ) -> None:
         """inserts typical rebar and reduces the needed steel diagram
 
@@ -48,10 +48,10 @@ class Mesh():
         """
         if self.diagram.is_positive():
             self.typical_type = 'typical'
-            self.typical_rebar = typical_rebar            
+            self.typical_rebar = typical_rebar
             min_ratio_area = self.section.width * self.section.thickness * MIN_RATIO
             min_ratio_num = math.ceil(min_ratio_area/self.typical_rebar.get_area())
-            
+
             if arrangement["method"] == "MIN_RATIO":
                 self.typical_rebar_num = min_ratio_num
                 amount = self.typical_rebar_num * self.typical_rebar.get_area()
@@ -73,7 +73,7 @@ class Mesh():
                 while (self.diagram.get_side_distance() < d) and (self.diagram.get_middle_distance() < 2*d):
                     self.typical_rebar_num += 1
                     self.diagram.insert_typical(self.typical_rebar.get_area())
-            else: 
+            else:
                 raise ValueError("typical method type should be one of MIN_RATIO, COUNT,INTERVAL, SMART")
         else: # self.diagram.is_positive() == False
             self.typical_type = 'thermal'
@@ -92,7 +92,7 @@ class Mesh():
 
     def set_additional_rebar(self, additional_rebar: Rebar, additional_elimination: float) -> None:
         """inserts additional rebar and keeps them in the container.
-        the process of generating executive lengths is called here.
+        the process of generating practical lengths is called here.
 
         Args:
             additional_rebar (Rebar): rebar
@@ -100,8 +100,8 @@ class Mesh():
         """
         self.additional_rebar = additional_rebar
         self._insert_additional(additional_elimination)
-        self._theoretical_to_executive()
-          
+        self._theoretical_to_practical()
+
     def get_typical_piece(self) -> Piece:
         period = self._get_bounds()
         period.start -= self.typical_rebar.get_bend_length()
@@ -110,10 +110,10 @@ class Mesh():
         piece = Piece(self.typical_rebar, period)
         piece.bend.start = self.typical_rebar.get_bend_length()
         piece.bend.end = self.typical_rebar.get_bend_length()
-        piece.practical = period
+        piece.required = period
         self._set_piece_upper_bound(piece)
         self._round_piece(piece)
-        self._set_piece_executive(piece)
+        self._set_piece_practical(piece)
         return piece
 
     def _get_bounds(self) -> Period:
@@ -121,7 +121,7 @@ class Mesh():
         bounds.start += self.side_cover
         bounds.end -= self.side_cover
         return bounds
-    
+
     def _insert_additional(self, additional_elimination) -> None:
         """inserts additional rebars and initializes the theoretical periods
         if period length is less than the ELIMINATION_LENGTH it should be eliminated.
@@ -136,21 +136,21 @@ class Mesh():
                     row.append(piece)
             if len(row) > 0:
                 self.container.add_row(row)
-    
-    def _set_practical(self) -> None:
-        """gets stacks from container and adds optimized practical lengths to them.
+
+    def _set_required(self) -> None:
+        """gets stacks from container and adds optimized required lengths to them.
         """
         for stack in self.container.get_stacks("theoretical"):
-            PracticalOptimization(stack, d_length=self.section.effective_thickness, ld_length=self.additional_rebar.get_ld())
-    
+            RequiredOptimization(stack, d_length=self.section.effective_thickness, ld_length=self.additional_rebar.get_ld())
+
     def _bend(self) -> None:
         """if theoretical length has exceeded the bounds it should be bended
-        if practical length has exceeded the bounds, if domination is Ld it should be bended
+        if required length has exceeded the bounds, if domination is Ld it should be bended
         if domination is d it should be cut.
         """
         for piece in self.container.get_pieces():
             self._bend_piece(piece)
-            
+
     def _bend_piece(self, piece: Piece) -> None:
         bend_length = piece.rebar.get_bend_length()
         bounds = self._get_bounds()
@@ -158,25 +158,25 @@ class Mesh():
         if piece.theoretical.start < bounds.start:
             piece.bend.start = bend_length
             piece.theoretical.start = bounds.start - bend_length
-            piece.practical.start = piece.theoretical.start
+            piece.required.start = piece.theoretical.start
         if piece.theoretical.end > bounds.end:
             piece.bend.end = bend_length
             piece.theoretical.end = bounds.end + bend_length
-            piece.practical.end = piece.theoretical.end
-        # practical exceed
-        if piece.practical.start < bounds.start and piece.bend.start == 0:
+            piece.required.end = piece.theoretical.end
+        # required exceed
+        if piece.required.start < bounds.start and piece.bend.start == 0:
             if piece.domination.start == DominationType.D:
-                piece.practical.start = bounds.start
+                piece.required.start = bounds.start
             else: # piece.domination.start == Domination.LD
                 piece.bend.start = bend_length
-                piece.practical.start = bounds.start - bend_length
-        if piece.practical.end > bounds.end and piece.bend.end == 0:
+                piece.required.start = bounds.start - bend_length
+        if piece.required.end > bounds.end and piece.bend.end == 0:
             if piece.domination.end == DominationType.D:
-                piece.practical.end = bounds.end
+                piece.required.end = bounds.end
             else: # piece.domination.end == Domination.LD
                 piece.bend.end = bend_length
-                piece.practical.end = bounds.end + bend_length
-    
+                piece.required.end = bounds.end + bend_length
+
     def _bend_stack_base(self):
         bounds = self._get_bounds()
         stacks = self.container.get_stacks("theoretical")
@@ -188,36 +188,36 @@ class Mesh():
                 if piece.theoretical.start < bounds.start:
                     piece.bend.start = bend_length
                     piece.theoretical.start = bounds.start - bend_length
-                    piece.practical.start = piece.theoretical.start
+                    piece.required.start = piece.theoretical.start
                 if piece.theoretical.end > bounds.end:
                     piece.bend.end = bend_length
                     piece.theoretical.end = bounds.end + bend_length
-                    piece.practical.end = piece.theoretical.end
-                # practical exceed
-                if (piece.practical.start < bounds.start and piece.bend.start == 0):
+                    piece.required.end = piece.theoretical.end
+                # required exceed
+                if (piece.required.start < bounds.start and piece.bend.start == 0):
                     if piece.domination.start == DominationType.LD or (i > 0 and pieces[i-1].bend.start > 0):
                         piece.bend.start = bend_length
-                        piece.practical.start = bounds.start - bend_length
+                        piece.required.start = bounds.start - bend_length
                     else:
-                        piece.practical.start = bounds.start
-                        
-                if (piece.practical.end > bounds.end and piece.bend.end == 0):
+                        piece.required.start = bounds.start
+
+                if (piece.required.end > bounds.end and piece.bend.end == 0):
                     if piece.domination.end == DominationType.LD or (i > 0 and pieces[i-1].bend.end > 0):
                         piece.bend.end = bend_length
-                        piece.practical.end = bounds.end + bend_length
+                        piece.required.end = bounds.end + bend_length
                     else:
-                        piece.practical.end = bounds.end
-    
+                        piece.required.end = bounds.end
+
     def _set_upper_bound(self) -> None:
         """sets the upper bound property for all the pieces
         """
         for piece in self.container.get_pieces():
             self._set_piece_upper_bound(piece)
-            
+
     def _set_piece_upper_bound(self, piece:Piece) -> None:
         """sets the length_upper_bound property
         """
-        if piece.get_num_of_pieces("practical") > 1:
+        if piece.get_num_of_pieces("required") > 1:
             piece.length_upper_bound = STANDARD_LENGTH
         else:
             piece_upper_bound = self._get_bounds().get_length() + piece.bend.start + piece.bend.end
@@ -234,7 +234,7 @@ class Mesh():
         first try to round up if not possible try to round down.
         set the shortest_piece_length property of the piece.
         """
-        length = piece.get_shortest_piece_length("practical")
+        length = piece.get_shortest_piece_length("required")
         revised_length = None
         if round_up(length, ROUND_UNIT) <= piece.length_upper_bound:
             revised_length = round_up(length, ROUND_UNIT)
@@ -249,7 +249,7 @@ class Mesh():
     def _unify(self, by: str) -> bool:
         """try to unify all intersecting pieces based on their <by> lengths in the container
         Args:
-            by (str): could be practical or executive
+            by (str): could be required or practical
         Returns:
             bool: if any pieces are unified, return True else return False.
         """
@@ -274,7 +274,7 @@ class Mesh():
         try to unify all intersecting pieces based on their <by> lengths in a row
         try all possible partitionings and choose the best.
         Args:
-            by (str): could be practical or executive
+            by (str): could be required or practical
         Returns:
             bool: if any pieces are unified, return True else return False.
         """
@@ -298,7 +298,7 @@ class Mesh():
             for smaller in partition(collection[1:]):
                 # insert `first` in first subpartition's subsets
                 yield [[ first ] + smaller[0]] + smaller[1:]
-                # put `first` in its own subset 
+                # put `first` in its own subset
                 yield [ [ first ] ] + smaller
         rebar = self.additional_rebar
         sublist = []
@@ -313,7 +313,7 @@ class Mesh():
             if len(sublist) == 1:
                 sublist = []
                 i += 1
-                continue                
+                continue
             # find the min partitioning
             min_value = float("inf")
             min_parts = None
@@ -349,204 +349,204 @@ class Mesh():
             i += 1 - sum(list(map(lambda x: len(x)-1, min_parts)))
             sublist = []
         return is_unified
-        
-    def _set_executive(self, by: str):
-        """sets executive period of all pieces, based on their shortest piece length
-        and considers stack of pieces according to their <by>(practical or executive) property.
+
+    def _set_practical(self, by: str):
+        """sets practical period of all pieces, based on their shortest piece length
+        and considers stack of pieces according to their <by>(required or practical) property.
 
         Args:
-            by (str): could be practical or executive
+            by (str): could be required or practical
         """
         for stack in self.container.get_stacks(by=by):
             pieces = list(reversed(stack.get_pieces())) # longer to shorter
             for i in range(len(stack)):
                 if i == 0:
-                    self._set_piece_executive(piece= pieces[i])
-                else:    
-                    self._set_piece_executive(piece= pieces[i], base_piece= pieces[i-1])
-    
-    def _set_piece_executive(self, piece: Piece, base_piece: Piece= None):
-        """set executive period based on shortest_piece_length property.
+                    self._set_piece_practical(piece= pieces[i])
+                else:
+                    self._set_piece_practical(piece= pieces[i], base_piece= pieces[i-1])
+
+    def _set_piece_practical(self, piece: Piece, base_piece: Piece= None):
+        """set practical period based on shortest_piece_length property.
         Args:
             base_piece (Piece, optional): the base piece to be considered to revise length.
                 Defaults to None.
         """
         bounds = self._get_bounds()
-        length_change = piece.shortest_piece_length - piece.get_shortest_piece_length("practical")
+        length_change = piece.shortest_piece_length - piece.get_shortest_piece_length("required")
         bend_length = piece.rebar.get_bend_length()
         start = None
         end = None
 
         if piece.bend.start == 0 and piece.bend.end == 0: # no bend
             if length_change < 0:
-                start = piece.practical.start - length_change/2
-                end = piece.practical.end + length_change/2
-                piece.practical.start = start
-                piece.practical.end = end
+                start = piece.required.start - length_change/2
+                end = piece.required.end + length_change/2
+                piece.required.start = start
+                piece.required.end = end
                 if piece.theoretical.start < start:
                     piece.theoretical.start = start
                 if piece.theoretical.end > end:
                     piece.theoretical.end = end
             else: # length_change >= 0
                 if base_piece is None:
-                    if piece.practical.start - length_change <= bounds.start:
+                    if piece.required.start - length_change <= bounds.start:
                         start = bounds.start
-                        end  = min(start + piece.practical.get_length() + length_change, bounds.end)
-                    elif piece.practical.end + length_change >= bounds.end:
+                        end  = min(start + piece.required.get_length() + length_change, bounds.end)
+                    elif piece.required.end + length_change >= bounds.end:
                         end = bounds.end
-                        start = max(end - piece.practical.get_length() - length_change, bounds.start)
+                        start = max(end - piece.required.get_length() - length_change, bounds.start)
                     else: # doesn't reach any of two sides
-                        start = piece.practical.start - length_change/2
-                        end  = piece.practical.end + length_change/2
+                        start = piece.required.start - length_change/2
+                        end  = piece.required.end + length_change/2
                 else: # base piece is not None
                     if base_piece.bend.start == 0 and base_piece.bend.end == 0:
                         # base piece is not bended in neighter of it's ends
-                        if piece.practical.start - length_change <= base_piece.executive.start:
+                        if piece.required.start - length_change <= base_piece.practical.start:
                             # reach start of base_piece
-                            start = base_piece.executive.start
-                            end = min(start + piece.practical.get_length() + length_change, base_piece.executive.end)
-                        elif piece.practical.end + length_change >= base_piece.executive.end:
+                            start = base_piece.practical.start
+                            end = min(start + piece.required.get_length() + length_change, base_piece.practical.end)
+                        elif piece.required.end + length_change >= base_piece.practical.end:
                             # reach end of base_piece
-                            end = base_piece.executive.end
-                            start = max(end - piece.practical.get_length() - length_change, base_piece.executive.start)
+                            end = base_piece.practical.end
+                            start = max(end - piece.required.get_length() - length_change, base_piece.practical.start)
                         else: # doesn't reach any of two sides of the base piece
-                            start = piece.practical.start - length_change/2
-                            end = piece.practical.end + length_change/2
+                            start = piece.required.start - length_change/2
+                            end = piece.required.end + length_change/2
                     elif base_piece.bend.start > 0 and base_piece.bend.end == 0:
                         # base piece is just bended in the start side
-                        if (piece.practical.end + length_change >= base_piece.executive.end) and \
-                            (base_piece.executive.end - piece.practical.get_length() - length_change >= bounds.start):
+                        if (piece.required.end + length_change >= base_piece.practical.end) and \
+                            (base_piece.practical.end - piece.required.get_length() - length_change >= bounds.start):
                             # reaches end of base piece and doesn't exceed the start bound
-                            end = base_piece.executive.end
-                            start = base_piece.executive.end - piece.practical.get_length() - length_change
-                        elif piece.practical.start - length_change <= bounds.start - bend_length:
+                            end = base_piece.practical.end
+                            start = base_piece.practical.end - piece.required.get_length() - length_change
+                        elif piece.required.start - length_change <= bounds.start - bend_length:
                             # reaches start to be bended and the addition length is sufficient
                             piece.bend.start = bend_length
                             start = bounds.start - bend_length
-                            end = min(start + piece.practical.get_length() + length_change, base_piece.executive.end)                            
-                            piece.practical.start = start
-                            
-                        elif (piece.practical.end + length_change >= base_piece.executive.end) and \
-                            (base_piece.executive.end - piece.practical.get_length() - length_change < bounds.start): 
+                            end = min(start + piece.required.get_length() + length_change, base_piece.practical.end)
+                            piece.required.start = start
+
+                        elif (piece.required.end + length_change >= base_piece.practical.end) and \
+                            (base_piece.practical.end - piece.required.get_length() - length_change < bounds.start):
                             # reaches not bended end of the base piece but ecxeeds the start bound
                             # the piece length should be increased to the base piece length
                             piece.shortest_piece_length = base_piece.shortest_piece_length
                             piece.bend.start = bend_length
-                            start = base_piece.executive.start
-                            end = base_piece.executive.end
-                            piece.practical.start = start
-                        elif (piece.practical.end + length_change < base_piece.executive.end) and \
-                            (piece.practical.start - length_change > bounds.start - bend_length): 
+                            start = base_piece.practical.start
+                            end = base_piece.practical.end
+                            piece.required.start = start
+                        elif (piece.required.end + length_change < base_piece.practical.end) and \
+                            (piece.required.start - length_change > bounds.start - bend_length):
                             # doesn't reach any of two ends
-                            if piece.practical.start - length_change/2 >= bounds.start:
+                            if piece.required.start - length_change/2 >= bounds.start:
                                 # doesn't proceed start bound
-                                start = piece.practical.start - length_change/2
-                                end = piece.practical.end + length_change/2
+                                start = piece.required.start - length_change/2
+                                end = piece.required.end + length_change/2
                             else:
                                 start = bounds.start
-                                end = start + piece.practical.get_length() + length_change
+                                end = start + piece.required.get_length() + length_change
                     elif base_piece.bend.start == 0 and base_piece.bend.end > 0:
                         # base piece is just bended in the end side
-                        if (piece.practical.start - length_change <= base_piece.executive.start) and \
-                            (base_piece.executive.start + piece.practical.get_length() + length_change <= bounds.end):
+                        if (piece.required.start - length_change <= base_piece.practical.start) and \
+                            (base_piece.practical.start + piece.required.get_length() + length_change <= bounds.end):
                             # reaches start of base piece and doesn't exceed the end bound
-                            start = base_piece.executive.start 
-                            end = start + piece.practical.get_length() + length_change
-                        elif piece.practical.end + length_change >= bounds.end + bend_length:
+                            start = base_piece.practical.start
+                            end = start + piece.required.get_length() + length_change
+                        elif piece.required.end + length_change >= bounds.end + bend_length:
                             # reaches end to be bended and the addition length is sufficient
                             piece.bend.end = bend_length
                             end = bounds.end + bend_length
-                            start = max(end - piece.practical.get_length() - length_change, base_piece.executive.start)
-                            piece.practical.end = end
-                        elif (piece.practical.start - length_change < base_piece.executive.start) and \
-                            (base_piece.executive.start + piece.practical.get_length() + length_change > bounds.end): 
+                            start = max(end - piece.required.get_length() - length_change, base_piece.practical.start)
+                            piece.required.end = end
+                        elif (piece.required.start - length_change < base_piece.practical.start) and \
+                            (base_piece.practical.start + piece.required.get_length() + length_change > bounds.end):
                             # reaches not bended end of the base piece but ecxeeds the end bound
                             # the piece length should be increased to the base piace length
                             piece.shortest_piece_length = base_piece.shortest_piece_length
                             piece.bend.end = bend_length
-                            start = base_piece.executive.start
-                            end = base_piece.executive.end
-                            piece.practical.end = end
-                        elif (piece.practical.end + length_change < bounds.end + bend_length) and \
-                            (piece.practical.start - length_change > base_piece.executive.start):  
+                            start = base_piece.practical.start
+                            end = base_piece.practical.end
+                            piece.required.end = end
+                        elif (piece.required.end + length_change < bounds.end + bend_length) and \
+                            (piece.required.start - length_change > base_piece.practical.start):
                             # doesn't reach any of two ends
-                            if piece.practical.end + length_change/2 <= bounds.end:
+                            if piece.required.end + length_change/2 <= bounds.end:
                                 # doesn't proceed end bound
-                                start = piece.practical.start - length_change/2
-                                end = piece.practical.end + length_change/2
+                                start = piece.required.start - length_change/2
+                                end = piece.required.end + length_change/2
                             else:
                                 end = bounds.end
-                                start = end - piece.practical.get_length() - length_change
+                                start = end - piece.required.get_length() - length_change
                     else: # base_piece.bend.start > 0 and base_piece.bend.end > 0
-                        if piece.practical.start - length_change <= bounds.start:
+                        if piece.required.start - length_change <= bounds.start:
                             start = bounds.start
-                            end = bounds.start + piece.practical.get_length() + length_change
-                        elif piece.practical.end + length_change >= bounds.end:
+                            end = bounds.start + piece.required.get_length() + length_change
+                        elif piece.required.end + length_change >= bounds.end:
                             end = bounds.end
-                            start = bounds.end - piece.practical.get_length() - length_change
+                            start = bounds.end - piece.required.get_length() - length_change
                         else:
-                            start = piece.practical.start - length_change/2
-                            end = piece.practical.end + length_change/2
+                            start = piece.required.start - length_change/2
+                            end = piece.required.end + length_change/2
         elif piece.bend.start > 0 and piece.bend.end == 0: # start bend
             if length_change < 0:
-                piece.practical.end += length_change
-                start = piece.practical.start
-                end = piece.practical.end
+                piece.required.end += length_change
+                start = piece.required.start
+                end = piece.required.end
             else: # lenght_change > 0
                 if base_piece is None:
-                    end = min(piece.practical.end + length_change, bounds.end)
-                    start = piece.practical.start
+                    end = min(piece.required.end + length_change, bounds.end)
+                    start = piece.required.start
                 else: # base_piece is not None
                     if base_piece.bend.end > 0:
-                        if piece.practical.end + length_change >= base_piece.executive.end:
-                            end = base_piece.executive.end
-                            start = piece.practical.start
+                        if piece.required.end + length_change >= base_piece.practical.end:
+                            end = base_piece.practical.end
+                            start = piece.required.start
                             piece.bend.end = bend_length
-                            piece.practical.end = base_piece.executive.end
+                            piece.required.end = base_piece.practical.end
                         else:
-                            end = min(piece.practical.end + length_change, bounds.end)
-                            start = piece.practical.start
+                            end = min(piece.required.end + length_change, bounds.end)
+                            start = piece.required.start
                     else:
-                        end = min(piece.practical.end + length_change, base_piece.executive.end, bounds.end)
-                        start = piece.practical.start
+                        end = min(piece.required.end + length_change, base_piece.practical.end, bounds.end)
+                        start = piece.required.start
         elif piece.bend.start == 0 and piece.bend.end > 0: # end bend
             if length_change < 0:
-                piece.practical.start -= length_change
-                start = piece.practical.start
-                end = piece.practical.end
+                piece.required.start -= length_change
+                start = piece.required.start
+                end = piece.required.end
             else: # lenght_change > 0
                 if base_piece is None:
-                    start = max(piece.practical.start - length_change, bounds.start)
-                    end = piece.practical.end
+                    start = max(piece.required.start - length_change, bounds.start)
+                    end = piece.required.end
                 else: # base_piece is not None
                     if base_piece.bend.start > 0:
-                        if piece.practical.start - length_change <= base_piece.executive.start:
-                            start = base_piece.executive.start
-                            end = piece.practical.end
+                        if piece.required.start - length_change <= base_piece.practical.start:
+                            start = base_piece.practical.start
+                            end = piece.required.end
                             piece.bend.start = bend_length
-                            piece.practical.start = base_piece.executive.start
+                            piece.required.start = base_piece.practical.start
                         else:
-                            start = max(piece.practical.start - length_change, bounds.start)
-                            end = piece.practical.end
+                            start = max(piece.required.start - length_change, bounds.start)
+                            end = piece.required.end
                     else:
-                        start = max(piece.practical.start - length_change, base_piece.executive.start, bounds.start)
-                        end = piece.practical.end
+                        start = max(piece.required.start - length_change, base_piece.practical.start, bounds.start)
+                        end = piece.required.end
         else: # both sides are bended
             if length_change <= 0:
-                piece.practical.end += length_change
-                start = piece.practical.start
-                end = piece.practical.end
+                piece.required.end += length_change
+                start = piece.required.start
+                end = piece.required.end
             else:  # lenght_change > 0
-                start = piece.practical.start
-                end = piece.practical.end
+                start = piece.required.start
+                end = piece.required.end
 
-        piece.executive = Period(start, end)
-        
-    def get_stacks(self) -> List[Stack]:
-        """returns list if stacks based on their executive period
+        piece.practical = Period(start, end)
+
+    def get_stacks(self) -> list[Stack]:
+        """returns list if stacks based on their practical period
         """
-        return self.container.get_stacks(by="executive")
-    
+        return self.container.get_stacks(by="practical")
+
     def get_additional_pieces(self) -> Iterator[Piece]:
         """return an Iterator over all the pieces
 
@@ -555,9 +555,9 @@ class Mesh():
         """
         return self.container.get_pieces()
 
-    def get_piece_rows(self) -> List[List[Piece]]:
+    def get_piece_rows(self) -> list[list[Piece]]:
         return reversed(self.container.get_rows())
-        
+
     def _get_effective_area_diagram(self) -> Diagram:
         """return diagram of the effective As area of the rebar
 
@@ -579,13 +579,13 @@ class Mesh():
             if piece.bend.start > 0 and piece.bend.end > 0:
                 stations = []
             elif piece.bend.start > 0 and piece.bend.end == 0:
-                stations = [piece.executive.end - piece.rebar.get_ld(), piece.executive.end]
+                stations = [piece.practical.end - piece.rebar.get_ld(), piece.practical.end]
             elif piece.bend.start == 0 and piece.bend.end > 0:
-                stations = [piece.executive.start, piece.executive.start + piece.rebar.get_ld()]
+                stations = [piece.practical.start, piece.practical.start + piece.rebar.get_ld()]
             else: # piece.bend.start == 0 and piece.bend.end == 0
                 stations = [
-                    piece.executive.start, piece.executive.start + piece.rebar.get_ld(),
-                    piece.executive.end - piece.rebar.get_ld(), piece.executive.end
+                    piece.practical.start, piece.practical.start + piece.rebar.get_ld(),
+                    piece.practical.end - piece.rebar.get_ld(), piece.practical.end
                 ]
             value = piece.rebar.get_area()
             diagram.increase_area(bends=bends, stations=stations, value=value)
@@ -599,12 +599,12 @@ class Mesh():
 
     def get_resistance_moment_diagram(
             self,
-            widths: List[float],
-            stations: List[float],
+            widths: list[float],
+            stations: list[float],
             fy: float,
             fc: float
         ) -> Diagram:
-        """returns the 
+        """returns the
 
         Args:
             fy (float): yield resistance of the steel
@@ -619,10 +619,10 @@ class Mesh():
         extended_stations = sorted(list(set(stations + area_diagram_stations)))
         interpolated_areas = np.interp(extended_stations, area_diagram_stations, areas_diagram_values)
         interpolated_widths = np.interp(extended_stations, stations, widths)
-        
+
         def get_moment(As, b, d):
             if b <= 0:
-                b = 1e-2 # 
+                b = 1e-2 #
             if fc <= 2800:
                 B1 = 0.85
             else:
@@ -651,57 +651,57 @@ class Mesh():
 
         moments = [get_moment(interpolated_areas[i], interpolated_widths[i], self.section.effective_thickness)  for i in range(len(interpolated_areas))]
         return Diagram(stations=extended_stations, areas=moments)
-    
+
     def get_drawing_data(self):
         return self.container.get_drawing_data()
 
-    def _theoretical_to_executive(self):
-        """process theoretical pieces to executive ones
+    def _theoretical_to_practical(self):
+        """process theoretical pieces to practical ones
         after this process they are ready to reduce their length type
         """
         def sub_process():
-            """inserts practical and unifies until no unification happens.
+            """inserts required and unifies until no unification happens.
             """
             while True:
-                self._set_practical()
-                is_unified = self._unify(by="practical")
+                self._set_required()
+                is_unified = self._unify(by="required")
                 if is_unified:
                     self._refresh()
                 else:
                     break
-        # first set practical
+        # first set required
         # then round and unify
         while True:
             sub_process()
             self._bend_stack_base()
             self._set_upper_bound()
             self._round()
-            self._set_executive(by="practical")
-            is_unified = self._unify(by="executive")
+            self._set_practical(by="required")
+            is_unified = self._unify(by="practical")
             if is_unified:
                 self._refresh()
             else:
                 break
-    
+
     def refresh(self) -> None:
         self._refresh()
-        self._theoretical_to_executive()
+        self._theoretical_to_practical()
 
     def adjust_reduced_type_lengths(self) -> bool:
         """it is assumed that the length types are reduced and shortest piece length
         property is assigned.
         """
-        self._set_executive(by="executive")
-        is_unified = self._unify(by="executive")
+        self._set_practical(by="practical")
+        is_unified = self._unify(by="practical")
         return is_unified
-        
+
     def _get_min_gap(self):
         # get max station of original diagram
         max_station = self.diagram.get_max_point(self._get_bounds()).station
         # calculate number of additional rebars in max station
         additional_rebar_num = 0 # number of additional rebars
         for piece in self.container.get_pieces():
-            if piece.executive.start <= max_station <= piece.executive.end:
+            if piece.practical.start <= max_station <= piece.practical.end:
                 additional_rebar_num += 1
         # calculate min gap between rebars
         width = self.section.width - 2 * self.side_cover
@@ -711,14 +711,14 @@ class Mesh():
             return gap_length / gap_num
         else:
             return float('inf')
-    
+
     def _get_max_gap(self):
         # get min station of original diagram
         min_station = self.diagram.get_min_point(self._get_bounds()).station
         # calculate number of additional rebars in max station
         additional_rebar_num = 0 # number of additional rebars
         for piece in self.container.get_pieces():
-            if piece.executive.start <= min_station <= piece.executive.end:
+            if piece.practical.start <= min_station <= piece.practical.end:
                 additional_rebar_num += 1
         # calculate min gap between rebars
         width = self.section.width - 2 * self.side_cover
@@ -728,7 +728,7 @@ class Mesh():
             return gap_length / gap_num
         else:
             return float('-inf')
-    
+
     def get_max_gap_warning(self):
         max_gap = round(self._get_max_gap(), 3)
         if max_gap > MAX_REBAR_GAP:
@@ -740,7 +740,7 @@ class Mesh():
             return None
 
     def get_min_gap_warning(self):
-        min_gap = round(self._get_min_gap(),3) # in mm 
+        min_gap = round(self._get_min_gap(),3) # in mm
         output = {'gap': round(min_gap,3)}
         if min_gap < MIN_REBAR_GAP:
             output['error_type'] = 'MIN_GAP'
@@ -751,7 +751,7 @@ class Mesh():
         else:
             output['error_type'] = None
         return output
-    
+
     def get_min_ratio_warning(self):
         if self.typical_type == 'typical':
             min_ratio_area = self.section.width * self.section.thickness * MIN_RATIO
@@ -762,11 +762,6 @@ class Mesh():
                     'min_num': min_ratio_num
                 }
             else:
-                return None            
+                return None
         else:
             return None
-        
-        
-
-
-    

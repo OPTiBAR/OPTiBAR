@@ -1,15 +1,16 @@
-from core.src.components.collections import Stack
-from pyomo.environ import *
+from __future__ import annotations
 from typing import List
+from core.components.collections import Stack
+from pyomo.environ import *
 from pyomo.opt import SolverStatus, TerminationCondition
 
 class Minimization():
-    def __init__(self, selected_length: List[float], lengths: List[float], upper_bounds: List[float], num_pieces: List[int]):
+    def __init__(self, selected_length: list[float], lengths: list[float], upper_bounds: list[float], num_pieces: list[int]):
         self.lengths = lengths
         self.upper_bounds = upper_bounds
         self.num_pieces = num_pieces
         self.selected_lengths = selected_length
-    
+
     def run(self, p:int):
         I = range(len(self.lengths))
         J = range(len(self.selected_lengths))
@@ -17,12 +18,12 @@ class Minimization():
         self.I = I
         self.J = J
         self.M = M
-        
+
         LS = self.lengths
         LO = self.selected_lengths
         LU = self.upper_bounds
         NSUB = {}
-        
+
         for m in M:
             sublist = []
             for i,num in enumerate(self.num_pieces):
@@ -31,7 +32,7 @@ class Minimization():
             NSUB[m] = sublist
         # print(M)
         # print(NSUB)
-        
+
         C = [[0 for j in J] for i in I]
         for i in I:
             for j in J:
@@ -39,7 +40,7 @@ class Minimization():
                     C[i][j] = LO[j]-LS[i]
                 else:
                     C[i][j] = 0
-        
+
 
         model = ConcreteModel(name='Type Minimizer')
         self.model = model
@@ -72,18 +73,13 @@ class Minimization():
 
         model.obj = Objective(expr=sum(C[i][j]*model.x[i,j] for j in J for i in I))
 
-        solvername='glpk'
-        # solverpath_folder='D:\\winglpk-4.65\\glpk-4.65\\w64' #does not need to be directly on c drive
-        solverpath_exe='D:\\winglpk-4.65\\glpk-4.65\\w64\\glpsol' #does not need to be directly on c drive
-        # sys.path.append(solverpath_folder)
-
-        # solvername='cplex'
-        # solverpath_exe='C:\\Program Files\\IBM\\ILOG\\CPLEX_Studio1261\\cplex\\bin\\x64_win64\\cplex'
-
-        solver=SolverFactory(solvername)#, executable=solverpath_exe)
-        solver.options['mipgap'] = 0.1
-        results = solver.solve(model)
-        if (results.solver.status == SolverStatus.ok) and (results.solver.termination_condition == TerminationCondition.optimal):
+        # HiGHS ships with the highspy package, so no external solver install is needed
+        solver = SolverFactory('appsi_highs')
+        solver.options['mip_rel_gap'] = 0.1
+        # solutions are loaded only when optimal, so an infeasible model doesn't raise
+        results = solver.solve(model, load_solutions=False)
+        if results.solver.termination_condition == TerminationCondition.optimal:
+            model.solutions.load_from(results)
             # Do something when the solution in optimal and feasible
             # print('feasible optimal')
             return('optimal')
@@ -95,7 +91,7 @@ class Minimization():
             # Something else is wrong
             # print('something eslse is wrong',results.solver.status)
             raise Exception("it should not happen please investigate the problem.")
-    
+
     def get_results(self):
         result_list = []
         for i in self.I:
@@ -111,7 +107,7 @@ class StackAlgorithmExact():
         Args:
             stack (Stack): stack of pieces
             selected_lengths (List[float]): list of awailable lengths
-            p (int): 
+            p (int):
 
         Returns:
             int: number of types of the lengths, it may be greater then the given value.
@@ -126,16 +122,15 @@ class StackAlgorithmExact():
             self.selected_lengths,
             [piece.shortest_piece_length for piece in pieces],
             [piece.length_upper_bound for piece in pieces],
-            [piece.get_num_of_pieces("executive") for piece in pieces]
+            [piece.get_num_of_pieces("practical") for piece in pieces]
         )
         while True:
             if minimization.run(p) == 'optimal':
                 break
             else:
                 p = p+1
-                
+
         new_lengths = minimization.get_results()
         for i,length in enumerate(new_lengths):
             pieces[i].shortest_piece_length = length
         return p
-        

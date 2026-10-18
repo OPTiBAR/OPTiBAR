@@ -121,7 +121,7 @@ class Excel(ttk.LabelFrame):
         level = self.selected_level_var.get()
         if (strip_name in self.labels):
             if number=='' and diameter=='':
-                del self.value_dict[(strip_name, level)]
+                self.value_dict.pop((strip_name, level), None) # erasing a row without a value is fine
             else:
                 self.value_dict[(strip_name, level)] = {'number':number, 'diameter': diameter}
             for i,row in enumerate(self.tree.get_children()):

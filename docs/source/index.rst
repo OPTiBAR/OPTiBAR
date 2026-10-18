@@ -5,9 +5,11 @@
 
 OPTiBAR: Concrete Structure Detailing toolbox
 =============================================
-OPTiBAR is a concrete structure detailing software the gets the output of structural analysis software and produces a detail drawing.
+OPTiBAR is a concrete structure detailing software that takes the design results of a mat foundation in CSI SAFE and produces a rebar detailing map.
 The unique feature of OPTiBAR is that it minimizes the steel consumption while keeping the drawing completely practical.
 The detailing process is highly automated but it is also possible to manually adjust the detailing parameters.
+
+Start with :doc:`tutorial/installation` and :doc:`tutorial/quickstart`. :doc:`explanation/index` describes how the rebar lengths are calculated.
 
 .. toctree::
    :maxdepth: 2

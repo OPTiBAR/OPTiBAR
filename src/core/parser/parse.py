@@ -20,6 +20,8 @@ class V16Parser():
             raise DriverMissingError()
         if not os.path.isfile(file_path):
             raise IOError("database file is not available")
+        # the access driver rejects relative paths
+        file_path = os.path.abspath(file_path)
         # if not file_path.endswith('.accdb'):
         #     raise IOError('file format is not accdb')
         self.conn = pyodbc.connect('Driver={' + ACCESS_DRIVER + '};DBQ=' +

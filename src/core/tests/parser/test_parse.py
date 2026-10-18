@@ -138,6 +138,17 @@ class TestMissingTable():
         assert tmerr.value.message == 'Please select "MODEL DEFINITION" tables when exporting access file from CSI SAFE.'
 
 
+class TestPath():
+    def test_relative_path(self, monkeypatch):
+        """the access driver rejects relative paths, the parser must resolve them"""
+        monkeypatch.chdir(DATA_PATH)
+        parser = V16Parser('tonf_m.accdb')
+        try:
+            assert len(parser.get_foundation()['strips']) == 3
+        finally:
+            parser.close()
+
+
 class TestDriver():
     def test_missing_driver(self, monkeypatch):
         monkeypatch.setattr('core.parser.parse.has_access_driver', lambda: False)

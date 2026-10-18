@@ -10,7 +10,7 @@ According to the clause (this part should be completed) of the Iranian code and 
 
 There are three methods for placing general reinforcements, which are as follows:
 
-- **Minimum (minRatio):** In this method, the minimum allowable reinforcement according to the code is placed in each strip.
+- **Minimum (minRatio):** In this method, the minimum reinforcement prescribed by the code is placed in each strip.
   (:math:`area = minRatio * width * depth`)
 - **Count (count):** If the reinforcement meets the minimum requirement, the desired number of reinforcements is placed. If the minimum reinforcement is not met, the minimum amount of reinforcement is placed.
 - **Smart (smart):** The minimum reinforcement is placed. If the distance from the first station with zero steel demand to any of the edges is more than the pile depth, or if the distance between two consecutive zero-demand intermediate stations is more than twice the pile depth, the reinforcement placement is completed. Otherwise, another reinforcement is placed.

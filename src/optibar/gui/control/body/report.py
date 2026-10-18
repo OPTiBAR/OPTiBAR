@@ -1,6 +1,7 @@
 """builds the text report of a result, shown in the results log and saved as the summary file."""
 from typing import Dict, List, Tuple
 import texttable
+from optibar.core.optimization.cut import pattern_text
 
 # each line is (tag, text); tags match the LogWindow styles: INFO, WARNING, ERROR, SUCCESS
 Report = List[Tuple[str, str]]
@@ -29,6 +30,7 @@ def calc_report(output: Dict) -> Report:
         ]
     ])
     report.append(('INFO', table.draw() + '\n'))
+    report.extend(cutting_report(output['data'].get('cut', [])))
 
     # warnings
     warning_data = output.get('warnings', {})
@@ -52,6 +54,32 @@ def calc_report(output: Dict) -> Report:
         for i,mesh_data in enumerate(warning_data['excess_stack']):
             data.append([i+1, mesh_data['strip_name'], mesh_data['level'], ', '.join(map(str,mesh_data['excess_list']))])
         report.extend(_warning_table("Excess Stack number", data))
+    return report
+
+
+def cutting_report(plans: List[Dict], detailed: bool = False) -> Report:
+    """bars and waste of the cutting plan per diameter; with detailed, every pattern too"""
+    if not plans:
+        return []
+    stock = plans[0]['stock_length']
+    table = texttable.Texttable(max_width=0)
+    table.set_cols_dtype(['t', 'i', 'f', 't', 'i'])
+    table.set_precision(2)
+    table.add_rows([[f"Diameter(mm)", f"Bars({stock:g}m)", "Waste(m)", "Waste(%)", "Patterns"]] + [
+        [plan['diameter'], plan['bars'], plan['waste'], f"{100 * plan['waste_ratio']:.1f}", len(plan['patterns'])]
+        for plan in plans
+    ])
+    report = [('INFO', 'Cutting Plans'), ('INFO', table.draw() + '\n')]
+    if detailed:
+        for plan in plans:
+            report.append(('INFO', f"Cutting Plan, diameter {plan['diameter']}"))
+            table = texttable.Texttable(max_width=0)
+            table.set_cols_dtype(['i', 'i', 't', 't'])
+            rows = [['#', 'Bars', 'Pieces (m), position in the piece lists', 'Waste(m)']]
+            for i, pattern in enumerate(plan['patterns'], start=1):
+                rows.append([i, pattern['number'], pattern_text(pattern), f"{pattern['waste']:g}"])
+            table.add_rows(rows)
+            report.append(('INFO', table.draw() + '\n'))
     return report
 
 

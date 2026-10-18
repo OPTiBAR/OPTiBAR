@@ -9,7 +9,7 @@ from optibar.gui.view.body.results import ResultNote, Diagram
 from optibar.gui.setting import VERSION
 from optibar.core.sketch.sketch import Sketch
 from optibar.core.sketch.dxf import DxfDrawing
-from .report import calc_report, analysis_report, diagram_data, settings_report
+from .report import calc_report, analysis_report, diagram_data, settings_report, cutting_report
 
 
 class Result():
@@ -123,6 +123,10 @@ class Result():
             '',
         ]
         report = (settings_report(data['config']) if data.get('config') else []) + self._report()
+        if data['calc_type'] == 'calculation' and 'data' in data['result_data']:
+            # the overview is in the report above; the file also gets every pattern
+            plans = data['result_data']['data'].get('cut', [])
+            report += cutting_report(plans, detailed=True)[2:]
         for tag, text in report:
             lines.append(f'{tag}: {text}' if tag in ('WARNING', 'ERROR') and '\n' not in text else text)
         return '\n'.join(lines) + '\n'

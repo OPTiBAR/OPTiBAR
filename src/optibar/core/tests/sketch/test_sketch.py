@@ -37,6 +37,7 @@ class TestSketch():
             tables -= 1
         if not output['shear_types']:
             tables -= 1
+        tables += len(output['cut']) # a cutting plan page per diameter
         assert count_pages(path) == len(output['strips']) + tables
 
     def test_long_table_continues_on_next_page(self, output, tmp_path):

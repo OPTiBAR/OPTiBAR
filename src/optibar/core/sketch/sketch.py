@@ -6,6 +6,7 @@ from typing import Dict, List, Union
 import cairo
 
 from . import setting
+from optibar.core.optimization.cut import pattern_text
 
 WIDTH = setting.WIDTH # mm
 HEIGHT = setting.HEIGHT # mm
@@ -53,10 +54,20 @@ class Sketch():
             ("Shear Piece List", self.__get_shear_piece_table()),
             ("Shear Type Table", self.__get_shear_type_table()),
         ]
+        for plan in self.__output.get("cut", []):
+            title = (f"Cutting Plan, diameter {plan['diameter']}: {plan['bars']} bars of {plan['stock_length']:g} m, "
+                f"waste {plan['waste']:g} m (positions as in the DXF piece lists)")
+            tables.append((title, self.__get_cutting_table(plan)))
         for name, table in tables:
             if len(table) > 1: # skip tables that only have a header
                 self.__draw_table(table, context, name)
         surface.finish()
+
+    def __get_cutting_table(self, plan: Dict) -> Table:
+        table = [['#', 'bars', 'pieces (m)', 'waste (m)']]
+        for i, pattern in enumerate(plan['patterns'], start=1):
+            table.append([i, pattern['number'], pattern_text(pattern), f"{pattern['waste']:g}"])
+        return table
 
     def __get_summary_table(self) -> Table:
         rebar = self.__output["summary"]["rebar"]

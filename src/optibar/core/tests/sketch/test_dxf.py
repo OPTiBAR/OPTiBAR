@@ -85,6 +85,15 @@ class TestDxf():
         total = rebar['typical']['top'] + rebar['typical']['bottom']
         assert str(round(1000 * total)) in texts(doc)
 
+    def test_cutting_sheets(self, doc, output):
+        """a sheet per 15 patterns of each diameter, titled with the diameter"""
+        sheets = sum(-(-len(plan['patterns']) // 15) for plan in output['cut'])
+        assert output['cut']
+        headers = [t for t in texts(doc) if t == 'Cutting Pattern']
+        assert len(headers) == sheets
+        for plan in output['cut']:
+            assert any(t.startswith(f"Cutting Plan %%C{plan['diameter']}") for t in texts(doc))
+
     def test_bars_beyond_the_strip(self, output, tmp_path):
         """the plugin crashed when a bar or shear zone ran past the end of its strip"""
         broken = copy.deepcopy(output)

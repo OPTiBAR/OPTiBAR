@@ -9,9 +9,11 @@ space, in meters, laid out as a row of sheets:
      2 top additional, X           6 bottom additional, X     10 piece lists, summary and
                                                                   technical tables, moment diagrams
 
-Differences from the plugin: English only; no cutting patterns (the engine output has none);
-grid lines use the CENTER linetype and table lines the Border layer, which the plugin intended
-but lost by calling SetDatabaseDefaults() after setting them.
+and below them, portrait sheets with the cutting plan of every diameter.
+
+Differences from the plugin: English only; grid lines use the CENTER linetype and table lines the
+Border layer, which the plugin intended but lost by calling SetDatabaseDefaults() after setting
+them; cutting sheets have a title and their column headers on every sheet.
 """
 from __future__ import annotations
 import math
@@ -160,6 +162,7 @@ class DxfDrawing():
         self._draw_summary()
         self._draw_technical_tables()
         self._draw_moments()
+        self._draw_cutting_plans()
         doc.set_modelspace_vport(height=self.layout.HEIGHT * 1.2, center=(self.layout.WIDTH * 4.5, self.layout.HEIGHT / 2))
         doc.saveas(str(file_path))
 
@@ -808,6 +811,61 @@ class DxfDrawing():
         self.text("Mu", (lx - 2 * scale, by - 3.5 * scale), 0.8 * scale, layer='moment', color=3)
         self.polyline([(lx, by - 2 * scale), (lx + 2 * scale, by - 2 * scale)], layer='moment', color=2, width=0.1 * scale)
         self.polyline([(lx, by - 3.5 * scale), (lx + 2 * scale, by - 3.5 * scale)], layer='moment', color=3, width=0.1 * scale)
+
+
+    # --- cutting plans ----------------------------------------------------------------------
+
+    def _draw_cutting_plans(self) -> None:
+        """portrait sheets below the plans, 15 cutting patterns each, one or more sheets per diameter"""
+        plans = self.output.get('cut', [])
+        H = self.layout.HEIGHT
+        W = self.layout.WIDTH / 2
+        s = H / 29.7 # one cm of a portrait A4 sheet; a meter of bar is drawn as one s
+        margin = 1.4 * s
+        rows_per_sheet = 15
+        columns = [2.87 * s, 4.33 * s, 5.8 * s, 18.4 * s] # waste | length | number | pattern | row
+        headers = ["Waste\n(m)", "Length\n(m)", "Number", "Cutting Pattern", "Row"]
+        sheet = 0
+        for plan in plans:
+            pages = max(1, math.ceil(len(plan['patterns']) / rows_per_sheet))
+            for page in range(pages):
+                x0, top = 1.5 * sheet * W, -H / 2
+                sheet += 1
+                # frame and grid
+                self.polyline([(x0, top), (x0 + W, top), (x0 + W, top - H), (x0, top - H)], layer='Sheet', closed=True)
+                self.polyline([(x0 + margin, top - margin), (x0 + W - margin, top - margin), (x0 + W - margin, top - H + margin), (x0 + margin, top - H + margin)],
+                    layer='Border', closed=True, width=0.002 * H)
+                for k in range(rows_per_sheet + 1):
+                    y = top - 3 * s - 1.5 * k * s
+                    bold = k in (0, rows_per_sheet)
+                    self.polyline([(x0 + margin, y), (x0 + W - margin, y)], layer='Border', color=None if bold else 3, width=0.0015 * H if bold else 0)
+                for x in columns:
+                    self.line((x0 + x, top - 1.5 * s), (x0 + x, top - 25.5 * s), color=3)
+                centers = [(margin + columns[0]) / 2, (columns[0] + columns[1]) / 2, (columns[1] + columns[2]) / 2, (columns[2] + columns[3]) / 2, (columns[3] + W - margin) / 2]
+                for center, header in zip(centers, headers):
+                    self.mtext(header.replace('\n', '\\P'), (x0 + center, top - margin - 0.75 * s), 0.24 * s, width=4 * s, layer='Border', color=2)
+                title = f"Cutting Plan %%C{num(plan['diameter'])}" + (f" ({page + 1}/{pages})" if pages > 1 else '')
+                self.text(title, (x0 + W / 2, top + 0.8 * s), 0.5 * s)
+                self.text(f"{plan['bars']} bars of {num(plan['stock_length'])} m, waste {num(plan['waste'], 2)} m ({num(100 * plan['waste_ratio'], 1)}%)",
+                    (x0 + W / 2, top - 26.8 * s), 0.3 * s)
+
+                # one row per pattern
+                for row, pattern in enumerate(plan['patterns'][page * rows_per_sheet:(page + 1) * rows_per_sheet]):
+                    y = top - 3.75 * s - row * 1.5 * s
+                    self.text(str(pattern['number']), (x0 + centers[2], y), 0.3 * s, color=2)
+                    self.text(num(pattern['waste'], 2), (x0 + centers[0], y), 0.3 * s, color=2)
+                    self.text(num(sum(p['length'] for p in pattern['pieces']), 2), (x0 + centers[1], y), 0.3 * s, color=2)
+                    self.text(str(page * rows_per_sheet + row + 1), (x0 + centers[4], y), 0.3 * s, color=2)
+                    start = 0
+                    for piece in pattern['pieces']:
+                        a = x0 + 6.1 * s + start * s
+                        b = a + piece['length'] * s
+                        # the bar with a cut mark at each end
+                        self.polyline([(a + 0.1 * s, y + 0.1 * s), (a - 0.1 * s, y - 0.1 * s), (a, y), (b, y), (b + 0.1 * s, y + 0.1 * s), (b - 0.1 * s, y - 0.1 * s)],
+                            layer='Border', color=6)
+                        self.text(num(piece['length'], 2), ((a + b) / 2, y + 0.2 * s), 0.2 * s, color=6)
+                        self.text('/'.join(piece['label']), ((a + b) / 2, y - 0.2 * s), 0.2 * s, color=6)
+                        start += piece['length']
 
 
 # stirrup leg positions (1..13) for 1 to 11 legs

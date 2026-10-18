@@ -85,6 +85,7 @@ def test_calculation(loaded_app):
     app.wait_until(lambda: app.request.get_button_label() == 'Calculate')
     log = app.log_text(app.notebook.results.log)
     assert 'Mass Summary' in log
+    assert 'Cutting Plans' in log
     files = app.notebook.results.files
     assert 'disabled' not in files.save_button.state()
     assert 'disabled' not in files.pdf_button.state()
@@ -106,6 +107,8 @@ def test_save_calculation_results(loaded_app):
     assert 'summary' in saved['result']['data']
     summary = app.tmp_path.joinpath('result_summary.txt').read_text(encoding='utf-8')
     assert 'Settings' in summary and 'Mass Summary' in summary and 'tonf_m.accdb' in summary
+    assert 'Cutting Plan, diameter' in summary
+    assert saved['result']['data']['cut'] # the plans are saved with the result
     assert app.errors() == []
 
 

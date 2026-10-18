@@ -1,24 +1,22 @@
-from __future__ import annotations
 from .period import Period
-from typing import List, Dict
 from copy import copy
 
 class Diagram():
-    def __init__(self, stations: List[float], areas: List[float]):
+    def __init__(self, stations: list[float], areas: list[float]):
         """Initializes Diagram.
 
         Args:
             stations (List[float]): list of stations
             areas (List[float]): list of areas
         """
-        
+
         if len(stations) != len(areas):
             raise ValueError("stations and areas should have the same length.")
         self._points = []
         for i in range(len(stations)):
             self._points.append(Point(stations[i], areas[i]))
         self._original_points = [copy(point) for point in self._points]
-    
+
     def insert_typical(self, amount: float) -> None:
         """inserts typical rebars, with the given area
 
@@ -26,8 +24,8 @@ class Diagram():
             amount (float): area of the all inserted rebars
         """
         self._insert(amount)
-        
-    def insert_additional(self, area: float) -> List[Period]:
+
+    def insert_additional(self, area: float) -> list[Period]:
         """inserts one row of additional rebar with the given area
 
         Args:
@@ -55,7 +53,7 @@ class Diagram():
         if self._points[-1].area == 0 and self._points[-2].area == 0:
             end_dist = self._points[-1].station - self._points[-2].station
         return max(start_dist, end_dist)
-        
+
     def get_middle_distance(self) -> float:
         """distance of two zero stations not in the start or end of the diagram
 
@@ -72,13 +70,13 @@ class Diagram():
             return max_dist
         else:
             return 0
-    
+
     def get_stations(self) -> List[float]:
         return [point.station for point in self._points]
 
     def get_values(self) -> List[float]:
         return [point.area for point in self._points]
-        
+
     def _insert(self, amount: float) -> None:
         """inserts given amount of steel
 
@@ -98,13 +96,13 @@ class Diagram():
         """
         for point in self._points:
             point.area -= amount
-    
+
     @staticmethod
     def _interpolate_zero_line(point1: Point, point2: Point)-> Point:
         """
         finds the intersection point of the connecting line between point1 and point2
         and the y=0 line.
-        it is assumed that (point1.value * point2.value < 0) and 
+        it is assumed that (point1.value * point2.value < 0) and
         (point1.station < poin2.station).
 
         Args:
@@ -120,7 +118,7 @@ class Diagram():
         y2 = abs(point2.area)
         d = (y1*(x2-x1))/(y2+y1)
         return Point(station=(d + x1), area=0)
-    
+
     @staticmethod
     def _interpolate(point_1: Point, point_2: Point, station: float) -> float:
         """returns area of the given station between two points
@@ -128,7 +126,7 @@ class Diagram():
         Args:
             point_1 (Point): first point
             point_2 (Point): second point
-            statation ([float]): satation that its area is required 
+            statation ([float]): satation that its area is required
 
         Returns:
             float: area of the point in the given station
@@ -152,11 +150,11 @@ class Diagram():
                 i += 2 # skip the newly added point
             else:
                 i += 1
-    
+
     def _remove_consecutive_zeros(self) -> None:
         """remove the consecutive zero points
         if there is a zero point between two other zeros it should be removed
-        """        
+        """
         points = self._points
         i = 1 # start from the second point
         while(i < len(points)-1):
@@ -172,9 +170,9 @@ class Diagram():
             if point.area < 0:
                 point.area = 0
 
-    def get_periods(self) -> List[Period]:
+    def get_periods(self) -> list[Period]:
         """finds the intervals that the diagram is strictly above zero line.
-        
+
         Returns:
             List[Period]: returns the list of periods for pieces
         """
@@ -213,7 +211,7 @@ class Diagram():
             if point.area > 0 :
                 return True
         return False
-    
+
     def get_max_point(self, period: Period) -> Point:
         """returns the point with the maximum area in the given period
         the original diagram is considered.
@@ -238,7 +236,7 @@ class Diagram():
                             max_area = area
                             max_station = station
         return Point(max_station, max_area)
-    
+
     def get_min_point(self, period:Period) -> Point:
         min_station = None
         min_area = float("inf")
@@ -260,13 +258,13 @@ class Diagram():
         each bended side is increased sharply by the value.
         if both sides are not bended, there are 4 stations.
         if one side is bended there are two points.
-        if both sides are bended, stations list is empty. 
+        if both sides are bended, stations list is empty.
         Args:
-            bends (Tuple[bool, bool]): a two member tuple indicating the bend status of each end 
+            bends (Tuple[bool, bool]): a two member tuple indicating the bend status of each end
             stations (List[float]): stations of the break points of the trapasoid
             value (float): the height of the trapasoid
         """
-        
+
         # adding points
         points = self._points # local reference for clarity
         for station in stations:
@@ -278,7 +276,7 @@ class Diagram():
                     break
                 else:
                     i += 1
-        
+
         # add constant line value
         # start bend
         if bends["start"] and not bends["end"]:
@@ -307,7 +305,7 @@ class Diagram():
                 if stations[1] <= points[i].station <= stations[2]:
                     points[i].area += value
                 i += 1
-        
+
         # add sloped line value
         # decreasing slope
         if (bends["start"] and not bends["end"]) or (not bends["start"] and not bends["end"]):
@@ -315,7 +313,7 @@ class Diagram():
             while (i < len(points)):
                 if stations[-2] < points[i].station < stations[-1]:
                     added_area = value * (stations[-1] - points[i].station)/(stations[-1] - stations[-2])
-                    points[i].area += added_area 
+                    points[i].area += added_area
                 i += 1
         # increasing slope
         if (not bends["start"] and bends["end"]) or (not bends["start"] and not bends["end"]):
@@ -323,7 +321,7 @@ class Diagram():
             while (i < len(points)):
                 if stations[0] < points[i].station < stations[1]:
                     added_area = value * (points[i].station - stations[0])/(stations[1] - stations[0])
-                    points[i].area += added_area 
+                    points[i].area += added_area
                 i += 1
 
     def trim_period(self, period: Period) -> None:
@@ -331,7 +329,7 @@ class Diagram():
 
         Args:
             period: the period that should be trimed and it should be subset of the diagram bounds
-            offset: 
+            offset:
         """
         assert period.is_subset_of(self.get_bounds())
         # add remove stations to the diagram
@@ -342,9 +340,9 @@ class Diagram():
             period.end - period.get_length()/100,
             period.end
         )
-            
+
         points = self._points
-        
+
         # add points
         for station in stations:
             i = 0
@@ -361,7 +359,7 @@ class Diagram():
                     points.insert(i+1, Point(station, area))
                     break
                 i += 1
-        
+
         # delete excess points
         i = 0
         while i < len(points):
@@ -374,7 +372,7 @@ class Diagram():
                 del points[i]
             else:
                 i += 1
-        
+
     def linearize_period(self, period: Period) -> None:
         """linearizes the diagram between two points (practicaly column sides)
         Args:
@@ -402,7 +400,7 @@ class Diagram():
                 del points[i]
             else:
                 i += 1
-    
+
     def minimize_period(self, period: Period, side:str) -> None:
         """reduces value of the point in the given period to the minimum of the point's value and
         the interpolated value of the given side of the period
@@ -422,9 +420,9 @@ class Diagram():
                 break
         for point in points:
             if period.start <= point.station <= period.end:
-                point.value = min(point.area, max_area) 
+                point.value = min(point.area, max_area)
         # area = Diagram._interpolate(points[i], points[i+1], station)
-    
+
     def __str__(self):
         return "\n".join([str(point) for point in self._points])
 

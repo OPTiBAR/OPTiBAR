@@ -1,14 +1,16 @@
-from __future__ import annotations
+from typing import override
 from .utilities import round_down, round_up
 
 class Period():
     def __init__(self,start=None, end=None):
         self.start = start
         self.end = end
-    
+
+    @override
     def __eq__(self, other):
         return round(self.start,3) == round(other.start,3) and round(self.end,3) == round(other.end,3)
-    
+
+    @override
     def __str__(self):
         return f"[{round(self.start,3)}, {round(self.end,3)}]"
 
@@ -28,7 +30,7 @@ class Period():
             bool: returns True if this one is subset if the other period
         """
         return (round_up(self.start,0.001) >= round_down(other.start,0.001)) and (round_down(self.end,0.001) <= round_up(other.end,0.001))
-    
+
     def has_intersection_with(self, other: Period) -> bool:
         """determines if this period has intersection with the other period
         it is assumed that self.start < other.start

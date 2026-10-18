@@ -1,8 +1,6 @@
-from __future__ import annotations
 from enum import Enum
-from typing import List, NoReturn
-from core.src.components.collections import Stack
-from core.src.components.period import Period
+from core.components.collections import Stack
+from core.components.period import Period
 
 class StackMinimization():
     """gets a list of lengths in ascending order and two lengths d and Ld.
@@ -21,7 +19,7 @@ class StackMinimization():
         self.lengths = lengths # ascending
         self._run()
         self._retrieve_selected_lengths()
-    
+
     class Pair():
         """helper class for dynamic programming algorithm
         """
@@ -29,17 +27,17 @@ class StackMinimization():
             self.value = None
             self.ref = None
             self.domination: DominationType = None
-        
+
         def __eq__(self, other: object) -> bool:
             return all((
                 round(self.value,3) == round(other.value,3),
                 self.ref == other.ref,
                 self.domination == other.domination
             ))
-        
+
         def __str__(self):
             return (f"Pair: [value: {self.value}, ref: {self.ref}, domination: {self.domination}]")
-    
+
     class SelectedLength():
         """helper class for retrieving new lengths from calculation results
         """
@@ -53,7 +51,7 @@ class StackMinimization():
             ))
         def __str__(self):
             return (f"SelectedLength: [index: {self.index}, domination: {self.domination}]")
-    
+
     def _run(self) -> NoReturn:
         lengths = self.lengths # local ref for clarity
         container = []
@@ -92,7 +90,7 @@ class StackMinimization():
                     container[i][j].value = min_value
                     container[i][j].ref = min_index
                     container[i][j].domination = min_domination
-                        
+
     def _retrieve_selected_lengths(self) -> None:
         """returns the list of indices that results in the minimum total length
         and the domination status of each one
@@ -103,7 +101,7 @@ class StackMinimization():
             if self._container[i][len(self.lengths)-1].value < min_value:
                 min_value = self._container[i][len(self.lengths)-1].value
                 min_index = i
-        
+
         row_index = min_index
         col_index = len(self.lengths)-1
         selected_lengths = []
@@ -113,7 +111,7 @@ class StackMinimization():
             col_index = self._container[row_index][col_index].ref
             row_index -= 1
         self._selected_lengths = selected_lengths
-    
+
     def get_results(self) -> List[IncreasedLength]:
         increased_lengths = []
         selected_lengths = list(reversed(self._selected_lengths))
@@ -129,7 +127,7 @@ class StackMinimization():
                 base_length = self.d_length + self.lengths[selected_length.index]
             for k in range(i,selected_length.index+1):
                 increased_length = IncreasedLength(addition = base_length - self.lengths[k], domination=selected_length.domination)
-                increased_lengths.append(increased_length)  
+                increased_lengths.append(increased_length)
             i = selected_length.index+1
         return increased_lengths
 
@@ -144,7 +142,7 @@ class IncreasedLength():
         ))
     def __str__(self):
         return (f"IncreasedLength: [addition: {self.addition}, domination: {self.domination}]")
-            
+
 class DominationType(Enum):
     D = 0
     LD = 1
@@ -162,7 +160,7 @@ class PieceDomination():
         return f"Piece Domination:({self.start}, {self.end})"
 
 
-class PracticalOptimization():
+class requiredOptimization():
     def __init__(self, stack: Stack, d_length: float, ld_length: float):
         self.stack = stack
         self.d_length = d_length
@@ -183,16 +181,16 @@ class PracticalOptimization():
             lengths.append(abs(self.stack.peak_station - getattr(piece.theoretical,side)))
         return lengths
 
-    def _initialize_practical(self) -> None:
-        """initializes practical period and domination for each piece of stack
+    def _initialize_required(self) -> None:
+        """initializes required period and domination for each piece of stack
         """
         for piece in self.stack.get_pieces():
-            if piece.practical is None:
-                piece.practical = Period()
+            if piece.required is None:
+                piece.required = Period()
                 piece.domination = PieceDomination()
 
-    def _set_practical(self, side:str, increased_lengths: List[IncreasedLength])->None:
-        """sets the practical period value for each side according to the given
+    def _set_required(self, side:str, increased_lengths: List[IncreasedLength])->None:
+        """sets the required period value for each side according to the given
         increased lengths.
 
         Args:
@@ -204,18 +202,18 @@ class PracticalOptimization():
             piece = self.stack.get_pieces()[i]
             if side == "start":
                 station = getattr(piece.theoretical, side) - increased_lengths[i].addition
-                if piece.practical.start is not None:
-                    station = min(station, piece.practical.start)
+                if piece.required.start is not None:
+                    station = min(station, piece.required.start)
             else:
                 station = getattr(piece.theoretical, side) + increased_lengths[i].addition
-                if piece.practical.end is not None:
-                    station = max(station, piece.practical.end)
+                if piece.required.end is not None:
+                    station = max(station, piece.required.end)
 
-            setattr(piece.practical, side, station)
+            setattr(piece.required, side, station)
             setattr(piece.domination, side, increased_lengths[i].domination)
-    
+
     def _set_side(self, side) -> None:
-        """sets the practical length for each side of the stack
+        """sets the required length for each side of the stack
 
         Args:
             side ([type]): [description]
@@ -223,9 +221,9 @@ class PracticalOptimization():
         lengths = self._extract_lengths(side)
         optimization = StackMinimization(lengths=lengths, d_length=self.d_length, ld_length=self.ld_length)
         increased_lengths = optimization.get_results()
-        self._set_practical(side=side, increased_lengths=increased_lengths)
-    
+        self._set_required(side=side, increased_lengths=increased_lengths)
+
     def _run(self) -> None:
-        self._initialize_practical()
+        self._initialize_required()
         self._set_side("start")
         self._set_side("end")

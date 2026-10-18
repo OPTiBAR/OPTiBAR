@@ -1,6 +1,6 @@
-from __future__ import annotations
 from enum import Enum
 import math
+from typing import override
 from .utilities import round_up
 from core.setting import (
     REBAR_90_BEND_COEFFICIENT,
@@ -19,7 +19,7 @@ class Rebar():
             self._ld_length = Rebar.calc_ld(fc, fy, rebar_type, level)
         else:
             self._ld_length = None
-    
+
     @classmethod
     def calc_ld(cls, fc: float, fy: float, rebar_type: RebarType, level: str) -> float:
         """ level should be "top" or "bottom" """
@@ -38,7 +38,7 @@ class Rebar():
         else:
             raise ValueError("level should be top or bottom")
         return round_up(ld, REBAR_LD_ROUND_UNIT)
-    
+
     @classmethod
     def calc_bend_legth(cls, rebar_type: RebarType, degree: float) -> float:
         if cls.special_lengths is not None:
@@ -51,7 +51,7 @@ class Rebar():
         else:
             raise ValueError("degree should be 90 or 135")
 
-    
+
     @classmethod
     def calc_overlap_length(cls, fc: float, fy: float, rebar_type: RebarType, level: str) -> None:
         if cls.special_lengths is not None:
@@ -64,16 +64,17 @@ class Rebar():
 
     def get_ld(self) -> float:
         return self._ld_length
-    
+
     def get_overlap_length(self) -> float:
         return round_up(self._ld_length * 1.3, REBAR_OVERLAP_ROUND_UNIT)
-    
+
     def get_bend_length(self, degree: float = 90) -> float:
         return Rebar.calc_bend_legth(self.rebar_type, degree)
-    
+
     def get_diameter_mm(self) -> int:
         return self.rebar_type.value
 
+    @override
     def __eq__(self, o: object) -> bool:
         return all((
             self.rebar_type == o.rebar_type,
@@ -92,4 +93,3 @@ class RebarType(Enum):
     T25 = 25
     T28 = 28
     T32 = 32
-    

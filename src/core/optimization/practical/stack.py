@@ -1,7 +1,5 @@
-from __future__ import annotations
-from core.src.components.period import Period
-from typing import List, Dict, NoReturn
-from core.src.components.collections import Stack
+from core.components.period import Period
+from core.components.collections import Stack
 from .errors import NotEnoughTypes
 import copy
 
@@ -9,13 +7,13 @@ class StackAlgorithm():
     def __init__(
             self,
             stack: Stack,
-            selected_lengths: List[float]
+            selected_lengths: list[float]
         ):
         self._stack = stack
         self._selected_lengths = sorted(selected_lengths)
         self._run()
         self._type_dict = self._get_selected_lengths()
-    
+
     def _run(self):
         container = []
         self._container = container
@@ -38,7 +36,7 @@ class StackAlgorithm():
                         if (piece.shortest_piece_length <= selected_lengths[j]):
                             if (piece.length_upper_bound >= selected_lengths[j]):
                                 sum += selected_lengths[j] - piece.shortest_piece_length
-                                type_counter.add_piece(num_of_pieces= piece.get_num_of_pieces("practical"),new_length= selected_lengths[j])
+                                type_counter.add_piece(num_of_pieces= piece.get_num_of_pieces("required"),new_length= selected_lengths[j])
                             else:
                                 sum = None
                                 break
@@ -48,7 +46,7 @@ class StackAlgorithm():
                     min_value = float("inf")
                     min_index = None
                     min_type_counter = None
-                    
+
                     for k in range(i-1, j):
                         if container[i-1][k].value is None:
                             continue
@@ -59,7 +57,7 @@ class StackAlgorithm():
                                 (piece.shortest_piece_length > selected_lengths[k]):
                                 if (piece.length_upper_bound >= selected_lengths[j]):
                                     sum += selected_lengths[j] - piece.shortest_piece_length
-                                    type_counter.add_piece(piece.get_num_of_pieces("practical"), selected_lengths[j])
+                                    type_counter.add_piece(piece.get_num_of_pieces("required"), selected_lengths[j])
                                 else:
                                     sum = None
                                     break
@@ -75,8 +73,8 @@ class StackAlgorithm():
         #     print("row:   ")
         #     for cell in row:
         #         print(cell)
-    
-    def _get_selected_lengths(self) -> Dict[int, List[float]]:
+
+    def _get_selected_lengths(self) -> dict[int, list[float]]:
         container = self._container
         lengths = self._selected_lengths
         max_piece_length = max(map(lambda piece: piece.shortest_piece_length,self._stack.get_pieces()))
@@ -116,7 +114,7 @@ class StackAlgorithm():
 
         return output_dict
 
-    def _adjust_lengths(self, selected_lengths: List[float]) -> NoReturn:
+    def _adjust_lengths(self, selected_lengths: list[float]) -> None:
         pieces = sorted(self._stack.get_pieces(), key=lambda piece: piece.shortest_piece_length)
         selected_lengths = sorted(selected_lengths)
         i = 0
@@ -136,8 +134,8 @@ class StackAlgorithm():
         # investigate exit condition
         if i < len(pieces):
             raise ValueError("the longest selected length is too short") # could be removed !
-    
-    def set_lengths(self, num_of_types: int) -> NoReturn:
+
+    def set_lengths(self, num_of_types: int) -> None:
         type_dict = self._type_dict
         # for num in type_dict:
         #     print(type_dict[num])
@@ -154,15 +152,15 @@ class StackAlgorithm():
                         break
         else:
             self._adjust_lengths(type_dict[num_of_types])
-            
+
 class TypeCounter():
     """holds a dict
             key: number of subpieces
-            value: set of the lengths of the pieces 
+            value: set of the lengths of the pieces
     """
     def __init__(self):
         self._counter = {}
-    
+
     def add(self, other_type_counter: TypeCounter)-> None:
         """combines another type counter with self
         adds new number_of_pieces and new lengths in each of length lists
@@ -175,16 +173,16 @@ class TypeCounter():
                 self._counter[num_of_pieces] = self._counter[num_of_pieces].union(other_type_counter._counter[num_of_pieces])
             else:
                 self._counter[num_of_pieces] = copy.copy(other_type_counter._counter[num_of_pieces])
-    
+
     def add_piece(self, num_of_pieces: int, new_length: float):
         if num_of_pieces in self._counter.keys():
             self._counter[num_of_pieces].add(new_length)
         else:
             self._counter[num_of_pieces] = {new_length}
-    
+
     def get_num_of_types(self) -> int:
         return sum(map(len,self._counter.values()))
-    
+
     def __eq__(self, other: TypeCounter) -> bool:
         is_equal = True
         for num_of_pieces in self._counter:
@@ -196,25 +194,25 @@ class TypeCounter():
                 is_equal = False
                 break
         return is_equal
-    
+
     def __copy__(self):
         tc = TypeCounter()
         tc.add(self)
         return tc
-    
+
     def __str__(self):
         output = "TypeCounter: [\n"
         for num_of_pieces in self._counter:
             output += f"\t{num_of_pieces}: {self._counter[num_of_pieces]}\n"
         output += "]"
         return output
-                
+
 class Cell():
     def __init__(self):
         self.value = None
         self.ref = None
         self.type_counter = TypeCounter()
-    
+
     def __eq__(self, other: Cell):
         value_equality = None
         if self.value is None or other.value is None:

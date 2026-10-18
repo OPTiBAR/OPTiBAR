@@ -1,5 +1,3 @@
-from __future__ import annotations
-from typing import Iterator, List, Dict
 from .piece import Piece
 from .diagram import Diagram
 
@@ -17,13 +15,13 @@ class Stack():
             piece (Piece): the piece that should be added to the stack
         """
         self._pieces.append(piece)
-    
+
     def get_pieces(self) -> List[Piece]:
         return self._pieces
-    
+
     def __len__(self):
         return len(self._pieces)
-    
+
     def __eq__(self, other: Stack):
         return all((
             self._pieces == other.get_pieces(),
@@ -40,7 +38,7 @@ class Bunch():
     """
     def __init__(self):
         self._pieces = []
-    
+
     def add(self, piece: Piece) -> None:
         """adds new piece to the bunch and updates count
 
@@ -51,7 +49,7 @@ class Bunch():
 
     def get_pieces(self):
         return self._pieces
-        
+
     def get_count(self):
         return len(self._pieces)
 
@@ -62,7 +60,7 @@ class Bunch():
             str_out += "\t" + str(self._pieces[0]) + "\n"
         str_out += "\n"
         return str_out
-    
+
     # def __eq__(self):
         # should not be defined
         # it harms the get_drawing_data method of the Container class
@@ -73,7 +71,7 @@ class Container():
     def __init__(self, diagram: Diagram):
         self._rows = []
         self._diagram = diagram
-    
+
     def add_row(self, row: List[Piece]) -> None:
         """add rows from bottom to the top
 
@@ -81,10 +79,10 @@ class Container():
             row (List[Piece]): row of pieces
         """
         self._rows.append(row)
-    
+
     def get_rows(self) -> List[List[Piece]]:
         return self._rows
-    
+
     def get_pieces(self) -> Iterator[Piece, None, None]:
         """generator returning all the pieces
 
@@ -118,9 +116,9 @@ class Container():
                     new_stack.add_piece(piece)
                     stacks.append(new_stack)
         return stacks
-        
-    
-            
+
+
+
     def get_drawing_data(self) -> List[List[Bunch]]:
         """returns bunch of piece in list of list
         the first list contains bunches of the first row and are sorted from start to end
@@ -156,7 +154,7 @@ class Container():
                         row_index += 1
                         referenced_bunches.append(piece_dict["bunch_ref"])
             return bunch_list
-        
+
         # initializing list of piece_dict
         piece_list = []
         for piece in self.get_pieces():
@@ -181,8 +179,8 @@ class Container():
             #     for bunch in stack_dict["bunch_list"]:
             #         print(bunch["bunch"])
             #         print(bunch["bunch"].get_pieces()[0].shortest_piece_length)
-            
-        
+
+
         # dict of rows key: row_index and value: list of bunches
         row_dict = {}
         for stack_dict in stack_list:

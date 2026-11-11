@@ -30,6 +30,6 @@ packages = ["src/optibar"]
 [dependency-groups]
 dev = [
     "jsonschema>=4.26.0",
-    "pypdf>=6.21.1",
+    "pypdf>=6.21.2",
     "pytest>=9.1.1",
 ]

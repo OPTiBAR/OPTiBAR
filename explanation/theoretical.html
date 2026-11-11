@@ -1,0 +1,613 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Theoretical Length &#8212; OPTiBAR  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=4418a689" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'explanation/theoretical';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Required Length" href="required.html" />
+    <link rel="prev" title="Basic Concepts" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="OPTiBAR  documentation - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="OPTiBAR  documentation - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/first-map.html">Your first detailing map</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how-to/index.html">How-to guides</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/install.html">Install OPTiBAR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/export-from-safe.html">Export a model from SAFE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/choose-length-types.html">Choose the number of length types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/adjust-detailing.html">Adjust the detailing of a project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/save-results.html">Save the drawings and results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/python.html">Use OPTiBAR from Python</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/window.html">The window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/settings.html">Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/safe-input.html">SAFE input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/outputs.html">Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/detailing-rules.html">Detailing Rules</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Explanation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Basic Concepts</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Theoretical Length</a></li>
+<li class="toctree-l2"><a class="reference internal" href="required.html">Required Length</a></li>
+<li class="toctree-l2"><a class="reference internal" href="practical.html">Practical Length</a></li>
+<li class="toctree-l2"><a class="reference internal" href="moment.html">Resistant Moment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shear.html">Shear Rebars</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/explanation/theoretical.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Theoretical Length</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theoretical-typical">Typical rebars</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-rebars">Additional rebars</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="theoretical-length">
+<h1>Theoretical Length<a class="headerlink" href="#theoretical-length" title="Link to this heading">#</a></h1>
+<p>To obtain the theoretical lengths of the pieces, it is necessary to first determine the cross-sectional steel area required along the length of the strip. Then, by reducing step by step, the required amount of steel, the theoretical length, and the location of the pieces are obtained.</p>
+<p>Note that this algorithm is only applicable when all the pieces obtained in one stage of the algorithm have the same diameter.</p>
+<p>In regions where a concrete column is present, it is sufficient to satisfy the required steel on each of the two faces of the column: the required steel diagram is replaced by a straight line between the faces, see <a class="reference internal" href="../reference/detailing-rules.html#columns"><span class="std std-ref">Columns</span></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The code clause for this rule is not documented yet.</p>
+</div>
+<p>The required steel diagram is corrected at the columns with the following algorithm (<code class="docutils literal notranslate"><span class="pre">Diagram.linearize_period</span></code>). The column sides come from the column sizes, see <a class="reference internal" href="../reference/detailing-rules.html#columns"><span class="std std-ref">Columns</span></a>.</p>
+<div class="proof algorithm admonition" id="column-side-reduction">
+<p class="admonition-title"><span class="caption-number">Algorithm 1 </span> (Reducing the required steel at the column sides)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(stationList\)</span>: the stations of the strip, in ascending order</p></li>
+<li><p><span class="math notranslate nohighlight">\(AsList\)</span>: the required steel at each station of <span class="math notranslate nohighlight">\(stationList\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(ColumnSideStationsList\)</span>: pairs of stations <span class="math notranslate nohighlight">\((sideStart, sideEnd)\)</span>, the faces of each column</p></li>
+</ul>
+<p><strong>Output</strong> The corrected <span class="math notranslate nohighlight">\(stationList\)</span> and <span class="math notranslate nohighlight">\(AsList\)</span></p>
+<ol class="arabic simple">
+<li><p>For each <span class="math notranslate nohighlight">\((sideStart, sideEnd) \in ColumnSideStationsList\)</span>:</p>
+<ol class="arabic simple">
+<li><p>If <span class="math notranslate nohighlight">\(sideStart &lt; stationList[0]\)</span>: <span class="math notranslate nohighlight">\(sideStart \leftarrow stationList[0]\)</span></p></li>
+<li><p>If <span class="math notranslate nohighlight">\(sideEnd &gt; stationList[end]\)</span>: <span class="math notranslate nohighlight">\(sideEnd \leftarrow stationList[end]\)</span></p></li>
+<li><p>For each <span class="math notranslate nohighlight">\(side \in \{sideStart, sideEnd\}\)</span> that falls between two stations: add <span class="math notranslate nohighlight">\(side\)</span> to <span class="math notranslate nohighlight">\(stationList\)</span>, and its <span class="math notranslate nohighlight">\(As\)</span>, interpolated between the two stations, to <span class="math notranslate nohighlight">\(AsList\)</span>.</p></li>
+<li><p>Remove every station strictly between <span class="math notranslate nohighlight">\(sideStart\)</span> and <span class="math notranslate nohighlight">\(sideEnd\)</span>, with its <span class="math notranslate nohighlight">\(As\)</span>.</p></li>
+</ol>
+</li>
+</ol>
+</section>
+</div><section id="theoretical-typical">
+<span id="typical-rebars"></span><h2>Typical rebars<a class="headerlink" href="#theoretical-typical" title="Link to this heading">#</a></h2>
+<p>There are four methods for placing the typical rebars, which are as follows:</p>
+<ul class="simple">
+<li><p><strong>Minimum ratio (<code class="docutils literal notranslate"><span class="pre">MIN_RATIO</span></code>):</strong> the minimum steel is placed in each strip, <span class="math notranslate nohighlight">\(A_s = 0.0018\,b\,h\)</span>, rounded up to whole bars.</p></li>
+<li><p><strong>Count (<code class="docutils literal notranslate"><span class="pre">COUNT</span></code>):</strong> the given number of bars is placed. If it is less than the minimum steel, a warning is reported, see <a class="reference internal" href="../reference/detailing-rules.html#typical-rebars"><span class="std std-ref">Detailing Rules</span></a>.</p></li>
+<li><p><strong>Interval (<code class="docutils literal notranslate"><span class="pre">INTERVAL</span></code>):</strong> the strip width divided by the interval, rounded up.</p></li>
+<li><p><strong>Smart (<code class="docutils literal notranslate"><span class="pre">SMART</span></code>):</strong> The minimum steel is placed. If the distance from the first station with zero steel demand to any of the edges is more than the foundation thickness, or if the distance between two consecutive zero-demand intermediate stations is more than twice the foundation thickness, the placement is completed. Otherwise, another bar is placed.</p></li>
+</ul>
+<p>The app uses <code class="docutils literal notranslate"><span class="pre">INTERVAL</span></code>, and <code class="docutils literal notranslate"><span class="pre">COUNT</span></code> for the strips set on the <strong>Strips</strong> page.</p>
+<p>The area of the typical rebars is subtracted from the required steel diagram (<code class="docutils literal notranslate"><span class="pre">Diagram.insert_typical</span></code>), with <a class="reference internal" href="#reduce-as">Algorithm 3</a>.
+If the diagram is still positive somewhere, the rest is covered by additional rebars.</p>
+</section>
+<section id="additional-rebars">
+<h2>Additional rebars<a class="headerlink" href="#additional-rebars" title="Link to this heading">#</a></h2>
+<p>The additional rebars are found row by row (<code class="docutils literal notranslate"><span class="pre">Mesh._insert_additional</span></code>):</p>
+<ol class="arabic simple">
+<li><p>Find the parts of the strip where the remaining required steel is more than zero (<a class="reference internal" href="#theoretical-piece">Algorithm 2</a>). Each part is the <strong>theoretical</strong> length of one bar; together they form a <strong>row</strong>.</p></li>
+<li><p>Subtract the area of one additional rebar from the diagram (<a class="reference internal" href="#reduce-as">Algorithm 3</a>).</p></li>
+<li><p>Repeat while the diagram is positive anywhere.</p></li>
+</ol>
+<p>The first row holds the longest bars, at the bottom of the stacks; every following row is shorter and lies above.
+Bars with a theoretical length shorter than <strong>Elimination, Additional</strong> are left out of their row.</p>
+<div class="proof algorithm admonition" id="theoretical-piece">
+<p class="admonition-title"><span class="caption-number">Algorithm 2 </span> (Theoretical pieces of one row)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(stationList\)</span>: the stations of the strip, in ascending order</p></li>
+<li><p><span class="math notranslate nohighlight">\(AsList\)</span>: the remaining required steel at each station of <span class="math notranslate nohighlight">\(stationList\)</span>, never negative</p></li>
+</ul>
+<p><strong>Output</strong> <span class="math notranslate nohighlight">\(rowList\)</span>: the list of <span class="math notranslate nohighlight">\((start, end)\)</span> periods of the pieces of the row</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(drawingFlag \leftarrow False\)</span>, <span class="math notranslate nohighlight">\(rowList \leftarrow []\)</span></p></li>
+<li><p>For each <span class="math notranslate nohighlight">\(i \in \{0, \ldots, len(stationList)-1\}\)</span>:</p>
+<ol class="arabic simple">
+<li><p>If <span class="math notranslate nohighlight">\(drawingFlag = False\)</span>:</p>
+<ol class="arabic simple">
+<li><p>If <span class="math notranslate nohighlight">\((i = 0\)</span> and <span class="math notranslate nohighlight">\(AsList[i] &gt; 0)\)</span> or <span class="math notranslate nohighlight">\((i &lt; len(AsList)-1\)</span> and <span class="math notranslate nohighlight">\(AsList[i+1] &gt; 0)\)</span>:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(drawingFlag \leftarrow True\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(start \leftarrow stationList[i]\)</span></p></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>Else:</p>
+<ol class="arabic simple">
+<li><p>If <span class="math notranslate nohighlight">\(i = len(stationList)-1\)</span> or <span class="math notranslate nohighlight">\((AsList[i] = 0\)</span> and <span class="math notranslate nohighlight">\(AsList[i+1] = 0)\)</span>:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(drawingFlag \leftarrow False\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(end \leftarrow stationList[i]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(rowList.append((start, end))\)</span></p></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>Return <span class="math notranslate nohighlight">\(rowList\)</span></p></li>
+</ol>
+</section>
+</div><p>A piece ends at the first of two consecutive zero stations, so a single zero station between two positive parts does not split the piece; <a class="reference internal" href="#reduce-as">Algorithm 3</a> keeps a single zero station where the diagram crosses zero and removes the ones in between.</p>
+<div class="proof algorithm admonition" id="reduce-as">
+<p class="admonition-title"><span class="caption-number">Algorithm 3 </span> (Reducing the As diagram)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(stationList\)</span>: the stations of the strip, in ascending order</p></li>
+<li><p><span class="math notranslate nohighlight">\(AsList\)</span>: the required steel at each station of <span class="math notranslate nohighlight">\(stationList\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(rebarAs\)</span>: the area to subtract, one additional rebar, or all the typical rebars</p></li>
+</ul>
+<p><strong>Output</strong> The revised <span class="math notranslate nohighlight">\(stationList\)</span> and <span class="math notranslate nohighlight">\(AsList\)</span></p>
+<ol class="arabic simple">
+<li><p>For each <span class="math notranslate nohighlight">\(i\)</span>: <span class="math notranslate nohighlight">\(AsList[i] \leftarrow AsList[i] - rebarAs\)</span></p></li>
+<li><p>For each pair of neighbouring stations <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(i+1\)</span> with <span class="math notranslate nohighlight">\(AsList[i] \cdot AsList[i+1] &lt; 0\)</span>: find the station where the line between <span class="math notranslate nohighlight">\((stationList[i], AsList[i])\)</span> and <span class="math notranslate nohighlight">\((stationList[i+1], AsList[i+1])\)</span> crosses zero, and insert it with <span class="math notranslate nohighlight">\(As = 0\)</span>.</p></li>
+<li><p>For each <span class="math notranslate nohighlight">\(i\)</span>: if <span class="math notranslate nohighlight">\(AsList[i] &lt; 0\)</span> then <span class="math notranslate nohighlight">\(AsList[i] \leftarrow 0\)</span></p></li>
+<li><p>Remove every zero station whose two neighbours are also zero.</p></li>
+</ol>
+</section>
+</div></section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Basic Concepts</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="required.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Required Length</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theoretical-typical">Typical rebars</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-rebars">Additional rebars</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sina Hajikazemi, Amir Salar
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023, Sina Hajikazemi, Amir Salar.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

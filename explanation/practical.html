@@ -1,0 +1,818 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Practical Length &#8212; OPTiBAR  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=4418a689" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'explanation/practical';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Resistant Moment" href="moment.html" />
+    <link rel="prev" title="Required Length" href="required.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="OPTiBAR  documentation - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="OPTiBAR  documentation - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/first-map.html">Your first detailing map</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how-to/index.html">How-to guides</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/install.html">Install OPTiBAR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/export-from-safe.html">Export a model from SAFE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/choose-length-types.html">Choose the number of length types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/adjust-detailing.html">Adjust the detailing of a project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/save-results.html">Save the drawings and results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/python.html">Use OPTiBAR from Python</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/window.html">The window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/settings.html">Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/safe-input.html">SAFE input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/outputs.html">Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/detailing-rules.html">Detailing Rules</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Explanation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Basic Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theoretical.html">Theoretical Length</a></li>
+<li class="toctree-l2"><a class="reference internal" href="required.html">Required Length</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Practical Length</a></li>
+<li class="toctree-l2"><a class="reference internal" href="moment.html">Resistant Moment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shear.html">Shear Rebars</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/explanation/practical.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Practical Length</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-whole-process">The whole process</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rounding">Upper bound and rounding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bars-longer-than-12-m">Bars longer than 12 m</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reducing-the-number-of-length-types">Reducing the number of length types</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-definition">Problem definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#greedy-algorithm">Greedy algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-programming-algorithm">Dynamic programming algorithm</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-lengths-of-the-foundation">Choosing the lengths of the foundation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-length-of-a-piece">Maximum length of a piece</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-lengths-of-a-stack">Choosing the lengths of a stack</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-program">Integer program for the stacks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-the-practical-periods">Setting the practical periods</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="practical-length">
+<h1>Practical Length<a class="headerlink" href="#practical-length" title="Link to this heading">#</a></h1>
+<p>To make the required lengths buildable, they are rounded, and the number of different lengths is reduced in two sets: in every stack, and in the whole foundation.
+Fewer lengths in a stack make the drawing easier to read and to build; fewer lengths in the foundation make the bars easier to cut.
+The lengths obtained are the <strong>practical</strong> lengths.</p>
+<section id="the-whole-process">
+<h2>The whole process<a class="headerlink" href="#the-whole-process" title="Link to this heading">#</a></h2>
+<p>The lengths of the additional rebars are found with the following algorithm (<code class="docutils literal notranslate"><span class="pre">Mesh._theoretical_to_practical</span></code> and <code class="docutils literal notranslate"><span class="pre">Foundation._set_length_type_num</span></code>):</p>
+<div class="proof algorithm admonition" id="practical-pipeline">
+<p class="admonition-title"><span class="caption-number">Algorithm 7 </span> (Finding the lengths of the pieces)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> The required steel diagrams of the strips and the settings of the calculation</p>
+<p><strong>Output</strong> The practical lengths of all the pieces</p>
+<ol class="arabic simple">
+<li><p>Place the typical rebars, see <a class="reference internal" href="theoretical.html#theoretical-typical"><span class="std std-ref">Theoretical Length</span></a>.</p></li>
+<li><p>Find the theoretical lengths of the additional rebars (<a class="reference internal" href="theoretical.html#theoretical-piece">Algorithm 2</a>).</p></li>
+<li><p>Add <span class="math notranslate nohighlight">\(d\)</span> and <span class="math notranslate nohighlight">\(L_d\)</span> to the ends of the pieces in the best way (<a class="reference internal" href="required.html#stackify">Algorithm 4</a> and <a class="reference internal" href="required.html"><span class="std std-doc">Required Length</span></a>); this gives the required lengths.</p></li>
+<li><p>Merge the pieces that meet (<a class="reference internal" href="required.html#merge-pieces">Algorithm 6</a>) by their required lengths. If any piece was merged, go to step 3.</p></li>
+<li><p>Correct the pieces that pass the sides of the strip (<a class="reference internal" href="required.html#bend-pieces">Algorithm 5</a>):</p>
+<ol class="arabic simple">
+<li><p>Bend the pieces whose theoretical length passes the side.</p></li>
+<li><p>Bend the pieces whose required length passes the side where <span class="math notranslate nohighlight">\(L_d\)</span> governs; cut them at the side where <span class="math notranslate nohighlight">\(d\)</span> governs.</p></li>
+</ol>
+</li>
+<li><p>Find the upper bound of each piece, and round its length (see <a class="reference internal" href="#rounding">Rounding</a>).</p></li>
+<li><p>Set the practical period of each piece from its rounded length (<a class="reference internal" href="#length-adjustment">Algorithm 11</a>).</p></li>
+<li><p>Merge the pieces that meet by their practical lengths. If any piece was merged, go to step 3.</p></li>
+<li><p>Reduce the number of length types of the whole foundation (<a class="reference internal" href="#total-algorithm">Algorithm 9</a>) and of every stack (<a class="reference internal" href="#stack-program">integer program</a>).</p></li>
+<li><p>Set the practical periods again from the reduced lengths and merge the pieces that meet. If any piece was merged, go to step 3 for all the strips and repeat step 9.</p></li>
+</ol>
+</section>
+</div></section>
+<section id="rounding">
+<span id="upper-bound-and-rounding"></span><h2>Upper bound and rounding<a class="headerlink" href="#rounding" title="Link to this heading">#</a></h2>
+<p>Each piece has an <strong>upper bound</strong> on its length: the 12 m stock length for a bar longer than 12 m, and otherwise the length of the strip less the side covers plus the bends of the piece, or 12 m if that is shorter.</p>
+<p>The length of a piece is rounded up to 10 cm.
+If the rounded length passes the upper bound, it is rounded down to 10 cm instead.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The comment in the code (<code class="docutils literal notranslate"><span class="pre">Mesh._round_piece</span></code>) and the original design both say 5 cm, but the code rounds to 10 cm (<code class="docutils literal notranslate"><span class="pre">ROUND_UNIT</span> <span class="pre">=</span> <span class="pre">0.1</span></code> in <code class="docutils literal notranslate"><span class="pre">setting.py</span></code>).</p>
+</div>
+</section>
+<section id="bars-longer-than-12-m">
+<span id="id1"></span><h2>Bars longer than 12 m<a class="headerlink" href="#bars-longer-than-12-m" title="Link to this heading">#</a></h2>
+<p>Bars come in 12 m stock lengths, so a bar longer than 12 m is made of several pieces, which overlap by the overlap length <span class="math notranslate nohighlight">\(o\)</span> of the bar, see <a class="reference internal" href="../reference/detailing-rules.html#special-lengths"><span class="std std-ref">Special Lengths</span></a>.
+A bar of length <span class="math notranslate nohighlight">\(L &gt; 12\)</span> m needs</p>
+<div class="math notranslate nohighlight">
+\[  n = \left\lceil \frac{L - o}{12 - o} \right\rceil\]</div>
+<p>pieces, and its <strong>net length</strong>, the length of steel it uses, is <span class="math notranslate nohighlight">\(L + (n-1)\,o\)</span>.
+All the pieces are 12 m long except one, the <strong>shortest piece</strong>, with a length of <span class="math notranslate nohighlight">\(L + (n-1)\,o - (n-1) \times 12\)</span>.
+The shortest piece is at the bent end of the bar, or at the end side when the bar is not bent (<code class="docutils literal notranslate"><span class="pre">Piece.get_subpieces</span></code>).</p>
+<p>Rounding and the reduction of length types change only the length of the shortest piece; the 12 m pieces stay as they are.
+When the shortest piece is made longer, its overlap with the next piece gets longer than <span class="math notranslate nohighlight">\(o\)</span>.</p>
+</section>
+<section id="reducing-the-number-of-length-types">
+<h2>Reducing the number of length types<a class="headerlink" href="#reducing-the-number-of-length-types" title="Link to this heading">#</a></h2>
+<section id="problem-definition">
+<h3>Problem definition<a class="headerlink" href="#problem-definition" title="Link to this heading">#</a></h3>
+<p>Pieces with lengths <span class="math notranslate nohighlight">\(L_1, \ldots, L_n\)</span> are needed, <span class="math notranslate nohighlight">\(N_1, \ldots, N_n\)</span> of each, written as <span class="math notranslate nohighlight">\(L = [L_1, \ldots, L_n]\)</span> and <span class="math notranslate nohighlight">\(N = [N_1, \ldots, N_n]\)</span>, with <span class="math notranslate nohighlight">\(L_i &lt; L_j\)</span> for <span class="math notranslate nohighlight">\(i &lt; j\)</span> and <span class="math notranslate nohighlight">\(N_i \neq 0\)</span>.
+We want fewer lengths, and the only change allowed is to supply a longer piece instead of a needed one.
+The task is to limit the lengths to <span class="math notranslate nohighlight">\(p &lt; n\)</span> with the least total length of the pieces.</p>
+</section>
+<section id="greedy-algorithm">
+<h3>Greedy algorithm<a class="headerlink" href="#greedy-algorithm" title="Link to this heading">#</a></h3>
+<p>A simple approach removes one length at each step: the length whose pieces are cheapest to lengthen to the next longer length.</p>
+<div class="proof algorithm admonition" id="greedy">
+<p class="admonition-title"><span class="caption-number">Algorithm 8 </span> (Greedy algorithm, one step)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> The lengths <span class="math notranslate nohighlight">\(L = [L_1, \ldots, L_n]\)</span> and the numbers <span class="math notranslate nohighlight">\(N = [N_1, \ldots, N_n]\)</span></p>
+<p><strong>Output</strong> The new numbers <span class="math notranslate nohighlight">\(\hat{N} = [\hat{N}_1, \ldots, \hat{N}_n]\)</span></p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(p \leftarrow \text{arg}\min_{i=1,\ldots,n-1} \left\{ N_i (L_j - L_i) \mid N_i \neq 0,\ j = \min\{ k &gt; i \mid N_k \neq 0 \} \right\}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(q \leftarrow \min\{ l &gt; p \mid N_l \neq 0 \}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{N}_i \leftarrow N_i\)</span> for <span class="math notranslate nohighlight">\(i = 1, \ldots, n\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{N}_p \leftarrow 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{N}_q \leftarrow N_p + N_q\)</span></p></li>
+</ol>
+</section>
+</div><p>The greedy algorithm doesn’t always find the best solution.
+For <span class="math notranslate nohighlight">\(L = [1,2,3,4]\)</span> and <span class="math notranslate nohighlight">\(N = [5,4,7,1]\)</span>, limited to two lengths, it removes length 2 in the first step and length 1 in the second, which gives <span class="math notranslate nohighlight">\(N = [0,0,16,1]\)</span> and a total length of 52.
+Keeping lengths 2 and 4 instead gives <span class="math notranslate nohighlight">\(N = [0,9,0,8]\)</span> and a total length of 50.</p>
+</section>
+<section id="dynamic-programming-algorithm">
+<h3>Dynamic programming algorithm<a class="headerlink" href="#dynamic-programming-algorithm" title="Link to this heading">#</a></h3>
+<p>The problem is solved directly with dynamic programming, in <span class="math notranslate nohighlight">\(O(n^3)\)</span>, instead of building an integer model and solving it with a solver.
+It is split into two subproblems: first, <span class="math notranslate nohighlight">\(P\)</span> lengths are chosen for the whole foundation (<strong>Total</strong>); then, for every stack, <span class="math notranslate nohighlight">\(PSUB\)</span> of these <span class="math notranslate nohighlight">\(P\)</span> lengths are chosen (<strong>Stack</strong>).</p>
+<section id="choosing-the-lengths-of-the-foundation">
+<h4>Choosing the lengths of the foundation<a class="headerlink" href="#choosing-the-lengths-of-the-foundation" title="Link to this heading">#</a></h4>
+<p>The best way to choose <span class="math notranslate nohighlight">\(p\)</span> lengths out of <span class="math notranslate nohighlight">\(1, \ldots, q\)</span> is built from the best ways to choose <span class="math notranslate nohighlight">\(p-1\)</span> lengths out of <span class="math notranslate nohighlight">\(1, \ldots, q-1\)</span>, <span class="math notranslate nohighlight">\(1, \ldots, q-2\)</span>, …, <span class="math notranslate nohighlight">\(1, \ldots, p-1\)</span>.
+<span class="math notranslate nohighlight">\(len(p,q)\)</span> is the least increase of the total length when <span class="math notranslate nohighlight">\(p\)</span> lengths are chosen out of <span class="math notranslate nohighlight">\(1, \ldots, q\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}    \text{len}(p,q) = \left\{
+    \begin{array}{lr}
+    \min_{i=p-1,\ldots,q-1}\left\{ \text{len}(p-1,i) + \sum^{q-1}_{j=i+1} (L_q - L_j)N_j\right\}, &amp; p&gt;1 \\
+    \sum^{q-1}_{j=1}(L_q- L_j)N_j ,&amp; p=1
+    \end{array}
+    \right.\end{split}\]</div>
+<p>If the minimum is reached at <span class="math notranslate nohighlight">\(\hat{i}\)</span>, the best way to choose <span class="math notranslate nohighlight">\(p\)</span> lengths out of <span class="math notranslate nohighlight">\(1, \ldots, q\)</span> is to choose <span class="math notranslate nohighlight">\(q\)</span>, and <span class="math notranslate nohighlight">\(p-1\)</span> lengths out of <span class="math notranslate nohighlight">\(1, \ldots, \hat{i}\)</span>; the lengths <span class="math notranslate nohighlight">\(\hat{i}+1, \ldots, q-1\)</span> are not chosen.
+<span class="math notranslate nohighlight">\(ref(p,q)\)</span> returns <span class="math notranslate nohighlight">\(\hat{i}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}    \text{ref}(p,q) = \left\{
+    \begin{array}{lr}
+    \text{arg}\,\min_{i=p-1,\ldots,q-1}\left\{ \text{len}(p-1,i) + \sum^{q-1}_{j=i+1} (L_q - L_j)N_j\right\}, &amp; p&gt;1 \\
+    \varnothing ,&amp; p=1
+    \end{array}
+    \right.\end{split}\]</div>
+<p>As for the required lengths, the values are computed in a table, row by row from the top, and in every row from left to right.
+To choose <span class="math notranslate nohighlight">\(p\)</span> of the <span class="math notranslate nohighlight">\(n\)</span> lengths, read the cell in row <span class="math notranslate nohighlight">\(p\)</span> of the last column, and follow <span class="math notranslate nohighlight">\(ref\)</span> from there.</p>
+<p><strong>Example.</strong> Let <span class="math notranslate nohighlight">\(L = [2,3,7,11,15]\)</span> and <span class="math notranslate nohighlight">\(N = [1,5,3,10,4]\)</span>. Each cell holds the value of <span class="math notranslate nohighlight">\(len\)</span> and of <span class="math notranslate nohighlight">\(ref\)</span>:</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">The table of the example</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<tbody>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\((0, \varnothing)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((1, \varnothing)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((25, \varnothing)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((61, \varnothing)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((137, \varnothing)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>-</p></td>
+<td><p><span class="math notranslate nohighlight">\((0, 1)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((1, 2)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((13, 2)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((61, 4)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>-</p></td>
+<td><p>-</p></td>
+<td><p><span class="math notranslate nohighlight">\((0, 2)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((1, 3)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((13, 4)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p><span class="math notranslate nohighlight">\((0, 3)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((1, 4)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p><span class="math notranslate nohighlight">\((0, 4)\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To choose 3 of the 5 lengths, read row 3 of the last column: the total length grows by 13, to <span class="math notranslate nohighlight">\(\sum_{i} N_i L_i + 13\)</span>.
+The longest length is always chosen; the cell gives <span class="math notranslate nohighlight">\(ref = 4\)</span>, so length 4 is chosen next; row 2 of column 4 gives <span class="math notranslate nohighlight">\(ref = 2\)</span>, so length 2 is chosen.
+The chosen lengths are <span class="math notranslate nohighlight">\([2,4,5]\)</span>, that is <span class="math notranslate nohighlight">\([3, 11, 15]\)</span>.</p>
+</section>
+<section id="maximum-length-of-a-piece">
+<h4>Maximum length of a piece<a class="headerlink" href="#maximum-length-of-a-piece" title="Link to this heading">#</a></h4>
+<p>Each piece also has an upper bound on its length, <span class="math notranslate nohighlight">\(\overline{L}_i\)</span> (see <a class="reference internal" href="#rounding">Rounding</a>).
+Some solutions are now not possible; they get the value <span class="math notranslate nohighlight">\(\infty\)</span>, and the two formulas become:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}    f(x) = \left\{
+    \begin{array}{lr}
+    \infty, &amp; x &gt; 0 \\
+    1 ,&amp; x \leq 0
+    \end{array}
+    \right.\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}    \text{len}(p,q) = \left\{
+    \begin{array}{lr}
+    \min_{i=p-1,\ldots,q-1}\left\{ \text{len}(p-1,i) + \sum^{q-1}_{j=i+1} (L_q - L_j)N_j f(L_q-\overline{L}_j)\right\}, &amp; p&gt;1 \\
+    \sum^{q-1}_{j=1}(L_q- L_j)N_j f(L_q-\overline{L}_j) ,&amp; p=1
+    \end{array}
+    \right.\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}    \text{ref}(p,q) = \left\{
+    \begin{array}{lr}
+    \text{arg}\min_{i=p-1,\ldots,q-1}\left\{ \text{len}(p-1,i) + \sum^{q-1}_{j=i+1} (L_q - L_j)N_j f(L_q-\overline{L}_j)\right\}, &amp; p&gt;1 \\
+    \varnothing ,&amp; p=1
+    \end{array}
+    \right.\end{split}\]</div>
+<div class="proof algorithm admonition" id="total-algorithm">
+<p class="admonition-title"><span class="caption-number">Algorithm 9 </span> (Choosing the lengths of the foundation)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> The shortest-piece lengths of all the additional rebars of the foundation, and the number of length types <span class="math notranslate nohighlight">\(P\)</span> (<strong>Total</strong>)</p>
+<p><strong>Output</strong> The <span class="math notranslate nohighlight">\(P\)</span> chosen lengths, or the smallest feasible number of length types</p>
+<ol class="arabic simple">
+<li><p>Group the pieces by length: the lengths <span class="math notranslate nohighlight">\(L_1 &lt; \ldots &lt; L_n\)</span>, the number <span class="math notranslate nohighlight">\(N_i\)</span> and the smallest upper bound <span class="math notranslate nohighlight">\(\overline{L}_i\)</span> of the pieces of each length.</p></li>
+<li><p>If 12 m is not among the lengths, add it with <span class="math notranslate nohighlight">\(N = 0\)</span> and <span class="math notranslate nohighlight">\(\overline{L} = 12\)</span> m, so the stock length is always a candidate.</p></li>
+<li><p>Compute the table of <span class="math notranslate nohighlight">\(len\)</span> and <span class="math notranslate nohighlight">\(ref\)</span> with the formulas above.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(len(P, n) = \infty\)</span>: stop with the error that <span class="math notranslate nohighlight">\(P\)</span> is not feasible, and give the smallest <span class="math notranslate nohighlight">\(p\)</span> with <span class="math notranslate nohighlight">\(len(p, n) &lt; \infty\)</span>.</p></li>
+<li><p>Follow <span class="math notranslate nohighlight">\(ref\)</span> from row <span class="math notranslate nohighlight">\(P\)</span> of the last column to get the chosen lengths.</p></li>
+</ol>
+</section>
+</div><p>The smallest feasible number is shown in the report and saved as <code class="docutils literal notranslate"><span class="pre">min_feasible_num</span></code>, see <a class="reference internal" href="../reference/outputs.html"><span class="std std-doc">Outputs</span></a>.</p>
+</section>
+<section id="choosing-the-lengths-of-a-stack">
+<h4>Choosing the lengths of a stack<a class="headerlink" href="#choosing-the-lengths-of-a-stack" title="Link to this heading">#</a></h4>
+<p>This subproblem is solved for each stack on its own: out of the <span class="math notranslate nohighlight">\(P\)</span> lengths of the foundation, <span class="math notranslate nohighlight">\(PSUB\)</span> (<strong>Stack</strong>) are chosen.
+Let <span class="math notranslate nohighlight">\(L_p,\ p = 1, \ldots, P\)</span> be the lengths of the foundation, in ascending order; let <span class="math notranslate nohighlight">\(R_q,\ q = 1, \ldots, Q\)</span> be the lengths of the pieces of the stack, <span class="math notranslate nohighlight">\(\overline{R}_q\)</span> their upper bounds and <span class="math notranslate nohighlight">\(N_q\)</span> their numbers.</p>
+<div class="proof algorithm admonition" id="stack-algorithm">
+<p class="admonition-title"><span class="caption-number">Algorithm 10 </span> (Choosing the lengths of a stack, one cell)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(j\)</span>: choosing <span class="math notranslate nohighlight">\(i\)</span> lengths out of the <span class="math notranslate nohighlight">\(j\)</span> shortest lengths</p>
+<p><strong>Output</strong> <span class="math notranslate nohighlight">\(len(i,j)\)</span>, <span class="math notranslate nohighlight">\(ref(i,j)\)</span></p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(minIndex \leftarrow None\)</span>, <span class="math notranslate nohighlight">\(minSum \leftarrow \infty\)</span></p></li>
+<li><p>For each <span class="math notranslate nohighlight">\(k = i-1, \ldots, j-1\)</span>:</p>
+<ol class="arabic simple">
+<li><p>If <span class="math notranslate nohighlight">\(i &gt; 1\)</span>: <span class="math notranslate nohighlight">\(sum \leftarrow len(i-1, k)\)</span>, <span class="math notranslate nohighlight">\(\underline{L} \leftarrow L_k\)</span></p></li>
+<li><p>Else: <span class="math notranslate nohighlight">\(sum \leftarrow 0\)</span>, <span class="math notranslate nohighlight">\(\underline{L} \leftarrow -\infty\)</span></p></li>
+<li><p>For each <span class="math notranslate nohighlight">\(q = 1, \ldots, Q\)</span> with <span class="math notranslate nohighlight">\(\underline{L} &lt; R_q \leq L_j\)</span>:</p>
+<ol class="arabic simple">
+<li><p>If <span class="math notranslate nohighlight">\(\overline{R}_q \geq L_j\)</span>: <span class="math notranslate nohighlight">\(sum \leftarrow sum + (L_j - R_q) N_q\)</span></p></li>
+<li><p>Else: <span class="math notranslate nohighlight">\(sum \leftarrow \infty\)</span></p></li>
+</ol>
+</li>
+<li><p>If <span class="math notranslate nohighlight">\(sum &lt; minSum\)</span>: <span class="math notranslate nohighlight">\(minSum \leftarrow sum\)</span>, <span class="math notranslate nohighlight">\(minIndex \leftarrow k\)</span></p></li>
+</ol>
+</li>
+<li><p><span class="math notranslate nohighlight">\(len(i,j) \leftarrow minSum\)</span>, <span class="math notranslate nohighlight">\(ref(i,j) \leftarrow minIndex\)</span></p></li>
+</ol>
+</section>
+</div><p>As before, the table is computed row by row and from left to right, up to row <span class="math notranslate nohighlight">\(PSUB\)</span>.
+In that row, every cell with <span class="math notranslate nohighlight">\(len(PSUB, j) &lt; \infty\)</span> and <span class="math notranslate nohighlight">\(R_Q \leq L_j\)</span> is a feasible solution (every piece of the stack is assigned a chosen length); the one with the least <span class="math notranslate nohighlight">\(len\)</span> is the best.</p>
+</section>
+<section id="stack-program">
+<span id="integer-program-for-the-stacks"></span><h4>Integer program for the stacks<a class="headerlink" href="#stack-program" title="Link to this heading">#</a></h4>
+<p>The algorithm above is implemented (<code class="docutils literal notranslate"><span class="pre">StackAlgorithm</span></code>), but the app uses an integer program instead (<code class="docutils literal notranslate"><span class="pre">StackAlgorithmExact</span></code>), solved with the HiGHS solver through Pyomo.
+In it, a length type of a stack is a pair of a length and a number of pieces: a 4 m bar and a 16 m bar made of a 12 m piece and a 4 m piece count as different types.</p>
+<p>With the pieces <span class="math notranslate nohighlight">\(i\)</span> of the stack, their shortest-piece lengths <span class="math notranslate nohighlight">\(LS_i\)</span> and numbers of pieces <span class="math notranslate nohighlight">\(m_i\)</span>, and the lengths of the foundation <span class="math notranslate nohighlight">\(LO_j\)</span>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x_{ij} \in \{0,1\}\)</span>: piece <span class="math notranslate nohighlight">\(i\)</span> gets length <span class="math notranslate nohighlight">\(LO_j\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(z_{mj} \in \{0,1\}\)</span>: some piece made of <span class="math notranslate nohighlight">\(m\)</span> pieces gets length <span class="math notranslate nohighlight">\(LO_j\)</span>;</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}  \begin{align*}
+  \min \quad &amp; \sum_{i,j} (LO_j - LS_i)\, x_{ij} \\
+  \text{s.t.} \quad &amp; \sum_j x_{ij} = 1 &amp;&amp; \text{for every piece } i \\
+  &amp; x_{ij} = 0 &amp;&amp; \text{if } LS_i &gt; LO_j \\
+  &amp; z_{m_i j} \geq x_{ij} &amp;&amp; \text{for every } i, j \\
+  &amp; \sum_{m,j} z_{mj} \leq PSUB
+  \end{align*}\end{split}\]</div>
+<p>The solver stops within 10% of the optimum.
+If there is no solution with <span class="math notranslate nohighlight">\(PSUB\)</span> types, <span class="math notranslate nohighlight">\(PSUB\)</span> is increased by one until there is; the stacks that needed more types than allowed are listed in the report as a warning (<code class="docutils literal notranslate"><span class="pre">excess_stack</span></code>).</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The integer program doesn’t use the upper bounds <span class="math notranslate nohighlight">\(\overline{R}_q\)</span> of the pieces, so a piece can get a length longer than its upper bound.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="setting-the-practical-periods">
+<h2>Setting the practical periods<a class="headerlink" href="#setting-the-practical-periods" title="Link to this heading">#</a></h2>
+<p>The rounded or reduced length tells how long a piece must be, but not where it starts and ends.
+The pieces of each stack are placed from the longest to the shortest; each piece is placed against the piece below it, its <strong>base piece</strong>, so the ends of the stack line up where possible (<code class="docutils literal notranslate"><span class="pre">Mesh._set_piece_practical</span></code>).</p>
+<div class="proof algorithm admonition" id="length-adjustment">
+<p class="admonition-title"><span class="caption-number">Algorithm 11 </span> (Adjusting the length of a piece)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> A piece with its required period, its new length, and its base piece (optional)</p>
+<p><strong>Output</strong> The practical period of the piece, with its new length</p>
+<ol class="arabic simple">
+<li><p>Piece without bends:</p>
+<ol class="arabic simple">
+<li><p>Shorter: take the same amount off both ends.</p></li>
+<li><p>Longer, with a base piece:</p>
+<ol class="arabic simple">
+<li><p>If the base piece has no bends: if the piece reaches one end of the base piece, align it with that end; otherwise add the same amount to both ends.</p></li>
+<li><p>If the base piece is bent at one end: try to align the piece with the unbent end of the base piece. If it would pass the side of the strip, try to reach the bent side and bend the piece there. If neither is possible, give the piece the length of the base piece and bend it.</p></li>
+<li><p>If the base piece is bent at both ends: as without a base piece.</p></li>
+</ol>
+</li>
+<li><p>Longer, without a base piece: if adding to one end reaches the side of the strip, stop at the side and add the rest to the other end; otherwise add the same amount to both ends.</p></li>
+</ol>
+</li>
+<li><p>Piece bent at one end:</p>
+<ol class="arabic simple">
+<li><p>Shorter: take it off the unbent end.</p></li>
+<li><p>Longer: add it to the unbent end, up to the side of the strip and the end of the base piece. If the base piece is bent at that end and the piece reaches it, bend the piece there too.</p></li>
+</ol>
+</li>
+<li><p>Piece bent at both ends:</p>
+<ol class="arabic simple">
+<li><p>Shorter: take it off the end side.</p></li>
+<li><p>Longer: leave it as it is; this should not happen.</p></li>
+</ol>
+</li>
+</ol>
+</section>
+</div><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In case 1.2.2, a piece is bent only to keep the number of length types down.
+This is an exception and should be checked on the drawing.
+In case 3.2, the original design asks for a warning, but the code keeps the length silently.</p>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="required.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Required Length</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="moment.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Resistant Moment</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-whole-process">The whole process</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rounding">Upper bound and rounding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bars-longer-than-12-m">Bars longer than 12 m</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reducing-the-number-of-length-types">Reducing the number of length types</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-definition">Problem definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#greedy-algorithm">Greedy algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-programming-algorithm">Dynamic programming algorithm</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-lengths-of-the-foundation">Choosing the lengths of the foundation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-length-of-a-piece">Maximum length of a piece</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-lengths-of-a-stack">Choosing the lengths of a stack</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-program">Integer program for the stacks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-the-practical-periods">Setting the practical periods</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sina Hajikazemi, Amir Salar
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023, Sina Hajikazemi, Amir Salar.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

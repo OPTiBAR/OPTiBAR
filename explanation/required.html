@@ -1,0 +1,736 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Required Length &#8212; OPTiBAR  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=4418a689" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'explanation/required';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Practical Length" href="practical.html" />
+    <link rel="prev" title="Theoretical Length" href="theoretical.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="OPTiBAR  documentation - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="OPTiBAR  documentation - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/first-map.html">Your first detailing map</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how-to/index.html">How-to guides</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/install.html">Install OPTiBAR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/export-from-safe.html">Export a model from SAFE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/choose-length-types.html">Choose the number of length types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/adjust-detailing.html">Adjust the detailing of a project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/save-results.html">Save the drawings and results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how-to/python.html">Use OPTiBAR from Python</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/window.html">The window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/settings.html">Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/safe-input.html">SAFE input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/outputs.html">Outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/detailing-rules.html">Detailing Rules</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Explanation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Basic Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theoretical.html">Theoretical Length</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Required Length</a></li>
+<li class="toctree-l2"><a class="reference internal" href="practical.html">Practical Length</a></li>
+<li class="toctree-l2"><a class="reference internal" href="moment.html">Resistant Moment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shear.html">Shear Rebars</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/explanation/required.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Required Length</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stacks">Stacks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-definition">Problem definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-programming-algorithm">Dynamic programming algorithm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bars-at-the-sides">Bars at the sides of the strip</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-bars-of-a-row">Merging bars of a row</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="required-length">
+<h1>Required Length<a class="headerlink" href="#required-length" title="Link to this heading">#</a></h1>
+<p>To turn the theoretical lengths of the pieces into lengths accepted by the code, they must be extended.
+The rules are given below; then an optimization problem is defined that satisfies them while adding the least length to the theoretical lengths (<code class="docutils literal notranslate"><span class="pre">optimization/required.py</span></code>).</p>
+<section id="stacks">
+<h2>Stacks<a class="headerlink" href="#stacks" title="Link to this heading">#</a></h2>
+<p>A <strong>stack</strong> is a set of additional rebars placed on top of each other: from top to bottom, every piece lies within the next one, so the pieces go from short to long.
+The station of the largest required steel within the top piece is the <strong>base</strong> of the stack.</p>
+<p>Stacks are found from the rows of <a class="reference internal" href="theoretical.html#theoretical-piece">Algorithm 2</a> with the following algorithm (<code class="docutils literal notranslate"><span class="pre">PieceContainer.get_stacks</span></code>).
+A piece can join more than one stack, so two stacks can share their lower pieces.</p>
+<div class="proof algorithm admonition" id="stackify">
+<p class="admonition-title"><span class="caption-number">Algorithm 4 </span> (Finding the stacks of rebars)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> <span class="math notranslate nohighlight">\(pieceContainer\)</span>: the rows of pieces, from top to bottom (short to long)</p>
+<p><strong>Output</strong> <span class="math notranslate nohighlight">\(stackList\)</span>: the stacks; each stack is a list of pieces from top to bottom (short to long)</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(stackList \leftarrow []\)</span></p></li>
+<li><p>For each <span class="math notranslate nohighlight">\(pieceList \in pieceContainer\)</span>:</p>
+<ol class="arabic simple">
+<li><p>For each <span class="math notranslate nohighlight">\(piece \in pieceList\)</span>:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(added \leftarrow False\)</span></p></li>
+<li><p>For each <span class="math notranslate nohighlight">\(stack \in stackList\)</span>:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(child \leftarrow stack[-1]\)</span></p></li>
+<li><p>If <span class="math notranslate nohighlight">\(child \subseteq piece\)</span>: <span class="math notranslate nohighlight">\(stack.append(piece)\)</span>, <span class="math notranslate nohighlight">\(added \leftarrow True\)</span></p></li>
+</ol>
+</li>
+<li><p>If <span class="math notranslate nohighlight">\(added = False\)</span>: <span class="math notranslate nohighlight">\(stackList.append([piece])\)</span></p></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</section>
+</div></section>
+<section id="problem-definition">
+<h2>Problem definition<a class="headerlink" href="#problem-definition" title="Link to this heading">#</a></h2>
+<p>On one side of the base of a stack (start or end), let <span class="math notranslate nohighlight">\(L_1, \ldots, L_n\)</span> be the distances from the base to the theoretical ends of the pieces, from top to bottom, so <span class="math notranslate nohighlight">\(L_1 &lt; \ldots &lt; L_n\)</span>.
+Each piece is extended according to two rules:</p>
+<ol class="arabic simple">
+<li><p>The bar runs past its theoretical end by at least the effective depth <span class="math notranslate nohighlight">\(d\)</span>.</p></li>
+<li><p>The required end of every bar is at least <span class="math notranslate nohighlight">\(L_d\)</span> past the theoretical end of the next shorter bar; for the shortest bar, at least <span class="math notranslate nohighlight">\(L_d\)</span> past the base.</p></li>
+</ol>
+<p>The rule that gives the longer bar <strong>governs</strong> the end of the bar; OPTiBAR records which one it is (<span class="math notranslate nohighlight">\(d\)</span> or <span class="math notranslate nohighlight">\(L_d\)</span>), as it decides how a bar is treated at the side of the foundation, see <a class="reference internal" href="#bars-at-the-sides">Bars at the sides of the strip</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The code clauses for these rules are not documented yet.
+For the first rule, see the warning in <a class="reference internal" href="../reference/detailing-rules.html#additional-rebars"><span class="std std-ref">Detailing Rules</span></a>.</p>
+</div>
+<p>The second rule is based on the theoretical end of the shorter bar.
+Suppose a stack has three bars of different lengths: bar 3 is extended from the end of bar 2, and bar 2 from the end of bar 1.
+If bar 2 is given the length of bar 3, then both bars 2 and 3 are extended from the end of bar 1.
+So giving some bars of a stack the same length can make the total length of the stack shorter.</p>
+</section>
+<section id="dynamic-programming-algorithm">
+<h2>Dynamic programming algorithm<a class="headerlink" href="#dynamic-programming-algorithm" title="Link to this heading">#</a></h2>
+<p>We choose the best subset of the lengths <span class="math notranslate nohighlight">\(1, \ldots, q\)</span>: every length that is not chosen is increased to the smallest chosen length above it, and the total length after applying the two rules is the least possible.
+The best way to choose <span class="math notranslate nohighlight">\(p\)</span> lengths out of <span class="math notranslate nohighlight">\(1, \ldots, q\)</span> is built from the best ways to choose <span class="math notranslate nohighlight">\(p-1\)</span> lengths out of <span class="math notranslate nohighlight">\(1, \ldots, q-1\)</span>, <span class="math notranslate nohighlight">\(1, \ldots, q-2\)</span>, …, <span class="math notranslate nohighlight">\(1, \ldots, p-1\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(len(p,q)\)</span> is the least total length of the bars <span class="math notranslate nohighlight">\(1, \ldots, q\)</span> when <span class="math notranslate nohighlight">\(p\)</span> lengths are chosen from them:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}  \text{len}(p,q) = \left\{
+  \begin{array}{lr}
+  \min_{i=p-1,\ldots,q-1}\left\{ \text{len}(p-1,i) + (q-i) \max\{L_i + L_d,\ L_q + d\}\right\}, &amp; p&gt;1 \\
+  q \max\{L_d,\ L_q+d\}, &amp; p=1
+  \end{array}
+  \right.\end{split}\]</div>
+<p>If the minimum is reached at <span class="math notranslate nohighlight">\(\hat{i}\)</span>, the best way to choose <span class="math notranslate nohighlight">\(p\)</span> lengths out of <span class="math notranslate nohighlight">\(1, \ldots, q\)</span> is to choose <span class="math notranslate nohighlight">\(q\)</span>, and <span class="math notranslate nohighlight">\(p-1\)</span> lengths out of <span class="math notranslate nohighlight">\(1, \ldots, \hat{i}\)</span>; the lengths <span class="math notranslate nohighlight">\(\hat{i}+1, \ldots, q-1\)</span> are increased to <span class="math notranslate nohighlight">\(L_q\)</span>.
+<span class="math notranslate nohighlight">\(ref(p,q)\)</span> returns <span class="math notranslate nohighlight">\(\hat{i}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}  \text{ref}(p,q) = \left\{
+  \begin{array}{lr}
+  \text{arg}\,\min_{i=p-1,\ldots,q-1}\left\{ \text{len}(p-1,i) + (q-i) \max\{L_i + L_d,\ L_q + d\}\right\}, &amp; p&gt;1 \\
+  \varnothing, &amp; p=1
+  \end{array}
+  \right.\end{split}\]</div>
+<p>A recursive function would compute the same values many times.
+Instead, the values are computed in a table, row by row from the top, and in every row from left to right: <span class="math notranslate nohighlight">\(len(1,1), len(1,2), \ldots, len(1,n)\)</span>, then <span class="math notranslate nohighlight">\(len(2,2), \ldots, len(2,n)\)</span>, and so on.
+The least value in the last column is the best solution; following <span class="math notranslate nohighlight">\(ref\)</span> from there gives the chosen lengths.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id1">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Dynamic programming algorithm table</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<tbody>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(len(1,1)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(len(1,2)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(len(1,3)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ldots\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(len(1,n-1)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(len(1,n)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>-</p></td>
+<td><p><span class="math notranslate nohighlight">\(len(2,2)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(len(2,3)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ldots\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(len(2,n-1)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(len(2,n)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>-</p></td>
+<td><p>-</p></td>
+<td><p><span class="math notranslate nohighlight">\(len(3,3)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ldots\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(len(3,n-1)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(len(3,n)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\ldots\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ldots\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ldots\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ldots\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ldots\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ldots\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p><span class="math notranslate nohighlight">\(len(n-1,n-1)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(len(n-1,n)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p><span class="math notranslate nohighlight">\(len(n,n)\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
+<p>Let <span class="math notranslate nohighlight">\(L = [1, 1.5, 2]\)</span>, <span class="math notranslate nohighlight">\(d = 0.3\)</span> and <span class="math notranslate nohighlight">\(L_d = 1.4\)</span>. Each cell of the table below holds the value of <span class="math notranslate nohighlight">\(len\)</span> and the value of <span class="math notranslate nohighlight">\(ref\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}  \begin{align}
+  \text{len}(1,1) &amp;= \max\{L_d, L_1 + d\} = \max\{1.4, 1 + 0.3\} = 1.4 \\
+  \text{len}(1,2) &amp;= 2 \times \max\{L_d, L_2 + d\} = 2 \times \max\{1.4, 1.5 + 0.3\} = 2 \times 1.8 = 3.6 \\
+  \text{len}(1,3) &amp;= 3 \times \max\{L_d, L_3 + d\} = 3 \times \max\{1.4, 2 + 0.3\} = 3 \times 2.3 = 6.9 \\
+  \text{len}(2,2) &amp;= \text{len}(1,1) + \max\{L_1+L_d , L_2 + d\} \\
+  &amp;= 1.4 + \max\{1+1.4, 1.5+0.3\} = 1.4 + 2.4 = 3.8 \\
+  \text{len}(2,3) &amp;= \min\{\text{len}(1,1) + 2 \times \max\{L_1+L_d, L_3+d\} , \text{len}(1,2) + \max\{L_2+L_d, L_3+d\}\} \\
+  &amp;= \min\{1.4 + 2 \times \max\{1+1.4, 2+0.3\} ,2 \times 1.8 + \max\{1.5+1.4,2+0.3\}\} \\
+  &amp;= \min\left\{1.4 + 2 \times 2.4 ,2 \times 1.8 + 2.9\right\} = 6.2 \\
+  \text{len}(3,3) &amp;= \text{len}(2,2)+\max\{L_2+L_d,L_3+d\} \\
+  &amp;= 1.4 + 2.4 + \max\{1.5+1.4, 2+0.3\} = 1.4 + 2.4 + 2.9 = 6.7
+  \end{align}\end{split}\]</div>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">The table of the example</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<tbody>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\((1.4, \varnothing)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((3.6, \varnothing)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((6.9, \varnothing)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>-</p></td>
+<td><p><span class="math notranslate nohighlight">\((3.8, 1)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((6.2, 1)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>-</p></td>
+<td><p>-</p></td>
+<td><p><span class="math notranslate nohighlight">\((6.7, 2) \)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The least value in the last column is <span class="math notranslate nohighlight">\(len(2,3) = 6.2\)</span>, with <span class="math notranslate nohighlight">\(ref(2,3) = 1\)</span>: bar 1 keeps its theoretical length, and bar 2 gets the theoretical length of bar 3.
+Applying the two rules to these lengths gives a total length of 6.2, less than the 6.7 of extending every bar on its own, <span class="math notranslate nohighlight">\(len(3,3)\)</span>.</p>
+<p>The extensions are found for the start and the end side of each stack separately.
+A piece that belongs to two stacks gets the longer of the two required ends.</p>
+</section>
+<section id="bars-at-the-sides">
+<span id="bars-at-the-sides-of-the-strip"></span><h2>Bars at the sides of the strip<a class="headerlink" href="#bars-at-the-sides" title="Link to this heading">#</a></h2>
+<p>The bars must stay within the strip, less the side cover on both ends.
+Bars that pass the side are bent or cut (<code class="docutils literal notranslate"><span class="pre">Mesh._bend_stack_base</span></code>), with a bend of the length given in <a class="reference internal" href="../reference/detailing-rules.html#special-lengths"><span class="std std-ref">Special Lengths</span></a>:</p>
+<div class="proof algorithm admonition" id="bend-pieces">
+<p class="admonition-title"><span class="caption-number">Algorithm 5 </span> (Bending the bars at the sides of the strip)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> The stacks of the strip, each from top to bottom, with their theoretical and required periods and the governing rule of each end</p>
+<p><strong>Output</strong> The bends and the corrected periods of the pieces</p>
+<ol class="arabic simple">
+<li><p>For each <span class="math notranslate nohighlight">\(stack\)</span>, and each <span class="math notranslate nohighlight">\(piece\)</span> of it, from top to bottom, and each <span class="math notranslate nohighlight">\(side \in \{start, end\}\)</span>:</p>
+<ol class="arabic simple">
+<li><p>If the theoretical <span class="math notranslate nohighlight">\(side\)</span> of the piece passes the side of the strip: bend it; the theoretical and required <span class="math notranslate nohighlight">\(side\)</span> are at the side of the strip plus the bend.</p></li>
+<li><p>Else, if the required <span class="math notranslate nohighlight">\(side\)</span> passes the side of the strip:</p>
+<ol class="arabic simple">
+<li><p>If <span class="math notranslate nohighlight">\(L_d\)</span> governs that end, or the piece above it in the stack is bent on that side: bend it, and its required <span class="math notranslate nohighlight">\(side\)</span> is at the side of the strip plus the bend.</p></li>
+<li><p>Else (<span class="math notranslate nohighlight">\(d\)</span> governs): cut it at the side of the strip.</p></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</section>
+</div></section>
+<section id="merging-bars-of-a-row">
+<h2>Merging bars of a row<a class="headerlink" href="#merging-bars-of-a-row" title="Link to this heading">#</a></h2>
+<p>The required lengths of two neighbouring bars of a row can overlap.
+Then one bar from the start of the first to the end of the second may be shorter than the two bars together, as an overlap is only needed every 12 m.
+The bars of a row are merged where this lowers the total length, with the following algorithm (<code class="docutils literal notranslate"><span class="pre">Mesh._unify</span></code>).
+The <strong>net length</strong> of a bar of length <span class="math notranslate nohighlight">\(L\)</span> is <span class="math notranslate nohighlight">\(L\)</span> itself up to 12 m, and <span class="math notranslate nohighlight">\(L\)</span> plus its overlaps above, see <a class="reference internal" href="practical.html#bars-longer-than-12-m"><span class="std std-ref">Practical Length</span></a>.</p>
+<div class="proof algorithm admonition" id="merge-pieces">
+<p class="admonition-title"><span class="caption-number">Algorithm 6 </span> (Merging bars that meet)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> The pieces <span class="math notranslate nohighlight">\(p_1, \ldots, p_n\)</span> of a row, sorted by their start (and end)</p>
+<p><strong>Output</strong> The pieces of the row, merged with the least total net length</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(subset \leftarrow []\)</span></p></li>
+<li><p>For each <span class="math notranslate nohighlight">\(i \in 1, \ldots, n\)</span>:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(subset.append(p_i)\)</span></p></li>
+<li><p>If <span class="math notranslate nohighlight">\(i = n\)</span> or <span class="math notranslate nohighlight">\(p_i.end &lt; p_{i+1}.start\)</span> (the next piece doesn’t meet <span class="math notranslate nohighlight">\(p_i\)</span>):</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(minPartitionValue \leftarrow \infty\)</span>, <span class="math notranslate nohighlight">\(minPartition \leftarrow None\)</span></p></li>
+<li><p>For each partition <span class="math notranslate nohighlight">\(part\)</span> of <span class="math notranslate nohighlight">\(subset\)</span> into groups of consecutive pieces:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(partSum \leftarrow\)</span> the sum of the net lengths of the merged pieces of the groups of <span class="math notranslate nohighlight">\(part\)</span></p></li>
+<li><p>If <span class="math notranslate nohighlight">\(partSum &lt; minPartitionValue\)</span>: <span class="math notranslate nohighlight">\(minPartitionValue \leftarrow partSum\)</span>, <span class="math notranslate nohighlight">\(minPartition \leftarrow part\)</span></p></li>
+</ol>
+</li>
+<li><p>Replace the pieces of <span class="math notranslate nohighlight">\(subset\)</span> by one merged piece for each group of <span class="math notranslate nohighlight">\(minPartition\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(subset \leftarrow []\)</span></p></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</section>
+</div><p>When two pieces are not merged, the stacks they belong to are kept apart in the rows above too.
+After merging, the required lengths are found again, and this repeats until no bars are merged.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="theoretical.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Theoretical Length</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="practical.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Practical Length</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stacks">Stacks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-definition">Problem definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-programming-algorithm">Dynamic programming algorithm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bars-at-the-sides">Bars at the sides of the strip</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-bars-of-a-row">Merging bars of a row</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sina Hajikazemi, Amir Salar
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023, Sina Hajikazemi, Amir Salar.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

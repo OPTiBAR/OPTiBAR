@@ -7,9 +7,9 @@ from optibar.gui.view.utils.styles import palette
 from optibar.gui.setting import REBAR_LIST
     
         
-class Excel(ttk.LabelFrame):
+class Excel(ttk.Frame):
     def __init__(self,parent):
-        super().__init__(parent, text='Strips')
+        super().__init__(parent)
         
         # variables
         self.selected_strip_name_var = tk.StringVar()

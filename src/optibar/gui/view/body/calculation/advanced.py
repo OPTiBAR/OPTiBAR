@@ -5,32 +5,30 @@ from optibar.gui.view.utils.common import IntEntry
 from typing import List, Dict
 from optibar.gui.setting import REBAR_LIST
 
-class Setting(ttk.Frame):
-    def __init__(self, parent):
-        ttk.Frame.__init__(self, parent)
-        self.special_length = SpecialLength(self)
-        self.typical = Typical(self)
-        self.special_length.grid(row=0, column=0, padx=10, pady=10, sticky='nswe')
-        self.typical.grid(row=0, column=1, padx=10, pady=10, sticky='nswe')
+class Setting():
+    """the advanced settings, as two pages of the settings notebook: Special Lengths and Strips"""
+    def __init__(self, notebook: ttk.Notebook):
+        self.special_length = SpecialLength(notebook)
+        self.typical = Typical(notebook)
+        notebook.add(self.special_length, text='Special Lengths')
+        notebook.add(self.typical, text='Strips')
 
-        # geometry
-        self.columnconfigure(0,weight=1)
-        self.columnconfigure(1,weight=1)
-        self.rowconfigure(0,weight=1)
     def get_values(self):
         return {
             'special_lengths': self.special_length.get_values(),
             'exceptions': self.typical.get_values()
         }
 
-class Typical(ttk.LabelFrame):
+class Typical(ttk.Frame):
     def __init__(self, parent):
-        ttk.LabelFrame.__init__(self, parent, text='Typical Arrangement')
-        
-        self.table = Excel(self)
-        
-        # geometry
+        ttk.Frame.__init__(self, parent, padding=(4, 8, 4, 4))
 
+        hint = ttk.Label(self, style='Muted.TLabel', wraplength=420, justify='left',
+            text='The number and diameter of the typical rebars of single strips and levels, instead of the interval of the Basic page.')
+        self.table = Excel(self)
+
+        # geometry
+        hint.grid(row=0, column=0, columnspan=2, sticky='w')
         self.table.grid(row=1,column=0, columnspan=2, sticky='ewns')
         for child in self.winfo_children(): 
             child.grid_configure(padx=15, pady=10)
@@ -55,9 +53,9 @@ class Typical(ttk.LabelFrame):
         return exceptions
 
 
-class SpecialLength(ttk.LabelFrame):
+class SpecialLength(ttk.Frame):
     def __init__(self, parent):
-        ttk.LabelFrame.__init__(self, parent, text='Special Lengths')
+        ttk.Frame.__init__(self, parent, padding=(4, 8, 4, 4))
         column_names = (
             'Bottom',
             'Top',

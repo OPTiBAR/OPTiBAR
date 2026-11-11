@@ -19,9 +19,9 @@ class CalcType(ttk.LabelFrame):
         # geometry
         computation_radio.grid(row=0, column=0, sticky='w')
         analysis_radio.grid(row=0, column=1, sticky='w')
-        for child in self.winfo_children(): 
-            child.grid_configure(padx=20, pady=20)
-        
+        for child in self.winfo_children():
+            child.grid_configure(padx=12, pady=8)
+
     def get_value(self):
         return self.type_var.get()
 
@@ -31,18 +31,14 @@ class CalcType(ttk.LabelFrame):
 
 
 class Setting(ttk.Notebook):
+    """the pages of the settings: Basic, Special Lengths and Strips"""
     def __init__(self, parent):
         ttk.Notebook.__init__(self, parent)
         basic = BasicSetting(self)
         self.basic = basic
-        advanced = AdvancedSetting(self)
-        self.advanced = advanced
-
-        basic.grid(sticky='nswe')
-        advanced.grid(sticky='nswe')
-
         self.add(basic, text='Basic')
-        self.add(advanced, text='Advanced')
+        # adds the Special Lengths and Strips pages
+        self.advanced = AdvancedSetting(self)
 
         # geometry
         self.columnconfigure(0,weight=1)
@@ -127,22 +123,18 @@ class CalcRequest(ttk.LabelFrame):
         self.event_generate('<<calc-pressed>>')
 
 
-class CalcNote(ttk.Frame):
+class SettingsPane(ttk.Frame):
+    """the left pane: the type of request, the settings, and the Calculate button"""
     def __init__(self, parent):
         ttk.Frame.__init__(self, parent)
-        
+
         self.calc_type = CalcType(self)
         self.setting = Setting(self)
         self.request = CalcRequest(self)
 
         # geometry
-        self.calc_type.grid(row=0, column=0, sticky='news', padx=20, pady=10)
-        self.setting.grid(row=1, column=0, sticky='news', padx=20, pady=10)
-        self.request.grid(row=2, column=0, sticky='news', padx=20, pady=10)
+        self.calc_type.grid(row=0, column=0, sticky='news', pady=(0, 8))
+        self.setting.grid(row=1, column=0, sticky='news', pady=(0, 8))
+        self.request.grid(row=2, column=0, sticky='news')
         self.columnconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
-
-
-
-
-

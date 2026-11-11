@@ -45,6 +45,10 @@ def set_theme(root: tk.Misc, mode: str) -> None:
     style.configure('Link.TLabel', foreground=colors['link'])
     style.configure('Muted.TLabel', foreground=colors['muted'])
     style.configure('Info.TLabel', foreground=colors['muted'])
+    # the status badge of the file bar
+    style.configure('Success.TLabel', foreground=colors['success'])
+    style.configure('Warning.TLabel', foreground=colors['warning'])
+    style.configure('Error.TLabel', foreground=colors['error'])
     # sv-ttk fixes the row height in pixels; follow the font instead so rows don't overlap on scaled displays
     tree_font = str(style.lookup('Treeview', 'font') or 'TkDefaultFont') # lookup returns a Tcl object
     linespace = font.nametofont(tree_font, root).metrics('linespace')

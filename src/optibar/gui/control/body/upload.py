@@ -1,41 +1,57 @@
-import webbrowser
-from tkinter.messagebox import showerror, showinfo, askyesno
+from pathlib import Path
 from typing import Dict
-from optibar.gui.view.body.upload import UploadNote
+from optibar.gui.view.body.upload import FileBar
+from optibar.gui.control.body.log import ReportLog
 from optibar.core.parser.parse import V16Parser, has_access_driver
 from optibar.core.parser.errors import TableMissingError, DriverMissingError
 
 
 class Upload():
-    def __init__(self, upload_note: UploadNote, project_data: Dict) -> None:
+    """loads the input file; its messages go to the input section of the report and the status badge"""
+    def __init__(self, file_bar: FileBar, report: ReportLog, project_data: Dict) -> None:
         self.project_data = project_data
-        self.browser = upload_note.browser
-        self.log = upload_note.log
+        self.browser = file_bar
+        self.report = report
         self.path_var = self.browser.path_var
 
         # add trace and bind and initialize
         self.path_var.trace_add('write', self.path_var_changed)
         self.path_var.set('')
         self.browser.bind('<<load-button-pressed>>', self.load_file)
+        self.browser.bind('<<status-clicked>>', lambda e: self.report.show_input())
+        root = file_bar.winfo_toplevel()
+        root.bind('<<open-file>>', lambda e: self.browser.browse_fun())
+        root.bind('<<reload-file>>', lambda e: self.load_file() if self.path_var.get() else None)
 
         # access files can't be read without the ODBC driver, say so before the user tries
         if not has_access_driver():
-            error = DriverMissingError()
-            self.log.write_error(error.message)
-            self.log.write_info('Download: ' + error.url)
-
+            self._failed(DriverMissingError())
 
     def path_var_changed(self, *args):
         if self.path_var.get() == '':
             self.browser.set_load_button_state('disabled')
-            self.browser.set_status('')
+            self.browser.set_status('No file loaded')
         else:
             self.browser.set_load_button_state('!disabled')
-            self.browser.set_status('Idle')
+
+    def _failed(self, error: Exception) -> None:
+        """reports an input file that can't be used; the calculation is disabled until another file is loaded"""
+        if isinstance(error, DriverMissingError):
+            lines = [('ERROR', error.message), ('INFO', 'Download it from:'), ('LINK', error.url)]
+            status = '✗ Access ODBC driver missing'
+        elif isinstance(error, TableMissingError):
+            lines = [('ERROR', error.message), ('INFO', 'Export the model from SAFE again, with this table.')]
+            status = '✗ Not loaded: a table is missing'
+        else:
+            lines = [('ERROR', 'There is some unknown error in parsing the access file.')]
+            status = '✗ Not loaded: the file could not be read'
+        self.browser.set_status(status, 'error')
+        self.report.set_input(lines)
+        self.project_data['data'] = None
+        self.project_data['is_available'].set(False)
 
     def load_file(self, *args):
-        self.log.clear()
-        self.browser.set_status('Parsing Database File')
+        self.browser.set_status('Loading…', 'busy')
         self.browser.update_idletasks()
         file_path = self.path_var.get()
         parser = None
@@ -44,34 +60,28 @@ class Upload():
             input_data = parser.get_foundation()
             concrete_set = parser.get_concrete_set()
             steel_set = parser.get_steel_set()
-        except DriverMissingError as e:
-            self.browser.set_status('Failed')
-            self.log.write_error(e.message)
-            self.log.write_info('Download: ' + e.url)
-            if askyesno('Access Driver Missing', e.message + '\n\nOpen the download page?'):
-                webbrowser.open(e.url)
-            return
-        except TableMissingError as e:
-            self.browser.set_status('Failed')
-            self.log.write_error(e.message)
-            showerror('Missing Table', e.message)
-            return
-        except Exception:
-            self.browser.set_status('Failed')
-            message = 'There is some unknown error in parsing the access file.'
-            self.log.write_error(message)
-            showerror('Unknown Error', message)
+        except Exception as e:
+            self._failed(e)
             return
         finally:
             if parser is not None:
                 parser.close()
 
-        self.log.write_success('File Parsed Successfully.')
+        lines = [
+            ('SUCCESS', 'File Parsed Successfully.'),
+            ('INFO', f"{Path(file_path).name}: {len(input_data['strips'])} strips"),
+        ]
+        warnings = []
         if len(concrete_set) > 1:
-            self.log.write_warning("You are using more than one concrete material. The output may not be reliable.")
+            warnings.append("You are using more than one concrete material. The output may not be reliable.")
         if len(steel_set) > 1:
-            self.log.write_warning("You are using more than one steel material. The output may not be reliable.")
-        self.browser.set_status('Done')
+            warnings.append("You are using more than one steel material. The output may not be reliable.")
+        lines += [('WARNING', warning) for warning in warnings]
+        if warnings:
+            self.browser.set_status(f"⚠ Loaded with {len(warnings)} warning{'s' if len(warnings) > 1 else ''}", 'warning')
+        else:
+            self.browser.set_status('✓ Loaded', 'success')
+        self.report.set_input(lines)
 
         # update project_data
         self.project_data['data'] = {
@@ -80,5 +90,5 @@ class Upload():
             'strip_names': [strip['name'] for strip in input_data['strips']],
             'materials': {'fc': next(iter(concrete_set)), 'fy': next(iter(steel_set))},
         }
+        # set even when it was True already: a reloaded file clears the results
         self.project_data['is_available'].set(True)
-        showinfo('Input File', 'Project loaded successfully. Go to the 2. Calculation tab to perform the calculation.')

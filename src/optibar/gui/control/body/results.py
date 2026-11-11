@@ -5,7 +5,8 @@ from pathlib import Path
 from tkinter.filedialog import asksaveasfilename
 from tkinter.messagebox import showinfo, showerror
 from typing import Dict
-from optibar.gui.view.body.results import ResultNote, Diagram
+from optibar.gui.view.body.results import ResultsPane, Diagram
+from optibar.gui.control.body.log import ReportLog
 from optibar.gui.setting import VERSION
 from optibar.core.sketch.sketch import Sketch
 from optibar.core.sketch.dxf import DxfDrawing
@@ -13,17 +14,19 @@ from .report import calc_report, analysis_report, diagram_data, settings_report,
 
 
 class Result():
-    def __init__(self, root: tk.Tk, result_note: ResultNote, result_data: Dict) -> None:
+    def __init__(self, root: tk.Tk, result_note: ResultsPane, result_data: Dict, report: ReportLog) -> None:
         self.root = root
         self.result_data = result_data
+        self.pane = result_note
         self.files = result_note.files
-        self.log = result_note.log
+        self.report = report
 
         self.files.bind('<<diagram-button-pressed>>', self.draw_diagram)
         self.files.bind('<<save-button-pressed>>', self.save_results)
         self.files.bind('<<pdf-button-pressed>>', lambda *args: self.save_drawing('pdf'))
         self.files.bind('<<dxf-button-pressed>>', lambda *args: self.save_drawing('dxf'))
         result_data['is_available'].trace_add('write', self.result_data_changed)
+        result_data['stale'].trace_add('write', lambda *args: self.pane.set_stale(result_data['stale'].get()))
 
         # initialize
         result_data['is_available'].set(False)
@@ -63,7 +66,7 @@ class Result():
             return
         data = self.result_data['data']
         self.files.set_button_state('save', '!disabled')
-        self.log.write_lines(self._report())
+        self.report.set_results(self._report())
         if data['calc_type'] == 'calculation':
             if 'data' in data['result_data']:
                 self.files.set_button_state('pdf', '!disabled')
@@ -156,6 +159,7 @@ class Result():
         showinfo(title, f'Saved:\n{path}')
 
     def __refresh(self):
-        self.log.clear()
+        self.result_data['stale'].set(False)
+        self.report.set_results([])
         for name in ('save', 'pdf', 'dxf', 'diagram'):
             self.files.set_button_state(name, 'disabled')

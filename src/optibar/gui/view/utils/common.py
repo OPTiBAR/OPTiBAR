@@ -1,4 +1,5 @@
 import tkinter as tk
+import webbrowser
 from tkinter import font, ttk
 from typing import List
 from optibar.gui.view.utils.styles import palette, report_font
@@ -29,8 +30,17 @@ class LogWindow(ttk.LabelFrame):
         self.grid_columnconfigure(1, weight = 0)
         self.grid_rowconfigure(1, weight = 0)
 
+        # LINK lines open their text, a url, in the browser
+        text.tag_bind('LINK', '<Button-1>', self._open_link)
+        text.tag_bind('LINK', '<Enter>', lambda e: text.configure(cursor='hand2'))
+        text.tag_bind('LINK', '<Leave>', lambda e: text.configure(cursor=''))
+
         self._apply_colors()
         self.bind('<<ThemeChanged>>', self._apply_colors)
+
+    def _open_link(self, event) -> None:
+        start, end = self.text.tag_prevrange('LINK', f'@{event.x},{event.y} + 1c')
+        webbrowser.open(self.text.get(start, end).strip())
 
     def _apply_colors(self, *args) -> None:
         colors = palette()
@@ -48,6 +58,8 @@ class LogWindow(ttk.LabelFrame):
         self.text.tag_configure('ROW', foreground=colors['text_fg'], spacing1=2, spacing3=2)
         self.text.tag_configure('ROW_ALT', foreground=colors['text_fg'], background=colors['stripe'], spacing1=2, spacing3=2)
         self.text.tag_configure('TOTAL', foreground=colors['text_fg'], font=self._fonts['bold'])
+        self.text.tag_configure('MUTED', foreground=colors['muted'])
+        self.text.tag_configure('LINK', foreground=colors['link'], underline=True)
     
     def clear(self) -> None:
         self.text['state'] = 'normal'

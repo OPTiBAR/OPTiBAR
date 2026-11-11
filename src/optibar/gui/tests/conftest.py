@@ -6,6 +6,8 @@ import pytest
 import optibar.gui.control.body.upload as upload_module
 import optibar.gui.control.body.calculation as calculation_module
 import optibar.gui.control.body.results as results_module
+import optibar.gui.view.body.upload as file_bar_module
+import optibar.gui.view.utils.common as common_module
 from optibar.gui.view.root import Root
 from optibar.gui.control.controller import Controller
 from optibar.core.parser.parse import has_access_driver
@@ -21,20 +23,24 @@ class App():
     def __init__(self, monkeypatch, tmp_path: pathlib.Path) -> None:
         self.dialogs = []
         self.save_paths = []
-        self.answer_yes = False
+        self.open_paths = []
         record = lambda kind: (lambda title, message, **kwargs: self.dialogs.append((kind, title, message)))
         for module in (upload_module, calculation_module, results_module):
             for kind in ('showinfo', 'showerror'):
                 if hasattr(module, kind):
                     monkeypatch.setattr(module, kind, record(kind))
-        monkeypatch.setattr(upload_module, 'askyesno', lambda title, message: self.dialogs.append(('askyesno', title, message)) or self.answer_yes)
         monkeypatch.setattr(results_module, 'asksaveasfilename', lambda **kwargs: str(self.save_paths.pop(0)) if self.save_paths else '')
-        monkeypatch.setattr(upload_module.webbrowser, 'open', lambda url: self.dialogs.append(('browser', url, '')))
+        monkeypatch.setattr(file_bar_module, 'askopenfilename', lambda **kwargs: str(self.open_paths.pop(0)) if self.open_paths else '')
+        monkeypatch.setattr(common_module.webbrowser, 'open', lambda url: self.dialogs.append(('browser', url, '')))
         self.tmp_path = tmp_path
         self.root = self._create_root()
+        # exceptions in tk callbacks are printed and swallowed by tkinter; record them as errors
+        self.root.report_callback_exception = lambda kind, value, tb: self.dialogs.append(('exception', kind.__name__, str(value)))
         Controller(self.root)
         self.root.update()
-        self.notebook = self.root.notebook
+        self.file_bar = self.root.file_bar
+        self.settings = self.root.settings
+        self.results = self.root.results
 
     @staticmethod
     def _create_root() -> Root:
@@ -50,10 +56,10 @@ class App():
 
     @property
     def request(self):
-        return self.notebook.calc.request
+        return self.settings.request
 
     def errors(self):
-        return [d for d in self.dialogs if d[0] == 'showerror']
+        return [d for d in self.dialogs if d[0] in ('showerror', 'exception')]
 
     def update(self, seconds: float = 0) -> None:
         end = time.time() + seconds
@@ -70,17 +76,18 @@ class App():
                 raise TimeoutError(self.request.status_var.get())
             self.update(0.05)
 
-    def log_text(self, log) -> str:
-        return log.text.get('1.0', 'end').strip()
+    def log_text(self, log=None) -> str:
+        """the text of the report, or of the given log"""
+        return (log or self.results.log).text.get('1.0', 'end').strip()
 
     def load(self, path: pathlib.Path = SAMPLE_FILE) -> None:
-        self.notebook.upload.browser.path_var.set(str(path))
-        self.notebook.upload.browser.event_generate('<<load-button-pressed>>')
+        self.file_bar.path_var.set(str(path))
+        self.file_bar.event_generate('<<load-button-pressed>>')
         self.update()
 
     def set_calc_type(self, calc_type: str) -> None:
-        self.notebook.calc.calc_type.type_var.set(calc_type)
-        self.notebook.calc.calc_type.event_generate('<<calc-type-changed>>')
+        self.settings.calc_type.type_var.set(calc_type)
+        self.settings.calc_type.event_generate('<<calc-type-changed>>')
 
     def calculate(self) -> None:
         self.request.event_generate('<<calc-pressed>>')

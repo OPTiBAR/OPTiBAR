@@ -10,7 +10,7 @@ from matplotlib.figure import Figure
 
 class FileFrame(ttk.LabelFrame):
     def __init__(self, parent):
-        ttk.LabelFrame.__init__(self, parent, text='Files')
+        ttk.LabelFrame.__init__(self, parent, text='Results', padding=(4, 0))
 
         # widgets
         self.save_button = ttk.Button(self, text='Save Results', command=lambda: self.event_generate("<<save-button-pressed>>"))
@@ -37,7 +37,7 @@ class FileFrame(ttk.LabelFrame):
         for i in range(6):
             self.columnconfigure(i, weight=1)
         for child in self.winfo_children():
-            child.grid_configure(padx=10, pady=10)
+            child.grid_configure(padx=8, pady=6)
 
     def get_diagram_type(self):
         return self.diagram_type_var.get()
@@ -68,7 +68,8 @@ class Diagram():
         self.sub = fig.add_subplot(1,1,1)
         # match the app theme
         colors = palette()
-        fig.set_facecolor(ttk.Style(window).lookup('TFrame', 'background') or colors['text_bg'])
+        # lookup returns a Tcl object, which matplotlib doesn't take as a color
+        fig.set_facecolor(str(ttk.Style(window).lookup('TFrame', 'background') or colors['text_bg']))
         self.sub.set_facecolor(colors['text_bg'])
         self.sub.tick_params(colors=colors['text_fg'])
         for item in (self.sub.xaxis.label, self.sub.yaxis.label, self.sub.title):
@@ -100,14 +101,27 @@ class Diagram():
         self.toolbar.update()
 
 
-class ResultNote(ttk.Frame):
+class ResultsPane(ttk.Frame):
+    """the right pane: the result buttons, and the report of the input file and the results"""
     def __init__(self, parent):
         ttk.Frame.__init__(self,parent)
         self.files = FileFrame(self)
+        # shown when the settings changed after the calculation
+        self.stale_label = ttk.Label(self, style='Warning.TLabel', justify='left',
+            text='⚠ The settings changed after this calculation. Press Calculate to update the results.')
+        self.bind('<Configure>', lambda e: self.stale_label.configure(wraplength=max(200, e.width - 16)))
         self.log = LogWindow(self)
 
         # geometry
-        self.files.grid(row=0, column=0, sticky='news', padx=20, pady=10)
-        self.log.grid(row=1, column=0, sticky='news', padx=20, pady=10)
+        self.files.grid(row=0, column=0, sticky='news', pady=(0, 8))
+        self.stale_label.grid(row=1, column=0, sticky='w', padx=4, pady=(0, 6))
+        self.stale_label.grid_remove()
+        self.log.grid(row=2, column=0, sticky='news')
         self.columnconfigure(0, weight=1)
-        self.rowconfigure(1, weight=1)
+        self.rowconfigure(2, weight=1)
+
+    def set_stale(self, stale: bool) -> None:
+        if stale:
+            self.stale_label.grid()
+        else:
+            self.stale_label.grid_remove()

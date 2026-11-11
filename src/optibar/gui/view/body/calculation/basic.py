@@ -21,7 +21,7 @@ class Typical(ttk.LabelFrame):
         self.columnconfigure(1,weight=1)
         self.rowconfigure(0, weight=1)
         for child in self.winfo_children(): 
-            child.grid_configure(padx=20, pady=10)
+            child.grid_configure(padx=12, pady=6)
 
     def get_values(self):
         return {
@@ -31,7 +31,7 @@ class Typical(ttk.LabelFrame):
 
 class Setting(ttk.Frame):
     def __init__(self, parent):
-        ttk.Frame.__init__(self, parent)
+        ttk.Frame.__init__(self, parent, padding=(4, 8, 4, 4))
         self.diameter = Diameter(self)
         self.type_num_calc = TypeNumCalc(self)
         self.type_num_analysis = TypeNumAnalysis(self)
@@ -39,26 +39,25 @@ class Setting(ttk.Frame):
         self.typical = Typical(self)
         self.cover = Cover(self)
 
-        # geometry
-        self.diameter.grid(row=0, column=0, rowspan=3, sticky='nwes',padx=(20,10), pady=10)
-        self.elimination.grid(row=2, column=1, sticky='news',padx=10, pady=10)
-        self.typical.grid(row=0, column=1,sticky='ewns',padx=10, pady=10)
-        self.cover.grid(row=1, column=1,sticky='ewns',padx=10, pady=10)
+        # geometry: two columns, to fit the settings pane
+        self.diameter.grid(row=0, column=0, sticky='nwes', padx=(0, 8), pady=(0, 8))
+        self.elimination.grid(row=1, column=0, sticky='nwes', padx=(0, 8), pady=(0, 8))
+        self.typical.grid(row=1, column=1, sticky='ewns', padx=(8, 0), pady=(0, 8))
+        self.cover.grid(row=2, column=1, sticky='ewns', padx=(8, 0), pady=(0, 8))
         self.set_calc_layout()
-        self.columnconfigure(0,weight=1)
-        self.columnconfigure(1,weight=1)
-        self.columnconfigure(2,weight=1)
+        self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=1)
         # groups keep their natural height, the space left over stays below them
         self.rowconfigure(3, weight=1)
 
     def set_analysis_layout(self):
         self.type_num_calc.grid_remove()
-        self.type_num_analysis.grid(row=0, column=2, rowspan=3, sticky='ewns', padx=(10,20), pady=10)
+        self.type_num_analysis.grid(row=0, column=1, sticky='ewns', padx=(8, 0), pady=(0, 8))
 
     def set_calc_layout(self):
         self.type_num_analysis.grid_remove()
-        self.type_num_calc.grid(row=0, column=2, rowspan=3, sticky='ewn', padx=(10,20), pady=10)
-    
+        self.type_num_calc.grid(row=0, column=1, sticky='ewns', padx=(8, 0), pady=(0, 8))
+
     def get_values(self):
         output = {
             'diameter': self.diameter.get_values(),
@@ -100,7 +99,7 @@ class Elimination(ttk.LabelFrame):
         shear_label.grid(row=1, column=0, sticky='w')
         shear_spinbox.grid(row=1, column=1, sticky='w')
         for child in self.winfo_children(): 
-            child.grid_configure(padx=20, pady=20)
+            child.grid_configure(padx=12, pady=6)
         self.columnconfigure(0,weight=1)
         self.columnconfigure(1, weight=1)
         self.rowconfigure(0,weight=1)
@@ -128,7 +127,7 @@ class Cover(ttk.LabelFrame):
         self.rowconfigure(0,weight=1)
 
         for child in self.winfo_children(): 
-            child.grid_configure(padx=20, pady=10)
+            child.grid_configure(padx=12, pady=6)
     def get_value(self):
         return self.entry.get_value()/100
 
@@ -170,7 +169,7 @@ class Diameter(ttk.LabelFrame):
         self.shear_combo.grid(row=3, column=1, sticky='w')
         
         for child in self.winfo_children(): 
-            child.grid_configure(padx=20, pady=10)
+            child.grid_configure(padx=12, pady=6)
         
         for i in range(4):
             self.rowconfigure(i, weight=1)
@@ -214,7 +213,7 @@ class TypeNumCalc(ttk.LabelFrame):
         self.shear_combo.grid(row=2, column=1, sticky='w')
 
         for child in self.winfo_children(): 
-            child.grid_configure(padx=20, pady=20)
+            child.grid_configure(padx=12, pady=6)
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.rowconfigure(0,weight=1)
@@ -253,7 +252,7 @@ class TypeNumAnalysis(ttk.LabelFrame):
             self.rowconfigure(1, weight=1)
 
             for child in self.winfo_children():
-                child.grid_configure(padx=20, pady=20)
+                child.grid_configure(padx=12, pady=6)
 
         def from_fun(self, e):
             if self.combo_from.get_value() > self.combo_to.get_value():
@@ -290,7 +289,7 @@ class TypeNumAnalysis(ttk.LabelFrame):
         self.shear_combo.grid(row=2, column=1, sticky='w')
 
         for child in self.winfo_children():
-            child.grid_configure(padx=20, pady=10)
+            child.grid_configure(padx=12, pady=6)
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.rowconfigure(0,weight=1)

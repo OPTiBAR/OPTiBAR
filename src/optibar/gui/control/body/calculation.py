@@ -1,11 +1,14 @@
 from typing import Dict
-from tkinter.messagebox import showinfo, showerror
-from optibar.gui.view.body.calculation.notebook import CalcNote
+from tkinter.messagebox import showerror
+from optibar.gui.view.body.calculation.notebook import SettingsPane
 from optibar.gui.control.utils.job import EngineJob
 from .special_lengths import Rebar
 
+STALE_CHECK_INTERVAL = 600 # ms
+
+
 class Calc():
-    def __init__(self, calc_note: CalcNote, project_data: Dict, result_data: Dict) -> None:
+    def __init__(self, calc_note: SettingsPane, project_data: Dict, result_data: Dict) -> None:
         self.calc_type = calc_note.calc_type
         self.setting = calc_note.setting
         self.request_frame = calc_note.request
@@ -26,6 +29,32 @@ class Calc():
         # initialize
         self.request_frame.set_status("Waiting for input file ...")
         project_data['is_available'].set(False)
+        self._stale_after = None
+        self.request_frame.bind('<Destroy>', self._cancel_stale_check, add='+')
+        self._check_stale()
+
+    def _cancel_stale_check(self, event=None):
+        if self._stale_after is not None:
+            self.request_frame.after_cancel(self._stale_after)
+            self._stale_after = None
+
+    def _current_request(self):
+        """the calc type and settings as they are now, or None while an entry is being edited"""
+        try:
+            return (self.calc_type.get_value(), self.setting.get_values())
+        except Exception:
+            return None
+
+    def _check_stale(self):
+        """marks the results out of date when the settings changed after the calculation"""
+        data = self.result_data['data']
+        if self.result_data['is_available'].get() and data is not None:
+            current = self._current_request()
+            if current is not None:
+                stale = current != (data['calc_type'], data['config'])
+                if self.result_data['stale'].get() != stale:
+                    self.result_data['stale'].set(stale)
+        self._stale_after = self.request_frame.after(STALE_CHECK_INTERVAL, self._check_stale)
 
     def check_changed(self, *args):
         if self.special_lengths.get_checked():
@@ -53,6 +82,7 @@ class Calc():
         # adopt calc note
         self.request_frame.set_button_label('Calculate')
         if self.project_data['is_available'].get() == False:
+            self.request_frame.set_status("Waiting for input file ...")
             self.request_frame.set_button_state('disabled')
             self.setting.advanced.typical.set_strip_names([])
         else:
@@ -101,7 +131,7 @@ class Calc():
                 'input_file': self.project_data['data']['file_path'],
                 'result_data': result,
             }
-            showinfo('Calculation', 'Calculated successfully. Go to the 3. Results tab to observe the results.')
+            self.result_data['stale'].set(False)
             self.result_data['is_available'].set(True)
 
         def on_error(message: str):

@@ -36,5 +36,5 @@ optibar
 
 ## Check the installation
 
-The OPTiBAR window opens with three tabs: **1. Input File**, **2. Calculation** and **3. Results**.
-If the **Report** box of the first tab says the Access ODBC driver is not installed, install it and restart OPTiBAR.
+The OPTiBAR window opens, with the input file along the top, the settings on the left and the **Report** box on the right.
+If the status next to **Input file** says **✗ Access ODBC driver missing**, install the driver from the link in the report and restart OPTiBAR.

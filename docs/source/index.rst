@@ -13,7 +13,7 @@ The documentation has four parts:
    Steps for specific tasks: installing OPTiBAR, exporting from SAFE, choosing the number of length types, adjusting the detailing, saving the results and using OPTiBAR from Python.
 
 :doc:`reference/index`
-   The settings, the SAFE tables OPTiBAR reads, the output files and the detailing rules.
+   The window, the settings, the SAFE tables OPTiBAR reads, the output files and the detailing rules.
 
 :doc:`explanation/index`
    How OPTiBAR finds the rebar lengths, and why: the theoretical, required and practical lengths, the resisting moment and the shear rebars.

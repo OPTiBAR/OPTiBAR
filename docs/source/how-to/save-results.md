@@ -1,7 +1,7 @@
 Save the drawings and results
 =============================
 
-After a calculation, the buttons of **3. Results** save its outputs.
+After a calculation, the buttons above the report save its outputs.
 Each one asks for a file name.
 
 * **DXF Drawing** saves the detailing map. Open it in any CAD program; to get a DWG file, save it as DWG from AutoCAD, AutoCAD LT or BricsCAD.

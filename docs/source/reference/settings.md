@@ -1,7 +1,7 @@
 Settings
 ========
 
-The settings of the **2. Calculation** tab.
+The settings on the left of the window, in the **Basic**, **Special Lengths** and **Strips** pages.
 Hover the ⓘ next to a setting in the app for a short description.
 **View > Dark Theme** switches the app to a dark theme.
 
@@ -12,7 +12,7 @@ Hover the ⓘ next to a setting in the app for a short description.
 | Computation | Details the foundation once, with the settings below. |
 | Analysis | Repeats the detailing for a range of Total and Stack, and compares the rebar mass of each combination. |
 
-## Basic tab
+## Basic
 
 | Setting | Meaning | Unit | Default | Values |
 | --- | --- | --- | --- | --- |
@@ -32,11 +32,11 @@ For an **Analysis**, Total and Stack are ranges, **From** and **To**: Total from
 
 The covers of the top and bottom faces are read from the SAFE model.
 
-## Advanced tab
+## Special Lengths and Strips
 
 | Setting | Meaning |
 | --- | --- |
 | Special Lengths | The development length (Ld, top and bottom), overlap length (top and bottom) and bend lengths (90° and 135°) of each bar diameter, in cm. Calculated from the materials of the SAFE model when the file is loaded, see [Special lengths](detailing-rules.md#special-lengths). |
 | Special Lengths, Automatic | When checked, the top Ld and the overlaps follow from the bottom Ld. |
 | Special Lengths, Reset | Restores the calculated values. |
-| Typical Arrangement | The number and diameter of the typical rebars of single strips and levels, instead of the interval. **Set** applies them, **Erase** removes them. |
+| Strips | The number and diameter of the typical rebars of single strips and levels, instead of the interval. **Set** applies them, **Erase** removes them. |

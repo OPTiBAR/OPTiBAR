@@ -68,7 +68,7 @@ The **JSON file** holds everything needed to reproduce or post-process the resul
 | `created` | Date and time of saving. |
 | `input_file` | The SAFE database the project was loaded from. |
 | `calc_type` | `calculation` for a computation, `analysis` for an analysis. |
-| `config` | The settings of the calculation tab. |
+| `config` | The settings of the calculation. |
 | `result` | The engine output, see below. |
 
 For a computation, `result` has a `data` key with the detailed foundation, and `warnings` when there are any.

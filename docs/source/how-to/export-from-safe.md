@@ -13,8 +13,9 @@ This guide shows how to export it so that OPTiBAR finds everything it needs.
 
 The units of the export don't matter; OPTiBAR converts them.
 
-To check the file, load it in OPTiBAR: in **1. Input File**, press **Browse**, choose the file and press **Load**.
-If a table is missing, the **Report** box names it; export again with that table selected.
+To check the file, load it in OPTiBAR: press **Open…** next to **Input file**, or **File > Open** (Ctrl+O), and choose the file.
+The status next to the buttons says **✓ Loaded**, or **✗ Not loaded** with the reason.
+If a table is missing, the **Report** box names it; export again with that table selected, and press **Reload** (F5).
 The report also warns when the model uses more than one concrete or steel material.
 
 ```{note}

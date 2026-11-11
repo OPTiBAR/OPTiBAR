@@ -37,7 +37,7 @@ The typical rebars ensure the minimum flexural steel in every level that needs f
 Their number comes from the **Typical Arrangement** setting:
 
 * **Interval**: the strip width divided by the interval, rounded up. A strip 1.10 m wide with an interval of 20 cm gets 6 bars.
-* **Number**, per strip and level in the Advanced tab: the given number of bars.
+* **Number**, per strip and level on the **Strips** page: the given number of bars.
 
 The number is not raised to the minimum: you may place less than the minimum steel.
 In that case, and when the spacing is out of range, OPTiBAR places the bars and adds a warning to the report:
@@ -113,5 +113,5 @@ with $f_y$ and $f'_c$ in MPa, $\psi_t = 1.3$ for top bars and $1.0$ for bottom b
 The overlap length is $1.3\,L_d$, rounded up to 5 cm.
 The bend length is $13.7\,d_b$ for 90° hooks and $11\,d_b$ for the 135° hooks of shear rebars, rounded up to 5 cm.
 
-All of them can be changed in **Advanced > Special Lengths**, for example when closely spaced bars or shear rebars call for longer lengths; see [Adjust the detailing of a project](../how-to/adjust-detailing.md).
+All of them can be changed on the **Special Lengths** page, for example when closely spaced bars or shear rebars call for longer lengths; see [Adjust the detailing of a project](../how-to/adjust-detailing.md).
 The drawing lists the overlap lengths used in its tables.

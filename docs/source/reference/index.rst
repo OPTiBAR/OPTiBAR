@@ -6,6 +6,7 @@ Technical descriptions of OPTiBAR's settings, inputs, outputs and rules, to look
 .. toctree::
    :maxdepth: 1
 
+   window
    settings
    safe-input
    outputs

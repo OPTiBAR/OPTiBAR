@@ -60,9 +60,9 @@ optibar
 ### 🖱️ Desktop app
 
 1. In SAFE, export the model to an Access database, including the **Model Definition** and **Design Results** tables.
-2. **1. Input File**: browse to the `.accdb` / `.mdb` file and press **Load**.
-3. **2. Calculation**: choose **Computation** for one detailing, or **Analysis** to compare a range of length types. Adjust diameters, spacing, cover and the number of length types, and optionally the special lengths and per-strip exceptions under **Advanced**. Press **Calculate**.
-4. **3. Results**: read the mass summary and warnings, then save the results (JSON and summary), the **DXF Drawing** or the **PDF Drawing**. For an analysis, **Diagram** plots the mass against the number of length types.
+2. Press **Open…** (or **File > Open**, Ctrl+O) and choose the `.accdb` / `.mdb` file. The status next to it says whether it loaded.
+3. In the settings on the left, choose **Computation** for one detailing, or **Analysis** to compare a range of length types. Adjust diameters, spacing, cover and the number of length types, and optionally the **Special Lengths** and the typical rebars of single **Strips**. Press **Calculate**.
+4. The **Report** on the right shows the mass summary and warnings. Save the results (JSON and summary), the **DXF Drawing** or the **PDF Drawing**. For an analysis, **Diagram** plots the mass against the number of length types. When you change a setting, the report says the results are out of date until you calculate again.
 
 See the [tutorial](https://optibar.readthedocs.io/en/latest/tutorials/first-map.html) and the [how-to guides](https://optibar.readthedocs.io/en/latest/how-to/index.html) for details.
 

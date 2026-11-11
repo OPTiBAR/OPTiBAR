@@ -40,7 +40,7 @@ There are four methods for placing the typical rebars, which are as follows:
 - **Interval (`INTERVAL`):** the strip width divided by the interval, rounded up.
 - **Smart (`SMART`):** The minimum steel is placed. If the distance from the first station with zero steel demand to any of the edges is more than the foundation thickness, or if the distance between two consecutive zero-demand intermediate stations is more than twice the foundation thickness, the placement is completed. Otherwise, another bar is placed.
 
-The app uses `INTERVAL`, and `COUNT` for the strips set in **Advanced > Typical Arrangement**.
+The app uses `INTERVAL`, and `COUNT` for the strips set on the **Strips** page.
 
 The area of the typical rebars is subtracted from the required steel diagram (`Diagram.insert_typical`), with {prf:ref}`reduce-as`.
 If the diagram is still positive somewhere, the rest is covered by additional rebars.

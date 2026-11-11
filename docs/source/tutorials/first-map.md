@@ -14,37 +14,34 @@ From the folder of the repository, run:
 uv run main.py
 ```
 
-The OPTiBAR window opens with three tabs: **1. Input File**, **2. Calculation** and **3. Results**.
-We go through them in this order.
+The OPTiBAR window opens. Along the top is the input file; below it, the settings are on the left and the results on the right.
 
 ## 2. Load the sample foundation
 
 The sample is a mat foundation designed in SAFE 2016 and exported to Microsoft Access.
 It is in the repository at `src/optibar/core/tests/parser/data_files/tonf_m.accdb`.
 
-In **1. Input File**, press **Browse**, choose `tonf_m.accdb` and press **Load**.
+Press **Open…** next to **Input file**, and choose `tonf_m.accdb`. OPTiBAR loads it right away.
 
-The **Report** box says the file was parsed successfully.
+Next to the buttons, the status says **✓ Loaded**, and the **Report** box on the right says the file was parsed successfully.
 
-![The Input File tab after loading a project](../_static/images/gui_input.png)
+![The window after loading the sample](../_static/images/gui_loaded.png)
 
 ## 3. Run the calculation
 
-Open **2. Calculation**. The settings are already filled in with their defaults; leave them as they are.
+The settings on the left are already filled in with their defaults; leave them as they are.
 
-![The Basic settings](../_static/images/gui_calculation_basic.png)
-
-Press **Calculate**.
-The button turns into **Stop** and the status line says **Status: Running**.
+Press **Calculate**, at the bottom left.
+The button turns into **Stop** and the status line next to it says **Status: Running**.
 After a few seconds it says **Status: Finished**, and the button says **Calculate** again.
 
 ## 4. Look at the results
 
-Open **3. Results**.
-The **Report** box starts with the **Mass Summary**: about 9.5 tons of rebars for the sample, of which 4.5 tons are additional rebars.
+The results appear in the **Report** box on the right, below the input file.
+They start with the **Mass Summary**: about 9.5 tons of rebars for the sample, of which 4.5 tons are additional rebars.
 Below it are the **Cutting Plans**, with the number of 12 m stock bars of each diameter and the waste.
 
-![The Results tab](../_static/images/gui_results.png)
+![The window with the results](../_static/images/gui_results.png)
 
 Scroll down: the report ends with two warnings.
 
@@ -59,7 +56,7 @@ The **Total** setting allowed 20 different lengths of additional rebars, but thi
 
 ## 5. Save the drawing
 
-Press **DXF Drawing** and save the file as `sample.dxf`.
+Press **DXF Drawing**, above the report, and save the file as `sample.dxf`.
 Open it in any CAD program, for example AutoCAD, BricsCAD or a free DXF viewer.
 
 You see a row of sheets with the foundation plan.

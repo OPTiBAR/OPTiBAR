@@ -1,5 +1,0 @@
-sphinx
-sphinx-book-theme
-sphinxcontrib-mermaid
-sphinx-proof
-myst-parser

@@ -3,7 +3,7 @@ name: Build and Deploy Sphinx Docs
 on:
   push:
     branches:
-      - main  
+      - main
 
 permissions:
   contents: write   # needed to push to gh-pages branch
@@ -14,23 +14,14 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.x"
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
 
-      - name: Install dependencies
-        run: |
-          pip install -U pip
-          pip install -r docs/requirements.txt
-
+      # only the docs group: Sphinx doesn't import OPTiBAR, so the app's dependencies aren't needed
       - name: Build documentation
-        run: |
-          make -C docs html
+        run: uv run --frozen --only-group docs sphinx-build -b html docs/source docs/build/html
 
       - name: Deploy to GitHub Pages
-        run: |
-          pip install ghp-import
-          ghp-import -n -p -f docs/build/html
+        run: uvx ghp-import -n -p -f docs/build/html

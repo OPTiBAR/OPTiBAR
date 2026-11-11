@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import font, ttk
 from typing import List
 from optibar.gui.view.utils.styles import palette, report_font
 
@@ -9,8 +9,13 @@ class LogWindow(ttk.LabelFrame):
     def __init__(self, parent):
         ttk.LabelFrame.__init__(self, parent, text='Report', padding=(12, 8))
 
+        mono = report_font()
+        self._fonts = {
+            'bold': font.Font(family=mono.cget('family'), size=mono.cget('size'), weight='bold'),
+            'heading': font.Font(family='Segoe UI', size=mono.cget('size') + 2, weight='bold'),
+        }
         text = tk.Text(self, wrap= "none", width=40, relief='flat', borderwidth=0, highlightthickness=1,
-            padx=10, pady=8, font=report_font(), state='disabled')
+            padx=12, pady=10, font=mono, state='disabled')
         self.text = text
         yscroll = ttk.Scrollbar(self, orient = 'vertical', command = text.yview)
         xscroll = ttk.Scrollbar(self, orient = 'horizontal', command = text.xview)
@@ -35,6 +40,14 @@ class LogWindow(ttk.LabelFrame):
         self.text.tag_configure('WARNING', foreground=colors['warning'])
         self.text.tag_configure('SUCCESS', foreground=colors['success'])
         self.text.tag_configure('INFO', foreground=colors['text_fg'])
+        # report sections and tables, see gui/control/body/report.py
+        self.text.tag_configure('HEADING', foreground=colors['text_fg'], font=self._fonts['heading'], spacing1=6)
+        self.text.tag_configure('WARNING_HEADING', foreground=colors['warning'], font=self._fonts['heading'], spacing1=6)
+        self.text.tag_configure('TABLE_HEAD', foreground=colors['text_fg'], font=self._fonts['bold'])
+        self.text.tag_configure('RULE', foreground=colors['border'])
+        self.text.tag_configure('ROW', foreground=colors['text_fg'], spacing1=2, spacing3=2)
+        self.text.tag_configure('ROW_ALT', foreground=colors['text_fg'], background=colors['stripe'], spacing1=2, spacing3=2)
+        self.text.tag_configure('TOTAL', foreground=colors['text_fg'], font=self._fonts['bold'])
     
     def clear(self) -> None:
         self.text['state'] = 'normal'
@@ -61,7 +74,8 @@ class LogWindow(ttk.LabelFrame):
     def _write(self, data_str: str, tag:str, indent: int):
         self.text['state'] = 'normal'
         info_str = indent * INDENT * ' ' + data_str
-        self.text.insert('end', info_str+'\n', tag)
+        # the newline stays untagged, so a striped row is shaded as wide as its table, not the whole box
+        self.text.insert('end', info_str, tag, '\n', ())
         self.text['state'] = 'disabled'
 
 

@@ -126,9 +126,10 @@ class Result():
         if data['calc_type'] == 'calculation' and 'data' in data['result_data']:
             # the overview is in the report above; the file also gets every pattern
             plans = data['result_data']['data'].get('cut', [])
-            report += cutting_report(plans, detailed=True)[2:]
+            report += cutting_report(plans, overview=False, detailed=True)
         for tag, text in report:
-            lines.append(f'{tag}: {text}' if tag in ('WARNING', 'ERROR') and '\n' not in text else text)
+            text = text.rstrip() # table cells are padded for the striped rows of the log
+            lines.append(f'{tag}: {text}' if tag in ('WARNING', 'ERROR') else text)
         return '\n'.join(lines) + '\n'
 
     def save_drawing(self, kind: str):

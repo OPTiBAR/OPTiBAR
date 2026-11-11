@@ -15,7 +15,6 @@ dependencies = [
     "pyomo>=6.9.5",
     "shapely>=2.1.2",
     "sv-ttk>=2.6.1",
-    "texttable>=1.7.1",
 ]
 
 [project.gui-scripts]

@@ -16,5 +16,11 @@ or with a virtual environment:
 > docs\make html
 ```
 
-The pages are in `docs/source`: `tutorial` for installing and using OPTiBAR, `explanation` for how the rebar lengths are calculated.
+The pages are in `docs/source`, organized by [Diátaxis](https://diataxis.fr/):
+
+- `tutorials`: lessons for new users, step by step.
+- `how-to`: steps for specific tasks.
+- `reference`: settings, SAFE input, outputs and detailing rules, to look up.
+- `explanation`: how and why the rebar lengths are calculated.
+
 Images go in `docs/source/_static/images`.

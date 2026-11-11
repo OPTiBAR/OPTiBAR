@@ -18,6 +18,15 @@ Every bar is labelled with its number, diameter and length, for example `4Ø25-L
 
 ![A plan sheet: top additional rebars of the X direction](../_static/images/dxf_plan.png)
 
+Additional rebars are drawn in two colors, so the drawing is easier to check:
+
+- **Blue** (layers `Additional Rebar Top` and `Additional Rebar Bottom`): each bar is a stack of its own.
+  Neighbouring bars can overlap, because their practical lengths are longer than their required lengths, but they don't need an overlap length there.
+- **Magenta** (layer `continuous Rebar`): one bar longer than the 12 m stock length, made of several pieces.
+  Where these pieces overlap, the overlap is the overlap length of the bar, 1.3 times its development length.
+
+![Blue bars are separate stacks; the magenta bar is longer than 12 m and spliced](../_static/images/dxf_splice_colors.png)
+
 After the sheets come a section of every shear type, with its stirrups and label,
 
 ![Shear type sections](../_static/images/dxf_sections.png)
@@ -25,6 +34,11 @@ After the sheets come a section of every shear type, with its stirrups and label
 followed by the tables: overlap lengths, number of length types, the piece list of every rebar type with its bar shape and weight, the mass summary and the concrete volume. Last are the moment diagrams of every strip, with the resisting moment φMn and the ultimate moment Mu along the strip, top and bottom.
 
 ![The tables](../_static/images/dxf_tables.png)
+
+A piece list has one row per cut length, so it can have more rows than the number of length types you allowed: a bar longer than 12 m is cut into several pieces, and its last piece has a length of its own.
+The table of a rebar type is left out when the foundation has none of them, for example the thermal rebars.
+
+The moment diagrams only count the tension steel, so φMn is a little lower than the real resisting moment; see [Resistant Moment](../explanation/moment.md).
 
 Each kind of object is on its own layer, for example `Typical Rebar Top`, `Additional Rebar Bottom`, `Rebar Text`, `Dimension` or `moment`, so parts of the drawing can be hidden or restyled.
 
@@ -39,6 +53,7 @@ The plans use as few stock bars as possible: the patterns are found by column ge
 
 **PDF Drawing** saves an A4 sketch: one page per strip with its top and bottom additional rebars, followed by the mass summary, the technical specifications, the piece lists and the cutting plans. It is meant for a quick check, the DXF is the detailing map.
 
+(results-file)=
 ## Results file and summary
 
 **Save Results** writes two files, for example `foundation_calculation.json` and `foundation_calculation_summary.txt`.

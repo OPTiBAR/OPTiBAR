@@ -64,7 +64,7 @@ optibar
 3. **2. Calculation**: choose **Computation** for one detailing, or **Analysis** to compare a range of length types. Adjust diameters, spacing, cover and the number of length types, and optionally the special lengths and per-strip exceptions under **Advanced**. Press **Calculate**.
 4. **3. Results**: read the mass summary and warnings, then save the results (JSON and summary), the **DXF Drawing** or the **PDF Drawing**. For an analysis, **Diagram** plots the mass against the number of length types.
 
-See the [quick start](https://optibar.readthedocs.io/en/latest/tutorial/quickstart.html) for details.
+See the [tutorial](https://optibar.readthedocs.io/en/latest/tutorials/first-map.html) and the [how-to guides](https://optibar.readthedocs.io/en/latest/how-to/index.html) for details.
 
 ### 🐍 Python
 

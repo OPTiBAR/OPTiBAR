@@ -1,19 +1,27 @@
-.. OPTiBAR documentation master file, created by
-   sphinx-quickstart on Wed Dec 27 21:56:44 2023.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 OPTiBAR: Concrete Structure Detailing toolbox
 =============================================
 OPTiBAR is a concrete structure detailing software that takes the design results of a mat foundation in CSI SAFE and produces a rebar detailing map.
 The unique feature of OPTiBAR is that it minimizes the steel consumption while keeping the drawing completely practical.
 The detailing process is highly automated but it is also possible to manually adjust the detailing parameters.
 
-Start with :doc:`tutorial/installation` and :doc:`tutorial/quickstart`. :doc:`explanation/index` describes how the rebar lengths are calculated.
+The documentation has four parts:
+
+:doc:`tutorials/index`
+   Start here: detail a sample foundation from start to finish, in :doc:`tutorials/first-map`.
+
+:doc:`how-to/index`
+   Steps for specific tasks: installing OPTiBAR, exporting from SAFE, choosing the number of length types, adjusting the detailing, saving the results and using OPTiBAR from Python.
+
+:doc:`reference/index`
+   The settings, the SAFE tables OPTiBAR reads, the output files and the detailing rules.
+
+:doc:`explanation/index`
+   How OPTiBAR finds the rebar lengths, and why: the theoretical, required and practical lengths, the resisting moment and the shear rebars.
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :hidden:
 
-   tutorial/index
+   tutorials/index
+   how-to/index
+   reference/index
    explanation/index

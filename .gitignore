@@ -172,3 +172,6 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Old manuals and design documents, kept locally only
+legacy/

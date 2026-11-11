@@ -1,7 +1,7 @@
 ## Documentation
 
-The documentation is built with Sphinx and published on [Read the Docs](https://optibar.readthedocs.io/).
-A GitHub workflow also builds it and deploys it to the `gh-pages` branch on every push to `main`.
+The documentation is built with Sphinx and published on GitHub Pages at <https://optibar.github.io/OPTiBAR/>.
+The GitHub workflow `.github/workflows/docs.yml` builds it and deploys it to the `gh-pages` branch on every push to `main`.
 
 The docs dependencies are the `docs` group in `pyproject.toml`, locked in `uv.lock` with the rest of the project.
 To build the docs locally, from the repository root:

@@ -15,7 +15,7 @@
 
 
 
-[📚 Read the full documentation](https://optibar.readthedocs.io/)  
+[📚 Read the full documentation](https://optibar.github.io/OPTiBAR/)  
 
 OPTiBAR turns the design results of a concrete mat foundation in **CSI SAFE** into a rebar detailing map. It places the typical, additional and shear rebars, then reduces the number of different bar lengths with an optimization that keeps the extra steel as small as possible, so the drawing stays practical to cut, place and check.
 
@@ -64,7 +64,7 @@ optibar
 3. In the settings on the left, choose **Computation** for one detailing, or **Analysis** to compare a range of length types. Adjust diameters, spacing, cover and the number of length types, and optionally the **Special Lengths** and the typical rebars of single **Strips**. Press **Calculate**.
 4. The **Report** on the right shows the mass summary and warnings. Save the results (JSON and summary), the **DXF Drawing** or the **PDF Drawing**. For an analysis, **Diagram** plots the mass against the number of length types. When you change a setting, the report says the results are out of date until you calculate again.
 
-See the [tutorial](https://optibar.readthedocs.io/en/latest/tutorials/first-map.html) and the [how-to guides](https://optibar.readthedocs.io/en/latest/how-to/index.html) for details.
+See the [tutorial](https://optibar.github.io/OPTiBAR/tutorials/first-map.html) and the [how-to guides](https://optibar.github.io/OPTiBAR/how-to/index.html) for details.
 
 ### 🐍 Python
 

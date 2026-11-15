@@ -36,7 +36,7 @@ def test_startup_warns_when_driver_missing(monkeypatch, make_app):
 
 
 def test_load_with_driver_missing_links_the_download(monkeypatch, app):
-    monkeypatch.setattr('optibar.core.parser.parse.has_access_driver', lambda: False)
+    monkeypatch.setattr('optibar.core.parser.source.has_access_driver', lambda: False)
     app.load()
     assert app.file_bar.status_var.get() == '✗ Access ODBC driver missing'
     assert 'disabled' in app.request.calculate_button.state()

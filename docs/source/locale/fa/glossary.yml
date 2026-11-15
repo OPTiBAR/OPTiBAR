@@ -1,0 +1,50 @@
+# Persian equivalents of the terms of OPTiBAR, followed by every translation (see docs/README.md).
+#
+#   English term: Persian equivalent
+#   English term: {use: [preferred form, other accepted forms], note: a hint for the translator}
+#
+# A term is matched in the English text as a whole word or its plural, ignoring case. The check accepts a
+# translation that contains any of the forms, so list plurals (with a half space, ‌ها) and other
+# forms that a sentence may need.
+#
+# DRAFT: to be reviewed by a Persian-speaking engineer.
+
+terms:
+  rebar:
+    use: [میلگرد, آرماتوربندی]
+    note: the bar itself is میلگرد; placing the bars (rebar detailing) is آرماتوربندی
+  additional rebar: [میلگرد تقویتی, میلگردهای تقویتی]
+  typical rebar: [میلگرد سراسری, میلگردهای سراسری]
+  thermal rebar: [میلگرد حرارتی, میلگردهای حرارتی]
+  shear rebar: [میلگرد برشی, میلگردهای برشی]
+  mat foundation: [فونداسیون گسترده, فونداسیون‌های گسترده]
+  design strip: [نوار طراحی, نوارهای طراحی]
+  station: [ایستگاه, ایستگاه‌ها]
+  stack:
+    use: [دسته, دسته‌ها]
+    note: a group of nested additional rebars around one peak of the steel diagram, not a software stack
+  length type:
+    use: [نوع طول, انواع طول]
+    note: one of the different bar lengths used; reducing the number of length types is the point of OPTiBAR
+  theoretical length: [طول نظری, طول‌های نظری]
+  required length: [طول لازم, طول‌های لازم]
+  practical length: [طول اجرایی, طول‌های اجرایی]
+  development length: [طول مهاری, طول‌های مهاری]
+  overlap length: [طول وصله, طول‌های وصله]
+  effective depth: عمق مؤثر
+  side cover: پوشش جانبی
+  bend: [خم, خم‌ها]
+  detailing map: [نقشهٔ آرماتوربندی, نقشه‌های آرماتوربندی]
+  piece list: [فهرست قطعات, فهرست‌های قطعات]
+  cutting plan: [نقشهٔ برش, نقشه‌های برش]
+  cutting pattern: [الگوی برش, الگوهای برش]
+  stock bar:
+    use: [شاخه, شاخه‌ها]
+    note: a full 12 m bar as delivered, before cutting
+  waste: پرت
+  resisting moment: لنگر مقاوم
+  ultimate moment: لنگر نهایی
+  steel area: سطح مقطع فولاد
+
+# names and abbreviations that stay as they are
+keep: [OPTiBAR, CSI SAFE, SAFE, DXF, PDF, JSON, HiGHS, AutoCAD, Python, uv, ACI 318]

@@ -1,0 +1,20 @@
+/* the pages of right-to-left languages (see conf.py) */
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap');
+
+body {
+    --font-stack: "Vazirmatn", -apple-system, "Segoe UI", sans-serif;
+    --font-stack--headings: "Vazirmatn", -apple-system, "Segoe UI", sans-serif;
+}
+
+/* code, formulas and file names stay left to right */
+pre, code, kbd, .highlight, .math, mjx-container, .MathJax {
+    direction: ltr;
+    text-align: left;
+    unicode-bidi: isolate;
+}
+
+/* the algorithms and diagrams are not translated (see docs/i18n.py): left to right, as in English */
+.proof.algorithm, .mermaid {
+    direction: ltr;
+    text-align: left;
+}

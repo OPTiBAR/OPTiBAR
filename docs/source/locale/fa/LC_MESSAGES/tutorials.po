@@ -1,0 +1,173 @@
+# Persian translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-11-15 13:23+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fa\n"
+"Language-Team: fa <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/tutorials/first-map.md:1
+msgid "Your first detailing map"
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:4
+msgid "In this tutorial, we turn a SAFE model into a rebar detailing map. We use a small sample foundation that comes with OPTiBAR and keep all the default settings, so you can see the whole way from the input file to the drawing in a few minutes."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:7
+msgid "Before you start, [install OPTiBAR](../how-to/install.md) from a clone of the repository."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:9
+msgid "1. Start OPTiBAR"
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:11
+msgid "From the folder of the repository, run:"
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:17
+msgid "The OPTiBAR window opens. Along the top is the input file; below it, the settings are on the left and the results on the right."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:19
+msgid "2. Load the sample foundation"
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:21
+msgid "The sample is a mat foundation designed in SAFE 2016 and exported to Microsoft Access. It is in the repository at `src/optibar/core/tests/parser/data_files/tonf_m.accdb`."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:24
+msgid "Press **Open…** next to **Input file**, and choose `tonf_m.accdb`. OPTiBAR loads it right away."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:26
+msgid "Next to the buttons, the status says **✓ Loaded**, and the **Report** box on the right says the file was parsed successfully."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:28
+msgid "![The window after loading the sample](../_static/images/gui_loaded.png)"
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:28
+msgid "The window after loading the sample"
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:30
+msgid "3. Run the calculation"
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:32
+msgid "The settings on the left are already filled in with their defaults; leave them as they are."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:34
+msgid "Press **Calculate**, at the bottom left. The button turns into **Stop** and the status line next to it says **Status: Running**. After a few seconds it says **Status: Finished**, and the button says **Calculate** again."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:38
+msgid "4. Look at the results"
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:40
+msgid "The results appear in the **Report** box on the right, below the input file. They start with the **Mass Summary**: about 9.5 tons of rebars for the sample, of which 4.5 tons are additional rebars. Below it are the **Cutting Plans**, with the number of 12 m stock bars of each diameter, whether that number is proven optimal, and the waste."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:44
+msgid "![The window with the results](../_static/images/gui_results.png)"
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:44
+msgid "The window with the results"
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:46
+msgid "Scroll down: the report ends with two warnings."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:48
+msgid "**Min Gap Warning**: in strip CSN4, the bottom bars are closer than 2.5 cm."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:49
+msgid "**Ratio Warning**: in strips CSA1, CSB1 and CSN4, the typical rebars at a 20 cm interval are less than the minimum steel ratio of 0.0018."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:51
+msgid "Warnings don't stop the detailing; they point to strips the designer should check. In a real project, you would fix them, for example by setting more typical bars for those strips. [Detailing rules](../reference/detailing-rules.md#typical-rebars) lists all the checks."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:55
+msgid "The **Total** setting allowed 20 different lengths of additional rebars, but this foundation needs only 9."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:57
+msgid "5. Save the drawing"
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:59
+msgid "Press **DXF Drawing**, above the report, and save the file as `sample.dxf`. Open it in any CAD program, for example AutoCAD, BricsCAD or a free DXF viewer."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:62
+msgid "You see a row of sheets with the foundation plan. The first sheet names the strips; the next ones show the typical and additional rebars, top and bottom, in X and Y; then come the shear zones. Zoom into a sheet of additional rebars: every bar is labelled with its number, diameter and length, for example `4Ø25-L=4.8`."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:66
+msgid "![A plan sheet: top additional rebars of the X direction](../_static/images/dxf_plan.png)"
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:66
+msgid "A plan sheet: top additional rebars of the X direction"
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:68
+msgid "To the right of the sheets are the tables with the piece lists and the mass summary, and below them the cutting plans."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:70
+msgid "What you did"
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:72
+msgid "You loaded a SAFE model, detailed it with the default settings, and saved the detailing map."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:74
+msgid "Next:"
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:76
+msgid "Detail your own foundation: [export the model from SAFE](../how-to/export-from-safe.md)."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:77
+msgid "Change the settings: [Settings](../reference/settings.md) lists all of them."
+msgstr ""
+
+#: ../../source/tutorials/first-map.md:78
+msgid "Learn why OPTiBAR limits the number of bar lengths: [Basic Concepts](../explanation/intro.md)."
+msgstr ""
+
+#: ../../source/tutorials/index.rst:2
+msgid "Tutorials"
+msgstr "آموزش‌ها"
+
+#: ../../source/tutorials/index.rst:4
+msgid "Lessons that take you through using OPTiBAR, step by step. Start here if you are new to OPTiBAR."
+msgstr "درس‌هایی که گام‌به‌گام کار با OPTiBAR را آموزش می‌دهند. اگر با OPTiBAR تازه آشنا شده‌اید، از اینجا شروع کنید."
+

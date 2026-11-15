@@ -22,3 +22,77 @@ body[data-theme="dark"] .mermaid {
         padding: 0.75rem;
     }
 }
+
+/* the language menu under the search box: the current language, opening the list of all of them.
+   Logical properties (inline-start, ...) keep it right for right-to-left languages too. */
+.sidebar-languages {
+    font-size: var(--sidebar-item-font-size);
+    border-bottom: 1px solid var(--color-sidebar-search-border);
+}
+
+.sidebar-languages summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem var(--sidebar-item-spacing-horizontal);
+    cursor: pointer;
+    list-style: none; /* no disclosure triangle: the caret below shows the state */
+    color: var(--color-sidebar-link-text--top-level);
+}
+
+.sidebar-languages summary::-webkit-details-marker {
+    display: none;
+}
+
+.sidebar-languages summary::after { /* a caret, turned when open */
+    content: "";
+    margin-inline-start: auto;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.15s;
+}
+
+.sidebar-languages[open] summary::after {
+    transform: rotate(-135deg);
+}
+
+.sidebar-languages summary:hover {
+    background: var(--color-sidebar-item-background--hover);
+}
+
+.sidebar-languages-icon {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+}
+
+.sidebar-languages ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0.5rem;
+    max-height: 15rem; /* many languages scroll */
+    overflow-y: auto;
+}
+
+.sidebar-languages li a,
+.sidebar-languages li .current {
+    display: block;
+    padding: 0.25rem var(--sidebar-item-spacing-horizontal);
+    padding-inline-start: calc(var(--sidebar-item-spacing-horizontal) + 1.5rem); /* under the name, past the icon */
+    text-decoration: none;
+    color: var(--color-sidebar-link-text);
+}
+
+.sidebar-languages li a:hover {
+    background: var(--color-sidebar-item-background--hover);
+}
+
+.sidebar-languages li .current {
+    font-weight: 600;
+    color: var(--color-brand-primary);
+}

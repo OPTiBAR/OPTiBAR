@@ -1,0 +1,23 @@
+{#- the language menu: the current language, opening a list of the same page in every language -#}
+{%- if languages and languages|length > 1 %}
+{%- set current = languages|selectattr('current')|first %}
+<details class="sidebar-languages">
+  <summary aria-label="Language: {{ current.name }}">
+    <svg class="sidebar-languages-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>
+    </svg>
+    <span lang="{{ current.code }}">{{ current.name }}</span>
+  </summary>
+  <ul>
+    {%- for lang in languages %}
+    <li>
+      {%- if lang.current %}
+      <span class="current" lang="{{ lang.code }}" aria-current="page">{{ lang.name }}</span>
+      {%- else %}
+      <a lang="{{ lang.code }}" hreflang="{{ lang.code }}" href="{{ content_root }}{{ lang.prefix }}{{ pagename }}.html">{{ lang.name }}</a>
+      {%- endif %}
+    </li>
+    {%- endfor %}
+  </ul>
+</details>
+{%- endif %}

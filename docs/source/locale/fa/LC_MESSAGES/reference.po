@@ -1,0 +1,961 @@
+# Persian translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-11-15 13:23+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fa\n"
+"Language-Team: fa <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/reference/detailing-rules.md:1
+msgid "Detailing Rules"
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:4
+msgid "This page lists the rules OPTiBAR follows when it places the longitudinal rebars of a strip: which bars go in, how many, and how far they run. Every strip has a top and a bottom level, and each level is detailed on its own."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:8
+msgid "The code clauses behind several rules on this page are not documented yet. Where a rule has no reference, check it against the design code of your project."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:12
+msgid "Thermal and typical rebars"
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:15
+msgid "A level of a strip that needs no flexural steel, where SAFE's required steel area is zero along the whole strip, gets **thermal** rebars. Any other level gets **typical** rebars. This is why the cross strips of a mat often get thermal rebars: their moments are small. A cross strip with a large moment gets typical rebars instead."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:21
+msgid "To use thermal rebars in a strip that carries a large moment, leave the strip out of the SAFE model and add its rebars to the drawing by hand."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:24
+msgid "Thermal rebars"
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:26
+msgid "The thermal rebars have a steel ratio of 0.0018 of the gross section, half in the top and half in the bottom: each level gets at least $0.0009\\,b\\,h$, rounded up to whole bars. Bars are added until the clear spacing is less than 35 cm."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:30
+msgid "The 35 cm spacing limit is a fixed value in OPTiBAR, not derived from the design code; its source is not documented."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:34
+msgid "Typical rebars"
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:36
+msgid "The typical rebars ensure the minimum flexural steel in every level that needs flexural steel. Their number comes from the **Typical Arrangement** setting:"
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:39
+msgid "**Interval**: the strip width divided by the interval, rounded up. A strip 1.10 m wide with an interval of 20 cm gets 6 bars."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:40
+msgid "**Number**, per strip and level on the **Strips** page: the given number of bars."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:42
+msgid "The number is not raised to the minimum: you may place less than the minimum steel. In that case, and when the spacing is out of range, OPTiBAR places the bars and adds a warning to the report:"
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:45
+msgid "the typical rebars are less than a steel ratio of 0.0018, $A_s < 0.0018\\,b\\,h$;"
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:46
+msgid "the clear spacing of the bars, typical and additional together, is more than 35 cm where the required steel is smallest;"
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:47
+msgid "the clear spacing is less than 2.5 cm, or less than the bar diameter, where the required steel is largest."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:50
+msgid "The code clauses for the minimum ratio and the spacing limits are not documented yet."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:54
+msgid "Additional rebars"
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:57
+msgid "Where the required steel is more than the typical rebars provide, the rest is covered by **additional** rebars. SAFE only gives the required steel area, so OPTiBAR first places bars to cover the diagram, which gives their **theoretical** lengths, see [Theoretical Length](../explanation/theoretical.md). Additional rebars with a theoretical length shorter than **Elimination, Additional** are left out."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:61
+msgid "Then every bar is extended to its **required** length, so that both conditions below hold at each end:"
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:63
+msgid "The bar runs past the end of its theoretical length by at least the effective depth $d$."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:64
+msgid "The bar runs at least $L_d$ past the point where it is needed at full strength: the peak of the diagram for the shortest bar of a stack, and the theoretical end of the next shorter bar for the others."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:70
+msgid "Extending a bar can let the next bar of the stack be shorter, so OPTiBAR chooses the extensions of a whole stack together, with the least total length; see [Required Length](../explanation/required.md)."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:73
+msgid "OPTiBAR extends bars past the end of their theoretical length by $d$ only. ACI 318 asks for at least the larger of $d$ and $12 d_b$, which is longer for bars thicker than $d/12$. Check this for thin foundations with large bars."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:78
+msgid "At last, the required lengths are rounded, unified and reduced to the numbers of length types you allow, which gives the **practical** lengths, see [Practical Length](../explanation/practical.md). All the steps run without user input; the settings only set the limits."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:81
+msgid "Bars that reach the side of the foundation, less the side cover, are bent."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:84
+msgid "Columns"
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:87
+msgid "OPTiBAR reads the column sizes from the **Load Size** of the point loads in SAFE; point loads without a load size, or smaller than 5 cm, are not columns."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:89
+msgid "Between the faces of a column, the required steel diagram is replaced by a straight line between its values at the two faces. So the steel needed under the column is the steel needed at its faces, and the peak of SAFE's diagram inside the column is not used. The same is done for the factored moment diagram, see [Resistant Moment](../explanation/moment.md)."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:94
+msgid "The code clause for taking the steel at the column faces is not documented yet."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:98
+msgid "Special lengths"
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:101
+msgid "The development length $L_d$ is calculated from the concrete and steel of the SAFE model, with ACI 318's simplified expressions for deformed bars in tension, with $\\psi_e = \\lambda = 1$:"
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:112
+msgid "with $f_y$ and $f'_c$ in MPa, $\\psi_t = 1.3$ for top bars and $1.0$ for bottom bars, rounded up to 1 cm. The overlap length is $1.3\\,L_d$, rounded up to 5 cm. The bend length is $13.7\\,d_b$ for 90° hooks and $11\\,d_b$ for the 135° hooks of shear rebars, rounded up to 5 cm."
+msgstr ""
+
+#: ../../source/reference/detailing-rules.md:116
+msgid "All of them can be changed on the **Special Lengths** page, for example when closely spaced bars or shear rebars call for longer lengths; see [Adjust the detailing of a project](../how-to/adjust-detailing.md). The drawing lists the overlap lengths used in its tables."
+msgstr ""
+
+#: ../../source/reference/index.rst:2
+msgid "Reference"
+msgstr "مرجع"
+
+#: ../../source/reference/index.rst:4
+msgid "Technical descriptions of OPTiBAR's settings, inputs, outputs and rules, to look things up."
+msgstr "شرح فنی تنظیمات، ورودی‌ها، خروجی‌ها و قواعد OPTiBAR، برای مراجعه."
+
+#: ../../source/reference/outputs.md:1
+msgid "Outputs"
+msgstr ""
+
+#: ../../source/reference/outputs.md:4
+msgid "DXF drawing"
+msgstr ""
+
+#: ../../source/reference/outputs.md:6
+msgid "**DXF Drawing** saves the detailing map as a DXF file in meters. It opens in AutoCAD, AutoCAD LT, BricsCAD and free DXF viewers, and can be saved as DWG from any of them."
+msgstr ""
+
+#: ../../source/reference/outputs.md:8
+msgid "The drawing is laid out in model space as a row of sheets, each with the foundation plan, grids, grid dimensions and columns:"
+msgstr ""
+
+#: ../../source/reference/outputs.md:10
+msgid "Name and width of the strips"
+msgstr ""
+
+#: ../../source/reference/outputs.md:11
+msgid "Top typical rebars, X and Y direction"
+msgstr ""
+
+#: ../../source/reference/outputs.md:12
+msgid "Top additional rebars, X and Y direction"
+msgstr ""
+
+#: ../../source/reference/outputs.md:13
+msgid "Bottom typical rebars, X and Y direction"
+msgstr ""
+
+#: ../../source/reference/outputs.md:14
+msgid "Bottom additional rebars, X and Y direction"
+msgstr ""
+
+#: ../../source/reference/outputs.md:15
+msgid "Shear zones, hatched by shear type"
+msgstr ""
+
+#: ../../source/reference/outputs.md:17
+msgid "Every bar is labelled with its number, diameter and length, for example `4Ø25-L=4.8`, and follows the mid line of its strip."
+msgstr ""
+
+#: ../../source/reference/outputs.md:19
+msgid "![A plan sheet: top additional rebars of the X direction](../_static/images/dxf_plan.png)"
+msgstr ""
+
+#: ../../source/reference/outputs.md:19
+msgid "A plan sheet: top additional rebars of the X direction"
+msgstr ""
+
+#: ../../source/reference/outputs.md:21
+msgid "Additional rebars are drawn in two colors, so the drawing is easier to check:"
+msgstr ""
+
+#: ../../source/reference/outputs.md:23
+msgid "**Blue** (layers `Additional Rebar Top` and `Additional Rebar Bottom`): each bar is a stack of its own. Neighbouring bars can overlap, because their practical lengths are longer than their required lengths, but they don't need an overlap length there."
+msgstr ""
+
+#: ../../source/reference/outputs.md:25
+msgid "**Magenta** (layer `continuous Rebar`): one bar longer than the 12 m stock length, made of several pieces. Where these pieces overlap, the overlap is the overlap length of the bar, 1.3 times its development length."
+msgstr ""
+
+#: ../../source/reference/outputs.md:28
+msgid "![Blue bars are separate stacks; the magenta bar is longer than 12 m and spliced](../_static/images/dxf_splice_colors.png)"
+msgstr ""
+
+#: ../../source/reference/outputs.md:28
+msgid "Blue bars are separate stacks; the magenta bar is longer than 12 m and spliced"
+msgstr ""
+
+#: ../../source/reference/outputs.md:30
+msgid "After the sheets come a section of every shear type, with its stirrups and label,"
+msgstr ""
+
+#: ../../source/reference/outputs.md:32
+msgid "![Shear type sections](../_static/images/dxf_sections.png)"
+msgstr ""
+
+#: ../../source/reference/outputs.md:32
+msgid "Shear type sections"
+msgstr ""
+
+#: ../../source/reference/outputs.md:34
+msgid "followed by the tables: overlap lengths, number of length types, the piece list of every rebar type with its bar shape and weight, the mass summary and the concrete volume. Last are the moment diagrams of every strip, with the resisting moment φMn and the ultimate moment Mu along the strip, top and bottom."
+msgstr ""
+
+#: ../../source/reference/outputs.md:36
+msgid "![The tables](../_static/images/dxf_tables.png)"
+msgstr ""
+
+#: ../../source/reference/outputs.md:36
+msgid "The tables"
+msgstr ""
+
+#: ../../source/reference/outputs.md:38
+msgid "A piece list has one row per cut length, so it can have more rows than the number of length types you allowed: a bar longer than 12 m is cut into several pieces, and its last piece has a length of its own. The table of a rebar type is left out when the foundation has none of them, for example the thermal rebars."
+msgstr ""
+
+#: ../../source/reference/outputs.md:41
+msgid "The moment diagrams only count the tension steel, so φMn is a little lower than the real resisting moment; see [Resistant Moment](../explanation/moment.md)."
+msgstr ""
+
+#: ../../source/reference/outputs.md:43
+msgid "Each kind of object is on its own layer, for example `Typical Rebar Top`, `Additional Rebar Bottom`, `Rebar Text`, `Dimension` or `moment`, so parts of the drawing can be hidden or restyled."
+msgstr ""
+
+#: ../../source/reference/outputs.md:45
+msgid "Below the sheets are the **cutting plans**: one or more portrait sheets per bar diameter, saying how to cut the pieces from 12 m stock bars. Each row is a cutting pattern with the number of bars to cut that way, the pieces drawn to scale with their lengths, the waste (`w`), and the position of each piece in the piece lists, for example `A5` for the fifth row of the additional rebars."
+msgstr ""
+
+#: ../../source/reference/outputs.md:48
+msgid "![A cutting plan](../_static/images/dxf_cutting.png)"
+msgstr ""
+
+#: ../../source/reference/outputs.md:48
+msgid "A cutting plan"
+msgstr ""
+
+#: ../../source/reference/outputs.md:50
+msgid "The plans use as few stock bars as possible, and every piece is cut exactly as many times as needed. They are solved exactly with an arc-flow integer program, which proves that no plan uses fewer bars. Its linear relaxation is solved first, and the number of bars it gives, rounded up, is a lower bound that is nearly always the optimum, so the integer program can stop as soon as it reaches it."
+msgstr ""
+
+#: ../../source/reference/outputs.md:52
+msgid "The line under each sheet gives the number of bars, whether the plan is proven optimal, and the waste. If the time limit stopped the solver before the proof, it says \"not proven optimal\" with the fewest bars any plan could use. The PDF drawing and the Report show the same."
+msgstr ""
+
+#: ../../source/reference/outputs.md:54
+msgid "PDF drawing"
+msgstr ""
+
+#: ../../source/reference/outputs.md:56
+msgid "**PDF Drawing** saves an A4 sketch: one page per strip with its top and bottom additional rebars, followed by the mass summary, the technical specifications, the piece lists and the cutting plans. It is meant for a quick check, the DXF is the detailing map."
+msgstr ""
+
+#: ../../source/reference/outputs.md:59
+msgid "Results file and summary"
+msgstr ""
+
+#: ../../source/reference/outputs.md:61
+msgid "**Save Results** writes two files, for example `foundation_calculation.json` and `foundation_calculation_summary.txt`."
+msgstr ""
+
+#: ../../source/reference/outputs.md:63
+msgid "The **summary** is the text of the Report box, headed by the input file and the main settings, and ends with every pattern of the cutting plans. It is meant for reading and for attaching to a report."
+msgstr ""
+
+#: ../../source/reference/outputs.md:65
+msgid "The **JSON file** holds everything needed to reproduce or post-process the result:"
+msgstr ""
+
+#: ../../source/reference/outputs.md:67 ../../source/reference/outputs.md:81
+#: ../../source/reference/window.md:48
+msgid "Key"
+msgstr ""
+
+#: ../../source/reference/outputs.md:67 ../../source/reference/outputs.md:81
+msgid "Content"
+msgstr ""
+
+#: ../../source/reference/outputs.md:69
+msgid "The OPTiBAR version that produced the result."
+msgstr ""
+
+#: ../../source/reference/outputs.md:70
+msgid "Date and time of saving."
+msgstr ""
+
+#: ../../source/reference/outputs.md:71
+msgid "The SAFE database the project was loaded from."
+msgstr ""
+
+#: ../../source/reference/outputs.md:72
+msgid "`calculation` for a computation, `analysis` for an analysis."
+msgstr ""
+
+#: ../../source/reference/outputs.md:73
+msgid "The settings of the calculation."
+msgstr ""
+
+#: ../../source/reference/outputs.md:74
+msgid "The engine output, see below."
+msgstr ""
+
+#: ../../source/reference/outputs.md:76
+msgid "For a computation, `result` has a `data` key with the detailed foundation, and `warnings` when there are any. When the number of length types is too small to be feasible, `result` has an `errors` key with `min_feasible_num`, the smallest total number of length types that works."
+msgstr ""
+
+#: ../../source/reference/outputs.md:79
+msgid "The main parts of `result[\"data\"]` are:"
+msgstr ""
+
+#: ../../source/reference/outputs.md:83
+msgid "Rebar mass in tons by type and level, and the concrete volume in m³."
+msgstr ""
+
+#: ../../source/reference/outputs.md:84
+msgid "The piece list of the typical, thermal, additional and shear rebars: diameter, length, number and bends."
+msgstr ""
+
+#: ../../source/reference/outputs.md:85
+msgid "Per strip: geometry, the bars of every row with their practical stations and bends, shear zones, and the moment diagrams."
+msgstr ""
+
+#: ../../source/reference/outputs.md:86
+msgid "Materials, covers, the special lengths per diameter, and the numbers of length types used."
+msgstr ""
+
+#: ../../source/reference/outputs.md:87
+msgid "The shear arrangements: diameter, number of legs and spacing."
+msgstr ""
+
+#: ../../source/reference/outputs.md:88
+msgid "The foundation outline, openings, columns and grid lines."
+msgstr ""
+
+#: ../../source/reference/outputs.md:89
+msgid "The cutting plan of every diameter: stock length, number of bars, waste, whether the plan is proven optimal (`optimal`) and the fewest bars any plan could use (`lower_bound`), and the patterns with their pieces."
+msgstr ""
+
+#: ../../source/reference/outputs.md:91
+#, python-brace-format
+msgid "For an analysis, `result` is a list with the `data` part of every combination, or `{}` where a combination isn't feasible."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:1
+msgid "SAFE input"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:4
+msgid "OPTiBAR reads the Microsoft Access database (`.accdb` or `.mdb`) exported by CSI SAFE, through the Microsoft Access ODBC driver. The units of the file are converted when it is read."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:7
+msgid "Tables"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:9
+msgid "Table"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:9
+msgid "What OPTiBAR reads"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:9
+msgid "Program Control"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:9
+msgid "The units of the file."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:9
+msgid "Grid Lines"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:9
+msgid "The grid lines, for the drawing."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:9
+msgid "Concrete Slab Design 01 - Flexural And Shear Data"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:9
+msgid "The required top and bottom steel, the shear steel, the factored moments and the width at every station of every strip."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:9
+msgid "Object Geometry - Design Strips"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:9
+msgid "The geometry and widths of the strips."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:9
+msgid "Material Properties 03 - Concrete"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:9
+msgid "$f'_c$ of the concrete."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:15
+msgid "Material Properties 04 - Rebar"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:15
+msgid "$f_y$ of the rebars."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:16
+msgid "Slab Design Overwrites 01 - Strip Based"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:16
+msgid "The rebar material and cover overwrites of the strips."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:16
+msgid "Design Preferences 02 - Rebar Cover - Slabs"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:16
+msgid "The top and bottom covers, where a strip doesn't overwrite them."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:16
+msgid "Slab Properties 02 - Solid Slabs"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:16
+msgid "The thickness and material of the slabs."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:16
+msgid "Slab Property Assignments"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:16
+msgid "Which slab property each area has."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:16
+msgid "Object Geometry - Point Coordinates"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:16
+msgid "The coordinates of the points."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:16
+msgid "Load Assignments - Point Loads"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:16
+msgid "The columns: point loads with a load size larger than 5 cm in both directions."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:16
+msgid "Object Geometry - Areas 01 - General"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:16
+msgid "The outline and openings of the foundation; wall areas are skipped."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:25
+msgid "When the export doesn't contain a table, loading the file fails and the report names what is missing. When the model uses more than one concrete or steel material, the report warns about it."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:29
+msgid "SAFE versions"
+msgstr ""
+
+#: ../../source/reference/safe-input.md:31
+msgid "OPTiBAR is tested with files exported by **SAFE 2016** (v16.0.2); the parser is `V16Parser`."
+msgstr ""
+
+#: ../../source/reference/safe-input.md:33
+msgid "SAFE v20 and later (v20, v21, v22, v23) are built on a new platform, and the exported tables have different names: for example, the strip design results are in \"Concrete Slab Design Summary - Flexure and Shear Data\". These files are not supported yet."
+msgstr ""
+
+#: ../../source/reference/settings.md:1 ../../source/reference/window.md:30
+msgid "Settings"
+msgstr ""
+
+#: ../../source/reference/settings.md:4
+msgid "The settings on the left of the window, in the **Basic**, **Special Lengths** and **Strips** pages. Hover the ⓘ next to a setting in the app for a short description. **View > Dark Theme** switches the app to a dark theme."
+msgstr ""
+
+#: ../../source/reference/settings.md:8
+msgid "Type of Request"
+msgstr ""
+
+#: ../../source/reference/settings.md:10
+msgid "Value"
+msgstr ""
+
+#: ../../source/reference/settings.md:10 ../../source/reference/settings.md:17
+#: ../../source/reference/settings.md:37 ../../source/reference/window.md:11
+#: ../../source/reference/window.md:18
+msgid "Meaning"
+msgstr ""
+
+#: ../../source/reference/settings.md:10
+msgid "Computation"
+msgstr ""
+
+#: ../../source/reference/settings.md:10
+msgid "Details the foundation once, with the settings below."
+msgstr ""
+
+#: ../../source/reference/settings.md:10
+msgid "Analysis"
+msgstr ""
+
+#: ../../source/reference/settings.md:10
+msgid "Repeats the detailing for a range of Total and Stack, and compares the rebar mass of each combination."
+msgstr ""
+
+#: ../../source/reference/settings.md:15
+msgid "Basic"
+msgstr ""
+
+#: ../../source/reference/settings.md:17 ../../source/reference/settings.md:37
+msgid "Setting"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Unit"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Default"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Values"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Diameter, Typical"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Diameter of the typical rebars."
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "mm"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Diameter, Additional"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Diameter of the additional rebars."
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "as above"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Diameter, Thermal"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Diameter of the thermal rebars."
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Diameter, Shear"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Diameter of the shear rebars."
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Typical Arrangement, Interval"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Spacing of the typical rebars; a strip gets its width divided by the interval, rounded up."
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "cm"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "up to 100"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Cover, Side Cover"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Distance from the side of the foundation to the ends of the longitudinal rebars."
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "up to 20"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Elimination, Additional"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Additional rebars with a theoretical length shorter than this are left out."
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "m"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "0 to 2, in steps of 0.1"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Elimination, Shear"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Parts of a strip that need shear rebars and are shorter than this get none."
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "0 to 5, in steps of 0.5"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Number of Types, Total"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Maximum number of different lengths of additional rebars in the whole foundation."
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "10 to 40"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Number of Types, Stack"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Maximum number of different lengths of additional rebars in one stack."
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "1 to 5"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Number of Types, Shear"
+msgstr ""
+
+#: ../../source/reference/settings.md:17
+msgid "Maximum number of different shear rebar arrangements in the foundation."
+msgstr ""
+
+#: ../../source/reference/settings.md:31
+msgid "For an **Analysis**, Total and Stack are ranges, **From** and **To**: Total from 10 to 20 by default, spanning at most 10; Stack from 2 to 4, spanning at most 2."
+msgstr ""
+
+#: ../../source/reference/settings.md:33
+msgid "The covers of the top and bottom faces are read from the SAFE model."
+msgstr ""
+
+#: ../../source/reference/settings.md:35
+msgid "Special Lengths and Strips"
+msgstr ""
+
+#: ../../source/reference/settings.md:37
+msgid "Special Lengths"
+msgstr ""
+
+#: ../../source/reference/settings.md:37
+msgid "The development length (Ld, top and bottom), overlap length (top and bottom) and bend lengths (90° and 135°) of each bar diameter, in cm. Calculated from the materials of the SAFE model when the file is loaded, see [Special lengths](detailing-rules.md#special-lengths)."
+msgstr ""
+
+#: ../../source/reference/settings.md:39
+msgid "Special Lengths, Automatic"
+msgstr ""
+
+#: ../../source/reference/settings.md:39
+msgid "When checked, the top Ld and the overlaps follow from the bottom Ld."
+msgstr ""
+
+#: ../../source/reference/settings.md:39
+msgid "Special Lengths, Reset"
+msgstr ""
+
+#: ../../source/reference/settings.md:39
+msgid "Restores the calculated values."
+msgstr ""
+
+#: ../../source/reference/settings.md:39
+msgid "Strips"
+msgstr ""
+
+#: ../../source/reference/settings.md:39
+msgid "The number and diameter of the typical rebars of single strips and levels, instead of the interval. **Set** applies them, **Erase** removes them."
+msgstr ""
+
+#: ../../source/reference/window.md:1
+msgid "The window"
+msgstr ""
+
+#: ../../source/reference/window.md:4
+msgid "OPTiBAR has one window: the input file along the top, the settings on the left and the results on the right. The border between the settings and the results can be dragged."
+msgstr ""
+
+#: ../../source/reference/window.md:7
+msgid "![The OPTiBAR window with the results of the sample foundation](../_static/images/gui_results.png)"
+msgstr ""
+
+#: ../../source/reference/window.md:7
+msgid "The OPTiBAR window with the results of the sample foundation"
+msgstr ""
+
+#: ../../source/reference/window.md:9
+msgid "Input file"
+msgstr ""
+
+#: ../../source/reference/window.md:11
+msgid "Part"
+msgstr ""
+
+#: ../../source/reference/window.md:11
+msgid "Path"
+msgstr ""
+
+#: ../../source/reference/window.md:11
+msgid "The Access file that is loaded."
+msgstr ""
+
+#: ../../source/reference/window.md:11
+msgid "**Open…**"
+msgstr ""
+
+#: ../../source/reference/window.md:14
+msgid "Chooses an Access file (`.accdb` or `.mdb`) and loads it."
+msgstr ""
+
+#: ../../source/reference/window.md:14
+msgid "**Reload**"
+msgstr ""
+
+#: ../../source/reference/window.md:15
+msgid "Loads the same file again, for example after exporting it from SAFE again."
+msgstr ""
+
+#: ../../source/reference/window.md:15 ../../source/reference/window.md:18
+msgid "Status"
+msgstr ""
+
+#: ../../source/reference/window.md:15
+msgid "The state of the input file, see below. Click it to scroll the report to the input file."
+msgstr ""
+
+#: ../../source/reference/window.md:18
+msgid "No file loaded"
+msgstr ""
+
+#: ../../source/reference/window.md:18
+msgid "No file was opened yet."
+msgstr ""
+
+#: ../../source/reference/window.md:18
+msgid "Loading…"
+msgstr ""
+
+#: ../../source/reference/window.md:18
+msgid "The file is being read."
+msgstr ""
+
+#: ../../source/reference/window.md:18
+msgid "✓ Loaded"
+msgstr ""
+
+#: ../../source/reference/window.md:18
+msgid "The file is loaded; the calculation can start."
+msgstr ""
+
+#: ../../source/reference/window.md:18
+msgid "⚠ Loaded with … warnings"
+msgstr ""
+
+#: ../../source/reference/window.md:18
+msgid "The file is loaded, with warnings in the report, for example more than one concrete material."
+msgstr ""
+
+#: ../../source/reference/window.md:18
+msgid "✗ Not loaded: a table is missing"
+msgstr ""
+
+#: ../../source/reference/window.md:18
+msgid "The export doesn't have a table OPTiBAR needs; the report names it, see [SAFE input](safe-input.md)."
+msgstr ""
+
+#: ../../source/reference/window.md:24
+msgid "✗ Not loaded: the file could not be read"
+msgstr ""
+
+#: ../../source/reference/window.md:24
+msgid "The file is not a SAFE export OPTiBAR can read."
+msgstr ""
+
+#: ../../source/reference/window.md:24
+msgid "✗ Access ODBC driver missing"
+msgstr ""
+
+#: ../../source/reference/window.md:24
+msgid "The Microsoft Access ODBC driver is not installed; the report links to its download page, see [Install OPTiBAR](../how-to/install.md)."
+msgstr ""
+
+#: ../../source/reference/window.md:28
+msgid "Loading a file, or failing to load one, clears the results. **Calculate** is available only while a file is loaded."
+msgstr ""
+
+#: ../../source/reference/window.md:32
+msgid "The left side holds the **Type of Request**, the settings in three pages, **Basic**, **Special Lengths** and **Strips**, see [Settings](settings.md), and **Calculate**. While a calculation runs, **Calculate** turns into **Stop**, and the status line and progress bar next to it show its progress."
+msgstr ""
+
+#: ../../source/reference/window.md:35
+msgid "Results"
+msgstr ""
+
+#: ../../source/reference/window.md:37
+msgid "The buttons above the report save the results, see [Outputs](outputs.md): **Save Results**, **PDF Drawing** and **DXF Drawing** after a computation, and **Diagram** with **Total** or **Additional** after an analysis."
+msgstr ""
+
+#: ../../source/reference/window.md:39
+msgid "The **Report** box shows the input file at the top, and the results of the last calculation below it: the mass summary, the cutting plans and the warnings."
+msgstr ""
+
+#: ../../source/reference/window.md:41
+msgid "When a setting changes after a calculation, a warning above the report says the results are out of date. The results stay readable; press **Calculate** to update them. The warning goes away when the settings are the same as those of the results again."
+msgstr ""
+
+#: ../../source/reference/window.md:44
+msgid "![The warning that the results are out of date](../_static/images/gui_stale.png)"
+msgstr ""
+
+#: ../../source/reference/window.md:44
+msgid "The warning that the results are out of date"
+msgstr ""
+
+#: ../../source/reference/window.md:46
+msgid "Menus and keys"
+msgstr ""
+
+#: ../../source/reference/window.md:48
+msgid "Menu"
+msgstr ""
+
+#: ../../source/reference/window.md:48
+msgid "Command"
+msgstr ""
+
+#: ../../source/reference/window.md:48
+msgid "File"
+msgstr ""
+
+#: ../../source/reference/window.md:48
+msgid "Open…"
+msgstr ""
+
+#: ../../source/reference/window.md:48
+msgid "Ctrl+O"
+msgstr ""
+
+#: ../../source/reference/window.md:48
+msgid "Reload"
+msgstr ""
+
+#: ../../source/reference/window.md:48
+msgid "F5"
+msgstr ""
+
+#: ../../source/reference/window.md:48
+msgid "Exit"
+msgstr ""
+
+#: ../../source/reference/window.md:48
+msgid "View"
+msgstr ""
+
+#: ../../source/reference/window.md:48
+msgid "Dark Theme"
+msgstr ""
+
+#: ../../source/reference/window.md:48
+msgid "Help"
+msgstr ""
+
+#: ../../source/reference/window.md:48
+msgid "Documentation, About"
+msgstr ""
+

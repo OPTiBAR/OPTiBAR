@@ -1,0 +1,49 @@
+# Persian translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-11-15 13:23+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fa\n"
+"Language-Team: fa <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/index.rst:2
+msgid "OPTiBAR: Concrete Structure Detailing toolbox"
+msgstr "OPTiBAR: جعبه‌ابزار جزئیات‌سازی سازه‌های بتنی"
+
+#: ../../source/index.rst:3
+msgid "OPTiBAR is a concrete structure detailing software that takes the design results of a mat foundation in CSI SAFE and produces a rebar detailing map. The unique feature of OPTiBAR is that it minimizes the steel consumption while keeping the drawing completely practical. The detailing process is highly automated but it is also possible to manually adjust the detailing parameters."
+msgstr "OPTiBAR نرم‌افزاری برای جزئیات‌سازی سازه‌های بتنی است که نتایج طراحی یک فونداسیون گسترده را از CSI SAFE می‌گیرد و نقشهٔ آرماتوربندی آن را تولید می‌کند. ویژگی منحصربه‌فرد OPTiBAR این است که مصرف فولاد را کمینه می‌کند و در عین حال نقشه را کاملاً اجرایی نگه می‌دارد. فرایند جزئیات‌سازی تا حد زیادی خودکار است، اما پارامترهای آن را می‌توان به‌صورت دستی هم تنظیم کرد."
+
+#: ../../source/index.rst:7
+msgid "The documentation has four parts:"
+msgstr "این مستندات چهار بخش دارد:"
+
+#: ../../source/index.rst:10
+msgid "Start here: detail a sample foundation from start to finish, in :doc:`tutorials/first-map`."
+msgstr "از اینجا شروع کنید: آرماتوربندی یک فونداسیون نمونه را از ابتدا تا انتها در :doc:`tutorials/first-map` انجام دهید."
+
+#: ../../source/index.rst:13
+msgid "Steps for specific tasks: installing OPTiBAR, exporting from SAFE, choosing the number of length types, adjusting the detailing, saving the results and using OPTiBAR from Python."
+msgstr "مراحل انجام کارهای مشخص: نصب OPTiBAR، خروجی گرفتن از SAFE، انتخاب تعداد انواع طول، تنظیم جزئیات، ذخیرهٔ نتایج و استفاده از OPTiBAR در Python."
+
+#: ../../source/index.rst:16
+msgid "The window, the settings, the SAFE tables OPTiBAR reads, the output files and the detailing rules."
+msgstr "پنجرهٔ برنامه، تنظیمات، جدول‌هایی از SAFE که OPTiBAR می‌خواند، فایل‌های خروجی و قواعد جزئیات‌سازی."
+
+#: ../../source/index.rst:19
+msgid "How OPTiBAR finds the rebar lengths, and why: the theoretical, required and practical lengths, the resisting moment and the shear rebars."
+msgstr "OPTiBAR طول میلگردها را چگونه و چرا این‌گونه پیدا می‌کند: طول‌های نظری، طول‌های لازم و طول‌های اجرایی، لنگر مقاوم و میلگردهای برشی."
+

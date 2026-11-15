@@ -23,5 +23,13 @@ jobs:
       - name: Build documentation
         run: uv run --frozen --only-group docs sphinx-build -b html docs/source docs/build/html
 
+      # every translation in docs/source/locale, in a folder named after its language (fa/, ...)
+      - name: Build the translations
+        run: |
+          for path in docs/source/locale/*/; do
+            language=$(basename "$path")
+            uv run --frozen --only-group docs sphinx-build -b html -D language=$language docs/source docs/build/html/$language
+          done
+
       - name: Deploy to GitHub Pages
         run: uvx ghp-import -n -p -f docs/build/html

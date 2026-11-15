@@ -1,0 +1,707 @@
+# Persian translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-11-15 13:23+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fa\n"
+"Language-Team: fa <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/explanation/index.rst:2
+msgid "Explanation"
+msgstr "توضیحات"
+
+#: ../../source/explanation/index.rst:4
+msgid "How OPTiBAR details a foundation, and why it works the way it does. The rules themselves are listed in :doc:`../reference/detailing-rules`."
+msgstr "OPTiBAR آرماتوربندی یک فونداسیون را چگونه انجام می‌دهد و چرا این‌گونه کار می‌کند. خود قواعد در :doc:`../reference/detailing-rules` آمده‌اند."
+
+#: ../../source/explanation/intro.md:1
+msgid "Basic Concepts"
+msgstr "مفاهیم پایه"
+
+#: ../../source/explanation/intro.md:4
+msgid "In this chapter, the problem is defined, and its inputs and outputs are specified. Then, the main algorithm for solving it is presented, and its constituent parts are generally described."
+msgstr "در این فصل مسئله تعریف و ورودی‌ها و خروجی‌های آن مشخص می‌شوند. سپس الگوریتم اصلی حل آن ارائه و اجزای آن به‌طور کلی شرح داده می‌شوند."
+
+#: ../../source/explanation/intro.md:6
+msgid "The input to this problem is the required cross-sectional steel area in stations along a design strip. These values are provided for all design strips and upper and lower meshs. This input can be extracted from the output of analytical software such as *CSI SAFE*. In addition to this, the required cross-sectional area of shear reinforcement in these sections is also observable in the output of some design software. The input values are more precisely described in the following list:"
+msgstr "ورودی این مسئله سطح مقطع فولاد لازم در ایستگاه‌هایی در امتداد یک نوار طراحی است. این مقادیر برای همهٔ نوارهای طراحی و برای شبکه‌های بالا و پایین داده می‌شوند. این ورودی را می‌توان از خروجی نرم‌افزارهای تحلیلی مانند *CSI SAFE* استخراج کرد. علاوه بر این، سطح مقطع لازم میلگرد برشی در این مقاطع نیز در خروجی برخی نرم‌افزارهای طراحی دیده می‌شود. مقادیر ورودی به‌طور دقیق‌تر در فهرست زیر آمده‌اند:"
+
+#: ../../source/explanation/intro.md:12
+msgid "Material types for rebar and concrete"
+msgstr "نوع مصالح میلگرد و بتن"
+
+#: ../../source/explanation/intro.md:13
+msgid "Design strips"
+msgstr "نوارهای طراحی"
+
+#: ../../source/explanation/intro.md:15
+msgid "Depth"
+msgstr "عمق"
+
+#: ../../source/explanation/intro.md:16
+msgid "Coordinates of stations"
+msgstr "مختصات ایستگاه‌ها"
+
+#: ../../source/explanation/intro.md:17
+msgid "Coordinates of columns"
+msgstr "مختصات ستون‌ها"
+
+#: ../../source/explanation/intro.md:18
+msgid "Shear punch for each column (!)"
+msgstr "برش پانچ هر ستون (!)"
+
+#: ../../source/explanation/intro.md:19
+msgid "Cross-sectional steel area in the upper network"
+msgstr "سطح مقطع فولاد در شبکهٔ بالا"
+
+#: ../../source/explanation/intro.md:20
+msgid "Cross-sectional steel area in the lower network"
+msgstr "سطح مقطع فولاد در شبکهٔ پایین"
+
+#: ../../source/explanation/intro.md:21
+msgid "Shear steel cross-sectional area (!)"
+msgstr "سطح مقطع فولاد برشی (!)"
+
+#: ../../source/explanation/intro.md:23
+msgid "Items marked with (!) may not be available in the output of some *CSI SAFE* software versions."
+msgstr "مواردی که با (!) مشخص شده‌اند ممکن است در خروجی برخی نسخه‌های *CSI SAFE* موجود نباشند."
+
+#: ../../source/explanation/intro.md:25
+msgid "By using the steel quantity at each station, the length of each rebar can be calculated. These lengths are referred to as the **theoretical** lengths of the components."
+msgstr "با استفاده از مقدار فولاد در هر ایستگاه می‌توان طول هر میلگرد را محاسبه کرد. این طول‌ها **طول‌های نظری** اجزا نامیده می‌شوند."
+
+#: ../../source/explanation/intro.md:27
+msgid "Bars that only cover the required steel of the input are too short: according to ACI 318, they must be extended to satisfy the code requirements. The extended lengths are the **required** lengths of the rebars, see [Detailing Rules](../reference/detailing-rules.md#additional-rebars). A map drawn based on required lengths is hard to build for three reasons:"
+msgstr ""
+
+#: ../../source/explanation/intro.md:31
+msgid "The non-roundness of the lengths makes it difficult for workers to cut and locate, and for supervisors to check, for example, a rebar with a length of 3.77 m. The designer may prefer a length of 3.80 m or 4.00 m."
+msgstr ""
+
+#: ../../source/explanation/intro.md:32
+msgid "There may be too many different lengths used throughout the foundation. This complicates the maps and the rebar cutting process."
+msgstr ""
+
+#: ../../source/explanation/intro.md:33
+msgid "The abundance of lengths used side by side in a section of the strip. This complicates map reading and execution for the contractor and makes it difficult for the supervisor to check."
+msgstr ""
+
+#: ../../source/explanation/intro.md:35
+msgid "To solve this problem, it is possible to reduce the number of lengths by increasing the length of a set of components. The lengths obtained after this stage are called **practical** lengths."
+msgstr ""
+
+#: ../../source/explanation/intro.md:38
+msgid "In the following chapters, each of these stages will be examined."
+msgstr ""
+
+#: ../../source/explanation/intro.md:49
+msgid "Why the number of length types matters"
+msgstr ""
+
+#: ../../source/explanation/intro.md:52
+msgid "SAFE gives the required steel area as a continuous diagram along each strip. Covering it with bars, layer by layer, gives a bar of a different length for every layer:"
+msgstr ""
+
+#: ../../source/explanation/intro.md:55
+msgid "![The required steel area along a strip (blue) and the bars that cover it](../_static/images/steel_area_diagram.png)"
+msgstr ""
+
+#: ../../source/explanation/intro.md:55
+msgid "The required steel area along a strip (blue) and the bars that cover it"
+msgstr ""
+
+#: ../../source/explanation/intro.md:57
+msgid "Done for every strip, this gives tens or hundreds of different lengths in one foundation. A drawing like the one below is correct, but it is impractical to cut, place and check:"
+msgstr ""
+
+#: ../../source/explanation/intro.md:60
+msgid "![Additional rebars of a strip without unified lengths: every bar has its own length](../_static/images/lengths_not_unified.png)"
+msgstr ""
+
+#: ../../source/explanation/intro.md:60
+msgid "Additional rebars of a strip without unified lengths: every bar has its own length"
+msgstr ""
+
+#: ../../source/explanation/intro.md:62
+msgid "OPTiBAR takes two limits from the user:"
+msgstr ""
+
+#: ../../source/explanation/intro.md:64
+msgid "**Stack**: the maximum number of different lengths in one stack of bars."
+msgstr ""
+
+#: ../../source/explanation/intro.md:65
+msgid "**Total**: the maximum number of different lengths of additional rebars in the whole foundation."
+msgstr ""
+
+#: ../../source/explanation/intro.md:67
+msgid "Within these limits, it chooses the lengths that add the least steel. The same strip, with at most 4 lengths in a stack:"
+msgstr ""
+
+#: ../../source/explanation/intro.md:69
+msgid "![The same strip with at most 4 lengths per stack](../_static/images/lengths_stack_4.png)"
+msgstr ""
+
+#: ../../source/explanation/intro.md:69
+msgid "The same strip with at most 4 lengths per stack"
+msgstr ""
+
+#: ../../source/explanation/intro.md:71
+msgid "Larger limits save steel but make the foundation harder to build; [an analysis](../how-to/choose-length-types.md) shows the trade-off for a project."
+msgstr ""
+
+#: ../../source/explanation/intro.md:73
+#, python-brace-format
+msgid "Trying every choice is not possible. To keep 25 lengths out of 50, there are $\\binom{50}{25} \\approx 1.3 \\times 10^{14}$ choices; at one second each, checking them all would take about 4 million years. OPTiBAR uses dynamic programming instead, see [Required Length](required.md) and [Practical Length](practical.md)."
+msgstr ""
+
+#: ../../source/explanation/intro.md:77
+msgid "Notations"
+msgstr ""
+
+#: ../../source/explanation/intro.md:80
+msgid "$L_d$: Development length of the bar."
+msgstr ""
+
+#: ../../source/explanation/intro.md:81
+msgid "$d$: Effective depth of the foundation."
+msgstr ""
+
+#: ../../source/explanation/intro.md:82
+msgid "$b$: Width of the foundation."
+msgstr ""
+
+#: ../../source/explanation/intro.md:83
+msgid "$As$: Area of steel in the section."
+msgstr ""
+
+#: ../../source/explanation/intro.md:84
+msgid "$\\epsilon_t$: Total strain."
+msgstr ""
+
+#: ../../source/explanation/intro.md:85
+#, python-brace-format
+msgid "$\\epsilon_{ty}$: Yield strain."
+msgstr ""
+
+#: ../../source/explanation/moment.md:1
+msgid "Resistant Moment"
+msgstr ""
+
+#: ../../source/explanation/moment.md:4
+msgid "The design of a strip for flexure is checked by SAFE, but the detailing changes the steel along the strip: the theoretical lengths are extended to required lengths, and these are rounded and unified to practical lengths. To show that the detailed strip still carries its loads, OPTiBAR draws the resisting moment $\\phi M_n$ of every strip, top and bottom, next to the factored moment $M_u$ from SAFE. $\\phi M_n$ should be above $M_u$ everywhere."
+msgstr ""
+
+#: ../../source/explanation/moment.md:8
+msgid "![The resisting moment of a cantilever follows its bars; within $L_d$ of a cut bar end it rises linearly](../_static/images/resisting_moment.png)"
+msgstr ""
+
+#: ../../source/explanation/moment.md:8
+msgid "The resisting moment of a cantilever follows its bars; within  of a cut bar end it rises linearly"
+msgstr ""
+
+#: ../../source/explanation/moment.md:10
+msgid "Effective steel area"
+msgstr ""
+
+#: ../../source/explanation/moment.md:13
+#, python-brace-format
+msgid "A bar only counts fully in a section where it is developed, that is, where it runs at least $L_d$ into the concrete on that side. If a section is at a distance $x < L_d$ from the end of a bar, only the part $\\dfrac{x}{L_d} A_b$ of its area is counted."
+msgstr ""
+
+#: ../../source/explanation/moment.md:16
+msgid "So the effective steel area along a level of a strip is:"
+msgstr ""
+
+#: ../../source/explanation/moment.md:18
+msgid "the typical rebars, fully along the strip,"
+msgstr ""
+
+#: ../../source/explanation/moment.md:19
+msgid "plus every additional rebar, rising linearly from zero at each straight end to its full area at $L_d$ from that end."
+msgstr ""
+
+#: ../../source/explanation/moment.md:21
+msgid "Bent (hooked) ends count fully, as the hook anchors the bar. Since the area changes linearly near the bar ends, and the moment depends almost linearly on the area, the resisting moment changes almost linearly there too."
+msgstr ""
+
+#: ../../source/explanation/moment.md:25
+msgid "Only the tension steel is counted, so $\\phi M_n$ is a little less than the real resisting moment of the section."
+msgstr ""
+
+#: ../../source/explanation/moment.md:28
+msgid "Between the faces of a column, the factored moment is taken as a straight line between its values at the faces, as the required steel is, see [Columns](../reference/detailing-rules.md#columns)."
+msgstr ""
+
+#: ../../source/explanation/moment.md:30
+msgid "Resisting moment of a section"
+msgstr ""
+
+#: ../../source/explanation/moment.md:33
+msgid "Each section is a rectangle of width $b$, the width of the strip there, and effective depth $d$, with a steel area $A_s$."
+msgstr ""
+
+#: ../../source/explanation/moment.md:35
+msgid "ACI-318 table 22.2.2.4.3"
+msgstr ""
+
+#: ../../source/explanation/moment.md:47
+#, python-brace-format
+msgid "When the steel ratio $\\rho = \\dfrac{A_s}{b d}$ is less than the balanced ratio $\\rho_b = 0.85 \\beta_1 \\dfrac{f'_c}{f_y} \\dfrac{600}{600 + f_y}$, the steel yields:"
+msgstr ""
+
+#: ../../source/explanation/moment.md:56
+#, python-brace-format
+msgid "Otherwise $a$ is found from the strain compatibility of the section with $E_s = 200$ GPa, and $M_n = 0.85 f'_c a b \\left(d - \\frac{a}{2}\\right)$. Then"
+msgstr ""
+
+#: ../../source/explanation/moment.md:66
+#, python-brace-format
+msgid "and the strength reduction factor follows ACI-318 table 21.2.2, with $\\epsilon_{ty} = 0.002$:"
+msgstr ""
+
+#: ../../source/explanation/practical.md:1
+msgid "Practical Length"
+msgstr ""
+
+#: ../../source/explanation/practical.md:4
+msgid "To make the required lengths buildable, they are rounded, and the number of different lengths is reduced in two sets: in every stack, and in the whole foundation. Fewer lengths in a stack make the drawing easier to read and to build; fewer lengths in the foundation make the bars easier to cut. The lengths obtained are the **practical** lengths."
+msgstr ""
+
+#: ../../source/explanation/practical.md:8
+msgid "The whole process"
+msgstr ""
+
+#: ../../source/explanation/practical.md:11
+msgid "The lengths of the additional rebars are found with the following algorithm (`Mesh._theoretical_to_practical` and `Foundation._set_length_type_num`):"
+msgstr ""
+
+#: ../../source/explanation/practical.md:35
+msgid "Upper bound and rounding"
+msgstr ""
+
+#: ../../source/explanation/practical.md:38
+msgid "Each piece has an **upper bound** on its length: the 12 m stock length for a bar longer than 12 m, and otherwise the length of the strip less the side covers plus the bends of the piece, or 12 m if that is shorter."
+msgstr ""
+
+#: ../../source/explanation/practical.md:40
+msgid "The length of a piece is rounded up to 10 cm. If the rounded length passes the upper bound, it is rounded down to 10 cm instead."
+msgstr ""
+
+#: ../../source/explanation/practical.md:44
+msgid "The comment in the code (`Mesh._round_piece`) and the original design both say 5 cm, but the code rounds to 10 cm (`ROUND_UNIT = 0.1` in `setting.py`)."
+msgstr ""
+
+#: ../../source/explanation/practical.md:48
+msgid "Bars longer than 12 m"
+msgstr ""
+
+#: ../../source/explanation/practical.md:51
+msgid "Bars come in 12 m stock lengths, so a bar longer than 12 m is made of several pieces, which overlap by the overlap length $o$ of the bar, see [Special Lengths](../reference/detailing-rules.md#special-lengths). A bar of length $L > 12$ m needs"
+msgstr ""
+
+#: ../../source/explanation/practical.md:58
+msgid "pieces, and its **net length**, the length of steel it uses, is $L + (n-1)\\,o$. All the pieces are 12 m long except one, the **shortest piece**, with a length of $L + (n-1)\\,o - (n-1) \\times 12$. The shortest piece is at the bent end of the bar, or at the end side when the bar is not bent (`Piece.get_subpieces`)."
+msgstr ""
+
+#: ../../source/explanation/practical.md:62
+msgid "Rounding and the reduction of length types change only the length of the shortest piece; the 12 m pieces stay as they are. When the shortest piece is made longer, its overlap with the next piece gets longer than $o$."
+msgstr ""
+
+#: ../../source/explanation/practical.md:65
+msgid "Reducing the number of length types"
+msgstr ""
+
+#: ../../source/explanation/practical.md:68
+#: ../../source/explanation/required.md:39
+msgid "Problem definition"
+msgstr ""
+
+#: ../../source/explanation/practical.md:70
+msgid "Pieces with lengths $L_1, \\ldots, L_n$ are needed, $N_1, \\ldots, N_n$ of each, written as $L = [L_1, \\ldots, L_n]$ and $N = [N_1, \\ldots, N_n]$, with $L_i < L_j$ for $i < j$ and $N_i \\neq 0$. We want fewer lengths, and the only change allowed is to supply a longer piece instead of a needed one. The task is to limit the lengths to $p < n$ with the least total length of the pieces."
+msgstr ""
+
+#: ../../source/explanation/practical.md:74
+msgid "Greedy algorithm"
+msgstr ""
+
+#: ../../source/explanation/practical.md:76
+msgid "A simple approach removes one length at each step: the length whose pieces are cheapest to lengthen to the next longer length."
+msgstr ""
+
+#: ../../source/explanation/practical.md:92
+msgid "The greedy algorithm doesn't always find the best solution. For $L = [1,2,3,4]$ and $N = [5,4,7,1]$, limited to two lengths, it removes length 2 in the first step and length 1 in the second, which gives $N = [0,0,16,1]$ and a total length of 52. Keeping lengths 2 and 4 instead gives $N = [0,9,0,8]$ and a total length of 50."
+msgstr ""
+
+#: ../../source/explanation/practical.md:96
+msgid "Two subproblems"
+msgstr ""
+
+#: ../../source/explanation/practical.md:98
+msgid "The problem is split into two subproblems: first, $P$ lengths are chosen for the whole foundation (**Total**), with dynamic programming in $O(n^3)$; then, for every stack, $PSUB$ of these $P$ lengths are chosen (**Stack**), with an integer program."
+msgstr ""
+
+#: ../../source/explanation/practical.md:100
+msgid "Choosing the lengths of the foundation"
+msgstr ""
+
+#: ../../source/explanation/practical.md:102
+msgid "The best way to choose $p$ lengths out of $1, \\ldots, q$ is built from the best ways to choose $p-1$ lengths out of $1, \\ldots, q-1$, $1, \\ldots, q-2$, …, $1, \\ldots, p-1$. $len(p,q)$ is the least increase of the total length when $p$ lengths are chosen out of $1, \\ldots, q$:"
+msgstr ""
+
+#: ../../source/explanation/practical.md:114
+#, python-brace-format
+msgid "If the minimum is reached at $\\hat{i}$, the best way to choose $p$ lengths out of $1, \\ldots, q$ is to choose $q$, and $p-1$ lengths out of $1, \\ldots, \\hat{i}$; the lengths $\\hat{i}+1, \\ldots, q-1$ are not chosen. $ref(p,q)$ returns $\\hat{i}$:"
+msgstr ""
+
+#: ../../source/explanation/practical.md:126
+msgid "As for the required lengths, the values are computed in a table, row by row from the top, and in every row from left to right. To choose $p$ of the $n$ lengths, read the cell in row $p$ of the last column, and follow $ref$ from there."
+msgstr ""
+
+#: ../../source/explanation/practical.md:129
+msgid "**Example.** Let $L = [2,3,7,11,15]$ and $N = [1,5,3,10,4]$. Each cell holds the value of $len$ and of $ref$:"
+msgstr ""
+
+#: ../../source/explanation/practical.md:131
+#: ../../source/explanation/required.md:153
+msgid "The table of the example"
+msgstr ""
+
+#: ../../source/explanation/practical.md:159
+#, python-brace-format
+msgid "To choose 3 of the 5 lengths, read row 3 of the last column: the total length grows by 13, to $\\sum_{i} N_i L_i + 13$. The longest length is always chosen; the cell gives $ref = 4$, so length 4 is chosen next; row 2 of column 4 gives $ref = 2$, so length 2 is chosen. The chosen lengths are $[2,4,5]$, that is $[3, 11, 15]$."
+msgstr ""
+
+#: ../../source/explanation/practical.md:163
+msgid "Maximum length of a piece"
+msgstr ""
+
+#: ../../source/explanation/practical.md:165
+#, python-brace-format
+msgid "Each piece also has an upper bound on its length, $\\overline{L}_i$ (see [Rounding](#rounding)). Some solutions are now not possible; they get the value $\\infty$, and the two formulas become:"
+msgstr ""
+
+#: ../../source/explanation/practical.md:209
+msgid "The smallest feasible number is shown in the report and saved as `min_feasible_num`, see [Outputs](../reference/outputs.md)."
+msgstr ""
+
+#: ../../source/explanation/practical.md:212
+msgid "Choosing the lengths of a stack"
+msgstr ""
+
+#: ../../source/explanation/practical.md:214
+msgid "This subproblem is solved for each stack on its own: out of the $P$ lengths of the foundation, $PSUB$ (**Stack**) are chosen. It is an integer program (`StackAlgorithm` in `stack.py`), solved with the HiGHS solver through Pyomo. In it, a length type of a stack is a pair of a length and a number of pieces: a 4 m bar and a 16 m bar made of a 12 m piece and a 4 m piece count as different types."
+msgstr ""
+
+#: ../../source/explanation/practical.md:218
+msgid "With the pieces $i$ of the stack, their shortest-piece lengths $LS_i$ and numbers of pieces $m_i$, and the lengths of the foundation $LO_j$:"
+msgstr ""
+
+#: ../../source/explanation/practical.md:220
+#, python-brace-format
+msgid "$x_{ij} \\in \\{0,1\\}$: piece $i$ gets length $LO_j$;"
+msgstr ""
+
+#: ../../source/explanation/practical.md:221
+#, python-brace-format
+msgid "$z_{mj} \\in \\{0,1\\}$: some piece made of $m$ pieces gets length $LO_j$;"
+msgstr ""
+
+#: ../../source/explanation/practical.md:233
+#, python-format
+msgid "The solver stops within 10% of the optimum. If there is no solution with $PSUB$ types, $PSUB$ is increased by one until there is; the stacks that needed more types than allowed are listed in the report as a warning (`excess_stack`)."
+msgstr ""
+
+#: ../../source/explanation/practical.md:237
+msgid "The integer program doesn't use the upper bounds of the pieces (see [Rounding](#rounding)), so a piece can get a length longer than its upper bound."
+msgstr ""
+
+#: ../../source/explanation/practical.md:240
+msgid "Setting the practical periods"
+msgstr ""
+
+#: ../../source/explanation/practical.md:243
+msgid "The rounded or reduced length tells how long a piece must be, but not where it starts and ends. The pieces of each stack are placed from the longest to the shortest; each piece is placed against the piece below it, its **base piece**, so the ends of the stack line up where possible (`Mesh._set_piece_practical`)."
+msgstr ""
+
+#: ../../source/explanation/practical.md:269
+msgid "In case 1.2.2, a piece is bent only to keep the number of length types down. This is an exception and should be checked on the drawing. In case 3.2, the original design asks for a warning, but the code keeps the length silently."
+msgstr ""
+
+#: ../../source/explanation/required.md:1
+msgid "Required Length"
+msgstr ""
+
+#: ../../source/explanation/required.md:10
+msgid "To turn the theoretical lengths of the pieces into lengths accepted by the code, they must be extended. The rules are given below; then an optimization problem is defined that satisfies them while adding the least length to the theoretical lengths (`optimization/required.py`)."
+msgstr ""
+
+#: ../../source/explanation/required.md:13
+msgid "Stacks"
+msgstr ""
+
+#: ../../source/explanation/required.md:16
+msgid "A **stack** is a set of additional rebars placed on top of each other: from top to bottom, every piece lies within the next one, so the pieces go from short to long. The station of the largest required steel within the top piece is the **base** of the stack."
+msgstr ""
+
+#: ../../source/explanation/required.md:19
+#, python-brace-format
+msgid "Stacks are found from the rows of {prf:ref}`theoretical-piece` with the following algorithm (`PieceContainer.get_stacks`). A piece can join more than one stack, so two stacks can share their lower pieces."
+msgstr ""
+
+#: ../../source/explanation/required.md:42
+msgid "On one side of the base of a stack (start or end), let $L_1, \\ldots, L_n$ be the distances from the base to the theoretical ends of the pieces, from top to bottom, so $L_1 < \\ldots < L_n$. Each piece is extended according to two rules:"
+msgstr ""
+
+#: ../../source/explanation/required.md:45
+msgid "The bar runs past its theoretical end by at least the effective depth $d$."
+msgstr ""
+
+#: ../../source/explanation/required.md:46
+msgid "The required end of every bar is at least $L_d$ past the theoretical end of the next shorter bar; for the shortest bar, at least $L_d$ past the base."
+msgstr ""
+
+#: ../../source/explanation/required.md:48
+msgid "The rule that gives the longer bar **governs** the end of the bar; OPTiBAR records which one it is ($d$ or $L_d$), as it decides how a bar is treated at the side of the foundation, see [Bars at the sides of the strip](#bars-at-the-sides)."
+msgstr ""
+
+#: ../../source/explanation/required.md:51
+msgid "The code clauses for these rules are not documented yet. For the first rule, see the warning in [Detailing Rules](../reference/detailing-rules.md#additional-rebars)."
+msgstr ""
+
+#: ../../source/explanation/required.md:55
+msgid "The second rule is based on the theoretical end of the shorter bar. Suppose a stack has three bars of different lengths: bar 3 is extended from the end of bar 2, and bar 2 from the end of bar 1. If bar 2 is given the length of bar 3, then both bars 2 and 3 are extended from the end of bar 1. So giving some bars of a stack the same length can make the total length of the stack shorter."
+msgstr ""
+
+#: ../../source/explanation/required.md:60
+msgid "Dynamic programming algorithm"
+msgstr ""
+
+#: ../../source/explanation/required.md:63
+msgid "We choose the best subset of the lengths $1, \\ldots, q$: every length that is not chosen is increased to the smallest chosen length above it, and the total length after applying the two rules is the least possible. The best way to choose $p$ lengths out of $1, \\ldots, q$ is built from the best ways to choose $p-1$ lengths out of $1, \\ldots, q-1$, $1, \\ldots, q-2$, …, $1, \\ldots, p-1$."
+msgstr ""
+
+#: ../../source/explanation/required.md:66
+msgid "$len(p,q)$ is the least total length of the bars $1, \\ldots, q$ when $p$ lengths are chosen from them:"
+msgstr ""
+
+#: ../../source/explanation/required.md:77
+#, python-brace-format
+msgid "If the minimum is reached at $\\hat{i}$, the best way to choose $p$ lengths out of $1, \\ldots, q$ is to choose $q$, and $p-1$ lengths out of $1, \\ldots, \\hat{i}$; the lengths $\\hat{i}+1, \\ldots, q-1$ are increased to $L_q$. $ref(p,q)$ returns $\\hat{i}$:"
+msgstr ""
+
+#: ../../source/explanation/required.md:89
+msgid "A recursive function would compute the same values many times. Instead, the values are computed in a table, row by row from the top, and in every row from left to right: $len(1,1), len(1,2), \\ldots, len(1,n)$, then $len(2,2), \\ldots, len(2,n)$, and so on. The least value in the last column is the best solution; following $ref$ from there gives the chosen lengths."
+msgstr ""
+
+#: ../../source/explanation/required.md:93
+msgid "Dynamic programming algorithm table"
+msgstr ""
+
+#: ../../source/explanation/required.md:133
+msgid "Example"
+msgstr ""
+
+#: ../../source/explanation/required.md:136
+msgid "Let $L = [1, 1.5, 2]$, $d = 0.3$ and $L_d = 1.4$. Each cell of the table below holds the value of $len$ and the value of $ref$."
+msgstr ""
+
+#: ../../source/explanation/required.md:166
+msgid "The least value in the last column is $len(2,3) = 6.2$, with $ref(2,3) = 1$: bar 1 keeps its theoretical length, and bar 2 gets the theoretical length of bar 3. Applying the two rules to these lengths gives a total length of 6.2, less than the 6.7 of extending every bar on its own, $len(3,3)$."
+msgstr ""
+
+#: ../../source/explanation/required.md:169
+msgid "The extensions are found for the start and the end side of each stack separately. A piece that belongs to two stacks gets the longer of the two required ends."
+msgstr ""
+
+#: ../../source/explanation/required.md:173
+msgid "Bars at the sides of the strip"
+msgstr ""
+
+#: ../../source/explanation/required.md:176
+msgid "The bars must stay within the strip, less the side cover on both ends. Bars that pass the side are bent or cut (`Mesh._bend_stack_base`), with a bend of the length given in [Special Lengths](../reference/detailing-rules.md#special-lengths):"
+msgstr ""
+
+#: ../../source/explanation/required.md:193
+msgid "Merging bars of a row"
+msgstr ""
+
+#: ../../source/explanation/required.md:196
+msgid "The required lengths of two neighbouring bars of a row can overlap. Then one bar from the start of the first to the end of the second may be shorter than the two bars together, as an overlap is only needed every 12 m. The bars of a row are merged where this lowers the total length, with the following algorithm (`Mesh._unify`). The **net length** of a bar of length $L$ is $L$ itself up to 12 m, and $L$ plus its overlaps above, see [Practical Length](practical.md#bars-longer-than-12-m)."
+msgstr ""
+
+#: ../../source/explanation/required.md:220
+msgid "When two pieces are not merged, the stacks they belong to are kept apart in the rows above too. After merging, the required lengths are found again, and this repeats until no bars are merged."
+msgstr ""
+
+#: ../../source/explanation/shear.md:1
+msgid "Shear Rebars"
+msgstr ""
+
+#: ../../source/explanation/shear.md:4
+msgid "In this chapter, we explore the algorithm for placing shear reinforcement."
+msgstr ""
+
+#: ../../source/explanation/shear.md:6
+msgid "Where the one-way shear of a strip is more than the concrete can carry, SAFE gives the required shear steel along the strip, as an area per unit length. OPTiBAR connects these values at the stations of the strip linearly, and then:"
+msgstr ""
+
+#: ../../source/explanation/shear.md:9
+msgid "Sets the required shear steel to zero inside the columns and inside the strips that cross the strip, since no shear rebars are placed there."
+msgstr ""
+
+#: ../../source/explanation/shear.md:10
+msgid "Near the faces of the columns and crossing strips, within one foundation thickness of the face, caps the required steel at its value at the face. So the critical section is at one thickness from the face."
+msgstr ""
+
+#: ../../source/explanation/shear.md:12
+msgid "A **shear zone** is a part of the strip where the required shear steel is more than zero. Zones shorter than **Elimination, Shear** get no shear rebars. Each zone is designed for the largest required steel in it."
+msgstr ""
+
+#: ../../source/explanation/shear.md:17
+msgid "The code clauses for these rules are not documented yet. OPTiBAR takes the critical section at one foundation thickness from the face; design codes usually take it at the effective depth $d$, which is a little closer to the face."
+msgstr ""
+
+#: ../../source/explanation/shear.md:21
+msgid "The designed algorithm for placing shear reinforcement is as follows:"
+msgstr ""
+
+#: ../../source/explanation/shear.md:23
+msgid "Find regions with positive values of the required shear steel."
+msgstr ""
+
+#: ../../source/explanation/shear.md:24
+msgid "Find the maximum required steel in each of these regions."
+msgstr ""
+
+#: ../../source/explanation/shear.md:25
+msgid "Find a specified number (user-input) of unit densities along the length so that the minimum amount of shear steel is used by increasing the density in each region. This is done similarly to increasing the length of segments with a dynamic programming algorithm."
+msgstr ""
+
+#: ../../source/explanation/shear.md:26
+msgid "For each selected density, generate a shear type using the algorithm below and assign it to each region."
+msgstr ""
+
+#: ../../source/explanation/shear.md:28
+msgid "Choosing the shear types"
+msgstr ""
+
+#: ../../source/explanation/shear.md:31
+#, python-brace-format
+msgid "The number of shear types in the foundation is set by **Number of Types, Shear**. Sort the distinct required densities of the zones, $\\rho_1 < \\rho_2 < \\ldots < \\rho_n$, and let $\\ell_i$ be the total length of the zones with density $\\rho_i$. If $\\rho_k$ is a selected density, every zone with a density between the previous selected density and $\\rho_k$ gets the type of $\\rho_k$. The steel used is $\\sum_i \\ell_i \\rho_{s(i)}$, where $\\rho_{s(i)}$ is the selected density zone $i$ is assigned to. The densities with the least steel are found by dynamic programming, like the practical lengths:"
+msgstr ""
+
+#: ../../source/explanation/shear.md:46
+#, python-brace-format
+msgid "where $\\text{steel}(p,q)$ is the least steel for the zones up to $\\rho_q$ with $p$ types, the largest of which is $\\rho_q$. The largest density is always selected, so every zone gets a type."
+msgstr ""
+
+#: ../../source/explanation/shear.md:61
+msgid "Shear types with the same number of legs and spacing are merged. A zone of length $L$ gets $n \\lceil L / s \\rceil$ stirrups. The length of a stirrup is the thickness of the foundation less the covers, plus a 135° and a 90° hook."
+msgstr ""
+
+#: ../../source/explanation/shear.md:66
+msgid "OPTiBAR does not check the minimum shear steel, nor the maximum spacing of the legs across the strip. Check them against the design code of your project."
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:1
+msgid "Theoretical Length"
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:3
+msgid "To obtain the theoretical lengths of the pieces, it is necessary to first determine the cross-sectional steel area required along the length of the strip. Then, by reducing step by step, the required amount of steel, the theoretical length, and the location of the pieces are obtained."
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:5
+msgid "Note that this algorithm is only applicable when all the pieces obtained in one stage of the algorithm have the same diameter."
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:7
+msgid "In regions where a concrete column is present, it is sufficient to satisfy the required steel on each of the two faces of the column: the required steel diagram is replaced by a straight line between the faces, see [Columns](../reference/detailing-rules.md#columns)."
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:10
+msgid "The code clause for this rule is not documented yet."
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:13
+msgid "The required steel diagram is corrected at the columns with the following algorithm (`Diagram.linearize_period`). The column sides come from the column sizes, see [Columns](../reference/detailing-rules.md#columns)."
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:33
+msgid "Typical rebars"
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:36
+msgid "There are four methods for placing the typical rebars, which are as follows:"
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:38
+msgid "**Minimum ratio (`MIN_RATIO`):** the minimum steel is placed in each strip, $A_s = 0.0018\\,b\\,h$, rounded up to whole bars."
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:39
+msgid "**Count (`COUNT`):** the given number of bars is placed. If it is less than the minimum steel, a warning is reported, see [Detailing Rules](../reference/detailing-rules.md#typical-rebars)."
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:40
+msgid "**Interval (`INTERVAL`):** the strip width divided by the interval, rounded up."
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:41
+msgid "**Smart (`SMART`):** The minimum steel is placed. If the distance from the first station with zero steel demand to any of the edges is more than the foundation thickness, or if the distance between two consecutive zero-demand intermediate stations is more than twice the foundation thickness, the placement is completed. Otherwise, another bar is placed."
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:43
+msgid "The app uses `INTERVAL`, and `COUNT` for the strips set on the **Strips** page."
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:45
+#, python-brace-format
+msgid "The area of the typical rebars is subtracted from the required steel diagram (`Diagram.insert_typical`), with {prf:ref}`reduce-as`. If the diagram is still positive somewhere, the rest is covered by additional rebars."
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:48
+msgid "Additional rebars"
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:51
+msgid "The additional rebars are found row by row (`Mesh._insert_additional`):"
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:53
+#, python-brace-format
+msgid "Find the parts of the strip where the remaining required steel is more than zero ({prf:ref}`theoretical-piece`). Each part is the **theoretical** length of one bar; together they form a **row**."
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:54
+#, python-brace-format
+msgid "Subtract the area of one additional rebar from the diagram ({prf:ref}`reduce-as`)."
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:55
+msgid "Repeat while the diagram is positive anywhere."
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:57
+msgid "The first row holds the longest bars, at the bottom of the stacks; every following row is shorter and lies above. Bars with a theoretical length shorter than **Elimination, Additional** are left out of their row."
+msgstr ""
+
+#: ../../source/explanation/theoretical.md:83
+#, python-brace-format
+msgid "A piece ends at the first of two consecutive zero stations, so a single zero station between two positive parts does not split the piece; {prf:ref}`reduce-as` keeps a single zero station where the diagram crosses zero and removes the ones in between."
+msgstr ""
+

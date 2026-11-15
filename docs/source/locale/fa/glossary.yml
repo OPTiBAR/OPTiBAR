@@ -26,7 +26,7 @@ terms:
   length type:
     use: [نوع طول, انواع طول]
     note: one of the different bar lengths used; reducing the number of length types is the point of OPTiBAR
-  theoretical length: [طول نظری, طول‌های نظری]
+  theoretical length: [طول تئوری, طول‌های تئوری]
   required length: [طول لازم, طول‌های لازم]
   practical length: [طول اجرایی, طول‌های اجرایی]
   development length: [طول مهاری, طول‌های مهاری]

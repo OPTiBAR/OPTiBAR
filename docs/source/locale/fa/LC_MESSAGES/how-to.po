@@ -21,187 +21,187 @@ msgstr ""
 
 #: ../../source/how-to/adjust-detailing.md:1
 msgid "Adjust the detailing of a project"
-msgstr ""
+msgstr "تنظیم جزئیات آرماتوربندی یک پروژه"
 
 #: ../../source/how-to/adjust-detailing.md:4
 msgid "The **Special Lengths** and **Strips** pages of the settings change the detailing beyond the **Basic** page. Both changes below are optional."
-msgstr ""
+msgstr "صفحه‌های **Special Lengths** و **Strips** در تنظیمات، جزئیات آرماتوربندی را فراتر از صفحهٔ **Basic** تغییر می‌دهند. هر دو تغییر زیر اختیاری هستند."
 
 #: ../../source/how-to/adjust-detailing.md:7
 msgid "Change the development, overlap and bend lengths"
-msgstr ""
+msgstr "تغییر طول‌های مهاری، وصله و خم"
 
 #: ../../source/how-to/adjust-detailing.md:9
 msgid "OPTiBAR calculates these lengths from the concrete and steel of the SAFE model when the file is loaded; see [Special lengths](../reference/detailing-rules.md#special-lengths). Change them when the conditions of the foundation call for it, for example closely spaced bars or shear rebars."
-msgstr ""
+msgstr "OPTiBAR این طول‌ها را هنگام بارگذاری فایل، از بتن و فولاد مدل SAFE محاسبه می‌کند؛ [طول‌های ویژه](../reference/detailing-rules.md#special-lengths) را ببینید. وقتی شرایط فونداسیون ایجاب می‌کند آن‌ها را تغییر دهید، مثلاً برای میلگردهایی با فاصلهٔ کم یا میلگردهای برشی."
 
 #: ../../source/how-to/adjust-detailing.md:12
 msgid "![The Special Lengths page](../_static/images/gui_special_lengths.png)"
-msgstr ""
+msgstr "![صفحهٔ Special Lengths](../_static/images/gui_special_lengths.png)"
 
 #: ../../source/how-to/adjust-detailing.md:12
 msgid "The Special Lengths page"
-msgstr ""
+msgstr "صفحهٔ Special Lengths"
 
 #: ../../source/how-to/adjust-detailing.md:14
 msgid "On the **Special Lengths** page, find the row of the bar diameter."
-msgstr ""
+msgstr "در صفحهٔ **Special Lengths**، ردیف قطر میلگرد را پیدا کنید."
 
 #: ../../source/how-to/adjust-detailing.md:15
 msgid "Edit the value, in cm. With **Automatic** checked, edit only the bottom development length (Ld); the top Ld and the overlaps follow from it."
-msgstr ""
+msgstr "مقدار را بر حسب سانتی‌متر ویرایش کنید. وقتی **Automatic** فعال است، فقط طول مهاری پایین (Ld) را ویرایش کنید؛ Ld بالا و طول‌های وصله از آن به دست می‌آیند."
 
 #: ../../source/how-to/adjust-detailing.md:17
 msgid "Press **Calculate** again."
-msgstr ""
+msgstr "دوباره **Calculate** را بزنید."
 
 #: ../../source/how-to/adjust-detailing.md:19
 msgid "To go back to the calculated values, press **Reset**."
-msgstr ""
+msgstr "برای بازگشت به مقادیر محاسبه‌شده، **Reset** را بزنید."
 
 #: ../../source/how-to/adjust-detailing.md:21
 msgid "Set the typical rebars of a strip"
-msgstr ""
+msgstr "تعیین میلگردهای سراسری یک نوار"
 
 #: ../../source/how-to/adjust-detailing.md:23
 msgid "By default, every strip gets typical rebars at the interval of the **Basic** page. To give one strip a different number of bars or a different diameter:"
-msgstr ""
+msgstr "به‌طور پیش‌فرض، هر نوار میلگردهای سراسری با فاصلهٔ تعیین‌شده در صفحهٔ **Basic** می‌گیرد. برای اینکه یک نوار تعداد یا قطر متفاوتی از میلگردها داشته باشد:"
 
 #: ../../source/how-to/adjust-detailing.md:26
 msgid "![The Strips page](../_static/images/gui_strips.png)"
-msgstr ""
+msgstr "![صفحهٔ Strips](../_static/images/gui_strips.png)"
 
 #: ../../source/how-to/adjust-detailing.md:26
 msgid "The Strips page"
-msgstr ""
+msgstr "صفحهٔ Strips"
 
 #: ../../source/how-to/adjust-detailing.md:28
 msgid "On the **Strips** page, select the strip and the level (top or bottom)."
-msgstr ""
+msgstr "در صفحهٔ **Strips**، نوار و تراز آن (بالا یا پایین) را انتخاب کنید."
 
 #: ../../source/how-to/adjust-detailing.md:29
 msgid "Enter the **Number** of bars and the **Diameter**."
-msgstr ""
+msgstr "**Number** (تعداد) میلگردها و **Diameter** (قطر) را وارد کنید."
 
 #: ../../source/how-to/adjust-detailing.md:30
 msgid "Press **Set**."
-msgstr ""
+msgstr "**Set** را بزنید."
 
 #: ../../source/how-to/adjust-detailing.md:32
 msgid "For example, a strip 1.2 m wide gets 6 typical bars with an interval of 20 cm; set its top level to 8 to place 8 bars instead. To remove the override, select the strip and level and press **Erase**."
-msgstr ""
+msgstr "برای نمونه، نواری به عرض 1.2 متر با فاصلهٔ 20 سانتی‌متر، 6 میلگرد سراسری می‌گیرد؛ برای قرار دادن 8 میلگرد، تراز بالای آن را روی 8 بگذارید. برای حذف این تغییر، نوار و تراز را انتخاب کنید و **Erase** را بزنید."
 
 #: ../../source/how-to/adjust-detailing.md:35
 msgid "OPTiBAR places the bars you set even when they are less than the minimum steel, and reports a warning, see [Typical rebars](../reference/detailing-rules.md#typical-rebars)."
-msgstr ""
+msgstr "OPTiBAR میلگردهایی را که تعیین می‌کنید قرار می‌دهد، حتی اگر کمتر از حداقل فولاد باشند، و هشداری گزارش می‌کند؛ [میلگردهای سراسری](../reference/detailing-rules.md#typical-rebars) را ببینید."
 
 #: ../../source/how-to/choose-length-types.md:1
 msgid "Choose the number of length types"
-msgstr ""
+msgstr "انتخاب تعداد انواع طول"
 
 #: ../../source/how-to/choose-length-types.md:4
 msgid "The **Number of Types** settings, **Total** and **Stack**, set how many different lengths of additional rebars the drawing may use. Fewer lengths make the foundation easier to build but use more steel; see [Why the number of length types matters](../explanation/intro.md#length-types)."
-msgstr ""
+msgstr "تنظیمات **Number of Types**، یعنی **Total** و **Stack** (دسته)، تعیین می‌کنند که نقشه از چند طول مختلف میلگرد تقویتی می‌تواند استفاده کند. طول‌های کمتر اجرای فونداسیون را ساده‌تر می‌کنند اما فولاد بیشتری مصرف می‌کنند؛ [چرا تعداد انواع طول مهم است](../explanation/intro.md#length-types) را ببینید."
 
 #: ../../source/how-to/choose-length-types.md:7
 msgid "Start from typical values"
-msgstr ""
+msgstr "شروع با مقادیر معمول"
 
 #: ../../source/how-to/choose-length-types.md:9
 msgid "Good starting values are 2 to 4 for **Stack** and 10 to 30 for **Total**. Use smaller numbers for small foundations and for sites that need a simple drawing, larger ones for large foundations."
-msgstr ""
+msgstr "مقادیر شروع مناسب، 2 تا 4 برای **Stack** (دسته) و 10 تا 30 برای **Total** است. برای فونداسیون‌های کوچک و کارگاه‌هایی که به نقشهٔ ساده نیاز دارند عددهای کوچک‌تر، و برای فونداسیون‌های بزرگ عددهای بزرگ‌تر به کار ببرید."
 
 #: ../../source/how-to/choose-length-types.md:12
 msgid "Compare the options with an analysis"
-msgstr ""
+msgstr "مقایسهٔ گزینه‌ها با یک تحلیل"
 
 #: ../../source/how-to/choose-length-types.md:14
 msgid "An analysis runs the detailing for every combination in a range of **Total** and **Stack**, and compares the rebar mass."
-msgstr ""
+msgstr "یک تحلیل، آرماتوربندی را برای هر ترکیب در بازه‌ای از **Total** و **Stack** (دسته) اجرا می‌کند و وزن میلگردها را مقایسه می‌کند."
 
 #: ../../source/how-to/choose-length-types.md:16
 msgid "Open the foundation with **Open…**."
-msgstr ""
+msgstr "فونداسیون را با **Open…** باز کنید."
 
 #: ../../source/how-to/choose-length-types.md:17
 msgid "In the settings on the left, set **Type of Request** to **Analysis**."
-msgstr ""
+msgstr "در تنظیمات سمت چپ، **Type of Request** را روی **Analysis** بگذارید."
 
 #: ../../source/how-to/choose-length-types.md:18
 msgid "Under **Number of Types**, set the range of **Total**, for example 10 to 20, and of **Stack**, for example 2 to 4. A range can span at most 10 for Total and 2 for Stack."
-msgstr ""
+msgstr "زیر **Number of Types**، بازهٔ **Total** را، مثلاً 10 تا 20، و بازهٔ **Stack** (دسته) را، مثلاً 2 تا 4، تعیین کنید. هر بازه برای Total حداکثر 10 و برای Stack حداکثر 2 واحد می‌تواند باشد."
 
 #: ../../source/how-to/choose-length-types.md:20
 msgid "Set the other settings as for the final computation, and press **Calculate**. The status line shows the progress; an analysis takes longer than a single computation."
-msgstr ""
+msgstr "بقیهٔ تنظیمات را مانند محاسبهٔ نهایی تعیین کنید و **Calculate** را بزنید. خط وضعیت پیشرفت را نشان می‌دهد؛ یک تحلیل از یک محاسبهٔ تکی بیشتر طول می‌کشد."
 
 #: ../../source/how-to/choose-length-types.md:22
 msgid "Above the report, press **Diagram**, and choose **Total** to plot the mass of all the rebars, or **Additional** for the additional rebars only."
-msgstr ""
+msgstr "در بالای گزارش، **Diagram** را بزنید و **Total** را برای رسم وزن همهٔ میلگردها، یا **Additional** را فقط برای میلگردهای تقویتی انتخاب کنید."
 
 #: ../../source/how-to/choose-length-types.md:24
 msgid "![Mass of the additional rebars of a foundation, for stack 3 and 4 and total 6 to 29](../_static/images/analysis_plot.png)"
-msgstr ""
+msgstr "![وزن میلگردهای تقویتی یک فونداسیون، برای دستهٔ 3 و 4 و کل 6 تا 29](../_static/images/analysis_plot.png)"
 
 #: ../../source/how-to/choose-length-types.md:24
 msgid "Mass of the additional rebars of a foundation, for stack 3 and 4 and total 6 to 29"
-msgstr ""
+msgstr "وزن میلگردهای تقویتی یک فونداسیون، برای دستهٔ 3 و 4 و کل 6 تا 29"
 
 #: ../../source/how-to/choose-length-types.md:26
 msgid "The plot has one curve per Stack number. Look for the point where the curve gets steep: below it, every length type you remove costs a lot of steel."
-msgstr ""
+msgstr "نمودار برای هر عدد Stack (دسته) یک منحنی دارد. نقطه‌ای را پیدا کنید که منحنی تند می‌شود: پایین‌تر از آن، حذف هر نوع طول فولاد زیادی هزینه دارد."
 
 #: ../../source/how-to/choose-length-types.md:29
 msgid "Set **Type of Request** back to **Computation**, enter the chosen numbers, and press **Calculate**."
-msgstr ""
+msgstr "**Type of Request** را دوباره روی **Computation** بگذارید، عددهای انتخاب‌شده را وارد کنید و **Calculate** را بزنید."
 
 #: ../../source/how-to/choose-length-types.md:31
 msgid "If the numbers are not feasible"
-msgstr ""
+msgstr "اگر عددها شدنی نباشند"
 
 #: ../../source/how-to/choose-length-types.md:33
 msgid "When **Total** is too small for the foundation, the calculation stops and the report gives the smallest number that works. When **Stack** is too small for some stacks, OPTiBAR uses more types there and lists those strips as a warning."
-msgstr ""
+msgstr "وقتی **Total** برای فونداسیون خیلی کوچک باشد، محاسبه متوقف می‌شود و گزارش کوچک‌ترین عددی را که کار می‌کند اعلام می‌کند. وقتی **Stack** برای برخی دسته‌ها خیلی کوچک باشد، OPTiBAR در آنجا انواع بیشتری به کار می‌برد و آن نوارها را در یک هشدار فهرست می‌کند."
 
 #: ../../source/how-to/export-from-safe.md:1
 msgid "Export a model from SAFE"
-msgstr ""
+msgstr "خروجی گرفتن از مدل در SAFE"
 
 #: ../../source/how-to/export-from-safe.md:4
 msgid "OPTiBAR reads the Microsoft Access database (`.accdb` or `.mdb`) that SAFE exports. This guide shows how to export it so that OPTiBAR finds everything it needs."
-msgstr ""
+msgstr "OPTiBAR پایگاه دادهٔ Microsoft Access (`.accdb` یا `.mdb`) را که SAFE خروجی می‌دهد می‌خواند. این راهنما نشان می‌دهد چگونه از آن خروجی بگیرید تا OPTiBAR همهٔ آنچه نیاز دارد را پیدا کند."
 
 #: ../../source/how-to/export-from-safe.md:7
 msgid "In SAFE, give every column load a **Load Size**. OPTiBAR finds the columns from the load sizes of the point loads; without them it doesn't know where the columns are."
-msgstr ""
+msgstr "در SAFE، به هر بار ستون یک **Load Size** بدهید. OPTiBAR ستون‌ها را از اندازهٔ بارهای نقطه‌ای پیدا می‌کند؛ بدون آن نمی‌داند ستون‌ها کجا هستند."
 
 #: ../../source/how-to/export-from-safe.md:8
 msgid "Run the analysis and the design (**Run Analysis** and **Start Design**)."
-msgstr ""
+msgstr "تحلیل و طراحی را اجرا کنید (**Run Analysis** و **Start Design**)."
 
 #: ../../source/how-to/export-from-safe.md:9
 msgid "Choose **File > Export > Access .mdb/.accdb File**."
-msgstr ""
+msgstr "**File > Export > Access .mdb/.accdb File** را انتخاب کنید."
 
 #: ../../source/how-to/export-from-safe.md:10
 msgid "Select the table groups **Model Definition** and **Design Results**. To export less, select only the tables listed in [SAFE input](../reference/safe-input.md)."
-msgstr ""
+msgstr "گروه‌های جدول **Model Definition** و **Design Results** را انتخاب کنید. برای خروجی کوچک‌تر، فقط جدول‌های فهرست‌شده در [ورودی SAFE](../reference/safe-input.md) را انتخاب کنید."
 
 #: ../../source/how-to/export-from-safe.md:12
 msgid "Press **OK** and choose a name and a folder for the file."
-msgstr ""
+msgstr "**OK** را بزنید و نام و پوشه‌ای برای فایل انتخاب کنید."
 
 #: ../../source/how-to/export-from-safe.md:14
 msgid "The units of the export don't matter; OPTiBAR converts them."
-msgstr ""
+msgstr "واحدهای خروجی اهمیتی ندارند؛ OPTiBAR آن‌ها را تبدیل می‌کند."
 
 #: ../../source/how-to/export-from-safe.md:16
 msgid "To check the file, load it in OPTiBAR: press **Open…** next to **Input file**, or **File > Open** (Ctrl+O), and choose the file. The status next to the buttons says **✓ Loaded**, or **✗ Not loaded** with the reason. If a table is missing, the **Report** box names it; export again with that table selected, and press **Reload** (F5). The report also warns when the model uses more than one concrete or steel material."
-msgstr ""
+msgstr "برای بررسی فایل، آن را در OPTiBAR بارگذاری کنید: **Open…** را در کنار **Input file** بزنید، یا **File > Open** (Ctrl+O)، و فایل را انتخاب کنید. وضعیت کنار دکمه‌ها **✓ Loaded** را نشان می‌دهد، یا **✗ Not loaded** را همراه با علت. اگر جدولی موجود نباشد، کادر **Report** نام آن را می‌گوید؛ دوباره با انتخاب آن جدول خروجی بگیرید و **Reload** (F5) را بزنید. گزارش همچنین وقتی مدل بیش از یک مصالح بتن یا فولاد به کار می‌برد هشدار می‌دهد."
 
 #: ../../source/how-to/export-from-safe.md:22
 msgid "OPTiBAR is tested with files from SAFE 2016 (v16). SAFE v20 and later export different tables, see [SAFE input](../reference/safe-input.md#safe-versions)."
-msgstr ""
+msgstr "OPTiBAR با فایل‌های SAFE 2016 (v16) آزموده شده است. SAFE v20 و نسخه‌های بعدی جدول‌های متفاوتی خروجی می‌دهند؛ [ورودی SAFE](../reference/safe-input.md#safe-versions) را ببینید."
 
 #: ../../source/how-to/index.rst:2
 msgid "How-to guides"
@@ -213,110 +213,110 @@ msgstr "مراحل انجام کارهای مشخص، برای وقتی که م�
 
 #: ../../source/how-to/install.md:1
 msgid "Install OPTiBAR"
-msgstr ""
+msgstr "نصب OPTiBAR"
 
 #: ../../source/how-to/install.md:4
 msgid "Requirements"
-msgstr ""
+msgstr "پیش‌نیازها"
 
 #: ../../source/how-to/install.md:6
 msgid "**Windows**. OPTiBAR reads the Access database exported by SAFE through a Windows ODBC driver."
-msgstr ""
+msgstr "**Windows**. OPTiBAR پایگاه دادهٔ Access را که SAFE خروجی می‌دهد از طریق یک درایور ODBC ویندوز می‌خواند."
 
 #: ../../source/how-to/install.md:7
 msgid "**Python 3.13** or higher, or [uv](https://docs.astral.sh/uv/), which installs the right Python for you."
-msgstr ""
+msgstr "**Python 3.13** یا بالاتر، یا [uv](https://docs.astral.sh/uv/) که نسخهٔ مناسب Python را برای شما نصب می‌کند."
 
 #: ../../source/how-to/install.md:8
 msgid "The **Microsoft Access ODBC driver**, from the [Microsoft Access Database Engine 2016 Redistributable](https://www.microsoft.com/en-us/download/details.aspx?id=54920). Its bitness must match Python's: install the 64-bit version for 64-bit Python. OPTiBAR checks for the driver at startup and shows the download link when it is missing."
-msgstr ""
+msgstr "**درایور Microsoft Access ODBC**، از [Microsoft Access Database Engine 2016 Redistributable](https://www.microsoft.com/en-us/download/details.aspx?id=54920). معماری آن باید با Python یکی باشد: برای Python ‏64 بیتی، نسخهٔ 64 بیتی را نصب کنید. OPTiBAR هنگام شروع وجود درایور را بررسی می‌کند و اگر موجود نباشد پیوند دانلود را نشان می‌دهد."
 
 #: ../../source/how-to/install.md:13
 msgid "AutoCAD is not needed: OPTiBAR writes the drawing as a DXF file, which AutoCAD, AutoCAD LT, BricsCAD and free viewers can open."
-msgstr ""
+msgstr "به AutoCAD نیازی نیست: OPTiBAR نقشه را به‌صورت فایل DXF می‌نویسد که AutoCAD، AutoCAD LT، BricsCAD و نمایشگرهای رایگان می‌توانند آن را باز کنند."
 
 #: ../../source/how-to/install.md:15
 msgid "With uv"
-msgstr ""
+msgstr "با uv"
 
 #: ../../source/how-to/install.md:17
 msgid "Clone the repository and run the app. uv creates the environment and installs the dependencies on the first run."
-msgstr ""
+msgstr "مخزن را کپی (clone) کنید و برنامه را اجرا کنید. uv در نخستین اجرا محیط را می‌سازد و وابستگی‌ها را نصب می‌کند."
 
 #: ../../source/how-to/install.md:25
 msgid "With pip"
-msgstr ""
+msgstr "با pip"
 
 #: ../../source/how-to/install.md:31
 msgid "This installs the `optibar` command, which starts the app:"
-msgstr ""
+msgstr "این کار فرمان `optibar` را نصب می‌کند که برنامه را اجرا می‌کند:"
 
 #: ../../source/how-to/install.md:37
 msgid "Check the installation"
-msgstr ""
+msgstr "بررسی نصب"
 
 #: ../../source/how-to/install.md:39
 msgid "The OPTiBAR window opens, with the input file along the top, the settings on the left and the **Report** box on the right. If the status next to **Input file** says **✗ Access ODBC driver missing**, install the driver from the link in the report and restart OPTiBAR."
-msgstr ""
+msgstr "پنجرهٔ OPTiBAR باز می‌شود، با فایل ورودی در بالا، تنظیمات در سمت چپ و کادر **Report** در سمت راست. اگر وضعیت کنار **Input file** پیام **✗ Access ODBC driver missing** را نشان دهد، درایور را از پیوند داخل گزارش نصب کنید و OPTiBAR را دوباره اجرا کنید."
 
 #: ../../source/how-to/python.md:1
 msgid "Use OPTiBAR from Python"
-msgstr ""
+msgstr "استفاده از OPTiBAR در Python"
 
 #: ../../source/how-to/python.md:4
 msgid "The engine can be used without the app, for example to detail many foundations in a script."
-msgstr ""
+msgstr "موتور محاسبه را می‌توان بدون برنامه به کار برد، مثلاً برای آرماتوربندی چندین فونداسیون در یک اسکریپت."
 
 #: ../../source/how-to/python.md:6
 msgid "Run a computation"
-msgstr ""
+msgstr "اجرای یک محاسبه"
 
 #: ../../source/how-to/python.md:8
 msgid "Parse the SAFE file, run the calculation, and write the drawings:"
-msgstr ""
+msgstr "فایل SAFE را بخوانید، محاسبه را اجرا کنید و نقشه‌ها را بنویسید:"
 
 #: ../../source/how-to/python.md:36
 msgid "The settings are those of the app, in meters; see [Settings](../reference/settings.md). The output has the structure of the `result` key of the results file, see [Outputs](../reference/outputs.md#results-file)."
-msgstr ""
+msgstr "تنظیمات همان تنظیمات برنامه هستند، بر حسب متر؛ [تنظیمات](../reference/settings.md) را ببینید. خروجی ساختار کلید `result` فایل نتایج را دارد؛ [خروجی‌ها](../reference/outputs.md#results-file) را ببینید."
 
 #: ../../source/how-to/python.md:39
 msgid "Run an analysis"
-msgstr ""
+msgstr "اجرای یک تحلیل"
 
 #: ../../source/how-to/python.md:41
 #, python-brace-format
 msgid "Give `type_number[\"total\"]` and `type_number[\"stack\"]` as ranges, for example `{\"from\": 10, \"to\": 20}`, and call `optibar.core.run.run_analysis` with the same arguments. It returns one result per combination, or `{}` where a combination isn't feasible."
-msgstr ""
+msgstr "`type_number[\"total\"]` و `type_number[\"stack\"]` را به‌صورت بازه بدهید، مثلاً `{\"from\": 10, \"to\": 20}`، و `optibar.core.run.run_analysis` را با همان آرگومان‌ها فراخوانی کنید. این تابع برای هر ترکیب یک نتیجه برمی‌گرداند، یا `{}` برای ترکیب‌هایی که شدنی نیستند."
 
 #: ../../source/how-to/python.md:44
 msgid "There is no command line interface yet."
-msgstr ""
+msgstr "هنوز رابط خط فرمان وجود ندارد."
 
 #: ../../source/how-to/save-results.md:1
 msgid "Save the drawings and results"
-msgstr ""
+msgstr "ذخیرهٔ نقشه‌ها و نتایج"
 
 #: ../../source/how-to/save-results.md:4
 msgid "After a calculation, the buttons above the report save its outputs. Each one asks for a file name."
-msgstr ""
+msgstr "پس از یک محاسبه، دکمه‌های بالای گزارش خروجی‌های آن را ذخیره می‌کنند. هر کدام نام فایل را می‌پرسد."
 
 #: ../../source/how-to/save-results.md:7
 msgid "**DXF Drawing** saves the detailing map. Open it in any CAD program; to get a DWG file, save it as DWG from AutoCAD, AutoCAD LT or BricsCAD."
-msgstr ""
+msgstr "**DXF Drawing** نقشهٔ آرماتوربندی را ذخیره می‌کند. آن را در هر برنامهٔ CAD باز کنید؛ برای داشتن فایل DWG، آن را از AutoCAD، AutoCAD LT یا BricsCAD به‌صورت DWG ذخیره کنید."
 
 #: ../../source/how-to/save-results.md:8
 msgid "**PDF Drawing** saves a compact A4 sketch, for a quick check."
-msgstr ""
+msgstr "**PDF Drawing** یک کروکی فشردهٔ A4 برای بررسی سریع ذخیره می‌کند."
 
 #: ../../source/how-to/save-results.md:9
 msgid "**Save Results** saves the full result as a JSON file, and a readable summary next to it, for example `foundation_calculation.json` and `foundation_calculation_summary.txt`. Attach the summary to a report; use the JSON file to post-process the result."
-msgstr ""
+msgstr "**Save Results** نتیجهٔ کامل را به‌صورت فایل JSON ذخیره می‌کند و یک خلاصهٔ خوانا را کنار آن، مثلاً `foundation_calculation.json` و `foundation_calculation_summary.txt`. خلاصه را به گزارش پیوست کنید؛ از فایل JSON برای پردازش بعدی نتیجه استفاده کنید."
 
 #: ../../source/how-to/save-results.md:11
 msgid "[Outputs](../reference/outputs.md) describes the content of each file."
-msgstr ""
+msgstr "[خروجی‌ها](../reference/outputs.md) محتوای هر فایل را شرح می‌دهد."
 
 #: ../../source/how-to/save-results.md:13
 msgid "To stop a calculation that takes too long, press **Stop**. Loading a new input file clears the results."
-msgstr ""
+msgstr "برای متوقف کردن محاسبه‌ای که خیلی طول می‌کشد، **Stop** را بزنید. بارگذاری یک فایل ورودی جدید نتایج را پاک می‌کند."
 

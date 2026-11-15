@@ -78,12 +78,17 @@ def english_lines() -> set[tuple[str, int]]:
     return found
 
 
-def nothing_to_translate(text: str) -> bool:
-    """whether a string has no words once its formulas, code and link targets are taken out"""
+def prose(text: str) -> str:
+    """the text without its formulas, code and link targets, which are not translated"""
     text = DISPLAY_MATH.sub('', text)
     for pattern in MARKUP:
         text = pattern.sub('', text)
-    return not re.search(r'[^\W\d_]', text) # no letter left
+    return text
+
+
+def nothing_to_translate(text: str) -> bool:
+    """whether a string has no words once its formulas, code and link targets are taken out"""
+    return not re.search(r'[^\W\d_]', prose(text)) # no letter left
 
 
 def stays_english(message, english: set[tuple[str, int]]) -> bool:
@@ -233,10 +238,12 @@ def check(args) -> None:
                 if sorted(pattern.findall(m.id)) != sorted(pattern.findall(m.string)):
                     markup_problems.append(f'{where}\n      markup {pattern.pattern} differs')
             for word in rules['keep']:
-                if word in m.id and word not in m.string:
+                whole = re.compile(rf'(?<!\w){re.escape(word)}(?!\w)') # 'uv', not the uv of 'curve'
+                if whole.search(m.id) and not whole.search(m.string):
                     term_problems.append(f'{where}\n      keep {word!r} as it is')
             for term, rule in rules['terms'].items():
-                if re.search(rf'\b{re.escape(term)}(?:e?s)?\b', m.id, re.IGNORECASE) and \
+                # in the prose only: a term in code or a formula stays as it is
+                if re.search(rf'\b{re.escape(term)}(?:e?s)?\b', prose(m.id), re.IGNORECASE) and \
                         not any(form in m.string for form in rule['use']):
                     term_problems.append(f"{where}\n      {term!r} should be {' / '.join(rule['use'])}")
     translated, fuzzy, untranslated = totals

@@ -21,147 +21,147 @@ msgstr ""
 
 #: ../../source/tutorials/first-map.md:1
 msgid "Your first detailing map"
-msgstr ""
+msgstr "نخستین نقشهٔ آرماتوربندی شما"
 
 #: ../../source/tutorials/first-map.md:4
 msgid "In this tutorial, we turn a SAFE model into a rebar detailing map. We use a small sample foundation that comes with OPTiBAR and keep all the default settings, so you can see the whole way from the input file to the drawing in a few minutes."
-msgstr ""
+msgstr "در این آموزش، یک مدل SAFE را به نقشهٔ آرماتوربندی تبدیل می‌کنیم. از یک فونداسیون نمونهٔ کوچک که همراه OPTiBAR است استفاده می‌کنیم و همهٔ تنظیمات پیش‌فرض را نگه می‌داریم، تا در چند دقیقه کل مسیر از فایل ورودی تا نقشه را ببینید."
 
 #: ../../source/tutorials/first-map.md:7
 msgid "Before you start, [install OPTiBAR](../how-to/install.md) from a clone of the repository."
-msgstr ""
+msgstr "پیش از شروع، [OPTiBAR را نصب کنید](../how-to/install.md)، از روی یک کپی (clone) از مخزن."
 
 #: ../../source/tutorials/first-map.md:9
 msgid "1. Start OPTiBAR"
-msgstr ""
+msgstr "1. اجرای OPTiBAR"
 
 #: ../../source/tutorials/first-map.md:11
 msgid "From the folder of the repository, run:"
-msgstr ""
+msgstr "در پوشهٔ مخزن، این دستور را اجرا کنید:"
 
 #: ../../source/tutorials/first-map.md:17
 msgid "The OPTiBAR window opens. Along the top is the input file; below it, the settings are on the left and the results on the right."
-msgstr ""
+msgstr "پنجرهٔ OPTiBAR باز می‌شود. در بالای آن فایل ورودی است؛ زیر آن، تنظیمات در سمت چپ و نتایج در سمت راست قرار دارند."
 
 #: ../../source/tutorials/first-map.md:19
 msgid "2. Load the sample foundation"
-msgstr ""
+msgstr "2. بارگذاری فونداسیون نمونه"
 
 #: ../../source/tutorials/first-map.md:21
 msgid "The sample is a mat foundation designed in SAFE 2016 and exported to Microsoft Access. It is in the repository at `src/optibar/core/tests/parser/data_files/tonf_m.accdb`."
-msgstr ""
+msgstr "نمونه یک فونداسیون گسترده است که در SAFE 2016 طراحی و به Microsoft Access خروجی گرفته شده است. این فایل در مخزن در مسیر `src/optibar/core/tests/parser/data_files/tonf_m.accdb` قرار دارد."
 
 #: ../../source/tutorials/first-map.md:24
 msgid "Press **Open…** next to **Input file**, and choose `tonf_m.accdb`. OPTiBAR loads it right away."
-msgstr ""
+msgstr "دکمهٔ **Open…** را در کنار **Input file** بزنید و `tonf_m.accdb` را انتخاب کنید. OPTiBAR بلافاصله آن را بارگذاری می‌کند."
 
 #: ../../source/tutorials/first-map.md:26
 msgid "Next to the buttons, the status says **✓ Loaded**, and the **Report** box on the right says the file was parsed successfully."
-msgstr ""
+msgstr "در کنار دکمه‌ها، وضعیت **✓ Loaded** را نشان می‌دهد و کادر **Report** در سمت راست می‌گوید که فایل با موفقیت خوانده شده است."
 
 #: ../../source/tutorials/first-map.md:28
 msgid "![The window after loading the sample](../_static/images/gui_loaded.png)"
-msgstr ""
+msgstr "![پنجره پس از بارگذاری نمونه](../_static/images/gui_loaded.png)"
 
 #: ../../source/tutorials/first-map.md:28
 msgid "The window after loading the sample"
-msgstr ""
+msgstr "پنجره پس از بارگذاری نمونه"
 
 #: ../../source/tutorials/first-map.md:30
 msgid "3. Run the calculation"
-msgstr ""
+msgstr "3. اجرای محاسبه"
 
 #: ../../source/tutorials/first-map.md:32
 msgid "The settings on the left are already filled in with their defaults; leave them as they are."
-msgstr ""
+msgstr "تنظیمات سمت چپ از پیش با مقادیر پیش‌فرض پر شده‌اند؛ آن‌ها را همان‌طور که هستند رها کنید."
 
 #: ../../source/tutorials/first-map.md:34
 msgid "Press **Calculate**, at the bottom left. The button turns into **Stop** and the status line next to it says **Status: Running**. After a few seconds it says **Status: Finished**, and the button says **Calculate** again."
-msgstr ""
+msgstr "دکمهٔ **Calculate** را در پایین سمت چپ بزنید. دکمه به **Stop** تبدیل می‌شود و خط وضعیت کنار آن **Status: Running** را نشان می‌دهد. پس از چند ثانیه **Status: Finished** را نشان می‌دهد و دکمه دوباره **Calculate** می‌شود."
 
 #: ../../source/tutorials/first-map.md:38
 msgid "4. Look at the results"
-msgstr ""
+msgstr "4. مشاهدهٔ نتایج"
 
 #: ../../source/tutorials/first-map.md:40
 msgid "The results appear in the **Report** box on the right, below the input file. They start with the **Mass Summary**: about 9.5 tons of rebars for the sample, of which 4.5 tons are additional rebars. Below it are the **Cutting Plans**, with the number of 12 m stock bars of each diameter, whether that number is proven optimal, and the waste."
-msgstr ""
+msgstr "نتایج در کادر **Report** در سمت راست، زیر فایل ورودی، نمایش داده می‌شوند. ابتدا **Mass Summary** (خلاصهٔ وزن) می‌آید: حدود 9.5 تن میلگرد برای نمونه، که 4.5 تن آن میلگرد تقویتی است. زیر آن **Cutting Plans** (نقشه‌های برش) آمده‌اند، با تعداد شاخه‌های 12 متری هر قطر، اینکه آیا این تعداد بهینه بودنش اثبات شده است، و پرت."
 
 #: ../../source/tutorials/first-map.md:44
 msgid "![The window with the results](../_static/images/gui_results.png)"
-msgstr ""
+msgstr "![پنجره همراه با نتایج](../_static/images/gui_results.png)"
 
 #: ../../source/tutorials/first-map.md:44
 msgid "The window with the results"
-msgstr ""
+msgstr "پنجره همراه با نتایج"
 
 #: ../../source/tutorials/first-map.md:46
 msgid "Scroll down: the report ends with two warnings."
-msgstr ""
+msgstr "به پایین بروید: گزارش با دو هشدار تمام می‌شود."
 
 #: ../../source/tutorials/first-map.md:48
 msgid "**Min Gap Warning**: in strip CSN4, the bottom bars are closer than 2.5 cm."
-msgstr ""
+msgstr "**Min Gap Warning** (هشدار حداقل فاصله): در نوار CSN4، فاصلهٔ میلگردهای پایین کمتر از 2.5 سانتی‌متر است."
 
 #: ../../source/tutorials/first-map.md:49
 msgid "**Ratio Warning**: in strips CSA1, CSB1 and CSN4, the typical rebars at a 20 cm interval are less than the minimum steel ratio of 0.0018."
-msgstr ""
+msgstr "**Ratio Warning** (هشدار نسبت): در نوارهای CSA1، CSB1 و CSN4، میلگردهای سراسری با فاصلهٔ 20 سانتی‌متر کمتر از حداقل نسبت فولاد 0.0018 هستند."
 
 #: ../../source/tutorials/first-map.md:51
 msgid "Warnings don't stop the detailing; they point to strips the designer should check. In a real project, you would fix them, for example by setting more typical bars for those strips. [Detailing rules](../reference/detailing-rules.md#typical-rebars) lists all the checks."
-msgstr ""
+msgstr "هشدارها جلوی آرماتوربندی را نمی‌گیرند؛ آن‌ها نوارهایی را نشان می‌دهند که طراح باید بررسی کند. در یک پروژهٔ واقعی آن‌ها را برطرف می‌کنید، مثلاً با تعیین میلگردهای سراسری بیشتر برای آن نوارها. [قواعد جزئیات‌سازی](../reference/detailing-rules.md#typical-rebars) همهٔ بررسی‌ها را فهرست می‌کند."
 
 #: ../../source/tutorials/first-map.md:55
 msgid "The **Total** setting allowed 20 different lengths of additional rebars, but this foundation needs only 9."
-msgstr ""
+msgstr "تنظیم **Total** اجازهٔ 20 طول مختلف برای میلگردهای تقویتی را می‌داد، اما این فونداسیون فقط به 9 طول نیاز دارد."
 
 #: ../../source/tutorials/first-map.md:57
 msgid "5. Save the drawing"
-msgstr ""
+msgstr "5. ذخیرهٔ نقشه"
 
 #: ../../source/tutorials/first-map.md:59
 msgid "Press **DXF Drawing**, above the report, and save the file as `sample.dxf`. Open it in any CAD program, for example AutoCAD, BricsCAD or a free DXF viewer."
-msgstr ""
+msgstr "دکمهٔ **DXF Drawing** را در بالای گزارش بزنید و فایل را با نام `sample.dxf` ذخیره کنید. آن را در هر برنامهٔ CAD باز کنید، مثلاً AutoCAD، BricsCAD یا یک نمایشگر رایگان DXF."
 
 #: ../../source/tutorials/first-map.md:62
 msgid "You see a row of sheets with the foundation plan. The first sheet names the strips; the next ones show the typical and additional rebars, top and bottom, in X and Y; then come the shear zones. Zoom into a sheet of additional rebars: every bar is labelled with its number, diameter and length, for example `4Ø25-L=4.8`."
-msgstr ""
+msgstr "ردیفی از برگه‌ها با پلان فونداسیون می‌بینید. برگهٔ اول نام نوارها را نشان می‌دهد؛ برگه‌های بعدی میلگردهای سراسری و میلگردهای تقویتی را در بالا و پایین، در جهت X و Y، نشان می‌دهند؛ سپس ناحیه‌های برشی می‌آیند. روی یک برگه از میلگردهای تقویتی بزرگ‌نمایی کنید: کنار هر میلگرد تعداد، قطر و طول آن نوشته شده است، مثلاً `4Ø25-L=4.8`."
 
 #: ../../source/tutorials/first-map.md:66
 msgid "![A plan sheet: top additional rebars of the X direction](../_static/images/dxf_plan.png)"
-msgstr ""
+msgstr "![یک برگهٔ پلان: میلگردهای تقویتی بالای جهت X](../_static/images/dxf_plan.png)"
 
 #: ../../source/tutorials/first-map.md:66
 msgid "A plan sheet: top additional rebars of the X direction"
-msgstr ""
+msgstr "یک برگهٔ پلان: میلگردهای تقویتی بالای جهت X"
 
 #: ../../source/tutorials/first-map.md:68
 msgid "To the right of the sheets are the tables with the piece lists and the mass summary, and below them the cutting plans."
-msgstr ""
+msgstr "در سمت راست برگه‌ها جدول‌های فهرست قطعات و خلاصهٔ وزن قرار دارند و زیر آن‌ها نقشه‌های برش."
 
 #: ../../source/tutorials/first-map.md:70
 msgid "What you did"
-msgstr ""
+msgstr "آنچه انجام دادید"
 
 #: ../../source/tutorials/first-map.md:72
 msgid "You loaded a SAFE model, detailed it with the default settings, and saved the detailing map."
-msgstr ""
+msgstr "یک مدل SAFE را بارگذاری کردید، آرماتوربندی آن را با تنظیمات پیش‌فرض انجام دادید و نقشهٔ آرماتوربندی را ذخیره کردید."
 
 #: ../../source/tutorials/first-map.md:74
 msgid "Next:"
-msgstr ""
+msgstr "گام بعدی:"
 
 #: ../../source/tutorials/first-map.md:76
 msgid "Detail your own foundation: [export the model from SAFE](../how-to/export-from-safe.md)."
-msgstr ""
+msgstr "آرماتوربندی فونداسیون خودتان: [مدل را از SAFE خروجی بگیرید](../how-to/export-from-safe.md)."
 
 #: ../../source/tutorials/first-map.md:77
 msgid "Change the settings: [Settings](../reference/settings.md) lists all of them."
-msgstr ""
+msgstr "تغییر تنظیمات: [تنظیمات](../reference/settings.md) همهٔ آن‌ها را فهرست می‌کند."
 
 #: ../../source/tutorials/first-map.md:78
 msgid "Learn why OPTiBAR limits the number of bar lengths: [Basic Concepts](../explanation/intro.md)."
-msgstr ""
+msgstr "بیاموزید چرا OPTiBAR تعداد طول‌های میلگرد را محدود می‌کند: [مفاهیم پایه](../explanation/intro.md)."
 
 #: ../../source/tutorials/index.rst:2
 msgid "Tutorials"

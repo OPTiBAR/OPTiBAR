@@ -81,627 +81,627 @@ msgstr "مواردی که با (!) مشخص شده‌اند ممکن است در
 
 #: ../../source/explanation/intro.md:25
 msgid "By using the steel quantity at each station, the length of each rebar can be calculated. These lengths are referred to as the **theoretical** lengths of the components."
-msgstr "با استفاده از مقدار فولاد در هر ایستگاه می‌توان طول هر میلگرد را محاسبه کرد. این طول‌ها **طول‌های نظری** اجزا نامیده می‌شوند."
+msgstr "با استفاده از مقدار فولاد در هر ایستگاه می‌توان طول هر میلگرد را محاسبه کرد. این طول‌ها **طول‌های تئوری** اجزا نامیده می‌شوند."
 
 #: ../../source/explanation/intro.md:27
 msgid "Bars that only cover the required steel of the input are too short: according to ACI 318, they must be extended to satisfy the code requirements. The extended lengths are the **required** lengths of the rebars, see [Detailing Rules](../reference/detailing-rules.md#additional-rebars). A map drawn based on required lengths is hard to build for three reasons:"
-msgstr ""
+msgstr "میلگردهایی که فقط فولاد لازمِ ورودی را پوشش می‌دهند خیلی کوتاه‌اند: طبق ACI 318، باید امتداد داده شوند تا الزامات آیین‌نامه برآورده شود. طول‌های امتدادیافته **طول‌های لازم** میلگردها هستند؛ [قواعد جزئیات‌سازی](../reference/detailing-rules.md#additional-rebars) را ببینید. نقشه‌ای که بر اساس طول‌های لازم رسم شود به سه دلیل اجرای دشواری دارد:"
 
 #: ../../source/explanation/intro.md:31
 msgid "The non-roundness of the lengths makes it difficult for workers to cut and locate, and for supervisors to check, for example, a rebar with a length of 3.77 m. The designer may prefer a length of 3.80 m or 4.00 m."
-msgstr ""
+msgstr "گرد نبودن طول‌ها بریدن و جاگذاری را برای کارگران، و بررسی را برای ناظران دشوار می‌کند، مثلاً میلگردی به طول 3.77 متر. طراح ممکن است طول 3.80 یا 4.00 متر را ترجیح دهد."
 
 #: ../../source/explanation/intro.md:32
 msgid "There may be too many different lengths used throughout the foundation. This complicates the maps and the rebar cutting process."
-msgstr ""
+msgstr "ممکن است طول‌های مختلف بسیار زیادی در سراسر فونداسیون به کار رود. این کار نقشه‌ها و فرایند برش میلگرد را پیچیده می‌کند."
 
 #: ../../source/explanation/intro.md:33
 msgid "The abundance of lengths used side by side in a section of the strip. This complicates map reading and execution for the contractor and makes it difficult for the supervisor to check."
-msgstr ""
+msgstr "فراوانی طول‌هایی که در یک مقطع از نوار کنار هم به کار می‌روند. این کار خواندن نقشه و اجرا را برای پیمانکار پیچیده و بررسی را برای ناظر دشوار می‌کند."
 
 #: ../../source/explanation/intro.md:35
 msgid "To solve this problem, it is possible to reduce the number of lengths by increasing the length of a set of components. The lengths obtained after this stage are called **practical** lengths."
-msgstr ""
+msgstr "برای حل این مشکل، می‌توان تعداد طول‌ها را با افزایش طول مجموعه‌ای از اجزا کاهش داد. طول‌هایی که پس از این مرحله به دست می‌آیند **طول‌های اجرایی** نامیده می‌شوند."
 
 #: ../../source/explanation/intro.md:38
 msgid "In the following chapters, each of these stages will be examined."
-msgstr ""
+msgstr "در فصل‌های بعد، هر یک از این مراحل بررسی می‌شود."
 
 #: ../../source/explanation/intro.md:49
 msgid "Why the number of length types matters"
-msgstr ""
+msgstr "چرا تعداد انواع طول مهم است"
 
 #: ../../source/explanation/intro.md:52
 msgid "SAFE gives the required steel area as a continuous diagram along each strip. Covering it with bars, layer by layer, gives a bar of a different length for every layer:"
-msgstr ""
+msgstr "SAFE سطح مقطع فولاد لازم را به‌صورت نموداری پیوسته در امتداد هر نوار می‌دهد. پوشاندن آن با میلگردها، لایه به لایه، برای هر لایه میلگردی با طول متفاوت به دست می‌دهد:"
 
 #: ../../source/explanation/intro.md:55
 msgid "![The required steel area along a strip (blue) and the bars that cover it](../_static/images/steel_area_diagram.png)"
-msgstr ""
+msgstr "![سطح مقطع فولاد لازم در امتداد یک نوار (آبی) و میلگردهایی که آن را می‌پوشانند](../_static/images/steel_area_diagram.png)"
 
 #: ../../source/explanation/intro.md:55
 msgid "The required steel area along a strip (blue) and the bars that cover it"
-msgstr ""
+msgstr "سطح مقطع فولاد لازم در امتداد یک نوار (آبی) و میلگردهایی که آن را می‌پوشانند"
 
 #: ../../source/explanation/intro.md:57
 msgid "Done for every strip, this gives tens or hundreds of different lengths in one foundation. A drawing like the one below is correct, but it is impractical to cut, place and check:"
-msgstr ""
+msgstr "اگر این کار برای هر نوار انجام شود، ده‌ها یا صدها طول مختلف در یک فونداسیون به دست می‌آید. نقشه‌ای مانند نقشهٔ زیر درست است، اما بریدن، جاگذاری و بررسی آن عملی نیست:"
 
 #: ../../source/explanation/intro.md:60
 msgid "![Additional rebars of a strip without unified lengths: every bar has its own length](../_static/images/lengths_not_unified.png)"
-msgstr ""
+msgstr "![میلگردهای تقویتی یک نوار بدون یکسان‌سازی طول‌ها: هر میلگرد طول خاص خود را دارد](../_static/images/lengths_not_unified.png)"
 
 #: ../../source/explanation/intro.md:60
 msgid "Additional rebars of a strip without unified lengths: every bar has its own length"
-msgstr ""
+msgstr "میلگردهای تقویتی یک نوار بدون یکسان‌سازی طول‌ها: هر میلگرد طول خاص خود را دارد"
 
 #: ../../source/explanation/intro.md:62
 msgid "OPTiBAR takes two limits from the user:"
-msgstr ""
+msgstr "OPTiBAR دو حد را از کاربر می‌گیرد:"
 
 #: ../../source/explanation/intro.md:64
 msgid "**Stack**: the maximum number of different lengths in one stack of bars."
-msgstr ""
+msgstr "**Stack** (دسته): حداکثر تعداد طول‌های مختلف در یک دسته از میلگردها."
 
 #: ../../source/explanation/intro.md:65
 msgid "**Total**: the maximum number of different lengths of additional rebars in the whole foundation."
-msgstr ""
+msgstr "**Total** (کل): حداکثر تعداد طول‌های مختلف میلگردهای تقویتی در کل فونداسیون."
 
 #: ../../source/explanation/intro.md:67
 msgid "Within these limits, it chooses the lengths that add the least steel. The same strip, with at most 4 lengths in a stack:"
-msgstr ""
+msgstr "در این حدود، طول‌هایی را انتخاب می‌کند که کمترین فولاد را اضافه می‌کنند. همان نوار، با حداکثر 4 طول در هر دسته:"
 
 #: ../../source/explanation/intro.md:69
 msgid "![The same strip with at most 4 lengths per stack](../_static/images/lengths_stack_4.png)"
-msgstr ""
+msgstr "![همان نوار با حداکثر 4 طول در هر دسته](../_static/images/lengths_stack_4.png)"
 
 #: ../../source/explanation/intro.md:69
 msgid "The same strip with at most 4 lengths per stack"
-msgstr ""
+msgstr "همان نوار با حداکثر 4 طول در هر دسته"
 
 #: ../../source/explanation/intro.md:71
 msgid "Larger limits save steel but make the foundation harder to build; [an analysis](../how-to/choose-length-types.md) shows the trade-off for a project."
-msgstr ""
+msgstr "حدهای بزرگ‌تر فولاد صرفه‌جویی می‌کنند اما اجرای فونداسیون را دشوارتر می‌کنند؛ [یک تحلیل](../how-to/choose-length-types.md) این بده‌بستان را برای یک پروژه نشان می‌دهد."
 
 #: ../../source/explanation/intro.md:73
 #, python-brace-format
 msgid "Trying every choice is not possible. To keep 25 lengths out of 50, there are $\\binom{50}{25} \\approx 1.3 \\times 10^{14}$ choices; at one second each, checking them all would take about 4 million years. OPTiBAR uses dynamic programming instead, see [Required Length](required.md) and [Practical Length](practical.md)."
-msgstr ""
+msgstr "آزمودن همهٔ انتخاب‌ها ممکن نیست. برای نگه داشتن 25 طول از 50 طول، $\\binom{50}{25} \\approx 1.3 \\times 10^{14}$ انتخاب وجود دارد؛ اگر بررسی هر کدام یک ثانیه طول بکشد، بررسی همهٔ آن‌ها حدود 4 میلیون سال طول می‌کشد. OPTiBAR به‌جای آن از برنامه‌ریزی پویا استفاده می‌کند؛ [طول لازم](required.md) و [طول اجرایی](practical.md) را ببینید."
 
 #: ../../source/explanation/intro.md:77
 msgid "Notations"
-msgstr ""
+msgstr "نمادها"
 
 #: ../../source/explanation/intro.md:80
 msgid "$L_d$: Development length of the bar."
-msgstr ""
+msgstr "$L_d$: طول مهاری میلگرد."
 
 #: ../../source/explanation/intro.md:81
 msgid "$d$: Effective depth of the foundation."
-msgstr ""
+msgstr "$d$: عمق مؤثر فونداسیون."
 
 #: ../../source/explanation/intro.md:82
 msgid "$b$: Width of the foundation."
-msgstr ""
+msgstr "$b$: عرض فونداسیون."
 
 #: ../../source/explanation/intro.md:83
 msgid "$As$: Area of steel in the section."
-msgstr ""
+msgstr "$As$: سطح فولاد در مقطع."
 
 #: ../../source/explanation/intro.md:84
 msgid "$\\epsilon_t$: Total strain."
-msgstr ""
+msgstr "$\\epsilon_t$: کرنش کل."
 
 #: ../../source/explanation/intro.md:85
 #, python-brace-format
 msgid "$\\epsilon_{ty}$: Yield strain."
-msgstr ""
+msgstr "$\\epsilon_{ty}$: کرنش تسلیم."
 
 #: ../../source/explanation/moment.md:1
 msgid "Resistant Moment"
-msgstr ""
+msgstr "لنگر مقاوم"
 
 #: ../../source/explanation/moment.md:4
 msgid "The design of a strip for flexure is checked by SAFE, but the detailing changes the steel along the strip: the theoretical lengths are extended to required lengths, and these are rounded and unified to practical lengths. To show that the detailed strip still carries its loads, OPTiBAR draws the resisting moment $\\phi M_n$ of every strip, top and bottom, next to the factored moment $M_u$ from SAFE. $\\phi M_n$ should be above $M_u$ everywhere."
-msgstr ""
+msgstr "طراحی خمشی یک نوار را SAFE بررسی می‌کند، اما آرماتوربندی فولاد را در امتداد نوار تغییر می‌دهد: طول‌های تئوری تا طول‌های لازم امتداد داده می‌شوند و این‌ها گرد و یکسان‌سازی می‌شوند تا طول‌های اجرایی به دست آیند. برای نشان دادن اینکه نوارِ آرماتوربندی‌شده همچنان بارهای خود را تحمل می‌کند، OPTiBAR لنگر مقاوم $\\phi M_n$ هر نوار را، بالا و پایین، کنار لنگر ضریب‌دار $M_u$ از SAFE رسم می‌کند. $\\phi M_n$ باید همه‌جا بالاتر از $M_u$ باشد."
 
 #: ../../source/explanation/moment.md:8
 msgid "![The resisting moment of a cantilever follows its bars; within $L_d$ of a cut bar end it rises linearly](../_static/images/resisting_moment.png)"
-msgstr ""
+msgstr "![لنگر مقاوم یک طره از میلگردهایش پیروی می‌کند؛ در فاصلهٔ $L_d$ از انتهای بریدهٔ یک میلگرد به‌طور خطی افزایش می‌یابد](../_static/images/resisting_moment.png)"
 
 #: ../../source/explanation/moment.md:8
 msgid "The resisting moment of a cantilever follows its bars; within  of a cut bar end it rises linearly"
-msgstr ""
+msgstr "لنگر مقاوم یک طره از میلگردهایش پیروی می‌کند؛ در فاصلهٔ  از انتهای بریدهٔ یک میلگرد به‌طور خطی افزایش می‌یابد"
 
 #: ../../source/explanation/moment.md:10
 msgid "Effective steel area"
-msgstr ""
+msgstr "سطح مقطع فولاد مؤثر"
 
 #: ../../source/explanation/moment.md:13
 #, python-brace-format
 msgid "A bar only counts fully in a section where it is developed, that is, where it runs at least $L_d$ into the concrete on that side. If a section is at a distance $x < L_d$ from the end of a bar, only the part $\\dfrac{x}{L_d} A_b$ of its area is counted."
-msgstr ""
+msgstr "یک میلگرد فقط در مقطعی که در آن مهار شده باشد به‌طور کامل حساب می‌شود، یعنی جایی که دست‌کم $L_d$ در آن سمت درون بتن ادامه دارد. اگر مقطعی در فاصلهٔ $x < L_d$ از انتهای یک میلگرد باشد، فقط بخش $\\dfrac{x}{L_d} A_b$ از سطح آن حساب می‌شود."
 
 #: ../../source/explanation/moment.md:16
 msgid "So the effective steel area along a level of a strip is:"
-msgstr ""
+msgstr "بنابراین سطح مقطع فولاد مؤثر در امتداد یک تراز از نوار برابر است با:"
 
 #: ../../source/explanation/moment.md:18
 msgid "the typical rebars, fully along the strip,"
-msgstr ""
+msgstr "میلگردهای سراسری، به‌طور کامل در طول نوار،"
 
 #: ../../source/explanation/moment.md:19
 msgid "plus every additional rebar, rising linearly from zero at each straight end to its full area at $L_d$ from that end."
-msgstr ""
+msgstr "به‌علاوهٔ هر میلگرد تقویتی، که از صفر در هر انتهای راست تا سطح کامل خود در فاصلهٔ $L_d$ از آن انتها به‌طور خطی افزایش می‌یابد."
 
 #: ../../source/explanation/moment.md:21
 msgid "Bent (hooked) ends count fully, as the hook anchors the bar. Since the area changes linearly near the bar ends, and the moment depends almost linearly on the area, the resisting moment changes almost linearly there too."
-msgstr ""
+msgstr "انتهاهای خم‌شده (قلاب‌دار) به‌طور کامل حساب می‌شوند، چون قلاب میلگرد را مهار می‌کند. چون سطح در نزدیکی انتهای میلگردها به‌طور خطی تغییر می‌کند و لنگر تقریباً به‌طور خطی به سطح وابسته است، لنگر مقاوم نیز در آنجا تقریباً خطی تغییر می‌کند."
 
 #: ../../source/explanation/moment.md:25
 msgid "Only the tension steel is counted, so $\\phi M_n$ is a little less than the real resisting moment of the section."
-msgstr ""
+msgstr "فقط فولاد کششی حساب می‌شود، پس $\\phi M_n$ کمی کمتر از لنگر مقاوم واقعی مقطع است."
 
 #: ../../source/explanation/moment.md:28
 msgid "Between the faces of a column, the factored moment is taken as a straight line between its values at the faces, as the required steel is, see [Columns](../reference/detailing-rules.md#columns)."
-msgstr ""
+msgstr "بین دو بر یک ستون، لنگر ضریب‌دار مانند فولاد لازم به‌صورت خطی راست بین مقادیر آن در دو بر در نظر گرفته می‌شود؛ [ستون‌ها](../reference/detailing-rules.md#columns) را ببینید."
 
 #: ../../source/explanation/moment.md:30
 msgid "Resisting moment of a section"
-msgstr ""
+msgstr "لنگر مقاوم یک مقطع"
 
 #: ../../source/explanation/moment.md:33
 msgid "Each section is a rectangle of width $b$, the width of the strip there, and effective depth $d$, with a steel area $A_s$."
-msgstr ""
+msgstr "هر مقطع مستطیلی به عرض $b$، یعنی عرض نوار در آنجا، و عمق مؤثر $d$، با سطح مقطع فولاد $A_s$ است."
 
 #: ../../source/explanation/moment.md:35
 msgid "ACI-318 table 22.2.2.4.3"
-msgstr ""
+msgstr "جدول 22.2.2.4.3 در ACI-318"
 
 #: ../../source/explanation/moment.md:47
 #, python-brace-format
 msgid "When the steel ratio $\\rho = \\dfrac{A_s}{b d}$ is less than the balanced ratio $\\rho_b = 0.85 \\beta_1 \\dfrac{f'_c}{f_y} \\dfrac{600}{600 + f_y}$, the steel yields:"
-msgstr ""
+msgstr "وقتی نسبت فولاد $\\rho = \\dfrac{A_s}{b d}$ کمتر از نسبت متعادل $\\rho_b = 0.85 \\beta_1 \\dfrac{f'_c}{f_y} \\dfrac{600}{600 + f_y}$ باشد، فولاد تسلیم می‌شود:"
 
 #: ../../source/explanation/moment.md:56
 #, python-brace-format
 msgid "Otherwise $a$ is found from the strain compatibility of the section with $E_s = 200$ GPa, and $M_n = 0.85 f'_c a b \\left(d - \\frac{a}{2}\\right)$. Then"
-msgstr ""
+msgstr "در غیر این صورت $a$ از سازگاری کرنش مقطع با $E_s = 200$ GPa به دست می‌آید و $M_n = 0.85 f'_c a b \\left(d - \\frac{a}{2}\\right)$. سپس"
 
 #: ../../source/explanation/moment.md:66
 #, python-brace-format
 msgid "and the strength reduction factor follows ACI-318 table 21.2.2, with $\\epsilon_{ty} = 0.002$:"
-msgstr ""
+msgstr "و ضریب کاهش مقاومت از جدول 21.2.2 در ACI-318، با $\\epsilon_{ty} = 0.002$، پیروی می‌کند:"
 
 #: ../../source/explanation/practical.md:1
 msgid "Practical Length"
-msgstr ""
+msgstr "طول اجرایی"
 
 #: ../../source/explanation/practical.md:4
 msgid "To make the required lengths buildable, they are rounded, and the number of different lengths is reduced in two sets: in every stack, and in the whole foundation. Fewer lengths in a stack make the drawing easier to read and to build; fewer lengths in the foundation make the bars easier to cut. The lengths obtained are the **practical** lengths."
-msgstr ""
+msgstr "برای اجرایی کردن طول‌های لازم، آن‌ها گرد می‌شوند و تعداد طول‌های مختلف در دو مجموعه کاهش داده می‌شود: در هر دسته، و در کل فونداسیون. طول‌های کمتر در یک دسته خواندن و اجرای نقشه را ساده‌تر می‌کنند؛ طول‌های کمتر در فونداسیون بریدن میلگردها را ساده‌تر می‌کنند. طول‌های به‌دست‌آمده **طول‌های اجرایی** هستند."
 
 #: ../../source/explanation/practical.md:8
 msgid "The whole process"
-msgstr ""
+msgstr "کل فرایند"
 
 #: ../../source/explanation/practical.md:11
 msgid "The lengths of the additional rebars are found with the following algorithm (`Mesh._theoretical_to_practical` and `Foundation._set_length_type_num`):"
-msgstr ""
+msgstr "طول‌های میلگردهای تقویتی با الگوریتم زیر به دست می‌آیند (`Mesh._theoretical_to_practical` و `Foundation._set_length_type_num`):"
 
 #: ../../source/explanation/practical.md:35
 msgid "Upper bound and rounding"
-msgstr ""
+msgstr "کران بالا و گرد کردن"
 
 #: ../../source/explanation/practical.md:38
 msgid "Each piece has an **upper bound** on its length: the 12 m stock length for a bar longer than 12 m, and otherwise the length of the strip less the side covers plus the bends of the piece, or 12 m if that is shorter."
-msgstr ""
+msgstr "هر قطعه یک **کران بالا** برای طولش دارد: طول 12 متری شاخه برای میلگرد بلندتر از 12 متر، و در غیر این صورت طول نوار منهای پوشش جانبی دو طرف به‌علاوهٔ خم‌های قطعه، یا 12 متر اگر کوتاه‌تر باشد."
 
 #: ../../source/explanation/practical.md:40
 msgid "The length of a piece is rounded up to 10 cm. If the rounded length passes the upper bound, it is rounded down to 10 cm instead."
-msgstr ""
+msgstr "طول یک قطعه به بالا تا 10 سانتی‌متر گرد می‌شود. اگر طول گردشده از کران بالا بگذرد، به‌جای آن به پایین تا 10 سانتی‌متر گرد می‌شود."
 
 #: ../../source/explanation/practical.md:44
 msgid "The comment in the code (`Mesh._round_piece`) and the original design both say 5 cm, but the code rounds to 10 cm (`ROUND_UNIT = 0.1` in `setting.py`)."
-msgstr ""
+msgstr "توضیح داخل کد (`Mesh._round_piece`) و طراحی اولیه هر دو 5 سانتی‌متر را می‌گویند، اما کد تا 10 سانتی‌متر گرد می‌کند (`ROUND_UNIT = 0.1` در `setting.py`)."
 
 #: ../../source/explanation/practical.md:48
 msgid "Bars longer than 12 m"
-msgstr ""
+msgstr "میلگردهای بلندتر از 12 متر"
 
 #: ../../source/explanation/practical.md:51
 msgid "Bars come in 12 m stock lengths, so a bar longer than 12 m is made of several pieces, which overlap by the overlap length $o$ of the bar, see [Special Lengths](../reference/detailing-rules.md#special-lengths). A bar of length $L > 12$ m needs"
-msgstr ""
+msgstr "میلگردها در شاخه‌های 12 متری عرضه می‌شوند، پس میلگردی بلندتر از 12 متر از چند قطعه ساخته می‌شود که به اندازهٔ طول وصلهٔ $o$ میلگرد روی هم می‌افتند؛ [طول‌های ویژه](../reference/detailing-rules.md#special-lengths) را ببینید. میلگردی به طول $L > 12$ متر به این تعداد"
 
 #: ../../source/explanation/practical.md:58
 msgid "pieces, and its **net length**, the length of steel it uses, is $L + (n-1)\\,o$. All the pieces are 12 m long except one, the **shortest piece**, with a length of $L + (n-1)\\,o - (n-1) \\times 12$. The shortest piece is at the bent end of the bar, or at the end side when the bar is not bent (`Piece.get_subpieces`)."
-msgstr ""
+msgstr "قطعه نیاز دارد، و **طول خالص** آن، یعنی طول فولادی که مصرف می‌کند، $L + (n-1)\\,o$ است. همهٔ قطعه‌ها 12 متر طول دارند جز یکی، **کوتاه‌ترین قطعه**، با طول $L + (n-1)\\,o - (n-1) \\times 12$. کوتاه‌ترین قطعه در انتهای خم‌شدهٔ میلگرد است، یا اگر میلگرد خم نشده باشد در سمت انتهایی آن (`Piece.get_subpieces`)."
 
 #: ../../source/explanation/practical.md:62
 msgid "Rounding and the reduction of length types change only the length of the shortest piece; the 12 m pieces stay as they are. When the shortest piece is made longer, its overlap with the next piece gets longer than $o$."
-msgstr ""
+msgstr "گرد کردن و کاهش انواع طول فقط طول کوتاه‌ترین قطعه را تغییر می‌دهند؛ قطعه‌های 12 متری همان‌طور که هستند می‌مانند. وقتی کوتاه‌ترین قطعه بلندتر شود، هم‌پوشانی آن با قطعهٔ بعدی بیش از $o$ می‌شود."
 
 #: ../../source/explanation/practical.md:65
 msgid "Reducing the number of length types"
-msgstr ""
+msgstr "کاهش تعداد انواع طول"
 
 #: ../../source/explanation/practical.md:68
 #: ../../source/explanation/required.md:39
 msgid "Problem definition"
-msgstr ""
+msgstr "تعریف مسئله"
 
 #: ../../source/explanation/practical.md:70
 msgid "Pieces with lengths $L_1, \\ldots, L_n$ are needed, $N_1, \\ldots, N_n$ of each, written as $L = [L_1, \\ldots, L_n]$ and $N = [N_1, \\ldots, N_n]$, with $L_i < L_j$ for $i < j$ and $N_i \\neq 0$. We want fewer lengths, and the only change allowed is to supply a longer piece instead of a needed one. The task is to limit the lengths to $p < n$ with the least total length of the pieces."
-msgstr ""
+msgstr "قطعه‌هایی با طول‌های $L_1, \\ldots, L_n$ لازم‌اند، از هر کدام $N_1, \\ldots, N_n$ عدد، که به‌صورت $L = [L_1, \\ldots, L_n]$ و $N = [N_1, \\ldots, N_n]$ نوشته می‌شوند، با $L_i < L_j$ برای $i < j$ و $N_i \\neq 0$. طول‌های کمتری می‌خواهیم و تنها تغییر مجاز، دادن قطعه‌ای بلندتر به‌جای قطعهٔ لازم است. هدف محدود کردن طول‌ها به $p < n$ با کمترین طول کل قطعه‌هاست."
 
 #: ../../source/explanation/practical.md:74
 msgid "Greedy algorithm"
-msgstr ""
+msgstr "الگوریتم حریصانه"
 
 #: ../../source/explanation/practical.md:76
 msgid "A simple approach removes one length at each step: the length whose pieces are cheapest to lengthen to the next longer length."
-msgstr ""
+msgstr "یک روش ساده در هر گام یک طول را حذف می‌کند: طولی که بلند کردن قطعه‌هایش تا طول بلندتر بعدی کمترین هزینه را دارد."
 
 #: ../../source/explanation/practical.md:92
 msgid "The greedy algorithm doesn't always find the best solution. For $L = [1,2,3,4]$ and $N = [5,4,7,1]$, limited to two lengths, it removes length 2 in the first step and length 1 in the second, which gives $N = [0,0,16,1]$ and a total length of 52. Keeping lengths 2 and 4 instead gives $N = [0,9,0,8]$ and a total length of 50."
-msgstr ""
+msgstr "الگوریتم حریصانه همیشه بهترین جواب را پیدا نمی‌کند. برای $L = [1,2,3,4]$ و $N = [5,4,7,1]$، با محدودیت دو طول، در گام اول طول 2 و در گام دوم طول 1 را حذف می‌کند که $N = [0,0,16,1]$ و طول کل 52 را به دست می‌دهد. نگه داشتن طول‌های 2 و 4 به‌جای آن $N = [0,9,0,8]$ و طول کل 50 را به دست می‌دهد."
 
 #: ../../source/explanation/practical.md:96
 msgid "Two subproblems"
-msgstr ""
+msgstr "دو زیرمسئله"
 
 #: ../../source/explanation/practical.md:98
 msgid "The problem is split into two subproblems: first, $P$ lengths are chosen for the whole foundation (**Total**), with dynamic programming in $O(n^3)$; then, for every stack, $PSUB$ of these $P$ lengths are chosen (**Stack**), with an integer program."
-msgstr ""
+msgstr "مسئله به دو زیرمسئله تقسیم می‌شود: ابتدا $P$ طول برای کل فونداسیون (**Total**) با برنامه‌ریزی پویا در $O(n^3)$ انتخاب می‌شود؛ سپس برای هر دسته، $PSUB$ طول از این $P$ طول (**Stack**) با یک برنامهٔ عدد صحیح انتخاب می‌شود."
 
 #: ../../source/explanation/practical.md:100
 msgid "Choosing the lengths of the foundation"
-msgstr ""
+msgstr "انتخاب طول‌های فونداسیون"
 
 #: ../../source/explanation/practical.md:102
 msgid "The best way to choose $p$ lengths out of $1, \\ldots, q$ is built from the best ways to choose $p-1$ lengths out of $1, \\ldots, q-1$, $1, \\ldots, q-2$, …, $1, \\ldots, p-1$. $len(p,q)$ is the least increase of the total length when $p$ lengths are chosen out of $1, \\ldots, q$:"
-msgstr ""
+msgstr "بهترین روش انتخاب $p$ طول از میان $1, \\ldots, q$ از بهترین روش‌های انتخاب $p-1$ طول از میان $1, \\ldots, q-1$، $1, \\ldots, q-2$، …، $1, \\ldots, p-1$ ساخته می‌شود. $len(p,q)$ کمترین افزایش طول کل است وقتی $p$ طول از میان $1, \\ldots, q$ انتخاب شود:"
 
 #: ../../source/explanation/practical.md:114
 #, python-brace-format
 msgid "If the minimum is reached at $\\hat{i}$, the best way to choose $p$ lengths out of $1, \\ldots, q$ is to choose $q$, and $p-1$ lengths out of $1, \\ldots, \\hat{i}$; the lengths $\\hat{i}+1, \\ldots, q-1$ are not chosen. $ref(p,q)$ returns $\\hat{i}$:"
-msgstr ""
+msgstr "اگر کمینه در $\\hat{i}$ به دست آید، بهترین روش انتخاب $p$ طول از میان $1, \\ldots, q$ این است که $q$ انتخاب شود و $p-1$ طول از میان $1, \\ldots, \\hat{i}$؛ طول‌های $\\hat{i}+1, \\ldots, q-1$ انتخاب نمی‌شوند. $ref(p,q)$ مقدار $\\hat{i}$ را برمی‌گرداند:"
 
 #: ../../source/explanation/practical.md:126
 msgid "As for the required lengths, the values are computed in a table, row by row from the top, and in every row from left to right. To choose $p$ of the $n$ lengths, read the cell in row $p$ of the last column, and follow $ref$ from there."
-msgstr ""
+msgstr "مانند طول‌های لازم، مقادیر در یک جدول محاسبه می‌شوند، ردیف به ردیف از بالا، و در هر ردیف از چپ به راست. برای انتخاب $p$ طول از $n$ طول، خانهٔ ردیف $p$ از ستون آخر را بخوانید و از آنجا $ref$ را دنبال کنید."
 
 #: ../../source/explanation/practical.md:129
 msgid "**Example.** Let $L = [2,3,7,11,15]$ and $N = [1,5,3,10,4]$. Each cell holds the value of $len$ and of $ref$:"
-msgstr ""
+msgstr "**مثال.** فرض کنید $L = [2,3,7,11,15]$ و $N = [1,5,3,10,4]$. هر خانه مقدار $len$ و $ref$ را در خود دارد:"
 
 #: ../../source/explanation/practical.md:131
 #: ../../source/explanation/required.md:153
 msgid "The table of the example"
-msgstr ""
+msgstr "جدول مثال"
 
 #: ../../source/explanation/practical.md:159
 #, python-brace-format
 msgid "To choose 3 of the 5 lengths, read row 3 of the last column: the total length grows by 13, to $\\sum_{i} N_i L_i + 13$. The longest length is always chosen; the cell gives $ref = 4$, so length 4 is chosen next; row 2 of column 4 gives $ref = 2$, so length 2 is chosen. The chosen lengths are $[2,4,5]$, that is $[3, 11, 15]$."
-msgstr ""
+msgstr "برای انتخاب 3 طول از 5 طول، ردیف 3 از ستون آخر را بخوانید: طول کل 13 واحد افزایش می‌یابد و به $\\sum_{i} N_i L_i + 13$ می‌رسد. بلندترین طول همیشه انتخاب می‌شود؛ خانه $ref = 4$ را می‌دهد، پس طول 4 انتخاب بعدی است؛ ردیف 2 از ستون 4، $ref = 2$ را می‌دهد، پس طول 2 انتخاب می‌شود. طول‌های انتخاب‌شده $[2,4,5]$ هستند، یعنی $[3, 11, 15]$."
 
 #: ../../source/explanation/practical.md:163
 msgid "Maximum length of a piece"
-msgstr ""
+msgstr "حداکثر طول یک قطعه"
 
 #: ../../source/explanation/practical.md:165
 #, python-brace-format
 msgid "Each piece also has an upper bound on its length, $\\overline{L}_i$ (see [Rounding](#rounding)). Some solutions are now not possible; they get the value $\\infty$, and the two formulas become:"
-msgstr ""
+msgstr "هر قطعه همچنین یک کران بالا برای طولش دارد، $\\overline{L}_i$ ([گرد کردن](#rounding) را ببینید). برخی جواب‌ها اکنون ممکن نیستند؛ مقدار $\\infty$ می‌گیرند و دو رابطه چنین می‌شوند:"
 
 #: ../../source/explanation/practical.md:209
 msgid "The smallest feasible number is shown in the report and saved as `min_feasible_num`, see [Outputs](../reference/outputs.md)."
-msgstr ""
+msgstr "کوچک‌ترین عدد شدنی در گزارش نشان داده می‌شود و با نام `min_feasible_num` ذخیره می‌شود؛ [خروجی‌ها](../reference/outputs.md) را ببینید."
 
 #: ../../source/explanation/practical.md:212
 msgid "Choosing the lengths of a stack"
-msgstr ""
+msgstr "انتخاب طول‌های یک دسته"
 
 #: ../../source/explanation/practical.md:214
 msgid "This subproblem is solved for each stack on its own: out of the $P$ lengths of the foundation, $PSUB$ (**Stack**) are chosen. It is an integer program (`StackAlgorithm` in `stack.py`), solved with the HiGHS solver through Pyomo. In it, a length type of a stack is a pair of a length and a number of pieces: a 4 m bar and a 16 m bar made of a 12 m piece and a 4 m piece count as different types."
-msgstr ""
+msgstr "این زیرمسئله برای هر دسته جداگانه حل می‌شود: از میان $P$ طول فونداسیون، $PSUB$ طول (**Stack**) انتخاب می‌شود. این یک برنامهٔ عدد صحیح است (`StackAlgorithm` در `stack.py`) که با حل‌کنندهٔ HiGHS از طریق Pyomo حل می‌شود. در آن، یک نوع طول از یک دسته، جفتی از یک طول و یک تعداد قطعه است: میلگردی 4 متری و میلگردی 16 متری که از یک قطعهٔ 12 متری و یک قطعهٔ 4 متری ساخته شده است، دو نوع متفاوت به شمار می‌آیند."
 
 #: ../../source/explanation/practical.md:218
 msgid "With the pieces $i$ of the stack, their shortest-piece lengths $LS_i$ and numbers of pieces $m_i$, and the lengths of the foundation $LO_j$:"
-msgstr ""
+msgstr "با قطعه‌های $i$ از دسته، طول کوتاه‌ترین قطعهٔ آن‌ها $LS_i$ و تعداد قطعه‌هایشان $m_i$، و طول‌های فونداسیون $LO_j$:"
 
 #: ../../source/explanation/practical.md:220
 #, python-brace-format
 msgid "$x_{ij} \\in \\{0,1\\}$: piece $i$ gets length $LO_j$;"
-msgstr ""
+msgstr "$x_{ij} \\in \\{0,1\\}$: قطعهٔ $i$ طول $LO_j$ را می‌گیرد؛"
 
 #: ../../source/explanation/practical.md:221
 #, python-brace-format
 msgid "$z_{mj} \\in \\{0,1\\}$: some piece made of $m$ pieces gets length $LO_j$;"
-msgstr ""
+msgstr "$z_{mj} \\in \\{0,1\\}$: قطعه‌ای که از $m$ قطعه ساخته شده است طول $LO_j$ را می‌گیرد؛"
 
 #: ../../source/explanation/practical.md:233
 #, python-format
 msgid "The solver stops within 10% of the optimum. If there is no solution with $PSUB$ types, $PSUB$ is increased by one until there is; the stacks that needed more types than allowed are listed in the report as a warning (`excess_stack`)."
-msgstr ""
+msgstr "حل‌کننده در فاصلهٔ 10 درصد از مقدار بهینه متوقف می‌شود. اگر جوابی با $PSUB$ نوع وجود نداشته باشد، $PSUB$ یکی‌یکی افزایش می‌یابد تا جوابی پیدا شود؛ دسته‌هایی که به انواع بیشتری از حد مجاز نیاز داشتند در گزارش به‌صورت هشدار فهرست می‌شوند (`excess_stack`)."
 
 #: ../../source/explanation/practical.md:237
 msgid "The integer program doesn't use the upper bounds of the pieces (see [Rounding](#rounding)), so a piece can get a length longer than its upper bound."
-msgstr ""
+msgstr "برنامهٔ عدد صحیح کران‌های بالای قطعه‌ها را به کار نمی‌برد ([گرد کردن](#rounding) را ببینید)، پس یک قطعه می‌تواند طولی بلندتر از کران بالای خود بگیرد."
 
 #: ../../source/explanation/practical.md:240
 msgid "Setting the practical periods"
-msgstr ""
+msgstr "تعیین بازه‌های اجرایی"
 
 #: ../../source/explanation/practical.md:243
 msgid "The rounded or reduced length tells how long a piece must be, but not where it starts and ends. The pieces of each stack are placed from the longest to the shortest; each piece is placed against the piece below it, its **base piece**, so the ends of the stack line up where possible (`Mesh._set_piece_practical`)."
-msgstr ""
+msgstr "طول گردشده یا کاهش‌یافته می‌گوید یک قطعه چقدر باید بلند باشد، اما نمی‌گوید از کجا شروع و به کجا ختم می‌شود. قطعه‌های هر دسته از بلندترین به کوتاه‌ترین قرار داده می‌شوند؛ هر قطعه در برابر قطعهٔ زیر خود، یعنی **قطعهٔ پایه**، قرار می‌گیرد تا انتهاهای دسته تا جای ممکن هم‌تراز شوند (`Mesh._set_piece_practical`)."
 
 #: ../../source/explanation/practical.md:269
 msgid "In case 1.2.2, a piece is bent only to keep the number of length types down. This is an exception and should be checked on the drawing. In case 3.2, the original design asks for a warning, but the code keeps the length silently."
-msgstr ""
+msgstr "در حالت 1.2.2، قطعه فقط برای پایین نگه داشتن تعداد انواع طول خم می‌شود. این یک استثناست و باید روی نقشه بررسی شود. در حالت 3.2، طراحی اولیه هشداری می‌خواهد، اما کد طول را بی‌صدا نگه می‌دارد."
 
 #: ../../source/explanation/required.md:1
 msgid "Required Length"
-msgstr ""
+msgstr "طول لازم"
 
 #: ../../source/explanation/required.md:10
 msgid "To turn the theoretical lengths of the pieces into lengths accepted by the code, they must be extended. The rules are given below; then an optimization problem is defined that satisfies them while adding the least length to the theoretical lengths (`optimization/required.py`)."
-msgstr ""
+msgstr "برای تبدیل طول‌های تئوری قطعه‌ها به طول‌هایی که آیین‌نامه می‌پذیرد، باید آن‌ها را امتداد داد. قواعد در ادامه آمده‌اند؛ سپس یک مسئلهٔ بهینه‌سازی تعریف می‌شود که این قواعد را برآورده می‌کند و در عین حال کمترین طول را به طول‌های تئوری می‌افزاید (`optimization/required.py`)."
 
 #: ../../source/explanation/required.md:13
 msgid "Stacks"
-msgstr ""
+msgstr "دسته‌ها"
 
 #: ../../source/explanation/required.md:16
 msgid "A **stack** is a set of additional rebars placed on top of each other: from top to bottom, every piece lies within the next one, so the pieces go from short to long. The station of the largest required steel within the top piece is the **base** of the stack."
-msgstr ""
+msgstr "یک **دسته** مجموعه‌ای از میلگردهای تقویتی است که روی هم قرار گرفته‌اند: از بالا به پایین، هر قطعه درون قطعهٔ بعدی قرار دارد، پس قطعه‌ها از کوتاه به بلند می‌روند. ایستگاه بیشترین فولاد لازم در محدودهٔ قطعهٔ بالایی، **پایهٔ** دسته است."
 
 #: ../../source/explanation/required.md:19
 #, python-brace-format
 msgid "Stacks are found from the rows of {prf:ref}`theoretical-piece` with the following algorithm (`PieceContainer.get_stacks`). A piece can join more than one stack, so two stacks can share their lower pieces."
-msgstr ""
+msgstr "دسته‌ها از ردیف‌های {prf:ref}`theoretical-piece` با الگوریتم زیر به دست می‌آیند (`PieceContainer.get_stacks`). یک قطعه می‌تواند به بیش از یک دسته بپیوندد، پس دو دسته می‌توانند قطعه‌های پایینی مشترک داشته باشند."
 
 #: ../../source/explanation/required.md:42
 msgid "On one side of the base of a stack (start or end), let $L_1, \\ldots, L_n$ be the distances from the base to the theoretical ends of the pieces, from top to bottom, so $L_1 < \\ldots < L_n$. Each piece is extended according to two rules:"
-msgstr ""
+msgstr "در یک سمت پایهٔ یک دسته (ابتدا یا انتها)، فرض کنید $L_1, \\ldots, L_n$ فاصله‌های پایه تا انتهاهای تئوری قطعه‌ها، از بالا به پایین، باشند، پس $L_1 < \\ldots < L_n$. هر قطعه طبق دو قاعده امتداد داده می‌شود:"
 
 #: ../../source/explanation/required.md:45
 msgid "The bar runs past its theoretical end by at least the effective depth $d$."
-msgstr ""
+msgstr "میلگرد دست‌کم به اندازهٔ عمق مؤثر $d$ از انتهای تئوری خود فراتر می‌رود."
 
 #: ../../source/explanation/required.md:46
 msgid "The required end of every bar is at least $L_d$ past the theoretical end of the next shorter bar; for the shortest bar, at least $L_d$ past the base."
-msgstr ""
+msgstr "انتهای لازم هر میلگرد دست‌کم $L_d$ فراتر از انتهای تئوری میلگرد کوتاه‌تر بعدی است؛ برای کوتاه‌ترین میلگرد، دست‌کم $L_d$ فراتر از پایه."
 
 #: ../../source/explanation/required.md:48
 msgid "The rule that gives the longer bar **governs** the end of the bar; OPTiBAR records which one it is ($d$ or $L_d$), as it decides how a bar is treated at the side of the foundation, see [Bars at the sides of the strip](#bars-at-the-sides)."
-msgstr ""
+msgstr "قاعده‌ای که میلگرد بلندتری به دست می‌دهد بر انتهای میلگرد **حاکم** است؛ OPTiBAR ثبت می‌کند که کدام است ($d$ یا $L_d$)، چون این تعیین می‌کند با میلگرد در لبهٔ فونداسیون چگونه رفتار شود؛ [میلگردها در لبه‌های نوار](#bars-at-the-sides) را ببینید."
 
 #: ../../source/explanation/required.md:51
 msgid "The code clauses for these rules are not documented yet. For the first rule, see the warning in [Detailing Rules](../reference/detailing-rules.md#additional-rebars)."
-msgstr ""
+msgstr "بندهای آیین‌نامه‌ای این قواعد هنوز مستند نشده‌اند. برای قاعدهٔ اول، هشدار [قواعد جزئیات‌سازی](../reference/detailing-rules.md#additional-rebars) را ببینید."
 
 #: ../../source/explanation/required.md:55
 msgid "The second rule is based on the theoretical end of the shorter bar. Suppose a stack has three bars of different lengths: bar 3 is extended from the end of bar 2, and bar 2 from the end of bar 1. If bar 2 is given the length of bar 3, then both bars 2 and 3 are extended from the end of bar 1. So giving some bars of a stack the same length can make the total length of the stack shorter."
-msgstr ""
+msgstr "قاعدهٔ دوم بر انتهای تئوری میلگرد کوتاه‌تر استوار است. فرض کنید یک دسته سه میلگرد با طول‌های متفاوت دارد: میلگرد 3 از انتهای میلگرد 2 امتداد داده می‌شود و میلگرد 2 از انتهای میلگرد 1. اگر به میلگرد 2 طول میلگرد 3 داده شود، هر دو میلگرد 2 و 3 از انتهای میلگرد 1 امتداد داده می‌شوند. پس هم‌طول کردن برخی میلگردهای یک دسته می‌تواند طول کل دسته را کوتاه‌تر کند."
 
 #: ../../source/explanation/required.md:60
 msgid "Dynamic programming algorithm"
-msgstr ""
+msgstr "الگوریتم برنامه‌ریزی پویا"
 
 #: ../../source/explanation/required.md:63
 msgid "We choose the best subset of the lengths $1, \\ldots, q$: every length that is not chosen is increased to the smallest chosen length above it, and the total length after applying the two rules is the least possible. The best way to choose $p$ lengths out of $1, \\ldots, q$ is built from the best ways to choose $p-1$ lengths out of $1, \\ldots, q-1$, $1, \\ldots, q-2$, …, $1, \\ldots, p-1$."
-msgstr ""
+msgstr "بهترین زیرمجموعه از طول‌های $1, \\ldots, q$ را انتخاب می‌کنیم: هر طولی که انتخاب نشود تا کوچک‌ترین طول انتخاب‌شدهٔ بالاتر از خود افزایش می‌یابد، و طول کل پس از اعمال دو قاعده کمترین مقدار ممکن است. بهترین روش انتخاب $p$ طول از میان $1, \\ldots, q$ از بهترین روش‌های انتخاب $p-1$ طول از میان $1, \\ldots, q-1$، $1, \\ldots, q-2$، …، $1, \\ldots, p-1$ ساخته می‌شود."
 
 #: ../../source/explanation/required.md:66
 msgid "$len(p,q)$ is the least total length of the bars $1, \\ldots, q$ when $p$ lengths are chosen from them:"
-msgstr ""
+msgstr "$len(p,q)$ کمترین طول کل میلگردهای $1, \\ldots, q$ است وقتی $p$ طول از میان آن‌ها انتخاب شود:"
 
 #: ../../source/explanation/required.md:77
 #, python-brace-format
 msgid "If the minimum is reached at $\\hat{i}$, the best way to choose $p$ lengths out of $1, \\ldots, q$ is to choose $q$, and $p-1$ lengths out of $1, \\ldots, \\hat{i}$; the lengths $\\hat{i}+1, \\ldots, q-1$ are increased to $L_q$. $ref(p,q)$ returns $\\hat{i}$:"
-msgstr ""
+msgstr "اگر کمینه در $\\hat{i}$ به دست آید، بهترین روش انتخاب $p$ طول از میان $1, \\ldots, q$ این است که $q$ انتخاب شود و $p-1$ طول از میان $1, \\ldots, \\hat{i}$؛ طول‌های $\\hat{i}+1, \\ldots, q-1$ تا $L_q$ افزایش می‌یابند. $ref(p,q)$ مقدار $\\hat{i}$ را برمی‌گرداند:"
 
 #: ../../source/explanation/required.md:89
 msgid "A recursive function would compute the same values many times. Instead, the values are computed in a table, row by row from the top, and in every row from left to right: $len(1,1), len(1,2), \\ldots, len(1,n)$, then $len(2,2), \\ldots, len(2,n)$, and so on. The least value in the last column is the best solution; following $ref$ from there gives the chosen lengths."
-msgstr ""
+msgstr "یک تابع بازگشتی همان مقادیر را بارها محاسبه می‌کند. به‌جای آن، مقادیر در یک جدول محاسبه می‌شوند، ردیف به ردیف از بالا، و در هر ردیف از چپ به راست: $len(1,1), len(1,2), \\ldots, len(1,n)$، سپس $len(2,2), \\ldots, len(2,n)$، و به همین ترتیب. کمترین مقدار در ستون آخر بهترین جواب است؛ دنبال کردن $ref$ از آنجا طول‌های انتخاب‌شده را به دست می‌دهد."
 
 #: ../../source/explanation/required.md:93
 msgid "Dynamic programming algorithm table"
-msgstr ""
+msgstr "جدول الگوریتم برنامه‌ریزی پویا"
 
 #: ../../source/explanation/required.md:133
 msgid "Example"
-msgstr ""
+msgstr "مثال"
 
 #: ../../source/explanation/required.md:136
 msgid "Let $L = [1, 1.5, 2]$, $d = 0.3$ and $L_d = 1.4$. Each cell of the table below holds the value of $len$ and the value of $ref$."
-msgstr ""
+msgstr "فرض کنید $L = [1, 1.5, 2]$، $d = 0.3$ و $L_d = 1.4$. هر خانهٔ جدول زیر مقدار $len$ و مقدار $ref$ را در خود دارد."
 
 #: ../../source/explanation/required.md:166
 msgid "The least value in the last column is $len(2,3) = 6.2$, with $ref(2,3) = 1$: bar 1 keeps its theoretical length, and bar 2 gets the theoretical length of bar 3. Applying the two rules to these lengths gives a total length of 6.2, less than the 6.7 of extending every bar on its own, $len(3,3)$."
-msgstr ""
+msgstr "کمترین مقدار در ستون آخر $len(2,3) = 6.2$ است، با $ref(2,3) = 1$: میلگرد 1 طول تئوری خود را نگه می‌دارد و میلگرد 2 طول تئوری میلگرد 3 را می‌گیرد. اعمال دو قاعده بر این طول‌ها طول کل 6.2 را به دست می‌دهد، کمتر از 6.7 که از امتداد دادن جداگانهٔ هر میلگرد به دست می‌آید، یعنی $len(3,3)$."
 
 #: ../../source/explanation/required.md:169
 msgid "The extensions are found for the start and the end side of each stack separately. A piece that belongs to two stacks gets the longer of the two required ends."
-msgstr ""
+msgstr "امتدادها برای سمت ابتدا و سمت انتهای هر دسته جداگانه به دست می‌آیند. قطعه‌ای که به دو دسته تعلق دارد بلندترِ دو انتهای لازم را می‌گیرد."
 
 #: ../../source/explanation/required.md:173
 msgid "Bars at the sides of the strip"
-msgstr ""
+msgstr "میلگردها در لبه‌های نوار"
 
 #: ../../source/explanation/required.md:176
 msgid "The bars must stay within the strip, less the side cover on both ends. Bars that pass the side are bent or cut (`Mesh._bend_stack_base`), with a bend of the length given in [Special Lengths](../reference/detailing-rules.md#special-lengths):"
-msgstr ""
+msgstr "میلگردها باید درون نوار، منهای پوشش جانبی در دو انتها، بمانند. میلگردهایی که از لبه بگذرند خم یا بریده می‌شوند (`Mesh._bend_stack_base`)، با خمی به طول داده‌شده در [طول‌های ویژه](../reference/detailing-rules.md#special-lengths):"
 
 #: ../../source/explanation/required.md:193
 msgid "Merging bars of a row"
-msgstr ""
+msgstr "ادغام میلگردهای یک ردیف"
 
 #: ../../source/explanation/required.md:196
 msgid "The required lengths of two neighbouring bars of a row can overlap. Then one bar from the start of the first to the end of the second may be shorter than the two bars together, as an overlap is only needed every 12 m. The bars of a row are merged where this lowers the total length, with the following algorithm (`Mesh._unify`). The **net length** of a bar of length $L$ is $L$ itself up to 12 m, and $L$ plus its overlaps above, see [Practical Length](practical.md#bars-longer-than-12-m)."
-msgstr ""
+msgstr "طول‌های لازم دو میلگرد مجاور در یک ردیف ممکن است روی هم بیفتند. در این صورت یک میلگرد از ابتدای اولی تا انتهای دومی ممکن است کوتاه‌تر از دو میلگرد با هم باشد، چون وصله فقط هر 12 متر لازم است. میلگردهای یک ردیف در جایی که این کار طول کل را کم کند با الگوریتم زیر ادغام می‌شوند (`Mesh._unify`). **طول خالص** میلگردی به طول $L$ تا 12 متر خود $L$ است، و بیش از آن $L$ به‌علاوهٔ وصله‌هایش؛ [طول اجرایی](practical.md#bars-longer-than-12-m) را ببینید."
 
 #: ../../source/explanation/required.md:220
 msgid "When two pieces are not merged, the stacks they belong to are kept apart in the rows above too. After merging, the required lengths are found again, and this repeats until no bars are merged."
-msgstr ""
+msgstr "وقتی دو قطعه ادغام نشوند، دسته‌هایی که به آن‌ها تعلق دارند در ردیف‌های بالاتر نیز جدا نگه داشته می‌شوند. پس از ادغام، طول‌های لازم دوباره به دست می‌آیند و این کار تا وقتی هیچ میلگردی ادغام نشود تکرار می‌شود."
 
 #: ../../source/explanation/shear.md:1
 msgid "Shear Rebars"
-msgstr ""
+msgstr "میلگردهای برشی"
 
 #: ../../source/explanation/shear.md:4
 msgid "In this chapter, we explore the algorithm for placing shear reinforcement."
-msgstr ""
+msgstr "در این فصل، الگوریتم قرار دادن میلگردهای برشی را بررسی می‌کنیم."
 
 #: ../../source/explanation/shear.md:6
 msgid "Where the one-way shear of a strip is more than the concrete can carry, SAFE gives the required shear steel along the strip, as an area per unit length. OPTiBAR connects these values at the stations of the strip linearly, and then:"
-msgstr ""
+msgstr "جایی که برش یک‌طرفهٔ یک نوار بیش از ظرفیت بتن باشد، SAFE فولاد برشی لازم را در امتداد نوار، به‌صورت سطح در واحد طول، می‌دهد. OPTiBAR این مقادیر را در ایستگاه‌های نوار به‌طور خطی به هم وصل می‌کند و سپس:"
 
 #: ../../source/explanation/shear.md:9
 msgid "Sets the required shear steel to zero inside the columns and inside the strips that cross the strip, since no shear rebars are placed there."
-msgstr ""
+msgstr "فولاد برشی لازم را درون ستون‌ها و درون نوارهایی که نوار را قطع می‌کنند صفر می‌کند، چون در آنجا میلگرد برشی قرار داده نمی‌شود."
 
 #: ../../source/explanation/shear.md:10
 msgid "Near the faces of the columns and crossing strips, within one foundation thickness of the face, caps the required steel at its value at the face. So the critical section is at one thickness from the face."
-msgstr ""
+msgstr "در نزدیکی بر ستون‌ها و نوارهای متقاطع، در فاصلهٔ یک ضخامت فونداسیون از بر، فولاد لازم را به مقدار آن در بر محدود می‌کند. بنابراین مقطع بحرانی در فاصلهٔ یک ضخامت از بر است."
 
 #: ../../source/explanation/shear.md:12
 msgid "A **shear zone** is a part of the strip where the required shear steel is more than zero. Zones shorter than **Elimination, Shear** get no shear rebars. Each zone is designed for the largest required steel in it."
-msgstr ""
+msgstr "یک **ناحیهٔ برشی** بخشی از نوار است که فولاد برشی لازم در آن بیش از صفر است. ناحیه‌های کوتاه‌تر از **Elimination, Shear** میلگرد برشی نمی‌گیرند. هر ناحیه برای بیشترین فولاد لازم در آن طراحی می‌شود."
 
 #: ../../source/explanation/shear.md:17
 msgid "The code clauses for these rules are not documented yet. OPTiBAR takes the critical section at one foundation thickness from the face; design codes usually take it at the effective depth $d$, which is a little closer to the face."
-msgstr ""
+msgstr "بندهای آیین‌نامه‌ای این قواعد هنوز مستند نشده‌اند. OPTiBAR مقطع بحرانی را در فاصلهٔ یک ضخامت فونداسیون از بر در نظر می‌گیرد؛ آیین‌نامه‌های طراحی معمولاً آن را در فاصلهٔ عمق مؤثر $d$ در نظر می‌گیرند که کمی به بر نزدیک‌تر است."
 
 #: ../../source/explanation/shear.md:21
 msgid "The designed algorithm for placing shear reinforcement is as follows:"
-msgstr ""
+msgstr "الگوریتم طراحی‌شده برای قرار دادن میلگردهای برشی چنین است:"
 
 #: ../../source/explanation/shear.md:23
 msgid "Find regions with positive values of the required shear steel."
-msgstr ""
+msgstr "ناحیه‌هایی را که فولاد برشی لازم در آن‌ها مثبت است پیدا کنید."
 
 #: ../../source/explanation/shear.md:24
 msgid "Find the maximum required steel in each of these regions."
-msgstr ""
+msgstr "بیشترین فولاد لازم را در هر یک از این ناحیه‌ها پیدا کنید."
 
 #: ../../source/explanation/shear.md:25
 msgid "Find a specified number (user-input) of unit densities along the length so that the minimum amount of shear steel is used by increasing the density in each region. This is done similarly to increasing the length of segments with a dynamic programming algorithm."
-msgstr ""
+msgstr "تعداد مشخصی (ورودی کاربر) چگالی واحد در طول پیدا کنید، طوری که با افزایش چگالی در هر ناحیه کمترین مقدار فولاد برشی به کار رود. این کار مشابه افزایش طول قطعه‌ها با یک الگوریتم برنامه‌ریزی پویا انجام می‌شود."
 
 #: ../../source/explanation/shear.md:26
 msgid "For each selected density, generate a shear type using the algorithm below and assign it to each region."
-msgstr ""
+msgstr "برای هر چگالی انتخاب‌شده، با الگوریتم زیر یک نوع برشی بسازید و آن را به هر ناحیه اختصاص دهید."
 
 #: ../../source/explanation/shear.md:28
 msgid "Choosing the shear types"
-msgstr ""
+msgstr "انتخاب انواع برشی"
 
 #: ../../source/explanation/shear.md:31
 #, python-brace-format
 msgid "The number of shear types in the foundation is set by **Number of Types, Shear**. Sort the distinct required densities of the zones, $\\rho_1 < \\rho_2 < \\ldots < \\rho_n$, and let $\\ell_i$ be the total length of the zones with density $\\rho_i$. If $\\rho_k$ is a selected density, every zone with a density between the previous selected density and $\\rho_k$ gets the type of $\\rho_k$. The steel used is $\\sum_i \\ell_i \\rho_{s(i)}$, where $\\rho_{s(i)}$ is the selected density zone $i$ is assigned to. The densities with the least steel are found by dynamic programming, like the practical lengths:"
-msgstr ""
+msgstr "تعداد انواع برشی در فونداسیون با **Number of Types, Shear** تعیین می‌شود. چگالی‌های لازم متمایز ناحیه‌ها را مرتب کنید، $\\rho_1 < \\rho_2 < \\ldots < \\rho_n$، و فرض کنید $\\ell_i$ طول کل ناحیه‌هایی با چگالی $\\rho_i$ باشد. اگر $\\rho_k$ یک چگالی انتخاب‌شده باشد، هر ناحیه‌ای با چگالی بین چگالی انتخاب‌شدهٔ قبلی و $\\rho_k$ نوع $\\rho_k$ را می‌گیرد. فولاد مصرفی $\\sum_i \\ell_i \\rho_{s(i)}$ است، که در آن $\\rho_{s(i)}$ چگالی انتخاب‌شده‌ای است که ناحیهٔ $i$ به آن اختصاص یافته است. چگالی‌هایی با کمترین فولاد، مانند طول‌های اجرایی، با برنامه‌ریزی پویا به دست می‌آیند:"
 
 #: ../../source/explanation/shear.md:46
 #, python-brace-format
 msgid "where $\\text{steel}(p,q)$ is the least steel for the zones up to $\\rho_q$ with $p$ types, the largest of which is $\\rho_q$. The largest density is always selected, so every zone gets a type."
-msgstr ""
+msgstr "که در آن $\\text{steel}(p,q)$ کمترین فولاد برای ناحیه‌ها تا $\\rho_q$ با $p$ نوع است که بزرگ‌ترین آن‌ها $\\rho_q$ است. بزرگ‌ترین چگالی همیشه انتخاب می‌شود، پس هر ناحیه یک نوع می‌گیرد."
 
 #: ../../source/explanation/shear.md:61
 msgid "Shear types with the same number of legs and spacing are merged. A zone of length $L$ gets $n \\lceil L / s \\rceil$ stirrups. The length of a stirrup is the thickness of the foundation less the covers, plus a 135° and a 90° hook."
-msgstr ""
+msgstr "انواع برشی با تعداد شاخه و فاصلهٔ یکسان ادغام می‌شوند. ناحیه‌ای به طول $L$ تعداد $n \\lceil L / s \\rceil$ خاموت می‌گیرد. طول یک خاموت برابر ضخامت فونداسیون منهای پوشش‌ها، به‌علاوهٔ یک قلاب 135 درجه و یک قلاب 90 درجه است."
 
 #: ../../source/explanation/shear.md:66
 msgid "OPTiBAR does not check the minimum shear steel, nor the maximum spacing of the legs across the strip. Check them against the design code of your project."
-msgstr ""
+msgstr "OPTiBAR حداقل فولاد برشی و حداکثر فاصلهٔ شاخه‌ها در عرض نوار را بررسی نمی‌کند. آن‌ها را با آیین‌نامهٔ طراحی پروژهٔ خود بررسی کنید."
 
 #: ../../source/explanation/theoretical.md:1
 msgid "Theoretical Length"
-msgstr ""
+msgstr "طول تئوری"
 
 #: ../../source/explanation/theoretical.md:3
 msgid "To obtain the theoretical lengths of the pieces, it is necessary to first determine the cross-sectional steel area required along the length of the strip. Then, by reducing step by step, the required amount of steel, the theoretical length, and the location of the pieces are obtained."
-msgstr ""
+msgstr "برای به دست آوردن طول‌های تئوری قطعه‌ها، ابتدا باید سطح مقطع فولاد لازم در امتداد طول نوار تعیین شود. سپس با کاهش گام‌به‌گام فولاد لازم، طول تئوری و جای قطعه‌ها به دست می‌آیند."
 
 #: ../../source/explanation/theoretical.md:5
 msgid "Note that this algorithm is only applicable when all the pieces obtained in one stage of the algorithm have the same diameter."
-msgstr ""
+msgstr "توجه کنید که این الگوریتم فقط وقتی کاربرد دارد که همهٔ قطعه‌هایی که در یک مرحله از الگوریتم به دست می‌آیند قطر یکسانی داشته باشند."
 
 #: ../../source/explanation/theoretical.md:7
 msgid "In regions where a concrete column is present, it is sufficient to satisfy the required steel on each of the two faces of the column: the required steel diagram is replaced by a straight line between the faces, see [Columns](../reference/detailing-rules.md#columns)."
-msgstr ""
+msgstr "در ناحیه‌هایی که ستون بتنی وجود دارد، کافی است فولاد لازم در هر یک از دو بر ستون برآورده شود: نمودار فولاد لازم با یک خط راست بین دو بر جایگزین می‌شود؛ [ستون‌ها](../reference/detailing-rules.md#columns) را ببینید."
 
 #: ../../source/explanation/theoretical.md:10
 msgid "The code clause for this rule is not documented yet."
-msgstr ""
+msgstr "بند آیین‌نامه‌ای این قاعده هنوز مستند نشده است."
 
 #: ../../source/explanation/theoretical.md:13
 msgid "The required steel diagram is corrected at the columns with the following algorithm (`Diagram.linearize_period`). The column sides come from the column sizes, see [Columns](../reference/detailing-rules.md#columns)."
-msgstr ""
+msgstr "نمودار فولاد لازم در محل ستون‌ها با الگوریتم زیر اصلاح می‌شود (`Diagram.linearize_period`). برهای ستون از اندازهٔ ستون‌ها به دست می‌آیند؛ [ستون‌ها](../reference/detailing-rules.md#columns) را ببینید."
 
 #: ../../source/explanation/theoretical.md:33
 msgid "Typical rebars"
-msgstr ""
+msgstr "میلگردهای سراسری"
 
 #: ../../source/explanation/theoretical.md:36
 msgid "There are four methods for placing the typical rebars, which are as follows:"
-msgstr ""
+msgstr "چهار روش برای قرار دادن میلگردهای سراسری وجود دارد:"
 
 #: ../../source/explanation/theoretical.md:38
 msgid "**Minimum ratio (`MIN_RATIO`):** the minimum steel is placed in each strip, $A_s = 0.0018\\,b\\,h$, rounded up to whole bars."
-msgstr ""
+msgstr "**حداقل نسبت (`MIN_RATIO`):** حداقل فولاد در هر نوار قرار داده می‌شود، $A_s = 0.0018\\,b\\,h$، که به تعداد صحیح میلگرد گرد می‌شود."
 
 #: ../../source/explanation/theoretical.md:39
 msgid "**Count (`COUNT`):** the given number of bars is placed. If it is less than the minimum steel, a warning is reported, see [Detailing Rules](../reference/detailing-rules.md#typical-rebars)."
-msgstr ""
+msgstr "**تعداد (`COUNT`):** تعداد داده‌شده از میلگردها قرار داده می‌شود. اگر کمتر از حداقل فولاد باشد، هشداری گزارش می‌شود؛ [قواعد جزئیات‌سازی](../reference/detailing-rules.md#typical-rebars) را ببینید."
 
 #: ../../source/explanation/theoretical.md:40
 msgid "**Interval (`INTERVAL`):** the strip width divided by the interval, rounded up."
-msgstr ""
+msgstr "**فاصله (`INTERVAL`):** عرض نوار تقسیم بر فاصله، گرد شده به بالا."
 
 #: ../../source/explanation/theoretical.md:41
 msgid "**Smart (`SMART`):** The minimum steel is placed. If the distance from the first station with zero steel demand to any of the edges is more than the foundation thickness, or if the distance between two consecutive zero-demand intermediate stations is more than twice the foundation thickness, the placement is completed. Otherwise, another bar is placed."
-msgstr ""
+msgstr "**هوشمند (`SMART`):** حداقل فولاد قرار داده می‌شود. اگر فاصلهٔ نخستین ایستگاه با نیاز فولاد صفر تا هر یک از لبه‌ها بیش از ضخامت فونداسیون باشد، یا اگر فاصلهٔ دو ایستگاه میانی متوالی با نیاز صفر بیش از دو برابر ضخامت فونداسیون باشد، جاگذاری کامل است. در غیر این صورت، یک میلگرد دیگر قرار داده می‌شود."
 
 #: ../../source/explanation/theoretical.md:43
 msgid "The app uses `INTERVAL`, and `COUNT` for the strips set on the **Strips** page."
-msgstr ""
+msgstr "برنامه از `INTERVAL` استفاده می‌کند، و از `COUNT` برای نوارهایی که در صفحهٔ **Strips** تعیین شده‌اند."
 
 #: ../../source/explanation/theoretical.md:45
 #, python-brace-format
 msgid "The area of the typical rebars is subtracted from the required steel diagram (`Diagram.insert_typical`), with {prf:ref}`reduce-as`. If the diagram is still positive somewhere, the rest is covered by additional rebars."
-msgstr ""
+msgstr "سطح میلگردهای سراسری از نمودار فولاد لازم کم می‌شود (`Diagram.insert_typical`)، با {prf:ref}`reduce-as`. اگر نمودار هنوز در جایی مثبت باشد، باقی آن با میلگردهای تقویتی پوشش داده می‌شود."
 
 #: ../../source/explanation/theoretical.md:48
 msgid "Additional rebars"
-msgstr ""
+msgstr "میلگردهای تقویتی"
 
 #: ../../source/explanation/theoretical.md:51
 msgid "The additional rebars are found row by row (`Mesh._insert_additional`):"
-msgstr ""
+msgstr "میلگردهای تقویتی ردیف به ردیف به دست می‌آیند (`Mesh._insert_additional`):"
 
 #: ../../source/explanation/theoretical.md:53
 #, python-brace-format
 msgid "Find the parts of the strip where the remaining required steel is more than zero ({prf:ref}`theoretical-piece`). Each part is the **theoretical** length of one bar; together they form a **row**."
-msgstr ""
+msgstr "بخش‌هایی از نوار را که فولاد لازمِ باقی‌مانده در آن‌ها بیش از صفر است پیدا کنید ({prf:ref}`theoretical-piece`). هر بخش **طول تئوری** یک میلگرد است؛ این بخش‌ها با هم یک **ردیف** را تشکیل می‌دهند."
 
 #: ../../source/explanation/theoretical.md:54
 #, python-brace-format
 msgid "Subtract the area of one additional rebar from the diagram ({prf:ref}`reduce-as`)."
-msgstr ""
+msgstr "سطح یک میلگرد تقویتی را از نمودار کم کنید ({prf:ref}`reduce-as`)."
 
 #: ../../source/explanation/theoretical.md:55
 msgid "Repeat while the diagram is positive anywhere."
-msgstr ""
+msgstr "تا وقتی نمودار در جایی مثبت است تکرار کنید."
 
 #: ../../source/explanation/theoretical.md:57
 msgid "The first row holds the longest bars, at the bottom of the stacks; every following row is shorter and lies above. Bars with a theoretical length shorter than **Elimination, Additional** are left out of their row."
-msgstr ""
+msgstr "ردیف اول بلندترین میلگردها را در پایین دسته‌ها در خود دارد؛ هر ردیف بعدی کوتاه‌تر است و بالاتر قرار می‌گیرد. میلگردهایی با طول تئوری کوتاه‌تر از **Elimination, Additional** از ردیف خود حذف می‌شوند."
 
 #: ../../source/explanation/theoretical.md:83
 #, python-brace-format
 msgid "A piece ends at the first of two consecutive zero stations, so a single zero station between two positive parts does not split the piece; {prf:ref}`reduce-as` keeps a single zero station where the diagram crosses zero and removes the ones in between."
-msgstr ""
+msgstr "یک قطعه در نخستینِ دو ایستگاه صفر متوالی پایان می‌یابد، پس یک ایستگاه صفر تنها بین دو بخش مثبت قطعه را تقسیم نمی‌کند؛ {prf:ref}`reduce-as` یک ایستگاه صفر را در جایی که نمودار از صفر می‌گذرد نگه می‌دارد و ایستگاه‌های میان آن را حذف می‌کند."
 

@@ -21,143 +21,143 @@ msgstr ""
 
 #: ../../source/reference/detailing-rules.md:1
 msgid "Detailing Rules"
-msgstr ""
+msgstr "قواعد جزئیات‌سازی"
 
 #: ../../source/reference/detailing-rules.md:4
 msgid "This page lists the rules OPTiBAR follows when it places the longitudinal rebars of a strip: which bars go in, how many, and how far they run. Every strip has a top and a bottom level, and each level is detailed on its own."
-msgstr ""
+msgstr "این صفحه قواعدی را فهرست می‌کند که OPTiBAR هنگام قرار دادن میلگردهای طولی یک نوار رعایت می‌کند: کدام میلگردها قرار می‌گیرند، چه تعداد، و تا کجا ادامه دارند. هر نوار یک تراز بالا و یک تراز پایین دارد و آرماتوربندی هر تراز جداگانه انجام می‌شود."
 
 #: ../../source/reference/detailing-rules.md:8
 msgid "The code clauses behind several rules on this page are not documented yet. Where a rule has no reference, check it against the design code of your project."
-msgstr ""
+msgstr "بندهای آیین‌نامه‌ای پشت چند قاعده در این صفحه هنوز مستند نشده‌اند. جایی که قاعده‌ای مرجع ندارد، آن را با آیین‌نامهٔ طراحی پروژهٔ خود بررسی کنید."
 
 #: ../../source/reference/detailing-rules.md:12
 msgid "Thermal and typical rebars"
-msgstr ""
+msgstr "میلگردهای حرارتی و میلگردهای سراسری"
 
 #: ../../source/reference/detailing-rules.md:15
 msgid "A level of a strip that needs no flexural steel, where SAFE's required steel area is zero along the whole strip, gets **thermal** rebars. Any other level gets **typical** rebars. This is why the cross strips of a mat often get thermal rebars: their moments are small. A cross strip with a large moment gets typical rebars instead."
-msgstr ""
+msgstr "ترازی از یک نوار که به فولاد خمشی نیاز ندارد، یعنی جایی که سطح مقطع فولاد لازم SAFE در تمام طول نوار صفر است، میلگردهای **حرارتی** می‌گیرد. هر تراز دیگر میلگردهای **سراسری** می‌گیرد. به همین دلیل نوارهای عرضی یک فونداسیون گسترده اغلب میلگرد حرارتی می‌گیرند: لنگرهای آن‌ها کوچک است. نوار عرضی‌ای که لنگر بزرگی دارد به‌جای آن میلگرد سراسری می‌گیرد."
 
 #: ../../source/reference/detailing-rules.md:21
 msgid "To use thermal rebars in a strip that carries a large moment, leave the strip out of the SAFE model and add its rebars to the drawing by hand."
-msgstr ""
+msgstr "برای به کار بردن میلگرد حرارتی در نواری که لنگر بزرگی دارد، آن نوار را از مدل SAFE حذف کنید و میلگردهای آن را دستی به نقشه بیفزایید."
 
 #: ../../source/reference/detailing-rules.md:24
 msgid "Thermal rebars"
-msgstr ""
+msgstr "میلگردهای حرارتی"
 
 #: ../../source/reference/detailing-rules.md:26
 msgid "The thermal rebars have a steel ratio of 0.0018 of the gross section, half in the top and half in the bottom: each level gets at least $0.0009\\,b\\,h$, rounded up to whole bars. Bars are added until the clear spacing is less than 35 cm."
-msgstr ""
+msgstr "میلگردهای حرارتی نسبت فولاد 0.0018 از مقطع کل را دارند، نیمی در بالا و نیمی در پایین: هر تراز دست‌کم $0.0009\\,b\\,h$ می‌گیرد که به تعداد صحیح میلگرد گرد می‌شود. میلگرد اضافه می‌شود تا فاصلهٔ آزاد کمتر از 35 سانتی‌متر شود."
 
 #: ../../source/reference/detailing-rules.md:30
 msgid "The 35 cm spacing limit is a fixed value in OPTiBAR, not derived from the design code; its source is not documented."
-msgstr ""
+msgstr "حد فاصلهٔ 35 سانتی‌متر مقداری ثابت در OPTiBAR است و از آیین‌نامهٔ طراحی به دست نیامده است؛ منبع آن مستند نشده است."
 
 #: ../../source/reference/detailing-rules.md:34
 msgid "Typical rebars"
-msgstr ""
+msgstr "میلگردهای سراسری"
 
 #: ../../source/reference/detailing-rules.md:36
 msgid "The typical rebars ensure the minimum flexural steel in every level that needs flexural steel. Their number comes from the **Typical Arrangement** setting:"
-msgstr ""
+msgstr "میلگردهای سراسری حداقل فولاد خمشی را در هر ترازی که به فولاد خمشی نیاز دارد تأمین می‌کنند. تعداد آن‌ها از تنظیم **Typical Arrangement** به دست می‌آید:"
 
 #: ../../source/reference/detailing-rules.md:39
 msgid "**Interval**: the strip width divided by the interval, rounded up. A strip 1.10 m wide with an interval of 20 cm gets 6 bars."
-msgstr ""
+msgstr "**Interval** (فاصله): عرض نوار تقسیم بر فاصله، گرد شده به بالا. نواری به عرض 1.10 متر با فاصلهٔ 20 سانتی‌متر 6 میلگرد می‌گیرد."
 
 #: ../../source/reference/detailing-rules.md:40
 msgid "**Number**, per strip and level on the **Strips** page: the given number of bars."
-msgstr ""
+msgstr "**Number** (تعداد)، برای هر نوار و تراز در صفحهٔ **Strips**: تعداد داده‌شده از میلگردها."
 
 #: ../../source/reference/detailing-rules.md:42
 msgid "The number is not raised to the minimum: you may place less than the minimum steel. In that case, and when the spacing is out of range, OPTiBAR places the bars and adds a warning to the report:"
-msgstr ""
+msgstr "این تعداد تا حداقل بالا برده نمی‌شود: می‌توانید کمتر از حداقل فولاد قرار دهید. در این حالت، و وقتی فاصله خارج از محدوده باشد، OPTiBAR میلگردها را قرار می‌دهد و هشداری به گزارش می‌افزاید:"
 
 #: ../../source/reference/detailing-rules.md:45
 msgid "the typical rebars are less than a steel ratio of 0.0018, $A_s < 0.0018\\,b\\,h$;"
-msgstr ""
+msgstr "میلگردهای سراسری کمتر از نسبت فولاد 0.0018 هستند، $A_s < 0.0018\\,b\\,h$؛"
 
 #: ../../source/reference/detailing-rules.md:46
 msgid "the clear spacing of the bars, typical and additional together, is more than 35 cm where the required steel is smallest;"
-msgstr ""
+msgstr "فاصلهٔ آزاد میلگردها، سراسری و تقویتی با هم، در جایی که فولاد لازم کمترین است بیش از 35 سانتی‌متر است؛"
 
 #: ../../source/reference/detailing-rules.md:47
 msgid "the clear spacing is less than 2.5 cm, or less than the bar diameter, where the required steel is largest."
-msgstr ""
+msgstr "فاصلهٔ آزاد در جایی که فولاد لازم بیشترین است کمتر از 2.5 سانتی‌متر یا کمتر از قطر میلگرد است."
 
 #: ../../source/reference/detailing-rules.md:50
 msgid "The code clauses for the minimum ratio and the spacing limits are not documented yet."
-msgstr ""
+msgstr "بندهای آیین‌نامه‌ای برای حداقل نسبت و حدود فاصله هنوز مستند نشده‌اند."
 
 #: ../../source/reference/detailing-rules.md:54
 msgid "Additional rebars"
-msgstr ""
+msgstr "میلگردهای تقویتی"
 
 #: ../../source/reference/detailing-rules.md:57
 msgid "Where the required steel is more than the typical rebars provide, the rest is covered by **additional** rebars. SAFE only gives the required steel area, so OPTiBAR first places bars to cover the diagram, which gives their **theoretical** lengths, see [Theoretical Length](../explanation/theoretical.md). Additional rebars with a theoretical length shorter than **Elimination, Additional** are left out."
-msgstr ""
+msgstr "جایی که فولاد لازم بیش از مقداری است که میلگردهای سراسری تأمین می‌کنند، باقی آن با میلگردهای **تقویتی** پوشش داده می‌شود. SAFE فقط سطح مقطع فولاد لازم را می‌دهد، پس OPTiBAR ابتدا میلگردهایی برای پوشش نمودار قرار می‌دهد که **طول‌های تئوری** آن‌ها را به دست می‌دهد؛ [طول تئوری](../explanation/theoretical.md) را ببینید. میلگردهای تقویتی با طول تئوری کوتاه‌تر از **Elimination, Additional** حذف می‌شوند."
 
 #: ../../source/reference/detailing-rules.md:61
 msgid "Then every bar is extended to its **required** length, so that both conditions below hold at each end:"
-msgstr ""
+msgstr "سپس هر میلگرد تا **طول لازم** خود امتداد داده می‌شود، طوری که هر دو شرط زیر در هر انتها برقرار باشند:"
 
 #: ../../source/reference/detailing-rules.md:63
 msgid "The bar runs past the end of its theoretical length by at least the effective depth $d$."
-msgstr ""
+msgstr "میلگرد دست‌کم به اندازهٔ عمق مؤثر $d$ از انتهای طول تئوری خود فراتر می‌رود."
 
 #: ../../source/reference/detailing-rules.md:64
 msgid "The bar runs at least $L_d$ past the point where it is needed at full strength: the peak of the diagram for the shortest bar of a stack, and the theoretical end of the next shorter bar for the others."
-msgstr ""
+msgstr "میلگرد دست‌کم $L_d$ از نقطه‌ای که در آن به مقاومت کامل نیاز است فراتر می‌رود: برای کوتاه‌ترین میلگرد یک دسته، قلهٔ نمودار، و برای بقیه، انتهای تئوری میلگرد کوتاه‌تر بعدی."
 
 #: ../../source/reference/detailing-rules.md:70
 msgid "Extending a bar can let the next bar of the stack be shorter, so OPTiBAR chooses the extensions of a whole stack together, with the least total length; see [Required Length](../explanation/required.md)."
-msgstr ""
+msgstr "امتداد دادن یک میلگرد می‌تواند اجازه دهد میلگرد بعدی دسته کوتاه‌تر باشد، پس OPTiBAR امتدادهای کل یک دسته را با هم و با کمترین طول کل انتخاب می‌کند؛ [طول لازم](../explanation/required.md) را ببینید."
 
 #: ../../source/reference/detailing-rules.md:73
 msgid "OPTiBAR extends bars past the end of their theoretical length by $d$ only. ACI 318 asks for at least the larger of $d$ and $12 d_b$, which is longer for bars thicker than $d/12$. Check this for thin foundations with large bars."
-msgstr ""
+msgstr "OPTiBAR میلگردها را فقط به اندازهٔ $d$ از انتهای طول تئوری آن‌ها فراتر می‌برد. ACI 318 دست‌کم بزرگ‌ترِ $d$ و $12 d_b$ را می‌خواهد، که برای میلگردهای ضخیم‌تر از $d/12$ بلندتر است. این را برای فونداسیون‌های کم‌ضخامت با میلگردهای درشت بررسی کنید."
 
 #: ../../source/reference/detailing-rules.md:78
 msgid "At last, the required lengths are rounded, unified and reduced to the numbers of length types you allow, which gives the **practical** lengths, see [Practical Length](../explanation/practical.md). All the steps run without user input; the settings only set the limits."
-msgstr ""
+msgstr "در پایان، طول‌های لازم گرد، یکسان‌سازی و به تعداد انواع طولی که اجازه می‌دهید کاهش داده می‌شوند، که **طول‌های اجرایی** را به دست می‌دهد؛ [طول اجرایی](../explanation/practical.md) را ببینید. همهٔ گام‌ها بدون ورودی کاربر اجرا می‌شوند؛ تنظیمات فقط حدود را تعیین می‌کنند."
 
 #: ../../source/reference/detailing-rules.md:81
 msgid "Bars that reach the side of the foundation, less the side cover, are bent."
-msgstr ""
+msgstr "میلگردهایی که به لبهٔ فونداسیون، منهای پوشش جانبی، می‌رسند خم می‌شوند."
 
 #: ../../source/reference/detailing-rules.md:84
 msgid "Columns"
-msgstr ""
+msgstr "ستون‌ها"
 
 #: ../../source/reference/detailing-rules.md:87
 msgid "OPTiBAR reads the column sizes from the **Load Size** of the point loads in SAFE; point loads without a load size, or smaller than 5 cm, are not columns."
-msgstr ""
+msgstr "OPTiBAR اندازهٔ ستون‌ها را از **Load Size** بارهای نقطه‌ای در SAFE می‌خواند؛ بارهای نقطه‌ای بدون اندازهٔ بار، یا کوچک‌تر از 5 سانتی‌متر، ستون نیستند."
 
 #: ../../source/reference/detailing-rules.md:89
 msgid "Between the faces of a column, the required steel diagram is replaced by a straight line between its values at the two faces. So the steel needed under the column is the steel needed at its faces, and the peak of SAFE's diagram inside the column is not used. The same is done for the factored moment diagram, see [Resistant Moment](../explanation/moment.md)."
-msgstr ""
+msgstr "بین دو بر یک ستون، نمودار فولاد لازم با یک خط راست بین مقادیر آن در دو بر جایگزین می‌شود. بنابراین فولاد لازم زیر ستون همان فولاد لازم در برهای آن است و قلهٔ نمودار SAFE درون ستون به کار نمی‌رود. همین کار برای نمودار لنگر ضریب‌دار انجام می‌شود؛ [لنگر مقاوم](../explanation/moment.md) را ببینید."
 
 #: ../../source/reference/detailing-rules.md:94
 msgid "The code clause for taking the steel at the column faces is not documented yet."
-msgstr ""
+msgstr "بند آیین‌نامه‌ای برای در نظر گرفتن فولاد در بر ستون هنوز مستند نشده است."
 
 #: ../../source/reference/detailing-rules.md:98
 msgid "Special lengths"
-msgstr ""
+msgstr "طول‌های ویژه"
 
 #: ../../source/reference/detailing-rules.md:101
 msgid "The development length $L_d$ is calculated from the concrete and steel of the SAFE model, with ACI 318's simplified expressions for deformed bars in tension, with $\\psi_e = \\lambda = 1$:"
-msgstr ""
+msgstr "طول مهاری $L_d$ از بتن و فولاد مدل SAFE، با عبارت‌های ساده‌شدهٔ ACI 318 برای میلگردهای آجدار در کشش و با $\\psi_e = \\lambda = 1$ محاسبه می‌شود:"
 
 #: ../../source/reference/detailing-rules.md:112
 msgid "with $f_y$ and $f'_c$ in MPa, $\\psi_t = 1.3$ for top bars and $1.0$ for bottom bars, rounded up to 1 cm. The overlap length is $1.3\\,L_d$, rounded up to 5 cm. The bend length is $13.7\\,d_b$ for 90° hooks and $11\\,d_b$ for the 135° hooks of shear rebars, rounded up to 5 cm."
-msgstr ""
+msgstr "با $f_y$ و $f'_c$ بر حسب MPa، و $\\psi_t = 1.3$ برای میلگردهای بالا و $1.0$ برای میلگردهای پایین، گرد شده به بالا تا 1 سانتی‌متر. طول وصله $1.3\\,L_d$ است، گرد شده به بالا تا 5 سانتی‌متر. طول خم برای قلاب‌های 90 درجه $13.7\\,d_b$ و برای قلاب‌های 135 درجهٔ میلگردهای برشی $11\\,d_b$ است، گرد شده به بالا تا 5 سانتی‌متر."
 
 #: ../../source/reference/detailing-rules.md:116
 msgid "All of them can be changed on the **Special Lengths** page, for example when closely spaced bars or shear rebars call for longer lengths; see [Adjust the detailing of a project](../how-to/adjust-detailing.md). The drawing lists the overlap lengths used in its tables."
-msgstr ""
+msgstr "همهٔ آن‌ها را می‌توان در صفحهٔ **Special Lengths** تغییر داد، مثلاً وقتی میلگردهایی با فاصلهٔ کم یا میلگردهای برشی طول‌های بلندتری لازم دارند؛ [تنظیم جزئیات آرماتوربندی یک پروژه](../how-to/adjust-detailing.md) را ببینید. نقشه طول‌های وصلهٔ به‌کاررفته را در جدول‌هایش فهرست می‌کند."
 
 #: ../../source/reference/index.rst:2
 msgid "Reference"
@@ -169,793 +169,793 @@ msgstr "شرح فنی تنظیمات، ورودی‌ها، خروجی‌ها و 
 
 #: ../../source/reference/outputs.md:1
 msgid "Outputs"
-msgstr ""
+msgstr "خروجی‌ها"
 
 #: ../../source/reference/outputs.md:4
 msgid "DXF drawing"
-msgstr ""
+msgstr "نقشهٔ DXF"
 
 #: ../../source/reference/outputs.md:6
 msgid "**DXF Drawing** saves the detailing map as a DXF file in meters. It opens in AutoCAD, AutoCAD LT, BricsCAD and free DXF viewers, and can be saved as DWG from any of them."
-msgstr ""
+msgstr "**DXF Drawing** نقشهٔ آرماتوربندی را به‌صورت فایل DXF بر حسب متر ذخیره می‌کند. این فایل در AutoCAD، AutoCAD LT، BricsCAD و نمایشگرهای رایگان DXF باز می‌شود و از هر کدام از آن‌ها می‌توان آن را به‌صورت DWG ذخیره کرد."
 
 #: ../../source/reference/outputs.md:8
 msgid "The drawing is laid out in model space as a row of sheets, each with the foundation plan, grids, grid dimensions and columns:"
-msgstr ""
+msgstr "نقشه در فضای مدل به‌صورت ردیفی از برگه‌ها چیده شده است، هر کدام با پلان فونداسیون، محورها، اندازه‌گذاری محورها و ستون‌ها:"
 
 #: ../../source/reference/outputs.md:10
 msgid "Name and width of the strips"
-msgstr ""
+msgstr "نام و عرض نوارها"
 
 #: ../../source/reference/outputs.md:11
 msgid "Top typical rebars, X and Y direction"
-msgstr ""
+msgstr "میلگردهای سراسری بالا، جهت X و Y"
 
 #: ../../source/reference/outputs.md:12
 msgid "Top additional rebars, X and Y direction"
-msgstr ""
+msgstr "میلگردهای تقویتی بالا، جهت X و Y"
 
 #: ../../source/reference/outputs.md:13
 msgid "Bottom typical rebars, X and Y direction"
-msgstr ""
+msgstr "میلگردهای سراسری پایین، جهت X و Y"
 
 #: ../../source/reference/outputs.md:14
 msgid "Bottom additional rebars, X and Y direction"
-msgstr ""
+msgstr "میلگردهای تقویتی پایین، جهت X و Y"
 
 #: ../../source/reference/outputs.md:15
 msgid "Shear zones, hatched by shear type"
-msgstr ""
+msgstr "ناحیه‌های برشی، هاشورخورده بر اساس نوع برشی"
 
 #: ../../source/reference/outputs.md:17
 msgid "Every bar is labelled with its number, diameter and length, for example `4Ø25-L=4.8`, and follows the mid line of its strip."
-msgstr ""
+msgstr "کنار هر میلگرد تعداد، قطر و طول آن نوشته شده است، مثلاً `4Ø25-L=4.8`، و میلگرد در امتداد خط میانی نوار خود رسم می‌شود."
 
 #: ../../source/reference/outputs.md:19
 msgid "![A plan sheet: top additional rebars of the X direction](../_static/images/dxf_plan.png)"
-msgstr ""
+msgstr "![یک برگهٔ پلان: میلگردهای تقویتی بالای جهت X](../_static/images/dxf_plan.png)"
 
 #: ../../source/reference/outputs.md:19
 msgid "A plan sheet: top additional rebars of the X direction"
-msgstr ""
+msgstr "یک برگهٔ پلان: میلگردهای تقویتی بالای جهت X"
 
 #: ../../source/reference/outputs.md:21
 msgid "Additional rebars are drawn in two colors, so the drawing is easier to check:"
-msgstr ""
+msgstr "میلگردهای تقویتی با دو رنگ رسم می‌شوند تا بررسی نقشه آسان‌تر باشد:"
 
 #: ../../source/reference/outputs.md:23
 msgid "**Blue** (layers `Additional Rebar Top` and `Additional Rebar Bottom`): each bar is a stack of its own. Neighbouring bars can overlap, because their practical lengths are longer than their required lengths, but they don't need an overlap length there."
-msgstr ""
+msgstr "**آبی** (لایه‌های `Additional Rebar Top` و `Additional Rebar Bottom`): هر میلگرد یک دستهٔ جداگانه است. میلگردهای مجاور می‌توانند روی هم بیفتند، چون طول‌های اجرایی آن‌ها از طول‌های لازمشان بلندتر است، اما در آنجا به طول وصله نیاز ندارند."
 
 #: ../../source/reference/outputs.md:25
 msgid "**Magenta** (layer `continuous Rebar`): one bar longer than the 12 m stock length, made of several pieces. Where these pieces overlap, the overlap is the overlap length of the bar, 1.3 times its development length."
-msgstr ""
+msgstr "**ارغوانی** (لایهٔ `continuous Rebar`): یک میلگرد بلندتر از طول 12 متری شاخه، که از چند قطعه ساخته شده است. جایی که این قطعه‌ها روی هم می‌افتند، هم‌پوشانی برابر طول وصلهٔ میلگرد است، یعنی 1.3 برابر طول مهاری آن."
 
 #: ../../source/reference/outputs.md:28
 msgid "![Blue bars are separate stacks; the magenta bar is longer than 12 m and spliced](../_static/images/dxf_splice_colors.png)"
-msgstr ""
+msgstr "![میلگردهای آبی دسته‌های جداگانه‌اند؛ میلگرد ارغوانی بلندتر از 12 متر است و وصله شده است](../_static/images/dxf_splice_colors.png)"
 
 #: ../../source/reference/outputs.md:28
 msgid "Blue bars are separate stacks; the magenta bar is longer than 12 m and spliced"
-msgstr ""
+msgstr "میلگردهای آبی دسته‌های جداگانه‌اند؛ میلگرد ارغوانی بلندتر از 12 متر است و وصله شده است"
 
 #: ../../source/reference/outputs.md:30
 msgid "After the sheets come a section of every shear type, with its stirrups and label,"
-msgstr ""
+msgstr "پس از برگه‌ها، مقطع هر نوع برشی با خاموت‌ها و برچسب آن می‌آید،"
 
 #: ../../source/reference/outputs.md:32
 msgid "![Shear type sections](../_static/images/dxf_sections.png)"
-msgstr ""
+msgstr "![مقطع‌های انواع برشی](../_static/images/dxf_sections.png)"
 
 #: ../../source/reference/outputs.md:32
 msgid "Shear type sections"
-msgstr ""
+msgstr "مقطع‌های انواع برشی"
 
 #: ../../source/reference/outputs.md:34
 msgid "followed by the tables: overlap lengths, number of length types, the piece list of every rebar type with its bar shape and weight, the mass summary and the concrete volume. Last are the moment diagrams of every strip, with the resisting moment φMn and the ultimate moment Mu along the strip, top and bottom."
-msgstr ""
+msgstr "و سپس جدول‌ها: طول‌های وصله، تعداد انواع طول، فهرست قطعات هر نوع میلگرد با شکل و وزن آن، خلاصهٔ وزن و حجم بتن. در پایان نمودارهای لنگر هر نوار آمده‌اند، با لنگر مقاوم φMn و لنگر نهایی Mu در طول نوار، بالا و پایین."
 
 #: ../../source/reference/outputs.md:36
 msgid "![The tables](../_static/images/dxf_tables.png)"
-msgstr ""
+msgstr "![جدول‌ها](../_static/images/dxf_tables.png)"
 
 #: ../../source/reference/outputs.md:36
 msgid "The tables"
-msgstr ""
+msgstr "جدول‌ها"
 
 #: ../../source/reference/outputs.md:38
 msgid "A piece list has one row per cut length, so it can have more rows than the number of length types you allowed: a bar longer than 12 m is cut into several pieces, and its last piece has a length of its own. The table of a rebar type is left out when the foundation has none of them, for example the thermal rebars."
-msgstr ""
+msgstr "فهرست قطعات برای هر طول برش یک ردیف دارد، پس می‌تواند بیش از تعداد انواع طولی که اجازه داده‌اید ردیف داشته باشد: میلگردی بلندتر از 12 متر به چند قطعه بریده می‌شود و قطعهٔ آخر آن طول خاص خود را دارد. جدول یک نوع میلگرد وقتی فونداسیون هیچ میلگردی از آن نوع ندارد حذف می‌شود، مثلاً میلگردهای حرارتی."
 
 #: ../../source/reference/outputs.md:41
 msgid "The moment diagrams only count the tension steel, so φMn is a little lower than the real resisting moment; see [Resistant Moment](../explanation/moment.md)."
-msgstr ""
+msgstr "نمودارهای لنگر فقط فولاد کششی را حساب می‌کنند، پس φMn کمی کمتر از لنگر مقاوم واقعی است؛ [لنگر مقاوم](../explanation/moment.md) را ببینید."
 
 #: ../../source/reference/outputs.md:43
 msgid "Each kind of object is on its own layer, for example `Typical Rebar Top`, `Additional Rebar Bottom`, `Rebar Text`, `Dimension` or `moment`, so parts of the drawing can be hidden or restyled."
-msgstr ""
+msgstr "هر نوع شیء روی لایهٔ خودش قرار دارد، مثلاً `Typical Rebar Top`، `Additional Rebar Bottom`، `Rebar Text`، `Dimension` یا `moment`، تا بتوان بخش‌هایی از نقشه را پنهان کرد یا سبکشان را تغییر داد."
 
 #: ../../source/reference/outputs.md:45
 msgid "Below the sheets are the **cutting plans**: one or more portrait sheets per bar diameter, saying how to cut the pieces from 12 m stock bars. Each row is a cutting pattern with the number of bars to cut that way, the pieces drawn to scale with their lengths, the waste (`w`), and the position of each piece in the piece lists, for example `A5` for the fifth row of the additional rebars."
-msgstr ""
+msgstr "زیر برگه‌ها **نقشه‌های برش** آمده‌اند: یک یا چند برگهٔ عمودی برای هر قطر میلگرد، که نشان می‌دهند قطعه‌ها چگونه از شاخه‌های 12 متری بریده شوند. هر ردیف یک الگوی برش است، با تعداد شاخه‌هایی که به آن شکل بریده می‌شوند، قطعه‌ها که با مقیاس و طولشان رسم شده‌اند، پرت (`w`)، و جایگاه هر قطعه در فهرست قطعات، مثلاً `A5` برای ردیف پنجم میلگردهای تقویتی."
 
 #: ../../source/reference/outputs.md:48
 msgid "![A cutting plan](../_static/images/dxf_cutting.png)"
-msgstr ""
+msgstr "![یک نقشهٔ برش](../_static/images/dxf_cutting.png)"
 
 #: ../../source/reference/outputs.md:48
 msgid "A cutting plan"
-msgstr ""
+msgstr "یک نقشهٔ برش"
 
 #: ../../source/reference/outputs.md:50
 msgid "The plans use as few stock bars as possible, and every piece is cut exactly as many times as needed. They are solved exactly with an arc-flow integer program, which proves that no plan uses fewer bars. Its linear relaxation is solved first, and the number of bars it gives, rounded up, is a lower bound that is nearly always the optimum, so the integer program can stop as soon as it reaches it."
-msgstr ""
+msgstr "نقشه‌ها کمترین تعداد ممکن شاخه را به کار می‌برند و هر قطعه دقیقاً به تعداد لازم بریده می‌شود. آن‌ها با یک برنامهٔ عدد صحیح arc-flow به‌طور دقیق حل می‌شوند که اثبات می‌کند هیچ نقشه‌ای شاخهٔ کمتری به کار نمی‌برد. ابتدا آزادسازی خطی آن حل می‌شود و تعداد شاخه‌ای که به دست می‌دهد، گرد شده به بالا، کران پایینی است که تقریباً همیشه همان مقدار بهینه است، پس برنامهٔ عدد صحیح می‌تواند به محض رسیدن به آن متوقف شود."
 
 #: ../../source/reference/outputs.md:52
 msgid "The line under each sheet gives the number of bars, whether the plan is proven optimal, and the waste. If the time limit stopped the solver before the proof, it says \"not proven optimal\" with the fewest bars any plan could use. The PDF drawing and the Report show the same."
-msgstr ""
+msgstr "خط زیر هر برگه تعداد شاخه‌ها، بهینه بودن اثبات‌شدهٔ نقشه و پرت را نشان می‌دهد. اگر محدودیت زمان حل‌کننده را پیش از اثبات متوقف کند، عبارت «not proven optimal» (بهینه بودن اثبات نشده) را همراه با کمترین تعداد شاخه‌ای که هر نقشه‌ای ممکن است به کار ببرد نشان می‌دهد. نقشهٔ PDF و Report همین را نشان می‌دهند."
 
 #: ../../source/reference/outputs.md:54
 msgid "PDF drawing"
-msgstr ""
+msgstr "نقشهٔ PDF"
 
 #: ../../source/reference/outputs.md:56
 msgid "**PDF Drawing** saves an A4 sketch: one page per strip with its top and bottom additional rebars, followed by the mass summary, the technical specifications, the piece lists and the cutting plans. It is meant for a quick check, the DXF is the detailing map."
-msgstr ""
+msgstr "**PDF Drawing** یک کروکی A4 ذخیره می‌کند: برای هر نوار یک صفحه با میلگردهای تقویتی بالا و پایین آن، و سپس خلاصهٔ وزن، مشخصات فنی، فهرست قطعات و نقشه‌های برش. این کروکی برای بررسی سریع است؛ نقشهٔ آرماتوربندی همان فایل DXF است."
 
 #: ../../source/reference/outputs.md:59
 msgid "Results file and summary"
-msgstr ""
+msgstr "فایل نتایج و خلاصه"
 
 #: ../../source/reference/outputs.md:61
 msgid "**Save Results** writes two files, for example `foundation_calculation.json` and `foundation_calculation_summary.txt`."
-msgstr ""
+msgstr "**Save Results** دو فایل می‌نویسد، مثلاً `foundation_calculation.json` و `foundation_calculation_summary.txt`."
 
 #: ../../source/reference/outputs.md:63
 msgid "The **summary** is the text of the Report box, headed by the input file and the main settings, and ends with every pattern of the cutting plans. It is meant for reading and for attaching to a report."
-msgstr ""
+msgstr "**خلاصه** همان متن کادر Report است، با فایل ورودی و تنظیمات اصلی در ابتدا، و با همهٔ الگوهای نقشه‌های برش در پایان. این خلاصه برای خواندن و پیوست کردن به گزارش است."
 
 #: ../../source/reference/outputs.md:65
 msgid "The **JSON file** holds everything needed to reproduce or post-process the result:"
-msgstr ""
+msgstr "**فایل JSON** همهٔ آنچه برای بازتولید یا پردازش بعدی نتیجه لازم است را در خود دارد:"
 
 #: ../../source/reference/outputs.md:67 ../../source/reference/outputs.md:81
 #: ../../source/reference/window.md:48
 msgid "Key"
-msgstr ""
+msgstr "کلید"
 
 #: ../../source/reference/outputs.md:67 ../../source/reference/outputs.md:81
 msgid "Content"
-msgstr ""
+msgstr "محتوا"
 
 #: ../../source/reference/outputs.md:69
 msgid "The OPTiBAR version that produced the result."
-msgstr ""
+msgstr "نسخهٔ OPTiBAR که نتیجه را تولید کرده است."
 
 #: ../../source/reference/outputs.md:70
 msgid "Date and time of saving."
-msgstr ""
+msgstr "تاریخ و زمان ذخیره."
 
 #: ../../source/reference/outputs.md:71
 msgid "The SAFE database the project was loaded from."
-msgstr ""
+msgstr "پایگاه دادهٔ SAFE که پروژه از آن بارگذاری شده است."
 
 #: ../../source/reference/outputs.md:72
 msgid "`calculation` for a computation, `analysis` for an analysis."
-msgstr ""
+msgstr "`calculation` برای یک محاسبه، `analysis` برای یک تحلیل."
 
 #: ../../source/reference/outputs.md:73
 msgid "The settings of the calculation."
-msgstr ""
+msgstr "تنظیمات محاسبه."
 
 #: ../../source/reference/outputs.md:74
 msgid "The engine output, see below."
-msgstr ""
+msgstr "خروجی موتور محاسبه؛ پایین‌تر را ببینید."
 
 #: ../../source/reference/outputs.md:76
 msgid "For a computation, `result` has a `data` key with the detailed foundation, and `warnings` when there are any. When the number of length types is too small to be feasible, `result` has an `errors` key with `min_feasible_num`, the smallest total number of length types that works."
-msgstr ""
+msgstr "برای یک محاسبه، `result` یک کلید `data` با جزئیات فونداسیون دارد، و `warnings` وقتی هشداری وجود داشته باشد. وقتی تعداد انواع طول برای شدنی بودن خیلی کم باشد، `result` یک کلید `errors` با `min_feasible_num` دارد، یعنی کوچک‌ترین تعداد کل انواع طول که کار می‌کند."
 
 #: ../../source/reference/outputs.md:79
 msgid "The main parts of `result[\"data\"]` are:"
-msgstr ""
+msgstr "بخش‌های اصلی `result[\"data\"]` عبارت‌اند از:"
 
 #: ../../source/reference/outputs.md:83
 msgid "Rebar mass in tons by type and level, and the concrete volume in m³."
-msgstr ""
+msgstr "وزن میلگرد بر حسب تن به تفکیک نوع و تراز، و حجم بتن بر حسب m³."
 
 #: ../../source/reference/outputs.md:84
 msgid "The piece list of the typical, thermal, additional and shear rebars: diameter, length, number and bends."
-msgstr ""
+msgstr "فهرست قطعات میلگردهای سراسری، حرارتی و تقویتی و میلگردهای برشی: قطر، طول، تعداد و خم‌ها."
 
 #: ../../source/reference/outputs.md:85
 msgid "Per strip: geometry, the bars of every row with their practical stations and bends, shear zones, and the moment diagrams."
-msgstr ""
+msgstr "برای هر نوار: هندسه، میلگردهای هر ردیف با ایستگاه‌های اجرایی و خم‌هایشان، ناحیه‌های برشی و نمودارهای لنگر."
 
 #: ../../source/reference/outputs.md:86
 msgid "Materials, covers, the special lengths per diameter, and the numbers of length types used."
-msgstr ""
+msgstr "مصالح، پوشش‌ها، طول‌های ویژه برای هر قطر، و تعداد انواع طول به‌کاررفته."
 
 #: ../../source/reference/outputs.md:87
 msgid "The shear arrangements: diameter, number of legs and spacing."
-msgstr ""
+msgstr "آرایش‌های برشی: قطر، تعداد شاخه‌ها و فاصله."
 
 #: ../../source/reference/outputs.md:88
 msgid "The foundation outline, openings, columns and grid lines."
-msgstr ""
+msgstr "مرز فونداسیون، بازشوها، ستون‌ها و محورها."
 
 #: ../../source/reference/outputs.md:89
 msgid "The cutting plan of every diameter: stock length, number of bars, waste, whether the plan is proven optimal (`optimal`) and the fewest bars any plan could use (`lower_bound`), and the patterns with their pieces."
-msgstr ""
+msgstr "نقشهٔ برش هر قطر: طول شاخه، تعداد شاخه‌ها، پرت، اینکه آیا نقشه بهینهٔ اثبات‌شده است (`optimal`) و کمترین تعداد شاخه‌ای که هر نقشه‌ای ممکن است به کار ببرد (`lower_bound`)، و الگوها با قطعه‌هایشان."
 
 #: ../../source/reference/outputs.md:91
 #, python-brace-format
 msgid "For an analysis, `result` is a list with the `data` part of every combination, or `{}` where a combination isn't feasible."
-msgstr ""
+msgstr "برای یک تحلیل، `result` فهرستی از بخش `data` هر ترکیب است، یا `{}` برای ترکیبی که شدنی نیست."
 
 #: ../../source/reference/safe-input.md:1
 msgid "SAFE input"
-msgstr ""
+msgstr "ورودی SAFE"
 
 #: ../../source/reference/safe-input.md:4
 msgid "OPTiBAR reads the Microsoft Access database (`.accdb` or `.mdb`) exported by CSI SAFE, through the Microsoft Access ODBC driver. The units of the file are converted when it is read."
-msgstr ""
+msgstr "OPTiBAR پایگاه دادهٔ Microsoft Access (`.accdb` یا `.mdb`) را که CSI SAFE خروجی می‌دهد، از طریق درایور Microsoft Access ODBC می‌خواند. واحدهای فایل هنگام خواندن تبدیل می‌شوند."
 
 #: ../../source/reference/safe-input.md:7
 msgid "Tables"
-msgstr ""
+msgstr "جدول‌ها"
 
 #: ../../source/reference/safe-input.md:9
 msgid "Table"
-msgstr ""
+msgstr "جدول"
 
 #: ../../source/reference/safe-input.md:9
 msgid "What OPTiBAR reads"
-msgstr ""
+msgstr "آنچه OPTiBAR می‌خواند"
 
 #: ../../source/reference/safe-input.md:9
 msgid "Program Control"
-msgstr ""
+msgstr "Program Control"
 
 #: ../../source/reference/safe-input.md:9
 msgid "The units of the file."
-msgstr ""
+msgstr "واحدهای فایل."
 
 #: ../../source/reference/safe-input.md:9
 msgid "Grid Lines"
-msgstr ""
+msgstr "Grid Lines"
 
 #: ../../source/reference/safe-input.md:9
 msgid "The grid lines, for the drawing."
-msgstr ""
+msgstr "محورها، برای نقشه."
 
 #: ../../source/reference/safe-input.md:9
 msgid "Concrete Slab Design 01 - Flexural And Shear Data"
-msgstr ""
+msgstr "Concrete Slab Design 01 - Flexural And Shear Data"
 
 #: ../../source/reference/safe-input.md:9
 msgid "The required top and bottom steel, the shear steel, the factored moments and the width at every station of every strip."
-msgstr ""
+msgstr "فولاد لازم بالا و پایین، فولاد برشی، لنگرهای ضریب‌دار و عرض، در هر ایستگاه هر نوار."
 
 #: ../../source/reference/safe-input.md:9
 msgid "Object Geometry - Design Strips"
-msgstr ""
+msgstr "Object Geometry - Design Strips (هندسهٔ نوارهای طراحی)"
 
 #: ../../source/reference/safe-input.md:9
 msgid "The geometry and widths of the strips."
-msgstr ""
+msgstr "هندسه و عرض نوارها."
 
 #: ../../source/reference/safe-input.md:9
 msgid "Material Properties 03 - Concrete"
-msgstr ""
+msgstr "Material Properties 03 - Concrete"
 
 #: ../../source/reference/safe-input.md:9
 msgid "$f'_c$ of the concrete."
-msgstr ""
+msgstr "$f'_c$ بتن."
 
 #: ../../source/reference/safe-input.md:15
 msgid "Material Properties 04 - Rebar"
-msgstr ""
+msgstr "Material Properties 04 - Rebar (مشخصات مصالح میلگرد)"
 
 #: ../../source/reference/safe-input.md:15
 msgid "$f_y$ of the rebars."
-msgstr ""
+msgstr "$f_y$ میلگردها."
 
 #: ../../source/reference/safe-input.md:16
 msgid "Slab Design Overwrites 01 - Strip Based"
-msgstr ""
+msgstr "Slab Design Overwrites 01 - Strip Based"
 
 #: ../../source/reference/safe-input.md:16
 msgid "The rebar material and cover overwrites of the strips."
-msgstr ""
+msgstr "تغییرات مصالح میلگرد و پوشش نوارها."
 
 #: ../../source/reference/safe-input.md:16
 msgid "Design Preferences 02 - Rebar Cover - Slabs"
-msgstr ""
+msgstr "Design Preferences 02 - Rebar Cover - Slabs (پوشش میلگرد دال‌ها)"
 
 #: ../../source/reference/safe-input.md:16
 msgid "The top and bottom covers, where a strip doesn't overwrite them."
-msgstr ""
+msgstr "پوشش‌های بالا و پایین، در جایی که نوار آن‌ها را تغییر نمی‌دهد."
 
 #: ../../source/reference/safe-input.md:16
 msgid "Slab Properties 02 - Solid Slabs"
-msgstr ""
+msgstr "Slab Properties 02 - Solid Slabs"
 
 #: ../../source/reference/safe-input.md:16
 msgid "The thickness and material of the slabs."
-msgstr ""
+msgstr "ضخامت و مصالح دال‌ها."
 
 #: ../../source/reference/safe-input.md:16
 msgid "Slab Property Assignments"
-msgstr ""
+msgstr "Slab Property Assignments"
 
 #: ../../source/reference/safe-input.md:16
 msgid "Which slab property each area has."
-msgstr ""
+msgstr "اینکه هر سطح کدام مشخصهٔ دال را دارد."
 
 #: ../../source/reference/safe-input.md:16
 msgid "Object Geometry - Point Coordinates"
-msgstr ""
+msgstr "Object Geometry - Point Coordinates"
 
 #: ../../source/reference/safe-input.md:16
 msgid "The coordinates of the points."
-msgstr ""
+msgstr "مختصات نقطه‌ها."
 
 #: ../../source/reference/safe-input.md:16
 msgid "Load Assignments - Point Loads"
-msgstr ""
+msgstr "Load Assignments - Point Loads"
 
 #: ../../source/reference/safe-input.md:16
 msgid "The columns: point loads with a load size larger than 5 cm in both directions."
-msgstr ""
+msgstr "ستون‌ها: بارهای نقطه‌ای با اندازهٔ بار بزرگ‌تر از 5 سانتی‌متر در هر دو جهت."
 
 #: ../../source/reference/safe-input.md:16
 msgid "Object Geometry - Areas 01 - General"
-msgstr ""
+msgstr "Object Geometry - Areas 01 - General"
 
 #: ../../source/reference/safe-input.md:16
 msgid "The outline and openings of the foundation; wall areas are skipped."
-msgstr ""
+msgstr "مرز و بازشوهای فونداسیون؛ سطوح دیوار نادیده گرفته می‌شوند."
 
 #: ../../source/reference/safe-input.md:25
 msgid "When the export doesn't contain a table, loading the file fails and the report names what is missing. When the model uses more than one concrete or steel material, the report warns about it."
-msgstr ""
+msgstr "وقتی خروجی جدولی را نداشته باشد، بارگذاری فایل ناموفق است و گزارش نام آنچه کم است را می‌گوید. وقتی مدل بیش از یک مصالح بتن یا فولاد به کار ببرد، گزارش درباره‌اش هشدار می‌دهد."
 
 #: ../../source/reference/safe-input.md:29
 msgid "SAFE versions"
-msgstr ""
+msgstr "نسخه‌های SAFE"
 
 #: ../../source/reference/safe-input.md:31
 msgid "OPTiBAR is tested with files exported by **SAFE 2016** (v16.0.2); the parser is `V16Parser`."
-msgstr ""
+msgstr "OPTiBAR با فایل‌های خروجی **SAFE 2016** (v16.0.2) آزموده شده است؛ خواننده (parser) آن `V16Parser` است."
 
 #: ../../source/reference/safe-input.md:33
 msgid "SAFE v20 and later (v20, v21, v22, v23) are built on a new platform, and the exported tables have different names: for example, the strip design results are in \"Concrete Slab Design Summary - Flexure and Shear Data\". These files are not supported yet."
-msgstr ""
+msgstr "SAFE v20 و نسخه‌های بعدی (v20، v21، v22، v23) بر بستری جدید ساخته شده‌اند و جدول‌های خروجی نام‌های متفاوتی دارند: برای نمونه، نتایج طراحی نوارها در «Concrete Slab Design Summary - Flexure and Shear Data» است. این فایل‌ها هنوز پشتیبانی نمی‌شوند."
 
 #: ../../source/reference/settings.md:1 ../../source/reference/window.md:30
 msgid "Settings"
-msgstr ""
+msgstr "تنظیمات"
 
 #: ../../source/reference/settings.md:4
 msgid "The settings on the left of the window, in the **Basic**, **Special Lengths** and **Strips** pages. Hover the ⓘ next to a setting in the app for a short description. **View > Dark Theme** switches the app to a dark theme."
-msgstr ""
+msgstr "تنظیمات سمت چپ پنجره، در صفحه‌های **Basic**، **Special Lengths** و **Strips**. برای دیدن توضیح کوتاه هر تنظیم، نشانگر را روی ⓘ کنار آن در برنامه ببرید. **View > Dark Theme** برنامه را به پوستهٔ تیره می‌برد."
 
 #: ../../source/reference/settings.md:8
 msgid "Type of Request"
-msgstr ""
+msgstr "Type of Request (نوع درخواست)"
 
 #: ../../source/reference/settings.md:10
 msgid "Value"
-msgstr ""
+msgstr "مقدار"
 
 #: ../../source/reference/settings.md:10 ../../source/reference/settings.md:17
 #: ../../source/reference/settings.md:37 ../../source/reference/window.md:11
 #: ../../source/reference/window.md:18
 msgid "Meaning"
-msgstr ""
+msgstr "معنا"
 
 #: ../../source/reference/settings.md:10
 msgid "Computation"
-msgstr ""
+msgstr "Computation"
 
 #: ../../source/reference/settings.md:10
 msgid "Details the foundation once, with the settings below."
-msgstr ""
+msgstr "آرماتوربندی فونداسیون را یک بار، با تنظیمات زیر، انجام می‌دهد."
 
 #: ../../source/reference/settings.md:10
 msgid "Analysis"
-msgstr ""
+msgstr "Analysis"
 
 #: ../../source/reference/settings.md:10
 msgid "Repeats the detailing for a range of Total and Stack, and compares the rebar mass of each combination."
-msgstr ""
+msgstr "آرماتوربندی را برای بازه‌ای از Total و Stack (دسته) تکرار می‌کند و وزن میلگرد هر ترکیب را مقایسه می‌کند."
 
 #: ../../source/reference/settings.md:15
 msgid "Basic"
-msgstr ""
+msgstr "Basic"
 
 #: ../../source/reference/settings.md:17 ../../source/reference/settings.md:37
 msgid "Setting"
-msgstr ""
+msgstr "تنظیم"
 
 #: ../../source/reference/settings.md:17
 msgid "Unit"
-msgstr ""
+msgstr "واحد"
 
 #: ../../source/reference/settings.md:17
 msgid "Default"
-msgstr ""
+msgstr "پیش‌فرض"
 
 #: ../../source/reference/settings.md:17
 msgid "Values"
-msgstr ""
+msgstr "مقادیر"
 
 #: ../../source/reference/settings.md:17
 msgid "Diameter, Typical"
-msgstr ""
+msgstr "Diameter, Typical"
 
 #: ../../source/reference/settings.md:17
 msgid "Diameter of the typical rebars."
-msgstr ""
+msgstr "قطر میلگردهای سراسری."
 
 #: ../../source/reference/settings.md:17
 msgid "mm"
-msgstr ""
+msgstr "mm"
 
 #: ../../source/reference/settings.md:17
 msgid "Diameter, Additional"
-msgstr ""
+msgstr "Diameter, Additional"
 
 #: ../../source/reference/settings.md:17
 msgid "Diameter of the additional rebars."
-msgstr ""
+msgstr "قطر میلگردهای تقویتی."
 
 #: ../../source/reference/settings.md:17
 msgid "as above"
-msgstr ""
+msgstr "مانند بالا"
 
 #: ../../source/reference/settings.md:17
 msgid "Diameter, Thermal"
-msgstr ""
+msgstr "Diameter, Thermal"
 
 #: ../../source/reference/settings.md:17
 msgid "Diameter of the thermal rebars."
-msgstr ""
+msgstr "قطر میلگردهای حرارتی."
 
 #: ../../source/reference/settings.md:17
 msgid "Diameter, Shear"
-msgstr ""
+msgstr "Diameter, Shear"
 
 #: ../../source/reference/settings.md:17
 msgid "Diameter of the shear rebars."
-msgstr ""
+msgstr "قطر میلگردهای برشی."
 
 #: ../../source/reference/settings.md:17
 msgid "Typical Arrangement, Interval"
-msgstr ""
+msgstr "Typical Arrangement, Interval"
 
 #: ../../source/reference/settings.md:17
 msgid "Spacing of the typical rebars; a strip gets its width divided by the interval, rounded up."
-msgstr ""
+msgstr "فاصلهٔ میلگردهای سراسری؛ هر نوار به تعداد عرض خود تقسیم بر این فاصله، گرد شده به بالا، میلگرد می‌گیرد."
 
 #: ../../source/reference/settings.md:17
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #: ../../source/reference/settings.md:17
 msgid "up to 100"
-msgstr ""
+msgstr "تا 100"
 
 #: ../../source/reference/settings.md:17
 msgid "Cover, Side Cover"
-msgstr ""
+msgstr "Cover, Side Cover (پوشش جانبی)"
 
 #: ../../source/reference/settings.md:17
 msgid "Distance from the side of the foundation to the ends of the longitudinal rebars."
-msgstr ""
+msgstr "فاصله از لبهٔ فونداسیون تا انتهای میلگردهای طولی."
 
 #: ../../source/reference/settings.md:17
 msgid "up to 20"
-msgstr ""
+msgstr "تا 20"
 
 #: ../../source/reference/settings.md:17
 msgid "Elimination, Additional"
-msgstr ""
+msgstr "Elimination, Additional"
 
 #: ../../source/reference/settings.md:17
 msgid "Additional rebars with a theoretical length shorter than this are left out."
-msgstr ""
+msgstr "میلگردهای تقویتی با طول تئوری کوتاه‌تر از این مقدار حذف می‌شوند."
 
 #: ../../source/reference/settings.md:17
 msgid "m"
-msgstr ""
+msgstr "m"
 
 #: ../../source/reference/settings.md:17
 msgid "0 to 2, in steps of 0.1"
-msgstr ""
+msgstr "0 تا 2، با گام 0.1"
 
 #: ../../source/reference/settings.md:17
 msgid "Elimination, Shear"
-msgstr ""
+msgstr "Elimination, Shear"
 
 #: ../../source/reference/settings.md:17
 msgid "Parts of a strip that need shear rebars and are shorter than this get none."
-msgstr ""
+msgstr "بخش‌هایی از نوار که به میلگرد برشی نیاز دارند و کوتاه‌تر از این مقدارند، میلگرد برشی نمی‌گیرند."
 
 #: ../../source/reference/settings.md:17
 msgid "0 to 5, in steps of 0.5"
-msgstr ""
+msgstr "0 تا 5، با گام 0.5"
 
 #: ../../source/reference/settings.md:17
 msgid "Number of Types, Total"
-msgstr ""
+msgstr "Number of Types, Total"
 
 #: ../../source/reference/settings.md:17
 msgid "Maximum number of different lengths of additional rebars in the whole foundation."
-msgstr ""
+msgstr "حداکثر تعداد طول‌های مختلف میلگردهای تقویتی در کل فونداسیون."
 
 #: ../../source/reference/settings.md:17
 msgid "10 to 40"
-msgstr ""
+msgstr "10 تا 40"
 
 #: ../../source/reference/settings.md:17
 msgid "Number of Types, Stack"
-msgstr ""
+msgstr "Number of Types, Stack (تعداد انواع طول در هر دسته)"
 
 #: ../../source/reference/settings.md:17
 msgid "Maximum number of different lengths of additional rebars in one stack."
-msgstr ""
+msgstr "حداکثر تعداد طول‌های مختلف میلگردهای تقویتی در یک دسته."
 
 #: ../../source/reference/settings.md:17
 msgid "1 to 5"
-msgstr ""
+msgstr "1 تا 5"
 
 #: ../../source/reference/settings.md:17
 msgid "Number of Types, Shear"
-msgstr ""
+msgstr "Number of Types, Shear"
 
 #: ../../source/reference/settings.md:17
 msgid "Maximum number of different shear rebar arrangements in the foundation."
-msgstr ""
+msgstr "حداکثر تعداد آرایش‌های مختلف میلگرد برشی در فونداسیون."
 
 #: ../../source/reference/settings.md:31
 msgid "For an **Analysis**, Total and Stack are ranges, **From** and **To**: Total from 10 to 20 by default, spanning at most 10; Stack from 2 to 4, spanning at most 2."
-msgstr ""
+msgstr "برای یک **Analysis**، مقادیر Total و Stack (دسته) بازه هستند، با **From** و **To**: Total به‌طور پیش‌فرض از 10 تا 20، با گسترهٔ حداکثر 10؛ Stack از 2 تا 4، با گسترهٔ حداکثر 2."
 
 #: ../../source/reference/settings.md:33
 msgid "The covers of the top and bottom faces are read from the SAFE model."
-msgstr ""
+msgstr "پوشش‌های وجه بالا و پایین از مدل SAFE خوانده می‌شوند."
 
 #: ../../source/reference/settings.md:35
 msgid "Special Lengths and Strips"
-msgstr ""
+msgstr "Special Lengths و Strips"
 
 #: ../../source/reference/settings.md:37
 msgid "Special Lengths"
-msgstr ""
+msgstr "Special Lengths (طول‌های ویژه)"
 
 #: ../../source/reference/settings.md:37
 msgid "The development length (Ld, top and bottom), overlap length (top and bottom) and bend lengths (90° and 135°) of each bar diameter, in cm. Calculated from the materials of the SAFE model when the file is loaded, see [Special lengths](detailing-rules.md#special-lengths)."
-msgstr ""
+msgstr "طول مهاری (Ld، بالا و پایین)، طول وصله (بالا و پایین) و طول‌های خم (90 و 135 درجه) هر قطر میلگرد، بر حسب سانتی‌متر. این مقادیر هنگام بارگذاری فایل از مصالح مدل SAFE محاسبه می‌شوند؛ [طول‌های ویژه](detailing-rules.md#special-lengths) را ببینید."
 
 #: ../../source/reference/settings.md:39
 msgid "Special Lengths, Automatic"
-msgstr ""
+msgstr "Special Lengths, Automatic"
 
 #: ../../source/reference/settings.md:39
 msgid "When checked, the top Ld and the overlaps follow from the bottom Ld."
-msgstr ""
+msgstr "وقتی فعال باشد، Ld بالا و طول‌های وصله از Ld پایین به دست می‌آیند."
 
 #: ../../source/reference/settings.md:39
 msgid "Special Lengths, Reset"
-msgstr ""
+msgstr "Special Lengths, Reset"
 
 #: ../../source/reference/settings.md:39
 msgid "Restores the calculated values."
-msgstr ""
+msgstr "مقادیر محاسبه‌شده را بازمی‌گرداند."
 
 #: ../../source/reference/settings.md:39
 msgid "Strips"
-msgstr ""
+msgstr "Strips"
 
 #: ../../source/reference/settings.md:39
 msgid "The number and diameter of the typical rebars of single strips and levels, instead of the interval. **Set** applies them, **Erase** removes them."
-msgstr ""
+msgstr "تعداد و قطر میلگردهای سراسری نوارها و ترازهای جداگانه، به‌جای فاصله. **Set** آن‌ها را اعمال می‌کند و **Erase** آن‌ها را حذف می‌کند."
 
 #: ../../source/reference/window.md:1
 msgid "The window"
-msgstr ""
+msgstr "پنجرهٔ برنامه"
 
 #: ../../source/reference/window.md:4
 msgid "OPTiBAR has one window: the input file along the top, the settings on the left and the results on the right. The border between the settings and the results can be dragged."
-msgstr ""
+msgstr "OPTiBAR یک پنجره دارد: فایل ورودی در بالا، تنظیمات در سمت چپ و نتایج در سمت راست. مرز بین تنظیمات و نتایج را می‌توان کشید."
 
 #: ../../source/reference/window.md:7
 msgid "![The OPTiBAR window with the results of the sample foundation](../_static/images/gui_results.png)"
-msgstr ""
+msgstr "![پنجرهٔ OPTiBAR با نتایج فونداسیون نمونه](../_static/images/gui_results.png)"
 
 #: ../../source/reference/window.md:7
 msgid "The OPTiBAR window with the results of the sample foundation"
-msgstr ""
+msgstr "پنجرهٔ OPTiBAR با نتایج فونداسیون نمونه"
 
 #: ../../source/reference/window.md:9
 msgid "Input file"
-msgstr ""
+msgstr "فایل ورودی (Input file)"
 
 #: ../../source/reference/window.md:11
 msgid "Part"
-msgstr ""
+msgstr "بخش"
 
 #: ../../source/reference/window.md:11
 msgid "Path"
-msgstr ""
+msgstr "مسیر"
 
 #: ../../source/reference/window.md:11
 msgid "The Access file that is loaded."
-msgstr ""
+msgstr "فایل Access که بارگذاری شده است."
 
 #: ../../source/reference/window.md:11
 msgid "**Open…**"
-msgstr ""
+msgstr "**Open…**"
 
 #: ../../source/reference/window.md:14
 msgid "Chooses an Access file (`.accdb` or `.mdb`) and loads it."
-msgstr ""
+msgstr "یک فایل Access (`.accdb` یا `.mdb`) انتخاب و بارگذاری می‌کند."
 
 #: ../../source/reference/window.md:14
 msgid "**Reload**"
-msgstr ""
+msgstr "**Reload**"
 
 #: ../../source/reference/window.md:15
 msgid "Loads the same file again, for example after exporting it from SAFE again."
-msgstr ""
+msgstr "همان فایل را دوباره بارگذاری می‌کند، مثلاً پس از اینکه دوباره از SAFE خروجی گرفته شد."
 
 #: ../../source/reference/window.md:15 ../../source/reference/window.md:18
 msgid "Status"
-msgstr ""
+msgstr "وضعیت"
 
 #: ../../source/reference/window.md:15
 msgid "The state of the input file, see below. Click it to scroll the report to the input file."
-msgstr ""
+msgstr "وضعیت فایل ورودی؛ پایین‌تر را ببینید. با کلیک روی آن، گزارش تا فایل ورودی پیمایش می‌شود."
 
 #: ../../source/reference/window.md:18
 msgid "No file loaded"
-msgstr ""
+msgstr "No file loaded"
 
 #: ../../source/reference/window.md:18
 msgid "No file was opened yet."
-msgstr ""
+msgstr "هنوز فایلی باز نشده است."
 
 #: ../../source/reference/window.md:18
 msgid "Loading…"
-msgstr ""
+msgstr "Loading…"
 
 #: ../../source/reference/window.md:18
 msgid "The file is being read."
-msgstr ""
+msgstr "فایل در حال خوانده شدن است."
 
 #: ../../source/reference/window.md:18
 msgid "✓ Loaded"
-msgstr ""
+msgstr "✓ Loaded"
 
 #: ../../source/reference/window.md:18
 msgid "The file is loaded; the calculation can start."
-msgstr ""
+msgstr "فایل بارگذاری شده است؛ محاسبه می‌تواند آغاز شود."
 
 #: ../../source/reference/window.md:18
 msgid "⚠ Loaded with … warnings"
-msgstr ""
+msgstr "⚠ Loaded with … warnings"
 
 #: ../../source/reference/window.md:18
 msgid "The file is loaded, with warnings in the report, for example more than one concrete material."
-msgstr ""
+msgstr "فایل بارگذاری شده است، با هشدارهایی در گزارش، مثلاً بیش از یک مصالح بتن."
 
 #: ../../source/reference/window.md:18
 msgid "✗ Not loaded: a table is missing"
-msgstr ""
+msgstr "✗ Not loaded: a table is missing"
 
 #: ../../source/reference/window.md:18
 msgid "The export doesn't have a table OPTiBAR needs; the report names it, see [SAFE input](safe-input.md)."
-msgstr ""
+msgstr "خروجی جدولی را که OPTiBAR نیاز دارد ندارد؛ گزارش نام آن را می‌گوید؛ [ورودی SAFE](safe-input.md) را ببینید."
 
 #: ../../source/reference/window.md:24
 msgid "✗ Not loaded: the file could not be read"
-msgstr ""
+msgstr "✗ Not loaded: the file could not be read"
 
 #: ../../source/reference/window.md:24
 msgid "The file is not a SAFE export OPTiBAR can read."
-msgstr ""
+msgstr "فایل خروجی‌ای از SAFE نیست که OPTiBAR بتواند بخواند."
 
 #: ../../source/reference/window.md:24
 msgid "✗ Access ODBC driver missing"
-msgstr ""
+msgstr "✗ Access ODBC driver missing"
 
 #: ../../source/reference/window.md:24
 msgid "The Microsoft Access ODBC driver is not installed; the report links to its download page, see [Install OPTiBAR](../how-to/install.md)."
-msgstr ""
+msgstr "درایور Microsoft Access ODBC نصب نیست؛ گزارش به صفحهٔ دانلود آن پیوند می‌دهد؛ [نصب OPTiBAR](../how-to/install.md) را ببینید."
 
 #: ../../source/reference/window.md:28
 msgid "Loading a file, or failing to load one, clears the results. **Calculate** is available only while a file is loaded."
-msgstr ""
+msgstr "بارگذاری یک فایل، یا ناموفق بودن آن، نتایج را پاک می‌کند. **Calculate** فقط وقتی فایلی بارگذاری شده باشد در دسترس است."
 
 #: ../../source/reference/window.md:32
 msgid "The left side holds the **Type of Request**, the settings in three pages, **Basic**, **Special Lengths** and **Strips**, see [Settings](settings.md), and **Calculate**. While a calculation runs, **Calculate** turns into **Stop**, and the status line and progress bar next to it show its progress."
-msgstr ""
+msgstr "سمت چپ شامل **Type of Request**، تنظیمات در سه صفحهٔ **Basic**، **Special Lengths** و **Strips** ([تنظیمات](settings.md) را ببینید)، و **Calculate** است. هنگام اجرای محاسبه، **Calculate** به **Stop** تبدیل می‌شود و خط وضعیت و نوار پیشرفت کنار آن پیشرفت را نشان می‌دهند."
 
 #: ../../source/reference/window.md:35
 msgid "Results"
-msgstr ""
+msgstr "نتایج"
 
 #: ../../source/reference/window.md:37
 msgid "The buttons above the report save the results, see [Outputs](outputs.md): **Save Results**, **PDF Drawing** and **DXF Drawing** after a computation, and **Diagram** with **Total** or **Additional** after an analysis."
-msgstr ""
+msgstr "دکمه‌های بالای گزارش نتایج را ذخیره می‌کنند ([خروجی‌ها](outputs.md) را ببینید): **Save Results**، **PDF Drawing** و **DXF Drawing** پس از یک محاسبه، و **Diagram** با **Total** یا **Additional** پس از یک تحلیل."
 
 #: ../../source/reference/window.md:39
 msgid "The **Report** box shows the input file at the top, and the results of the last calculation below it: the mass summary, the cutting plans and the warnings."
-msgstr ""
+msgstr "کادر **Report** فایل ورودی را در بالا و نتایج آخرین محاسبه را زیر آن نشان می‌دهد: خلاصهٔ وزن، نقشه‌های برش و هشدارها."
 
 #: ../../source/reference/window.md:41
 msgid "When a setting changes after a calculation, a warning above the report says the results are out of date. The results stay readable; press **Calculate** to update them. The warning goes away when the settings are the same as those of the results again."
-msgstr ""
+msgstr "وقتی پس از یک محاسبه تنظیمی تغییر کند، هشداری بالای گزارش می‌گوید که نتایج قدیمی شده‌اند. نتایج همچنان خواندنی می‌مانند؛ برای به‌روزرسانی آن‌ها **Calculate** را بزنید. وقتی تنظیمات دوباره با تنظیمات نتایج یکی شوند، هشدار از بین می‌رود."
 
 #: ../../source/reference/window.md:44
 msgid "![The warning that the results are out of date](../_static/images/gui_stale.png)"
-msgstr ""
+msgstr "![هشدار قدیمی بودن نتایج](../_static/images/gui_stale.png)"
 
 #: ../../source/reference/window.md:44
 msgid "The warning that the results are out of date"
-msgstr ""
+msgstr "هشدار قدیمی بودن نتایج"
 
 #: ../../source/reference/window.md:46
 msgid "Menus and keys"
-msgstr ""
+msgstr "منوها و کلیدها"
 
 #: ../../source/reference/window.md:48
 msgid "Menu"
-msgstr ""
+msgstr "منو"
 
 #: ../../source/reference/window.md:48
 msgid "Command"
-msgstr ""
+msgstr "فرمان"
 
 #: ../../source/reference/window.md:48
 msgid "File"
-msgstr ""
+msgstr "File"
 
 #: ../../source/reference/window.md:48
 msgid "Open…"
-msgstr ""
+msgstr "Open…"
 
 #: ../../source/reference/window.md:48
 msgid "Ctrl+O"
-msgstr ""
+msgstr "Ctrl+O"
 
 #: ../../source/reference/window.md:48
 msgid "Reload"
-msgstr ""
+msgstr "Reload"
 
 #: ../../source/reference/window.md:48
 msgid "F5"
-msgstr ""
+msgstr "F5"
 
 #: ../../source/reference/window.md:48
 msgid "Exit"
-msgstr ""
+msgstr "Exit"
 
 #: ../../source/reference/window.md:48
 msgid "View"
-msgstr ""
+msgstr "View"
 
 #: ../../source/reference/window.md:48
 msgid "Dark Theme"
-msgstr ""
+msgstr "Dark Theme"
 
 #: ../../source/reference/window.md:48
 msgid "Help"
-msgstr ""
+msgstr "Help"
 
 #: ../../source/reference/window.md:48
 msgid "Documentation, About"
-msgstr ""
+msgstr "Documentation, About"
 

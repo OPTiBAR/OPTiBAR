@@ -45,5 +45,5 @@ msgstr "پنجرهٔ برنامه، تنظیمات، جدول‌هایی از SA
 
 #: ../../source/index.rst:19
 msgid "How OPTiBAR finds the rebar lengths, and why: the theoretical, required and practical lengths, the resisting moment and the shear rebars."
-msgstr "OPTiBAR طول میلگردها را چگونه و چرا این‌گونه پیدا می‌کند: طول‌های نظری، طول‌های لازم و طول‌های اجرایی، لنگر مقاوم و میلگردهای برشی."
+msgstr "OPTiBAR طول میلگردها را چگونه و چرا این‌گونه پیدا می‌کند: طول‌های تئوری، طول‌های لازم و طول‌های اجرایی، لنگر مقاوم و میلگردهای برشی."
 

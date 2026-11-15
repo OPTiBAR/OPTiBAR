@@ -2,7 +2,7 @@ from optibar.core.optimization.practical.errors import NotEnoughTypes
 from optibar.core.components.piece import Piece
 from optibar.core.components.collections import Stack
 
-from .exactstack import StackAlgorithm
+from .stack import StackAlgorithm
 from .total import TotalAlgorithm
 
 

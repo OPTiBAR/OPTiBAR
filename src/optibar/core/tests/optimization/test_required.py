@@ -3,7 +3,7 @@ from optibar.core.components.collections import Stack
 from optibar.core.components.period import Period
 from optibar.core.optimization.required import (
     PieceDomination,
-    StackMinimization,
+    RequiredLengthDP,
     RequiredOptimization,
     IncreasedLength,
     DominationType
@@ -13,7 +13,7 @@ from optibar.core.optimization.required import (
 @pytest.fixture
 def pair_factory(rebar):
     def _factory(value, ref, domination):
-        pair = StackMinimization.Pair()
+        pair = RequiredLengthDP.Pair()
         pair.value = value
         pair.ref = ref
         pair.domination = domination
@@ -30,17 +30,17 @@ def stack(piece_theoretical_factory):
 
 class TestHelperClasses():
     def test_pair(self):
-        pair_1 = StackMinimization.Pair()
+        pair_1 = RequiredLengthDP.Pair()
         pair_1.domination = DominationType.D
         pair_1.value = 10
         pair_1.ref = 2
 
-        pair_2 = StackMinimization.Pair()
+        pair_2 = RequiredLengthDP.Pair()
         pair_2.domination = DominationType.D
         pair_2.value = 10
         pair_2.ref = 2
 
-        pair_3 = StackMinimization.Pair()
+        pair_3 = RequiredLengthDP.Pair()
         pair_3.domination = DominationType.LD
         pair_3.value = 11
         pair_3.ref = 2
@@ -49,9 +49,9 @@ class TestHelperClasses():
             pair_1 != pair_3
         ))
     def test_selected_length(self):
-        selected_length_1 = StackMinimization.SelectedLength(10, DominationType.D)
-        selected_length_2 = StackMinimization.SelectedLength(10, DominationType.D)
-        selected_length_3 = StackMinimization.SelectedLength(11, DominationType.LD)
+        selected_length_1 = RequiredLengthDP.SelectedLength(10, DominationType.D)
+        selected_length_2 = RequiredLengthDP.SelectedLength(10, DominationType.D)
+        selected_length_3 = RequiredLengthDP.SelectedLength(11, DominationType.LD)
         assert all((
             selected_length_1 == selected_length_2,
             selected_length_1 != selected_length_3
@@ -74,9 +74,9 @@ class TestHelperClasses():
             piece_domination_1 != piece_domination_3
         ))
 
-class TestStackMinimization():
+class TestRequiredLengthDP():
     def test_container(self, pair_factory):
-        sm = StackMinimization(lengths=[1,1.5,2], d_length=.3, ld_length=1.4)
+        sm = RequiredLengthDP(lengths=[1,1.5,2], d_length=.3, ld_length=1.4)
         container = [
             [
                 pair_factory(1.4,None,DominationType.LD),
@@ -103,16 +103,16 @@ class TestStackMinimization():
         assert equality
     
     def test_selected_length(self):
-        sm = StackMinimization(lengths=[1,1.5,2], d_length=.3, ld_length=1.4)
+        sm = RequiredLengthDP(lengths=[1,1.5,2], d_length=.3, ld_length=1.4)
         selected_lengths = [
-            StackMinimization.SelectedLength(2,DominationType.LD),
-            StackMinimization.SelectedLength(0,DominationType.LD),
+            RequiredLengthDP.SelectedLength(2,DominationType.LD),
+            RequiredLengthDP.SelectedLength(0,DominationType.LD),
         ]
         
         assert sm._selected_lengths == selected_lengths
     
     def test_get_results(self):
-        sm = StackMinimization(lengths=[1,1.5,2], d_length=.3, ld_length=1.4)
+        sm = RequiredLengthDP(lengths=[1,1.5,2], d_length=.3, ld_length=1.4)
         # groups [1] and [1.5, 2]: each group is cut at one station, 1.4 (Ld) and 2.4 (1 + Ld)
         increased_lengths = [
             IncreasedLength(.4, DominationType.LD),

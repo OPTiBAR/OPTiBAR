@@ -4,7 +4,10 @@ from optibar.core.components.collections import Stack
 from pyomo.environ import *
 from pyomo.opt import SolverStatus, TerminationCondition
 
-class Minimization():
+class StackProgram():
+    """the integer program that gives every piece of a stack one of the lengths of the foundation, no
+    shorter than the piece, with at most p length types and the least added length. A length type is a
+    length and a number of pieces: a 4 m bar and a 16 m bar of a 12 m and a 4 m piece are two types."""
     def __init__(self, selected_length: list[float], lengths: list[float], upper_bounds: list[float], num_pieces: list[int]):
         self.lengths = lengths
         self.upper_bounds = upper_bounds
@@ -118,19 +121,19 @@ class StackAlgorithm():
     def run(self):
         p = self.p
         pieces = self.stack.get_pieces()
-        minimization = Minimization(
+        program = StackProgram(
             self.selected_lengths,
             [piece.shortest_piece_length for piece in pieces],
             [piece.length_upper_bound for piece in pieces],
             [piece.get_num_of_pieces("practical") for piece in pieces]
         )
         while True:
-            if minimization.run(p) == 'optimal':
+            if program.run(p) == 'optimal':
                 break
             else:
                 p = p+1
 
-        new_lengths = minimization.get_results()
+        new_lengths = program.get_results()
         for i,length in enumerate(new_lengths):
             pieces[i].shortest_piece_length = length
         return p

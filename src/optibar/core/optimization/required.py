@@ -4,7 +4,7 @@ from enum import Enum
 from optibar.core.components.collections import Stack
 from optibar.core.components.period import Period
 
-class StackMinimization():
+class RequiredLengthDP():
     """gets a list of lengths in ascending order and two lengths d and Ld.
     and returns the selected lengths and status of the domination.
     """
@@ -221,7 +221,7 @@ class RequiredOptimization():
             side ([type]): [description]
         """
         lengths = self._extract_lengths(side)
-        optimization = StackMinimization(lengths=lengths, d_length=self.d_length, ld_length=self.ld_length)
+        optimization = RequiredLengthDP(lengths=lengths, d_length=self.d_length, ld_length=self.ld_length)
         increased_lengths = optimization.get_results()
         self._set_required(side=side, increased_lengths=increased_lengths)
 

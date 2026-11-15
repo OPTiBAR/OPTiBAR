@@ -212,7 +212,7 @@ The smallest feasible number is shown in the report and saved as `min_feasible_n
 #### Choosing the lengths of a stack
 
 This subproblem is solved for each stack on its own: out of the $P$ lengths of the foundation, $PSUB$ (**Stack**) are chosen.
-It is an integer program (`StackAlgorithm` in `exactstack.py`), solved with the HiGHS solver through Pyomo.
+It is an integer program (`StackAlgorithm` in `stack.py`), solved with the HiGHS solver through Pyomo.
 In it, a length type of a stack is a pair of a length and a number of pieces: a 4 m bar and a 16 m bar made of a 12 m piece and a 4 m piece count as different types.
 
 With the pieces $i$ of the stack, their shortest-piece lengths $LS_i$ and numbers of pieces $m_i$, and the lengths of the foundation $LO_j$:

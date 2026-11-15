@@ -89,3 +89,36 @@ The main parts of `result["data"]` are:
 | `cut` | The cutting plan of every diameter: stock length, number of bars, waste, whether the plan is proven optimal (`optimal`) and the fewest bars any plan could use (`lower_bound`), and the patterns with their pieces. |
 
 For an analysis, `result` is a list with the `data` part of every combination, or `{}` where a combination isn't feasible.
+
+(exported-tables)=
+## Exported tables
+
+**Export…** saves the results as tables, for a spreadsheet or another program. The file type sets the format:
+
+- **Excel workbook** (`.xlsx`): a sheet per table, with the headers frozen and filters on. It also opens in Google Sheets and LibreOffice Calc.
+- **CSV files** (`.zip`): a zip with a CSV file per table, numbered in the order below, for example `02_mass_summary.csv`. The files are UTF-8, so Excel shows Ø and ³ correctly.
+- **JSON tables** (`.json`): `meta`, and `tables` with the columns of every table, each with its name and unit, and the rows as objects keyed by column name. Unlike the results file, it holds the tables, not the engine output.
+
+The values are numbers, not text, so they can be summed and sorted; the units are in the column headers, for example `Length (m)`. An empty cell means the value doesn't apply, for example the top mass of the shear rebars.
+The first sheet, or `00_about.csv`, says which OPTiBAR version made the file, when, from which input file, and whether it is a computation or an analysis.
+
+For a computation, the tables are:
+
+| Table | Content |
+| --- | --- |
+| Settings | Every setting of the calculation, with its unit. |
+| Mass Summary | Rebar mass in t by type, top and bottom, and the total. |
+| Typical Rebars, Thermal Rebars, Additional Rebars | The piece lists: position (`T1`, `A3`, ...), diameter, shape (straight, or bent at one or both ends), number, length and weight in kg. The positions are those of the drawing and the cutting plans. |
+| Shear Rebars | The piece list of the stirrups: position (`S1`, ...), diameter, number, length and weight. |
+| Shear Types | The shear arrangements: diameter, number of legs and spacing. |
+| Cutting Plans | Per diameter: stock length, number of bars, whether the plan is proven optimal, the fewest bars any plan could use, waste and number of patterns. |
+| Cutting Patterns | Every pattern: the number of bars to cut that way, its pieces with their positions, the used length and the waste. |
+| Bars | Every bar along every strip: strip, level, typical or additional, row, number, diameter, start and end along the strip, length, bends, and whether it is spliced from several pieces (one row each). |
+| Shear Zones | Every shear zone: strip, shear type, start, end and length. |
+| Specifications | Concrete and steel strength, covers, the numbers of length types and the concrete volume. |
+| Rebar Specifications | Per diameter: bend lengths, development lengths and overlap lengths, top and bottom. |
+| Warnings | The warnings of the report: warning, strip, level, the value and its limit. |
+
+When the number of length types is too small to be feasible, the file has **Settings** and **Errors**, with the smallest total number of length types that works.
+
+For an analysis, the file has **Settings** and **Analysis**: a row per combination of Stack and Total with the mass of the typical, thermal and additional rebars, their total, and the shear rebars. A combination that isn't feasible has no masses.

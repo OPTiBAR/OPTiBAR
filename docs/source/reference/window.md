@@ -34,7 +34,7 @@ While a calculation runs, **Calculate** turns into **Stop**, and the status line
 
 ## Results
 
-The buttons above the report save the results, see [Outputs](outputs.md): **Save Results**, **PDF Drawing** and **DXF Drawing** after a computation, and **Diagram** with **Total** or **Additional** after an analysis.
+The buttons above the report save the results, see [Outputs](outputs.md): **Save Results** and **Export…** after any calculation, **PDF Drawing** and **DXF Drawing** after a computation, and **Diagram** with **Total** or **Additional** after an analysis.
 
 The **Report** box shows the input file at the top, and the results of the last calculation below it: the mass summary, the cutting plans and the warnings.
 

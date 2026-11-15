@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-15 21:35+0100\n"
+"POT-Creation-Date: 2026-11-15 22:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fa\n"
@@ -280,15 +280,27 @@ msgid "The settings are those of the app, in meters; see [Settings](../reference
 msgstr "تنظیمات همان تنظیمات برنامه هستند، بر حسب متر؛ [تنظیمات](../reference/settings.md) را ببینید. خروجی ساختار کلید `result` فایل نتایج را دارد؛ [خروجی‌ها](../reference/outputs.md#results-file) را ببینید."
 
 #: ../../source/how-to/python.md:39
+msgid "Export the results as tables"
+msgstr "خروجی گرفتن از نتایج به صورت جدول"
+
+#: ../../source/how-to/python.md:41
+msgid "`optibar.core.export.export` writes the tables of [Exported tables](../reference/outputs.md#exported-tables) in the format of the file extension: `.xlsx`, `.zip` (CSV files) or `.json`. It takes the result as the results file holds it:"
+msgstr "`optibar.core.export.export` جدول‌های [جدول‌های خروجی](../reference/outputs.md#exported-tables) را با قالبی که پسوند فایل تعیین می‌کند می‌نویسد: `.xlsx`، `.zip` (فایل‌های CSV) یا `.json`. ورودی آن نتیجه است، به همان شکلی که فایل نتایج آن را نگه می‌دارد:"
+
+#: ../../source/how-to/python.md:51
+msgid "`optibar.core.export.prepare` returns the tables themselves, to use them in Python. A results file saved by the app can be exported the same way, after reading it with `json.load`."
+msgstr "`optibar.core.export.prepare` خود جدول‌ها را برمی‌گرداند تا در Python از آن‌ها استفاده شود. از فایل نتایجی که برنامه ذخیره کرده هم می‌توان به همین روش خروجی گرفت، پس از خواندن آن با `json.load`."
+
+#: ../../source/how-to/python.md:53
 msgid "Run an analysis"
 msgstr "اجرای یک تحلیل"
 
-#: ../../source/how-to/python.md:41
+#: ../../source/how-to/python.md:55
 #, python-brace-format
 msgid "Give `type_number[\"total\"]` and `type_number[\"stack\"]` as ranges, for example `{\"from\": 10, \"to\": 20}`, and call `optibar.core.run.run_analysis` with the same arguments. It returns one result per combination, or `{}` where a combination isn't feasible."
 msgstr "`type_number[\"total\"]` و `type_number[\"stack\"]` را به‌صورت بازه بدهید، مثلاً `{\"from\": 10, \"to\": 20}`، و `optibar.core.run.run_analysis` را با همان آرگومان‌ها فراخوانی کنید. این تابع برای هر ترکیب یک نتیجه برمی‌گرداند، یا `{}` برای ترکیب‌هایی که شدنی نیستند."
 
-#: ../../source/how-to/python.md:44
+#: ../../source/how-to/python.md:58
 msgid "There is no command line interface yet."
 msgstr "هنوز رابط خط فرمان وجود ندارد."
 
@@ -312,11 +324,15 @@ msgstr "**PDF Drawing** یک کروکی فشردهٔ A4 برای بررسی سر
 msgid "**Save Results** saves the full result as a JSON file, and a readable summary next to it, for example `foundation_calculation.json` and `foundation_calculation_summary.txt`. Attach the summary to a report; use the JSON file to post-process the result."
 msgstr "**Save Results** نتیجهٔ کامل را به‌صورت فایل JSON ذخیره می‌کند و یک خلاصهٔ خوانا را کنار آن، مثلاً `foundation_calculation.json` و `foundation_calculation_summary.txt`. خلاصه را به گزارش پیوست کنید؛ از فایل JSON برای پردازش بعدی نتیجه استفاده کنید."
 
-#: ../../source/how-to/save-results.md:11
+#: ../../source/how-to/save-results.md:10
+msgid "**Export…** saves the results as tables, for a spreadsheet or another program: the mass summary, the piece lists, the cutting plans, every bar and more. Choose the format with the file type: an **Excel workbook** (`.xlsx`) with a sheet per table, **CSV files** in a zip (`.zip`) with a file per table, or **JSON tables** (`.json`). The Excel workbook also opens in Google Sheets and LibreOffice."
+msgstr "**Export…** نتایج را به صورت جدول ذخیره می‌کند، برای یک صفحه‌گسترده یا برنامه‌ای دیگر: خلاصهٔ وزن، فهرست‌های قطعات، نقشه‌های برش، تک‌تک میلگردها و موارد دیگر. قالب را با نوع فایل انتخاب کنید: یک **Excel workbook** (`.xlsx`) با یک برگه برای هر جدول، **CSV files** در یک فایل zip (`.zip`) با یک فایل برای هر جدول، یا **JSON tables** (`.json`). فایل Excel در Google Sheets و LibreOffice هم باز می‌شود."
+
+#: ../../source/how-to/save-results.md:12
 msgid "[Outputs](../reference/outputs.md) describes the content of each file."
 msgstr "[خروجی‌ها](../reference/outputs.md) محتوای هر فایل را شرح می‌دهد."
 
-#: ../../source/how-to/save-results.md:13
+#: ../../source/how-to/save-results.md:14
 msgid "To stop a calculation that takes too long, press **Stop**. Loading a new input file clears the results."
 msgstr "برای متوقف کردن محاسبه‌ای که خیلی طول می‌کشد، **Stop** را بزنید. بارگذاری یک فایل ورودی جدید نتایج را پاک می‌کند."
 

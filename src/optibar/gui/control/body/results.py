@@ -10,6 +10,7 @@ from optibar.gui.control.body.log import ReportLog
 from optibar.gui.setting import VERSION
 from optibar.core.sketch.sketch import Sketch
 from optibar.core.sketch.dxf import DxfDrawing
+from optibar.core.export import FORMATS, export
 from .report import calc_report, analysis_report, diagram_data, settings_report, cutting_report
 
 
@@ -23,6 +24,7 @@ class Result():
 
         self.files.bind('<<diagram-button-pressed>>', self.draw_diagram)
         self.files.bind('<<save-button-pressed>>', self.save_results)
+        self.files.bind('<<export-button-pressed>>', self.export_results)
         self.files.bind('<<pdf-button-pressed>>', lambda *args: self.save_drawing('pdf'))
         self.files.bind('<<dxf-button-pressed>>', lambda *args: self.save_drawing('dxf'))
         result_data['is_available'].trace_add('write', self.result_data_changed)
@@ -66,6 +68,7 @@ class Result():
             return
         data = self.result_data['data']
         self.files.set_button_state('save', '!disabled')
+        self.files.set_button_state('export', '!disabled')
         self.report.set_results(self._report())
         if data['calc_type'] == 'calculation':
             if 'data' in data['result_data']:
@@ -98,24 +101,50 @@ class Result():
         if not path:
             return
         path = Path(path)
-        data = self.result_data['data']
         summary_path = path.with_name(path.stem + '_summary.txt')
         try:
             with open(path, 'w', encoding='utf-8') as f:
-                json.dump({
-                    'optibar_version': VERSION,
-                    'created': datetime.now().isoformat(timespec='seconds'),
-                    'input_file': data.get('input_file'),
-                    'calc_type': data['calc_type'],
-                    'config': data.get('config'),
-                    'result': data['result_data'],
-                }, f, indent=2)
+                json.dump(self._saved(), f, indent=2)
             with open(summary_path, 'w', encoding='utf-8') as f:
                 f.write(self._summary_text())
         except OSError as e:
             showerror('Save Results', f'The results could not be saved.\n\n{e}')
             return
         showinfo('Save Results', f'Saved:\n{path}\n{summary_path}')
+
+    def _saved(self) -> Dict:
+        """the result as Save Results writes it, and as the export prepares it"""
+        data = self.result_data['data']
+        return {
+            'optibar_version': VERSION,
+            'created': datetime.now().isoformat(timespec='seconds'),
+            'input_file': data.get('input_file'),
+            'calc_type': data['calc_type'],
+            'config': data.get('config'),
+            'result': data['result_data'],
+        }
+
+    def export_results(self, *args):
+        """exports the result as tables: an Excel workbook, CSV files in a zip or JSON, by the extension"""
+        path = asksaveasfilename(
+            title='Export Results',
+            initialfile=self._default_name() + '.xlsx',
+            defaultextension='.xlsx',
+            filetypes=[(format.name, f'*{format.extension}') for format in FORMATS.values()],
+        )
+        if not path:
+            return
+        path = Path(path)
+        if path.suffix.lower() not in FORMATS:
+            showerror('Export Results', f"Choose a file ending in {', '.join(FORMATS)}.")
+            return
+        try:
+            export(self._saved(), path)
+        except OSError as e:
+            # e.g. the workbook is open in Excel
+            showerror('Export Results', f'The results could not be exported.\n\n{e}')
+            return
+        showinfo('Export Results', f'Saved:\n{path}')
 
     def _summary_text(self) -> str:
         data = self.result_data['data']
@@ -161,5 +190,5 @@ class Result():
     def __refresh(self):
         self.result_data['stale'].set(False)
         self.report.set_results([])
-        for name in ('save', 'pdf', 'dxf', 'diagram'):
+        for name in ('save', 'export', 'pdf', 'dxf', 'diagram'):
             self.files.set_button_state(name, 'disabled')

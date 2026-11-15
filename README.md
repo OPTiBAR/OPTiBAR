@@ -27,7 +27,7 @@ OPTiBAR turns the design results of a concrete mat foundation in **CSI SAFE** in
 - **Reads the SAFE model and design results** from the Access database (`.accdb` / `.mdb`) that SAFE exports.
 - **Computes the rebar detailing** of every design strip: theoretical lengths from the required steel, required lengths from the code (development length and effective depth), and practical lengths rounded and reduced to the number of length types you allow.
 - **Analyses scenarios**: compares the rebar mass for a range of allowed length types, so you can pick a good trade-off.
-- **Produces drawings and reports**: a DXF detailing map (opens in AutoCAD, AutoCAD LT, BricsCAD and free viewers), a PDF sketch, and the results as JSON with a readable summary.
+- **Produces drawings and reports**: a DXF detailing map (opens in AutoCAD, AutoCAD LT, BricsCAD and free viewers), a PDF sketch, the results as JSON with a readable summary, and the tables of the results as an Excel workbook, CSV files or JSON.
 - **Works offline** through a desktop app, or from Python.
 
 ## ❌ What It Doesn't Do
@@ -65,7 +65,7 @@ optibar
 1. In SAFE, export the model to an Access database, including the **Model Definition** and **Design Results** tables.
 2. Press **Open…** (or **File > Open**, Ctrl+O) and choose the `.accdb` / `.mdb` file. The status next to it says whether it loaded.
 3. In the settings on the left, choose **Computation** for one detailing, or **Analysis** to compare a range of length types. Adjust diameters, spacing, cover and the number of length types, and optionally the **Special Lengths** and the typical rebars of single **Strips**. Press **Calculate**.
-4. The **Report** on the right shows the mass summary and warnings. Save the results (JSON and summary), the **DXF Drawing** or the **PDF Drawing**. For an analysis, **Diagram** plots the mass against the number of length types. When you change a setting, the report says the results are out of date until you calculate again.
+4. The **Report** on the right shows the mass summary and warnings. Save the results (JSON and summary), **Export…** them as tables (Excel, CSV or JSON), or save the **DXF Drawing** or the **PDF Drawing**. For an analysis, **Diagram** plots the mass against the number of length types. When you change a setting, the report says the results are out of date until you calculate again.
 
 See the [tutorial](https://optibar.github.io/OPTiBAR/tutorials/first-map.html) and the [how-to guides](https://optibar.github.io/OPTiBAR/how-to/index.html) for details.
 

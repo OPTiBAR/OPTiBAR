@@ -1,7 +1,9 @@
 import json
 import pathlib
+import zipfile
 import ezdxf
 import pytest
+from openpyxl import load_workbook
 from pypdf import PdfReader
 import optibar.gui.control.body.upload as upload_module
 from optibar.core.parser.parse import has_access_driver
@@ -16,7 +18,7 @@ def test_startup(app):
     assert 'disabled' in app.request.calculate_button.state()
     assert app.request.status_var.get() == 'Status: Waiting for input file ...'
     assert 'disabled' in app.file_bar.load_button.state()
-    for name in ('save', 'pdf', 'dxf', 'diagram'):
+    for name in ('save', 'export', 'pdf', 'dxf', 'diagram'):
         assert 'disabled' in getattr(app.results.files, name + '_button').state()
     assert not app.results.stale_label.winfo_ismapped()
     if has_access_driver():
@@ -176,6 +178,35 @@ def test_save_calculation_results(loaded_app):
 
 
 @requires_driver
+def test_export_calculation(loaded_app):
+    """Export writes the tables of the result in the format of the extension"""
+    app = loaded_app
+    run_calculation(app)
+    files = app.results.files
+    assert 'disabled' not in files.export_button.state()
+    for name in ('result.xlsx', 'result.zip', 'result.json'):
+        app.press(files, '<<export-button-pressed>>', app.tmp_path.joinpath(name))
+    workbook = load_workbook(app.tmp_path.joinpath('result.xlsx'))
+    assert workbook.sheetnames[:3] == ['About', 'Settings', 'Mass Summary']
+    about = {row[0].value: row[1].value for row in workbook['About'].iter_rows()}
+    assert about['Input file'].endswith('tonf_m.accdb')
+    with zipfile.ZipFile(app.tmp_path.joinpath('result.zip')) as archive:
+        assert '02_mass_summary.csv' in archive.namelist()
+    tables = json.loads(app.tmp_path.joinpath('result.json').read_text(encoding='utf-8'))['tables']
+    assert tables['Additional Rebars']['rows']
+    assert app.errors() == []
+
+
+@requires_driver
+def test_export_unknown_format(loaded_app):
+    app = loaded_app
+    run_calculation(app)
+    app.press(app.results.files, '<<export-button-pressed>>', app.tmp_path.joinpath('result.txt'))
+    assert list(app.tmp_path.iterdir()) == []
+    assert app.dialogs[-1][0] == 'showerror'
+
+
+@requires_driver
 def test_save_pdf(loaded_app):
     app = loaded_app
     run_calculation(app)
@@ -226,6 +257,8 @@ def test_analysis(loaded_app):
     app.press(files, '<<save-button-pressed>>', path)
     assert len(json.loads(path.read_text(encoding='utf-8'))['result']) == 4
     assert 'Mass Report' in app.tmp_path.joinpath('analysis_summary.txt').read_text(encoding='utf-8')
+    app.press(files, '<<export-button-pressed>>', app.tmp_path.joinpath('analysis.xlsx'))
+    assert load_workbook(app.tmp_path.joinpath('analysis.xlsx'))['Analysis'].max_row == 5 # header and 4 combinations
     assert app.errors() == []
 
 

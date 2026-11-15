@@ -36,6 +36,20 @@ else:
 The settings are those of the app, in meters; see [Settings](../reference/settings.md).
 The output has the structure of the `result` key of the results file, see [Outputs](../reference/outputs.md#results-file).
 
+## Export the results as tables
+
+`optibar.core.export.export` writes the tables of [Exported tables](../reference/outputs.md#exported-tables) in the format of the file extension: `.xlsx`, `.zip` (CSV files) or `.json`.
+It takes the result as the results file holds it:
+
+```python
+from optibar.core.export import export
+
+saved = {"calc_type": "calculation", "config": config, "result": output, "input_file": "foundation.accdb"}
+export(saved, "foundation.xlsx")
+```
+
+`optibar.core.export.prepare` returns the tables themselves, to use them in Python. A results file saved by the app can be exported the same way, after reading it with `json.load`.
+
 ## Run an analysis
 
 Give `type_number["total"]` and `type_number["stack"]` as ranges, for example `{"from": 10, "to": 20}`, and call `optibar.core.run.run_analysis` with the same arguments.

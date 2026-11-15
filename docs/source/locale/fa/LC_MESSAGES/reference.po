@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-15 21:35+0100\n"
+"POT-Creation-Date: 2026-11-15 22:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fa\n"
@@ -325,6 +325,7 @@ msgid "Key"
 msgstr "کلید"
 
 #: ../../source/reference/outputs.md:67 ../../source/reference/outputs.md:81
+#: ../../source/reference/outputs.md:107
 msgid "Content"
 msgstr "محتوا"
 
@@ -376,7 +377,7 @@ msgstr "برای هر نوار: هندسه، میلگردهای هر ردیف ب
 msgid "Materials, covers, the special lengths per diameter, and the numbers of length types used."
 msgstr "مصالح، پوشش‌ها، طول‌های ویژه برای هر قطر، و تعداد انواع طول به‌کاررفته."
 
-#: ../../source/reference/outputs.md:87
+#: ../../source/reference/outputs.md:87 ../../source/reference/outputs.md:112
 msgid "The shear arrangements: diameter, number of legs and spacing."
 msgstr "آرایش‌های برشی: قطر، تعداد شاخه‌ها و فاصله."
 
@@ -393,6 +394,139 @@ msgstr "نقشهٔ برش هر قطر: طول شاخه، تعداد شاخه‌�
 msgid "For an analysis, `result` is a list with the `data` part of every combination, or `{}` where a combination isn't feasible."
 msgstr "برای یک تحلیل، `result` فهرستی از بخش `data` هر ترکیب است، یا `{}` برای ترکیبی که شدنی نیست."
 
+#: ../../source/reference/outputs.md:94
+msgid "Exported tables"
+msgstr "جدول‌های خروجی"
+
+#: ../../source/reference/outputs.md:96
+msgid "**Export…** saves the results as tables, for a spreadsheet or another program. The file type sets the format:"
+msgstr "**Export…** نتایج را به صورت جدول ذخیره می‌کند، برای یک صفحه‌گسترده یا برنامه‌ای دیگر. نوع فایل، قالب را تعیین می‌کند:"
+
+#: ../../source/reference/outputs.md:98
+msgid "**Excel workbook** (`.xlsx`): a sheet per table, with the headers frozen and filters on. It also opens in Google Sheets and LibreOffice Calc."
+msgstr "**Excel workbook** (`.xlsx`): یک برگه برای هر جدول، با سطر عنوان ثابت و فیلترهای فعال. در Google Sheets و LibreOffice Calc هم باز می‌شود."
+
+#: ../../source/reference/outputs.md:99
+msgid "**CSV files** (`.zip`): a zip with a CSV file per table, numbered in the order below, for example `02_mass_summary.csv`. The files are UTF-8, so Excel shows Ø and ³ correctly."
+msgstr "**CSV files** (`.zip`): یک فایل zip با یک فایل CSV برای هر جدول، شماره‌گذاری‌شده به ترتیب زیر، مثلاً `02_mass_summary.csv`. فایل‌ها UTF-8 هستند، پس Excel نویسه‌های Ø و ³ را درست نشان می‌دهد."
+
+#: ../../source/reference/outputs.md:100
+msgid "**JSON tables** (`.json`): `meta`, and `tables` with the columns of every table, each with its name and unit, and the rows as objects keyed by column name. Unlike the results file, it holds the tables, not the engine output."
+msgstr "**JSON tables** (`.json`): `meta`، و `tables` با ستون‌های هر جدول، هر کدام با نام و واحدش، و سطرها به صورت شیءهایی با کلید نام ستون. برخلاف فایل نتایج، این فایل جدول‌ها را نگه می‌دارد، نه خروجی موتور محاسبه را."
+
+#: ../../source/reference/outputs.md:102
+msgid "The values are numbers, not text, so they can be summed and sorted; the units are in the column headers, for example `Length (m)`. An empty cell means the value doesn't apply, for example the top mass of the shear rebars. The first sheet, or `00_about.csv`, says which OPTiBAR version made the file, when, from which input file, and whether it is a computation or an analysis."
+msgstr "مقادیر عدد هستند نه متن، پس می‌توان آن‌ها را جمع زد و مرتب کرد؛ واحدها در عنوان ستون‌ها آمده‌اند، مثلاً `Length (m)`. خانهٔ خالی یعنی آن مقدار کاربرد ندارد، مثلاً وزن بالای میلگردهای برشی. برگهٔ اول، یا `00_about.csv`، می‌گوید فایل را کدام نسخهٔ OPTiBAR، چه زمانی و از کدام فایل ورودی ساخته است، و اینکه یک محاسبه است یا یک تحلیل."
+
+#: ../../source/reference/outputs.md:105
+msgid "For a computation, the tables are:"
+msgstr "برای یک محاسبه، جدول‌ها عبارت‌اند از:"
+
+#: ../../source/reference/outputs.md:107 ../../source/reference/safe-input.md:9
+msgid "Table"
+msgstr "جدول"
+
+#: ../../source/reference/outputs.md:107 ../../source/reference/settings.md:1
+#: ../../source/reference/window.md:30
+msgid "Settings"
+msgstr "تنظیمات"
+
+#: ../../source/reference/outputs.md:107
+msgid "Every setting of the calculation, with its unit."
+msgstr "همهٔ تنظیمات محاسبه، با واحدشان."
+
+#: ../../source/reference/outputs.md:107
+msgid "Mass Summary"
+msgstr "Mass Summary (خلاصهٔ وزن)"
+
+#: ../../source/reference/outputs.md:107
+msgid "Rebar mass in t by type, top and bottom, and the total."
+msgstr "وزن میلگرد بر حسب t به تفکیک نوع، بالا و پایین، و مجموع."
+
+#: ../../source/reference/outputs.md:107
+msgid "Typical Rebars, Thermal Rebars, Additional Rebars"
+msgstr "Typical Rebars, Thermal Rebars, Additional Rebars (میلگردهای سراسری، میلگردهای حرارتی، میلگردهای تقویتی)"
+
+#: ../../source/reference/outputs.md:107
+msgid "The piece lists: position (`T1`, `A3`, ...), diameter, shape (straight, or bent at one or both ends), number, length and weight in kg. The positions are those of the drawing and the cutting plans."
+msgstr "فهرست‌های قطعات: موقعیت (`T1`، `A3`، ...)، قطر، شکل (صاف، یا خم‌شده در یک یا هر دو سر)، تعداد، طول و وزن بر حسب kg. موقعیت‌ها همان موقعیت‌های نقشه و نقشه‌های برش هستند."
+
+#: ../../source/reference/outputs.md:111
+msgid "Shear Rebars"
+msgstr "Shear Rebars (میلگردهای برشی)"
+
+#: ../../source/reference/outputs.md:111
+msgid "The piece list of the stirrups: position (`S1`, ...), diameter, number, length and weight."
+msgstr "فهرست قطعات خاموت‌ها: موقعیت (`S1`، ...)، قطر، تعداد، طول و وزن."
+
+#: ../../source/reference/outputs.md:112
+msgid "Shear Types"
+msgstr "Shear Types (انواع برشی)"
+
+#: ../../source/reference/outputs.md:112
+msgid "Cutting Plans"
+msgstr "Cutting Plans (نقشه‌های برش)"
+
+#: ../../source/reference/outputs.md:112
+msgid "Per diameter: stock length, number of bars, whether the plan is proven optimal, the fewest bars any plan could use, waste and number of patterns."
+msgstr "برای هر قطر: طول شاخه، تعداد شاخه‌ها، اینکه آیا نقشه بهینهٔ اثبات‌شده است، کمترین تعداد شاخه‌ای که هر نقشه‌ای ممکن است به کار ببرد، پرت و تعداد الگوها."
+
+#: ../../source/reference/outputs.md:112
+msgid "Cutting Patterns"
+msgstr "Cutting Patterns (الگوهای برش)"
+
+#: ../../source/reference/outputs.md:112
+msgid "Every pattern: the number of bars to cut that way, its pieces with their positions, the used length and the waste."
+msgstr "هر الگو: تعداد شاخه‌هایی که باید به این شکل بریده شوند، قطعه‌هایش با موقعیتشان، طول استفاده‌شده و پرت."
+
+#: ../../source/reference/outputs.md:112
+msgid "Bars"
+msgstr "Bars (میلگردها)"
+
+#: ../../source/reference/outputs.md:112
+msgid "Every bar along every strip: strip, level, typical or additional, row, number, diameter, start and end along the strip, length, bends, and whether it is spliced from several pieces (one row each)."
+msgstr "تک‌تک میلگردهای هر نوار: نوار، تراز، سراسری یا تقویتی، ردیف، تعداد، قطر، ابتدا و انتها در امتداد نوار، طول، خم‌ها، و اینکه آیا از چند قطعه وصله شده است (هر قطعه در یک سطر)."
+
+#: ../../source/reference/outputs.md:112
+msgid "Shear Zones"
+msgstr "Shear Zones (ناحیه‌های برشی)"
+
+#: ../../source/reference/outputs.md:112
+msgid "Every shear zone: strip, shear type, start, end and length."
+msgstr "هر ناحیهٔ برشی: نوار، نوع برشی، ابتدا، انتها و طول."
+
+#: ../../source/reference/outputs.md:112
+msgid "Specifications"
+msgstr "Specifications (مشخصات)"
+
+#: ../../source/reference/outputs.md:112
+msgid "Concrete and steel strength, covers, the numbers of length types and the concrete volume."
+msgstr "مقاومت بتن و فولاد، پوشش‌ها، تعداد انواع طول و حجم بتن."
+
+#: ../../source/reference/outputs.md:112
+msgid "Rebar Specifications"
+msgstr "Rebar Specifications (مشخصات میلگردها)"
+
+#: ../../source/reference/outputs.md:112
+msgid "Per diameter: bend lengths, development lengths and overlap lengths, top and bottom."
+msgstr "برای هر قطر: طول خم‌ها، طول‌های مهاری و طول‌های وصله، بالا و پایین."
+
+#: ../../source/reference/outputs.md:112
+msgid "Warnings"
+msgstr "Warnings (هشدارها)"
+
+#: ../../source/reference/outputs.md:112
+msgid "The warnings of the report: warning, strip, level, the value and its limit."
+msgstr "هشدارهای گزارش: هشدار، نوار، تراز، مقدار و حد آن."
+
+#: ../../source/reference/outputs.md:122
+msgid "When the number of length types is too small to be feasible, the file has **Settings** and **Errors**, with the smallest total number of length types that works."
+msgstr "وقتی تعداد انواع طول برای شدنی بودن خیلی کم باشد، فایل **Settings** و **Errors** را دارد، با کوچک‌ترین تعداد کل انواع طول که کار می‌کند."
+
+#: ../../source/reference/outputs.md:124
+msgid "For an analysis, the file has **Settings** and **Analysis**: a row per combination of Stack and Total with the mass of the typical, thermal and additional rebars, their total, and the shear rebars. A combination that isn't feasible has no masses."
+msgstr "برای یک تحلیل، فایل **Settings** و **Analysis** را دارد: یک سطر برای هر ترکیب Stack (دسته) و Total با وزن میلگردهای سراسری، میلگردهای حرارتی و میلگردهای تقویتی، مجموع آن‌ها، و میلگردهای برشی. ترکیبی که شدنی نیست وزنی ندارد."
+
 #: ../../source/reference/safe-input.md:1
 msgid "SAFE input"
 msgstr "ورودی SAFE"
@@ -404,10 +538,6 @@ msgstr "OPTiBAR پایگاه دادهٔ Microsoft Access (`.accdb` یا `.mdb`) 
 #: ../../source/reference/safe-input.md:7
 msgid "Tables"
 msgstr "جدول‌ها"
-
-#: ../../source/reference/safe-input.md:9
-msgid "Table"
-msgstr "جدول"
 
 #: ../../source/reference/safe-input.md:9
 msgid "What OPTiBAR reads"
@@ -532,10 +662,6 @@ msgstr "OPTiBAR با فایل‌های خروجی **SAFE 2016** (v16.0.2) آزم
 #: ../../source/reference/safe-input.md:33
 msgid "SAFE v20 and later (v20, v21, v22, v23) are built on a new platform, and the exported tables have different names: for example, the strip design results are in \"Concrete Slab Design Summary - Flexure and Shear Data\". These files are not supported yet."
 msgstr "SAFE v20 و نسخه‌های بعدی (v20، v21، v22، v23) بر بستری جدید ساخته شده‌اند و جدول‌های خروجی نام‌های متفاوتی دارند: برای نمونه، نتایج طراحی نوارها در «Concrete Slab Design Summary - Flexure and Shear Data» است. این فایل‌ها هنوز پشتیبانی نمی‌شوند."
-
-#: ../../source/reference/settings.md:1 ../../source/reference/window.md:30
-msgid "Settings"
-msgstr "تنظیمات"
 
 #: ../../source/reference/settings.md:4
 msgid "The settings on the left of the window, in the **Basic**, **Special Lengths** and **Strips** pages. Hover the ⓘ next to a setting in the app for a short description. **View > Dark Theme** switches the app to a dark theme."
@@ -888,8 +1014,8 @@ msgid "Results"
 msgstr "نتایج"
 
 #: ../../source/reference/window.md:37
-msgid "The buttons above the report save the results, see [Outputs](outputs.md): **Save Results**, **PDF Drawing** and **DXF Drawing** after a computation, and **Diagram** with **Total** or **Additional** after an analysis."
-msgstr "دکمه‌های بالای گزارش نتایج را ذخیره می‌کنند ([خروجی‌ها](outputs.md) را ببینید): **Save Results**، **PDF Drawing** و **DXF Drawing** پس از یک محاسبه، و **Diagram** با **Total** یا **Additional** پس از یک تحلیل."
+msgid "The buttons above the report save the results, see [Outputs](outputs.md): **Save Results** and **Export…** after any calculation, **PDF Drawing** and **DXF Drawing** after a computation, and **Diagram** with **Total** or **Additional** after an analysis."
+msgstr "دکمه‌های بالای گزارش نتایج را ذخیره می‌کنند ([خروجی‌ها](outputs.md) را ببینید): **Save Results** و **Export…** پس از هر محاسبه یا تحلیل، **PDF Drawing** و **DXF Drawing** پس از یک محاسبه، و **Diagram** با **Total** یا **Additional** پس از یک تحلیل."
 
 #: ../../source/reference/window.md:39
 msgid "The **Report** box shows the input file at the top, and the results of the last calculation below it: the mass summary, the cutting plans and the warnings."

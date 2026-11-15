@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-15 21:35+0100\n"
+"POT-Creation-Date: 2026-11-15 23:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fa\n"
@@ -437,9 +437,9 @@ msgstr "تعیین بازه‌های اجرایی"
 msgid "The rounded or reduced length tells how long a piece must be, but not where it starts and ends. The pieces of each stack are placed from the longest to the shortest; each piece is placed against the piece below it, its **base piece**, so the ends of the stack line up where possible (`Mesh._set_piece_practical`)."
 msgstr "طول گردشده یا کاهش‌یافته می‌گوید یک قطعه چقدر باید بلند باشد، اما نمی‌گوید از کجا شروع و به کجا ختم می‌شود. قطعه‌های هر دسته از بلندترین به کوتاه‌ترین قرار داده می‌شوند؛ هر قطعه در برابر قطعهٔ زیر خود، یعنی **قطعهٔ پایه**، قرار می‌گیرد تا انتهاهای دسته تا جای ممکن هم‌تراز شوند (`Mesh._set_piece_practical`)."
 
-#: ../../source/explanation/practical.md:269
-msgid "In case 1.2.2, a piece is bent only to keep the number of length types down. This is an exception and should be checked on the drawing. In case 3.2, the original design asks for a warning, but the code keeps the length silently."
-msgstr "در حالت 1.2.2، قطعه فقط برای پایین نگه داشتن تعداد انواع طول خم می‌شود. این یک استثناست و باید روی نقشه بررسی شود. در حالت 3.2، طراحی اولیه هشداری می‌خواهد، اما کد طول را بی‌صدا نگه می‌دارد."
+#: ../../source/explanation/practical.md:276
+msgid "In case 1.2.2.3, a piece is bent only to keep the number of length types down. This is an exception and should be checked on the drawing. In case 3.2, the original design asks for a warning, but the code keeps the length silently."
+msgstr "در حالت 1.2.2.3، قطعه فقط برای پایین نگه داشتن تعداد انواع طول خم می‌شود. این یک استثناست و باید روی نقشه بررسی شود. در حالت 3.2، طراحی اولیه هشداری می‌خواهد، اما کد طول را بی‌صدا نگه می‌دارد."
 
 #: ../../source/explanation/required.md:1
 msgid "Required Length"

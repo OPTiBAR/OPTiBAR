@@ -38,10 +38,12 @@ exclude_patterns = []
 
 html_theme = 'furo'
 html_title = 'OPTiBAR'
-html_static_path = ['_static']
+html_static_path = ['_static', '../../assets/logo.svg', '../../assets/logo-dark.svg'] # the logos: one copy, in assets/
 html_css_files = ['custom.css']
-html_logo = "_static/logo.png"
 html_theme_options = {
+    # the logos of assets/ (see assets/README.md), the dark one for dark mode
+    "light_logo": "logo.svg",
+    "dark_logo": "logo-dark.svg",
     "sidebar_hide_name": True, # the logo has the name
     # the orange of the logo, darkened in light mode so links keep a 4.5:1 contrast with the page
     "light_css_variables": {

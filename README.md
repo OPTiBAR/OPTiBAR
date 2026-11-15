@@ -4,7 +4,10 @@
 
 
 <p align="center">
-  <img src="logo.png" alt="OPTiBAR Logo" width="150"/>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg"/>
+    <img src="assets/logo.svg" alt="OPTiBAR Logo" width="150"/>
+  </picture>
 </p>
 
 <p align="center">

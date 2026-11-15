@@ -40,3 +40,8 @@ docs = [
     "sphinx-proof>=0.4.1",
     "sphinxcontrib-mermaid>=2.1.1",
 ]
+
+[tool.uv]
+# the docs group too, so the environment always has what the docs need (and the Sphinx language
+# server of the editor finds it); the docs workflow installs only the docs group
+default-groups = ["dev", "docs"]

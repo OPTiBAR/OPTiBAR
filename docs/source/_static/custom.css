@@ -1,24 +1,16 @@
-/* The logo and the Mermaid diagrams are drawn on white. In dark mode, show them as white tiles with
-   rounded corners instead of bright squares on the dark page. */
+/* The Mermaid diagrams are drawn on white. In dark mode, show them as white tiles with rounded
+   corners instead of bright squares on the dark page. (The logo has a dark variant, see conf.py.) */
 
-body[data-theme="dark"] .sidebar-logo,
 body[data-theme="dark"] .mermaid {
     background: #ffffff;
     border-radius: 0.5rem;
-}
-
-body[data-theme="dark"] .mermaid {
     padding: 0.75rem;
 }
 
 @media (prefers-color-scheme: dark) {
-    body:not([data-theme="light"]) .sidebar-logo,
     body:not([data-theme="light"]) .mermaid {
         background: #ffffff;
         border-radius: 0.5rem;
-    }
-
-    body:not([data-theme="light"]) .mermaid {
         padding: 0.75rem;
     }
 }

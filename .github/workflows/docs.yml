@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v10.3.3 # no major tags since v8: pinned to a release
 
       # only the docs group: Sphinx doesn't import OPTiBAR, so the app's dependencies aren't needed
       - name: Build documentation

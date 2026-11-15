@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Install the Microsoft Access ODBC driver
         shell: pwsh
@@ -24,7 +24,7 @@ jobs:
           Get-OdbcDriver -Platform 64-bit | Where-Object Name -like "*Access*" | Select-Object Name
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v10.3.3 # no major tags since v8: pinned to a release
 
       - name: Install dependencies
         run: uv sync

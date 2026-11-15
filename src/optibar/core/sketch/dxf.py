@@ -11,9 +11,10 @@ space, in meters, laid out as a row of sheets:
 
 and below them, portrait sheets with the cutting plan of every diameter.
 
-Differences from the plugin: English only; grid lines use the CENTER linetype and table lines the
-Border layer, which the plugin intended but lost by calling SetDatabaseDefaults() after setting
-them; cutting sheets have a title and their column headers on every sheet.
+Differences from the plugin: English only; grid lines use the CENTER linetype, which the plugin
+intended but lost by calling SetDatabaseDefaults() after setting it; cutting sheets have a title and
+their column headers on every sheet; every entity is on a layer of its kind with a lineweight, and
+takes its color from the layer (the plugin left many on layer 0 with their own colors).
 """
 from __future__ import annotations
 import math
@@ -29,22 +30,55 @@ Point = Tuple[float, float]
 
 STYLE = 'OPTiBAR'
 DIMSTYLE = 'OPTiBAR'
-# name: ACI color, as assigned by the plugin
+# name: (ACI color, lineweight in 1/100 mm)
+# Every entity is on one of these layers and takes its color and lineweight from it (BYLAYER), so the drawing
+# prints with its line weights in any office, by the layer lineweights or by a color dependent plot style (CTB),
+# and every kind of object can be hidden or restyled by its layer. The colors are those of the plugin.
 LAYERS = {
-    'Border': 1,
-    'Sheet': 2,
-    'Strip': 3,
-    'Typical Rebar Top': 4,
-    'Typical Rebar Bottom': 4,
-    'Additional Rebar Top': 5,
-    'Additional Rebar Bottom': 5,
-    'continuous Rebar': 6,
-    'Dimension': 7,
-    'Dimension Text': 8,
-    'Column': 9,
-    'Rebar Text': 10,
-    'moment': 11,
+    # sheets
+    'Sheet': (2, 13),
+    'Border': (1, 35),
+    'Title': (7, 25),
+    # plans
+    'Grid': (7, 13),
+    'Strip': (3, 25),
+    'Strip Name': (7, 18),
+    'Column': (9, 18),
+    'Typical Rebar Top': (4, 30),
+    'Typical Rebar Bottom': (4, 30),
+    'Additional Rebar Top': (5, 35),
+    'Additional Rebar Bottom': (5, 35),
+    'continuous Rebar': (6, 35),
+    'Rebar Text': (10, 18),
+    'Dimension': (7, 13),
+    'Dimension Text': (8, 13),
+    # shear sections
+    'Section': (74, 25),
+    'Section Thermal Rebar': (252, 30),
+    'Section Rebar': (4, 18),
+    'Stirrup': (2, 30),
+    'Section Text': (7, 18),
+    # tables
+    'Table': (1, 25),
+    'Table Text': (7, 18),
+    # moment diagrams
+    'Moment Axis': (1, 18),
+    'Moment Resistance': (2, 35),
+    'Moment Ultimate': (3, 35),
+    'Moment Text': (7, 18),
+    # cutting plans
+    'Cutting Grid': (3, 18),
+    'Cutting Text': (2, 18),
+    'Cutting Bar': (6, 30),
+    'Cutting Bar Text': (6, 18),
 }
+SHEAR_LINEWEIGHT = 18 # of the 'Shear Type <id>' layers, one per shear type, in the color of its id
+BYLAYER = 256 # ACI color of an entity that takes the color of its layer
+
+
+def shear_layer(shear_id: int) -> str:
+    """the layer of a shear type: its zones in the shear plan and its legend"""
+    return f'Shear Type {shear_id}'
 HATCH_PATTERNS = ("GOST_GLASS", "ANGLE", "ANSI31", "ANSI37", "ANSI32", "NET3", "LINE", "NET", "DOTS", "ZIGZAG")
 
 # sheet index of each plan
@@ -172,8 +206,12 @@ class DxfDrawing():
 
     def _setup(self, doc) -> None:
         doc.styles.add(STYLE, font='arial.ttf')
-        for name, color in LAYERS.items():
-            doc.layers.add(name, color=color)
+        for name, (color, lineweight) in LAYERS.items():
+            doc.layers.add(name, color=color, lineweight=lineweight)
+        ids = {int(t['id']) for t in self.output['shear_types']}
+        ids |= {int(zone['id']) for strip in self.output['strips'] for zone in strip['shear_zones']}
+        for shear_id in sorted(ids):
+            doc.layers.add(shear_layer(shear_id), color=shear_id, lineweight=SHEAR_LINEWEIGHT)
         dimstyle = doc.dimstyles.new(DIMSTYLE)
         dimstyle.dxf.dimtxsty = STYLE
         dimstyle.dxf.dimsah = 1
@@ -186,26 +224,22 @@ class DxfDrawing():
         dimstyle.dxf.dimtad = 1
         dimstyle.dxf.dimzin = 0
 
-    def text(self, content: str, position: Point, height: float, layer: str = '0', rotation: float = 0,
-            align: TextEntityAlignment = TextEntityAlignment.MIDDLE, color: int = None) -> None:
+    # every entity is drawn on a layer and takes its color and lineweight from it
+
+    def text(self, content: str, position: Point, height: float, layer: str, rotation: float = 0,
+            align: TextEntityAlignment = TextEntityAlignment.MIDDLE) -> None:
         attribs = {'style': STYLE, 'height': height, 'layer': layer, 'rotation': rotation}
-        if color is not None:
-            attribs['color'] = color
         self.msp.add_text(content, dxfattribs=attribs).set_placement(position, align=align)
 
-    def mtext(self, content: str, position: Point, height: float, width: float = None, layer: str = '0', color: int = None) -> None:
+    def mtext(self, content: str, position: Point, height: float, layer: str, width: float = None) -> None:
         attribs = {'style': STYLE, 'char_height': height, 'layer': layer}
         if width is not None:
             attribs['width'] = width
-        if color is not None:
-            attribs['color'] = color
         self.msp.add_mtext(content, dxfattribs=attribs).set_location(position, attachment_point=MTextEntityAlignment.MIDDLE_CENTER)
 
-    def polyline(self, points: Sequence, layer: str = '0', color: int = None, closed: bool = False, width: float = 0) -> None:
+    def polyline(self, points: Sequence, layer: str, closed: bool = False, width: float = 0) -> None:
         """points are (x, y) or (x, y, start_width, end_width, bulge)"""
         attribs = {'layer': layer}
-        if color is not None:
-            attribs['color'] = color
         if width:
             attribs['const_width'] = width
         if points and len(points[0]) == 5:
@@ -213,10 +247,8 @@ class DxfDrawing():
         else:
             self.msp.add_lwpolyline([p[:2] for p in points], close=closed, dxfattribs=attribs)
 
-    def line(self, start: Point, end: Point, layer: str = 'Border', color: int = None, linetype: str = None, ltscale: float = None) -> None:
+    def line(self, start: Point, end: Point, layer: str, linetype: str = None, ltscale: float = None) -> None:
         attribs = {'layer': layer}
-        if color is not None:
-            attribs['color'] = color
         if linetype is not None:
             attribs['linetype'] = linetype
         if ltscale is not None:
@@ -228,16 +260,16 @@ class DxfDrawing():
         dim = self.msp.add_aligned_dim(p1=p1, p2=p2, distance=0, text=text, dimstyle=DIMSTYLE, override=override, dxfattribs={'layer': layer})
         dim.render()
 
-    def hatch_polygon(self, points: Sequence[Point], pattern: str, color: int) -> None:
-        hatch = self.msp.add_hatch(color=color)
-        hatch.set_pattern_fill(pattern, scale=0.1)
+    def hatch_polygon(self, points: Sequence[Point], pattern: str, layer: str) -> None:
+        hatch = self.msp.add_hatch(color=BYLAYER, dxfattribs={'layer': layer})
+        hatch.set_pattern_fill(pattern, color=BYLAYER, scale=0.1)
         hatch.paths.add_polyline_path(points, is_closed=True)
 
-    def solid_circles(self, centers: Sequence[Point], radius: float, color: int) -> None:
+    def solid_circles(self, centers: Sequence[Point], radius: float, layer: str) -> None:
         for center in centers:
-            self.msp.add_circle(center, radius, dxfattribs={'color': color})
-        hatch = self.msp.add_hatch(color=color)
-        hatch.set_solid_fill(color=color)
+            self.msp.add_circle(center, radius, dxfattribs={'layer': layer})
+        hatch = self.msp.add_hatch(color=BYLAYER, dxfattribs={'layer': layer})
+        hatch.set_solid_fill(color=BYLAYER)
         for center in centers:
             hatch.paths.add_edge_path().add_arc(center, radius, 0, 360)
 
@@ -261,9 +293,9 @@ class DxfDrawing():
             bx, by = L.plan_base(sheet)
             x = bx + L.width_of_foundation / 2 + L.min_x
             y = by + L.min_y
-            self.mtext(title, (x, y - 0.05 * L.HEIGHT), 0.01 * L.HEIGHT, width=L.HEIGHT / 2)
+            self.mtext(title, (x, y - 0.05 * L.HEIGHT), 0.01 * L.HEIGHT, 'Title', width=L.HEIGHT / 2)
             w = 0.002 * L.HEIGHT
-            self.polyline([(x - 0.15 * L.HEIGHT, y - 0.06 * L.HEIGHT, w, w, 0), (x + 0.15 * L.HEIGHT, y - 0.06 * L.HEIGHT, w, w, 0)])
+            self.polyline([(x - 0.15 * L.HEIGHT, y - 0.06 * L.HEIGHT, w, w, 0), (x + 0.15 * L.HEIGHT, y - 0.06 * L.HEIGHT, w, w, 0)], 'Title')
 
     def _plan_bases(self) -> List[Point]:
         return [self.layout.plan_base(sheet) for sheet in PLAN_TITLES]
@@ -316,13 +348,13 @@ class DxfDrawing():
                         at = lambda along, across: (o + across + bx, above - along + by)
                     else:
                         at = lambda along, across: (left + along + bx, o + across + by)
-                    self.msp.add_circle(at(0, shift), radius)
-                    self.text(grid['name'], at(0, shift), radius / 2)
+                    self.msp.add_circle(at(0, shift), radius, dxfattribs={'layer': 'Grid'})
+                    self.text(grid['name'], at(0, shift), radius / 2, 'Grid')
                     if shift:
-                        self.line(at(radius, shift), at(2 * radius, 0), layer='0', linetype='CENTER', ltscale=ltscale)
-                        self.line(at(2 * radius, 0), at(radius + length, 0), layer='0', linetype='CENTER', ltscale=ltscale)
+                        self.line(at(radius, shift), at(2 * radius, 0), 'Grid', linetype='CENTER', ltscale=ltscale)
+                        self.line(at(2 * radius, 0), at(radius + length, 0), 'Grid', linetype='CENTER', ltscale=ltscale)
                     else:
-                        self.line(at(radius, 0), at(radius + length, 0), layer='0', linetype='CENTER', ltscale=ltscale)
+                        self.line(at(radius, 0), at(radius + length, 0), 'Grid', linetype='CENTER', ltscale=ltscale)
 
     def _draw_grid_dimensions(self) -> None:
         L = self.layout
@@ -421,7 +453,7 @@ class DxfDrawing():
             if bends[1] > 0:
                 points.append(line.at(segment, end_distance, [up[0] + bend_down[0], up[1] + bend_down[1]], base))
 
-            self.polyline([(x, y, bar_width, bar_width, 0) for x, y in points], layer='continuous Rebar' if bunch['continuous'] else layer)
+            self.polyline([(x, y, bar_width, bar_width, 0) for x, y in points], 'continuous Rebar' if bunch['continuous'] else layer)
 
             if not line.is_start_left:
                 d = line.directions[segment]
@@ -431,7 +463,7 @@ class DxfDrawing():
                 else:
                     text_position = line.at(segment, end_distance, text_up, base)
             label = f"{bunch['number']}%%C{num(bunch['diameter'])}-L={num(stations[1] - stations[0], 2)}"
-            self.text(label, text_position, dist * 0.7, layer='Rebar Text', rotation=text_angle, align=TextEntityAlignment.LEFT)
+            self.text(label, text_position, dist * 0.7, 'Rebar Text', rotation=text_angle, align=TextEntityAlignment.LEFT)
 
     def _draw_strip_widths(self) -> None:
         L = self.layout
@@ -457,7 +489,7 @@ class DxfDrawing():
                 if not (direction[0] > 0 or (direction[0] == 0 and direction[1] < 0)):
                     direction = [-direction[0], -direction[1]]
                 position = (middle[0] + direction[0] * 0.5 * scale, middle[1] + direction[1] * 0.5 * scale)
-                self.text(strip['name'], position, scale * 0.1, layer='Dimension', color=7,
+                self.text(strip['name'], position, scale * 0.1, 'Strip Name',
                     rotation=math.degrees(math.atan2(direction[1], direction[0])))
 
     def _draw_shear_zones(self) -> None:
@@ -494,9 +526,9 @@ class DxfDrawing():
                     right.append(edge(segment, end_distance, line.normals[segment], 1))
                     left.append(edge(segment, end_distance, line.normals[segment], -1))
                 outline = right + left[::-1]
-                color = int(zone['id'])
-                self.polyline(outline, color=color, closed=True)
-                self.hatch_polygon(outline, HATCH_PATTERNS[color % 10], color)
+                shear_id = int(zone['id'])
+                self.polyline(outline, shear_layer(shear_id), closed=True)
+                self.hatch_polygon(outline, HATCH_PATTERNS[shear_id % 10], shear_layer(shear_id))
 
     # --- sections ------------------------------------------------------------------------------
 
@@ -507,17 +539,17 @@ class DxfDrawing():
         bar = 0.0015 * H
         for i, shear_type in enumerate(self.output['shear_types']):
             y0 = by - i * H / 4
-            color = int(shear_type['id'])
+            shear_id = int(shear_type['id'])
             number = shear_type['number']
             # legend, with the hatch used for this type in the shear plan
             legend = [(bx, y0), (bx + 1.7 * H / 16, y0), (bx + 1.7 * H / 16, y0 - H / 16), (bx, y0 - H / 16)]
-            self.polyline(legend, color=color, closed=True)
-            self.hatch_polygon(legend, HATCH_PATTERNS[color % 10], color)
+            self.polyline(legend, shear_layer(shear_id), closed=True)
+            self.hatch_polygon(legend, HATCH_PATTERNS[shear_id % 10], shear_layer(shear_id))
             self.polyline([
                 (bx + 3 * H / 16, y0 - H / 32, H / 150, H / 150, 0),
                 (bx + 3.5 * H / 16, y0 - H / 32, H / 75, 0, 0),
                 (bx + 3.75 * H / 16, y0 - H / 32, 0, 0, 0),
-            ], color=74)
+            ], 'Section')
 
             # section outline and dimensions
             w = 2 * H / 8
@@ -528,7 +560,7 @@ class DxfDrawing():
             x0 = bx + 5.05 * H / 16
             top = y0 + H / 32
             bottom = top - H / 8
-            self.polyline([(x0, top), (x0 + w, top), (x0 + w, bottom), (x0, bottom)], color=74, closed=True)
+            self.polyline([(x0, top), (x0 + w, top), (x0 + w, bottom), (x0, bottom)], 'Section', closed=True)
             self.aligned_dim((x0, top), (x0 + w, top), 0.002 * H, 0.008 * H, 0.008 * H, text='Width Of Strip')
             self.aligned_dim((x0, top), (x0, bottom), 0.002 * H, 0.008 * H, 0.008 * H, text=f'{num(depth)}m')
 
@@ -540,7 +572,7 @@ class DxfDrawing():
                 (x0 + w - H / 80, top - H / 160, bar, bar, -0.45),
                 (x0 + w - H / 160, top - H / 80, bar, bar, 0),
                 (x0 + w - H / 160, top - H / 160 - H / 40, bar, bar, 0),
-            ], color=252)
+            ], 'Section Thermal Rebar')
             self.polyline([
                 (x0 + H / 160, bottom + H / 160 + H / 40, bar, bar, 0),
                 (x0 + H / 160, bottom + H / 80, bar, bar, 0.45),
@@ -548,7 +580,7 @@ class DxfDrawing():
                 (x0 + w - H / 80, bottom + H / 160, bar, bar, 0.45),
                 (x0 + w - H / 160, bottom + H / 80, bar, bar, 0),
                 (x0 + w - H / 160, bottom + H / 160 + H / 40, bar, bar, 0),
-            ], color=252)
+            ], 'Section Thermal Rebar')
 
             # stirrup legs: positions on a 13-slot grid when they fit, evenly spaced otherwise
             if number <= 11:
@@ -559,11 +591,11 @@ class DxfDrawing():
                 legs = [(x0 + (j + 1) * inner / (number + 1), j <= number / 2) for j in range(number)]
                 bar_count, spacing = number + 2, inner / (number + 1)
             for x, hook_right in legs:
-                self.polyline(self._stirrup(x, top, bottom, hook_right, bar), color=2)
+                self.polyline(self._stirrup(x, top, bottom, hook_right, bar), 'Stirrup')
             centers_top = [(x0 + H / 160 + H / 200 + j * spacing, top - H / 160 - H / 400) for j in range(bar_count)]
             centers_bottom = [(x0 + H / 160 + H / 200 + j * spacing, bottom + H / 160 + H / 400) for j in range(bar_count)]
             for pair in zip(centers_top, centers_bottom):
-                self.solid_circles(pair, H / 700, 4)
+                self.solid_circles(pair, H / 700, 'Section Rebar')
 
             # label with a leader
             label = f"{number}%%C{num(shear_type['diameter'])}@{num(shear_type['interval'] * 100)}cm"
@@ -576,8 +608,8 @@ class DxfDrawing():
             else:
                 tip = (x0 + H / 110 + 12 * inner / (number + 1) + H / 200, top - H / 16 + H / 100)
                 end = (tip[0] + H / 5, top - H / 160 - H / 600 + H / 20)
-            self.msp.add_leader([tip, end], dimstyle=DIMSTYLE, override={'dimasz': H / 100})
-            self.msp.add_mtext(label, dxfattribs={'style': STYLE, 'char_height': H / 100}).set_location(
+            self.msp.add_leader([tip, end], dimstyle=DIMSTYLE, override={'dimasz': H / 100}, dxfattribs={'layer': 'Section Text'})
+            self.msp.add_mtext(label, dxfattribs={'style': STYLE, 'char_height': H / 100, 'layer': 'Section Text'}).set_location(
                 (x0 + H / 70 + 6 * inner / 12 + H / 5, top - H / 160 - H / 600 + H / 14))
 
     def _stirrup(self, x: float, top: float, bottom: float, hook_right: bool, bar: float) -> List:
@@ -629,32 +661,32 @@ class DxfDrawing():
     def _draw_piece_table(self, x: float, y: float, title: str, rows: List[Tuple[str, float, int, float]], total_weight: float) -> None:
         columns = [x + 0.5, x + 3, x + 5.5, x + 7, x + 9, x + 11]
         text_y = y - 1
-        self.line((x, y), (x + 12, y))
+        self.line((x, y), (x + 12, y), layer='Table')
         for column, header in zip(columns, ("POS", "SHAPE", "D.", "Number", "L(m)", "weight(kg)")):
-            self.text(header, (column, text_y), 0.25)
+            self.text(header, (column, text_y), 0.25, layer='Table Text')
         for k, (shape, diameter, number, length) in enumerate(rows, start=1):
             row_y = text_y - k - 0.5
-            self.text(str(k), (columns[0], row_y), 0.25)
+            self.text(str(k), (columns[0], row_y), 0.25, layer='Table Text')
             self._draw_shape(shape, diameter, length, columns[1], text_y - k)
-            self.text(num(diameter), (columns[2], row_y), 0.25)
-            self.text(str(number), (columns[3], row_y), 0.25)
-            self.text(num(length), (columns[4], row_y), 0.25)
+            self.text(num(diameter), (columns[2], row_y), 0.25, layer='Table Text')
+            self.text(str(number), (columns[3], row_y), 0.25, layer='Table Text')
+            self.text(num(length), (columns[4], row_y), 0.25, layer='Table Text')
             weight = diameter ** 2 / 4 * number * length * 3.1416 * 7850 / 1000000
-            self.text(num(weight, 0), (columns[5], row_y), 0.25)
-            self.line((x, y - k - 1), (x + 12, y - k - 1))
+            self.text(num(weight, 0), (columns[5], row_y), 0.25, layer='Table Text')
+            self.line((x, y - k - 1), (x + 12, y - k - 1), layer='Table')
         k = len(rows)
         bottom = y - (k + 1) - 1
-        self.line((x, bottom), (x + 12, bottom))
+        self.line((x, bottom), (x + 12, bottom), layer='Table')
         for offset in (0, 1, 5, 6, 8, 10, 12):
-            self.line((x + offset, y), (x + offset, bottom))
+            self.line((x + offset, y), (x + offset, bottom), layer='Table')
         # total weight row
         total_bottom = y - (k + 2) - 1
-        self.line((x, total_bottom), (x + 12, total_bottom))
+        self.line((x, total_bottom), (x + 12, total_bottom), layer='Table')
         for offset in (0, 10, 12):
-            self.line((x + offset, bottom), (x + offset, total_bottom))
-        self.text(num(total_weight, 1), (columns[5], text_y - (k + 1) - 0.5), 0.25)
-        self.text("Total Weight", (x + 5, text_y - (k + 1) - 0.5), 0.25)
-        self.mtext(title, (x + 6, text_y + 1.5), 0.45, width=20)
+            self.line((x + offset, bottom), (x + offset, total_bottom), layer='Table')
+        self.text(num(total_weight, 1), (columns[5], text_y - (k + 1) - 0.5), 0.25, layer='Table Text')
+        self.text("Total Weight", (x + 5, text_y - (k + 1) - 0.5), 0.25, layer='Table Text')
+        self.mtext(title, (x + 6, text_y + 1.5), 0.45, width=20, layer='Table Text')
 
     def _draw_shape(self, shape: str, diameter: float, length: float, cx: float, row_top: float) -> None:
         """bar shape sketch with its straight and bent lengths"""
@@ -662,37 +694,37 @@ class DxfDrawing():
         spec = self._rebar_spec(diameter)
         b90 = spec['bend']['B90'] if spec else 0
         if shape == 'no_side':
-            self.polyline([(cx - 1.3, row_top - 0.7, w, w, 0), (cx + 1.3, row_top - 0.7, w, w, 0)])
-            self.text(num(length), (cx, row_top - 0.55), 0.15)
+            self.polyline([(cx - 1.3, row_top - 0.7, w, w, 0), (cx + 1.3, row_top - 0.7, w, w, 0)], layer='Table Text')
+            self.text(num(length), (cx, row_top - 0.55), 0.15, layer='Table Text')
             return
         if shape == 'one_side':
             self.polyline([
                 (cx - 1.3, row_top - 0.2, w, w, 0), (cx - 1.3, row_top - 0.6, w, w, 0.45),
                 (cx - 1.2, row_top - 0.7, w, w, 0), (cx + 1.3, row_top - 0.7, w, w, 0),
-            ])
+            ], layer='Table Text')
             straight = length - b90
         elif shape == 'two_side':
             self.polyline([
                 (cx - 1.3, row_top - 0.2, w, w, 0), (cx - 1.3, row_top - 0.6, w, w, 0.45),
                 (cx - 1.2, row_top - 0.7, w, w, 0), (cx + 1.2, row_top - 0.7, w, w, 0.45),
                 (cx + 1.3, row_top - 0.6, w, w, 0), (cx + 1.3, row_top - 0.2, w, w, 0),
-            ])
+            ], layer='Table Text')
             straight = length - 2 * b90
             if spec:
-                self.text(num(b90), (cx + 1.45, row_top - 0.4), 0.15, rotation=270)
+                self.text(num(b90), (cx + 1.45, row_top - 0.4), 0.15, rotation=270, layer='Table Text')
         else: # stirrup
             self.polyline([
                 (cx - 1.3, row_top - 0.2, w, w, 0), (cx - 1.3, row_top - 0.6, w, w, 0.45),
                 (cx - 1.2, row_top - 0.7, w, w, 0), (cx + 1.2, row_top - 0.7, w, w, 0.6),
                 (cx + 1.25, row_top - 0.55, w, w, 0), (cx + 0.95, row_top - 0.35, w, w, 0),
-            ])
+            ], layer='Table Text')
             b135 = spec['bend']['B135'] if spec else 0
             straight = length - b90 - b135
             if spec:
-                self.text(num(b135), (cx + 1.2, row_top - 0.35), 0.15, rotation=math.degrees(5.67))
+                self.text(num(b135), (cx + 1.2, row_top - 0.35), 0.15, rotation=math.degrees(5.67), layer='Table Text')
         if spec:
-            self.text(num(b90), (cx - 1.45, row_top - 0.4), 0.15, rotation=90)
-            self.text(num(straight, 2), (cx, row_top - 0.55), 0.15)
+            self.text(num(b90), (cx - 1.45, row_top - 0.4), 0.15, rotation=90, layer='Table Text')
+            self.text(num(straight, 2), (cx, row_top - 0.55), 0.15, layer='Table Text')
 
     def _draw_summary(self) -> None:
         bx, by = self.layout.list_base()
@@ -703,14 +735,14 @@ class DxfDrawing():
         rebar = self.output['summary']['rebar']
         kg = lambda tons: num(1000 * tons, 1)
 
-        self.mtext("Summary Of Rebars Mass", (x + width / 2, by + 0.5), 0.45, width=20)
+        self.mtext("Summary Of Rebars Mass", (x + width / 2, by + 0.5), 0.45, width=20, layer='Table Text')
         for i in (0, 2, 3, 4, 5, 6, 7):
-            self.line((x, by - i), (x + width, by - i))
+            self.line((x, by - i), (x + width, by - i), layer='Table')
         for offset in (0, 4, 6.5, 9, 11.5):
-            self.line((x + offset, by), (x + offset, by - 7))
+            self.line((x + offset, by), (x + offset, by - 7), layer='Table')
         columns = (2, 5.25, 7.75, 10.25)
         for column, header in zip(columns, ("Type of Rebar", "Top(kg)", "Bottom(kg)", "Total(kg)")):
-            self.text(header, (x + column, by - 1), 0.25)
+            self.text(header, (x + column, by - 1), 0.25, layer='Table Text')
         rows = [
             ("Typical Rebars", kg(rebar['typical']['top']), kg(rebar['typical']['bottom']), kg(rebar['typical']['top'] + rebar['typical']['bottom'])),
             ("Thermal Rebars", kg(rebar['thermal']['top']), kg(rebar['thermal']['bottom']), kg(rebar['thermal']['top'] + rebar['thermal']['bottom'])),
@@ -721,18 +753,18 @@ class DxfDrawing():
         bottom_total = rebar['typical']['bottom'] + rebar['thermal']['bottom'] + rebar['additional']['bottom']
         rows.append(("Total", kg(top_total), kg(bottom_total), kg(top_total + bottom_total + rebar['shear'])))
         for i, (label, *values) in enumerate(rows):
-            self.mtext(label, (x + columns[0], by - 2.5 - i), 0.25, width=7)
+            self.mtext(label, (x + columns[0], by - 2.5 - i), 0.25, width=7, layer='Table Text')
             for column, value in zip(columns[1:], values):
-                self.text(value, (x + column, by - 2.5 - i), 0.25)
+                self.text(value, (x + column, by - 2.5 - i), 0.25, layer='Table Text')
 
         # concrete volume
-        self.mtext("Summary Of concrete volume(m³)", (x + width / 2, by - 9), 0.45, width=20)
+        self.mtext("Summary Of concrete volume(m³)", (x + width / 2, by - 9), 0.45, width=20, layer='Table Text')
         for i in (0, 1):
-            self.line((x, by - 9.5 - 2 * i), (x + width, by - 9.5 - 2 * i))
+            self.line((x, by - 9.5 - 2 * i), (x + width, by - 9.5 - 2 * i), layer='Table')
         for i in range(3):
-            self.line((x + i * width / 2, by - 9.5), (x + i * width / 2, by - 11.5))
-        self.mtext("Total concrete volume", (x + width / 4, by - 10.5), 0.25, width=7)
-        self.text(num(self.output['summary']['concrete']), (x + 3 * width / 4, by - 10.5), 0.25)
+            self.line((x + i * width / 2, by - 9.5), (x + i * width / 2, by - 11.5), layer='Table')
+        self.mtext("Total concrete volume", (x + width / 4, by - 10.5), 0.25, width=7, layer='Table Text')
+        self.text(num(self.output['summary']['concrete']), (x + 3 * width / 4, by - 10.5), 0.25, layer='Table Text')
 
     def _draw_technical_tables(self) -> None:
         x, y = self.layout.list_base()
@@ -743,33 +775,33 @@ class DxfDrawing():
 
         # overlap lengths
         for i in range(5):
-            self.line((x, y - i * cell_h), (x + width, y - i * cell_h))
+            self.line((x, y - i * cell_h), (x + width, y - i * cell_h), layer='Table')
         for i in range(2):
-            self.line((x + i * width, y), (x + i * width, y - 4 * cell_h))
-        self.mtext("Length Of Overlap for Foundation in cm", (x + width / 2, y + 0.5), 0.45, width=20)
+            self.line((x + i * width, y), (x + i * width, y - 4 * cell_h), layer='Table')
+        self.mtext("Length Of Overlap for Foundation in cm", (x + width / 2, y + 0.5), 0.45, width=20, layer='Table Text')
         material = spec['material']
-        self.text(f"F'c={num(material['fc'] / 10, 1)}kg/cm², Fy={num(material['fy'] / 10, 1)}kg/cm²", (x + width / 2, y - 0.5 * cell_h), 0.25)
+        self.text(f"F'c={num(material['fc'] / 10, 1)}kg/cm², Fy={num(material['fy'] / 10, 1)}kg/cm²", (x + width / 2, y - 0.5 * cell_h), 0.25, layer='Table Text')
         for label, row in (("Rebar Size", 1.5), ("Top", 2.5), ("Bottom", 3.5)):
-            self.text(label, (x + 1.5 * cell_w, y - row * cell_h), 0.25)
+            self.text(label, (x + 1.5 * cell_w, y - row * cell_h), 0.25, layer='Table Text')
         for i, rebar in enumerate(rebars):
             cx = x + (3.5 + i) * cell_w
-            self.text(f"%%C{num(rebar['diameter'])}", (cx, y - 1.5 * cell_h), 0.25)
-            self.text(num(rebar['overlap']['top'] * 100), (cx, y - 2.5 * cell_h), 0.25)
-            self.text(num(rebar['overlap']['bottom'] * 100), (cx, y - 3.5 * cell_h), 0.25)
-            self.line((x + (3 + i) * cell_w, y - cell_h), (x + (3 + i) * cell_w, y - 4 * cell_h))
+            self.text(f"%%C{num(rebar['diameter'])}", (cx, y - 1.5 * cell_h), 0.25, layer='Table Text')
+            self.text(num(rebar['overlap']['top'] * 100), (cx, y - 2.5 * cell_h), 0.25, layer='Table Text')
+            self.text(num(rebar['overlap']['bottom'] * 100), (cx, y - 3.5 * cell_h), 0.25, layer='Table Text')
+            self.line((x + (3 + i) * cell_w, y - cell_h), (x + (3 + i) * cell_w, y - 4 * cell_h), layer='Table')
 
         # number of length types
         lx = x + width / 2 - 2 * cell_w
         ly = y - 8 * cell_h
         lw = 4 * cell_w
         for i in range(3):
-            self.line((lx, ly - i * cell_h), (lx + lw, ly - i * cell_h))
+            self.line((lx, ly - i * cell_h), (lx + lw, ly - i * cell_h), layer='Table')
         for offset in (0, 3 * cell_w, lw):
-            self.line((lx + offset, ly), (lx + offset, ly - 2 * cell_h))
-        self.mtext("Number Of Length Type Of Additional Rebars", (lx + lw / 2, ly + 0.6), 0.25, width=4.8)
+            self.line((lx + offset, ly), (lx + offset, ly - 2 * cell_h), layer='Table')
+        self.mtext("Number Of Length Type Of Additional Rebars", (lx + lw / 2, ly + 0.6), 0.25, width=4.8, layer='Table Text')
         for row, (label, value) in enumerate((("Stack", spec['length_type']['stack']), ("Total", spec['length_type']['total']))):
-            self.mtext(label, (lx + (lw - cell_w) / 2, ly - (row + 0.5) * cell_h), 0.25, width=4.8)
-            self.text(str(value), (lx + lw - 0.5 * cell_w, ly - (row + 0.5) * cell_h), 0.25)
+            self.mtext(label, (lx + (lw - cell_w) / 2, ly - (row + 0.5) * cell_h), 0.25, width=4.8, layer='Table Text')
+            self.text(str(value), (lx + lw - 0.5 * cell_w, ly - (row + 0.5) * cell_h), 0.25, layer='Table Text')
 
     # --- moment diagrams --------------------------------------------------------------------
 
@@ -791,28 +823,28 @@ class DxfDrawing():
                 y0 = by - number * 5 * scale
                 def curve(stations, values):
                     return [(x0 + (s if line.is_start_left else line.length - s), y0 + scale * 2 * abs(v) / max_resistance) for s, v in zip(stations, values)]
-                self.polyline(curve(resistance['stations'], resistance['values']), layer='moment', color=2)
-                self.polyline(curve(ultimate['stations'], ultimate['values']), layer='moment', color=3)
+                self.polyline(curve(resistance['stations'], resistance['values']), layer='Moment Resistance')
+                self.polyline(curve(ultimate['stations'], ultimate['values']), layer='Moment Ultimate')
                 axis_length = strip_length + 3 * scale
                 # axes and arrow heads as separate polylines, some viewers skip zero width parts of tapered ones
-                self.polyline([(x0, y0 + 3 * scale), (x0, y0), (x0 + axis_length, y0)], layer='moment', color=1)
-                self.polyline([(x0, y0 + 3.2 * scale, 0, 0.2 * scale, 0), (x0, y0 + 3 * scale, 0, 0, 0)], layer='moment', color=1)
-                self.polyline([(x0 + axis_length, y0, 0.2 * scale, 0, 0), (x0 + axis_length + 0.2 * scale, y0, 0, 0, 0)], layer='moment', color=1)
-                self.line((x0 - 0.1 * scale, y0 + 2 * scale), (x0 + 0.1 * scale, y0 + 2 * scale), layer='moment', color=7)
-                self.line((x0 + strip_length, y0 + 0.1 * scale), (x0 + strip_length, y0 - 0.1 * scale), layer='moment', color=7)
-                self.text(num(max_resistance, 2), (x0 - 0.7 * scale, y0 + 2 * scale), 0.2 * scale, layer='moment', color=7)
-                self.text(num(strip_length, 2), (x0 + strip_length, y0 - 0.3 * scale), 0.2 * scale, layer='moment', color=7)
-                self.text("M(ton.m)", (x0 - 1.3 * scale, y0 + 3 * scale), 0.3 * scale, layer='moment', color=7)
-                self.text("L(m)", (x0 + axis_length, y0 - 0.5 * scale), 0.3 * scale, layer='moment', color=7)
+                self.polyline([(x0, y0 + 3 * scale), (x0, y0), (x0 + axis_length, y0)], layer='Moment Axis')
+                self.polyline([(x0, y0 + 3.2 * scale, 0, 0.2 * scale, 0), (x0, y0 + 3 * scale, 0, 0, 0)], layer='Moment Axis')
+                self.polyline([(x0 + axis_length, y0, 0.2 * scale, 0, 0), (x0 + axis_length + 0.2 * scale, y0, 0, 0, 0)], layer='Moment Axis')
+                self.line((x0 - 0.1 * scale, y0 + 2 * scale), (x0 + 0.1 * scale, y0 + 2 * scale), layer='Moment Text')
+                self.line((x0 + strip_length, y0 + 0.1 * scale), (x0 + strip_length, y0 - 0.1 * scale), layer='Moment Text')
+                self.text(num(max_resistance, 2), (x0 - 0.7 * scale, y0 + 2 * scale), 0.2 * scale, layer='Moment Text')
+                self.text(num(strip_length, 2), (x0 + strip_length, y0 - 0.3 * scale), 0.2 * scale, layer='Moment Text')
+                self.text("M(ton.m)", (x0 - 1.3 * scale, y0 + 3 * scale), 0.3 * scale, layer='Moment Text')
+                self.text("L(m)", (x0 + axis_length, y0 - 0.5 * scale), 0.3 * scale, layer='Moment Text')
                 if column == 0:
-                    self.text(strip['name'], (x0 - 5 * scale, y0 + scale), 0.6 * scale, layer='moment', color=7)
-            self.text(level.upper(), (x0 + max_length / 3, by + 4 * scale), scale, layer='moment', color=7)
+                    self.text(strip['name'], (x0 - 5 * scale, y0 + scale), 0.6 * scale, layer='Moment Text')
+            self.text(level.upper(), (x0 + max_length / 3, by + 4 * scale), scale, layer='Moment Text')
         # legend
         lx = bx + 2 * shift
-        self.text("%%CMn", (lx - 2 * scale, by - 2 * scale), 0.8 * scale, layer='moment', color=2)
-        self.text("Mu", (lx - 2 * scale, by - 3.5 * scale), 0.8 * scale, layer='moment', color=3)
-        self.polyline([(lx, by - 2 * scale), (lx + 2 * scale, by - 2 * scale)], layer='moment', color=2, width=0.1 * scale)
-        self.polyline([(lx, by - 3.5 * scale), (lx + 2 * scale, by - 3.5 * scale)], layer='moment', color=3, width=0.1 * scale)
+        self.text("%%CMn", (lx - 2 * scale, by - 2 * scale), 0.8 * scale, layer='Moment Resistance')
+        self.text("Mu", (lx - 2 * scale, by - 3.5 * scale), 0.8 * scale, layer='Moment Ultimate')
+        self.polyline([(lx, by - 2 * scale), (lx + 2 * scale, by - 2 * scale)], layer='Moment Resistance', width=0.1 * scale)
+        self.polyline([(lx, by - 3.5 * scale), (lx + 2 * scale, by - 3.5 * scale)], layer='Moment Ultimate', width=0.1 * scale)
 
 
     # --- cutting plans ----------------------------------------------------------------------
@@ -840,35 +872,35 @@ class DxfDrawing():
                 for k in range(rows_per_sheet + 1):
                     y = top - 3 * s - 1.5 * k * s
                     bold = k in (0, rows_per_sheet)
-                    self.polyline([(x0 + margin, y), (x0 + W - margin, y)], layer='Border', color=None if bold else 3, width=0.0015 * H if bold else 0)
+                    self.polyline([(x0 + margin, y), (x0 + W - margin, y)], layer='Border' if bold else 'Cutting Grid', width=0.0015 * H if bold else 0)
                 for x in columns:
-                    self.line((x0 + x, top - 1.5 * s), (x0 + x, top - 25.5 * s), color=3)
+                    self.line((x0 + x, top - 1.5 * s), (x0 + x, top - 25.5 * s), 'Cutting Grid')
                 centers = [(margin + columns[0]) / 2, (columns[0] + columns[1]) / 2, (columns[1] + columns[2]) / 2, (columns[2] + columns[3]) / 2, (columns[3] + W - margin) / 2]
                 for center, header in zip(centers, headers):
-                    self.mtext(header.replace('\n', '\\P'), (x0 + center, top - margin - 0.75 * s), 0.24 * s, width=4 * s, layer='Border', color=2)
+                    self.mtext(header.replace('\n', '\\P'), (x0 + center, top - margin - 0.75 * s), 0.24 * s, width=4 * s, layer='Cutting Text')
                 title = f"Cutting Plan %%C{num(plan['diameter'])}" + (f" ({page + 1}/{pages})" if pages > 1 else '')
-                self.text(title, (x0 + W / 2, top + 0.8 * s), 0.5 * s)
+                self.text(title, (x0 + W / 2, top + 0.8 * s), 0.5 * s, 'Title')
                 optimality = optimality_text(plan)
                 self.text(f"{plan['bars']} bars of {num(plan['stock_length'])} m" + (f" ({optimality})" if optimality else '')
                     + f", waste {num(plan['waste'], 2)} m ({num(100 * plan['waste_ratio'], 1)}%)",
-                    (x0 + W / 2, top - 26.8 * s), 0.3 * s)
+                    (x0 + W / 2, top - 26.8 * s), 0.3 * s, 'Title')
 
                 # one row per pattern
                 for row, pattern in enumerate(plan['patterns'][page * rows_per_sheet:(page + 1) * rows_per_sheet]):
                     y = top - 3.75 * s - row * 1.5 * s
-                    self.text(str(pattern['number']), (x0 + centers[2], y), 0.3 * s, color=2)
-                    self.text(num(pattern['waste'], 2), (x0 + centers[0], y), 0.3 * s, color=2)
-                    self.text(num(sum(p['length'] for p in pattern['pieces']), 2), (x0 + centers[1], y), 0.3 * s, color=2)
-                    self.text(str(page * rows_per_sheet + row + 1), (x0 + centers[4], y), 0.3 * s, color=2)
+                    self.text(str(pattern['number']), (x0 + centers[2], y), 0.3 * s, 'Cutting Text')
+                    self.text(num(pattern['waste'], 2), (x0 + centers[0], y), 0.3 * s, 'Cutting Text')
+                    self.text(num(sum(p['length'] for p in pattern['pieces']), 2), (x0 + centers[1], y), 0.3 * s, 'Cutting Text')
+                    self.text(str(page * rows_per_sheet + row + 1), (x0 + centers[4], y), 0.3 * s, 'Cutting Text')
                     start = 0
                     for piece in pattern['pieces']:
                         a = x0 + 6.1 * s + start * s
                         b = a + piece['length'] * s
                         # the bar with a cut mark at each end
                         self.polyline([(a + 0.1 * s, y + 0.1 * s), (a - 0.1 * s, y - 0.1 * s), (a, y), (b, y), (b + 0.1 * s, y + 0.1 * s), (b - 0.1 * s, y - 0.1 * s)],
-                            layer='Border', color=6)
-                        self.text(num(piece['length'], 2), ((a + b) / 2, y + 0.2 * s), 0.2 * s, color=6)
-                        self.text('/'.join(piece['label']), ((a + b) / 2, y - 0.2 * s), 0.2 * s, color=6)
+                            layer='Cutting Bar')
+                        self.text(num(piece['length'], 2), ((a + b) / 2, y + 0.2 * s), 0.2 * s, 'Cutting Bar Text')
+                        self.text('/'.join(piece['label']), ((a + b) / 2, y - 0.2 * s), 0.2 * s, 'Cutting Bar Text')
                         start += piece['length']
 
 

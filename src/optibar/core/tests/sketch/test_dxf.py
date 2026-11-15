@@ -4,7 +4,7 @@ import pathlib
 import ezdxf
 import pytest
 from optibar.core.run import run_calculation
-from optibar.core.sketch.dxf import DxfDrawing, LAYERS, PLAN_TITLES, StripLine
+from optibar.core.sketch.dxf import DxfDrawing, LAYERS, PLAN_TITLES, StripLine, shear_layer
 
 DATA_PATH = pathlib.Path(__file__).parent.parent.joinpath('data_files', 'parsed_data.json')
 CONFIG = {
@@ -53,8 +53,26 @@ class TestDxf():
         assert doc.header['$INSUNITS'] == 6 # meters
 
     def test_layers(self, doc):
-        for name in LAYERS:
-            assert name in doc.layers
+        for name, (color, lineweight) in LAYERS.items():
+            layer = doc.layers.get(name)
+            assert (layer.dxf.color, layer.dxf.lineweight) == (color, lineweight)
+
+    def test_shear_type_layers(self, doc, output):
+        """a layer per shear type, in the color of its id, for its zones in the shear plan and its legend"""
+        msp = doc.modelspace()
+        for shear_type in output['shear_types']:
+            name = shear_layer(int(shear_type['id']))
+            assert doc.layers.get(name).dxf.color == int(shear_type['id'])
+            assert msp.query(f'HATCH[layer=="{name}"]')
+
+    def test_every_entity_by_layer(self, doc):
+        """nothing on layer 0, and every entity takes its color and lineweight from its layer,
+        so the drawing prints by layer lineweights or by a color dependent plot style"""
+        for entity in doc.modelspace():
+            assert entity.dxf.layer != '0', entity
+            assert entity.dxf.layer in doc.layers, entity
+            assert entity.dxf.color == 256, entity
+            assert entity.dxf.lineweight == -1, entity
 
     def test_titles_and_strip_names(self, doc, output):
         content = texts(doc)

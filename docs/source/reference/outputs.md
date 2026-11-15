@@ -40,7 +40,7 @@ The table of a rebar type is left out when the foundation has none of them, for 
 
 The moment diagrams only count the tension steel, so φMn is a little lower than the real resisting moment; see [Resistant Moment](../explanation/moment.md).
 
-Each kind of object is on its own layer, for example `Typical Rebar Top`, `Additional Rebar Bottom`, `Rebar Text`, `Dimension` or `moment`, so parts of the drawing can be hidden or restyled.
+Each kind of object is on its own layer, for example `Typical Rebar Top`, `Additional Rebar Bottom`, `Rebar Text`, `Dimension`, `Table` or `Moment Resistance`, so parts of the drawing can be hidden or restyled. Every object takes its color and lineweight from its layer, so the drawing prints with its line weights either way: with the lineweights of the layers, or with a color dependent plot style (CTB) that gives each color a pen weight.
 
 Below the sheets are the **cutting plans**: one or more portrait sheets per bar diameter, saying how to cut the pieces from 12 m stock bars.
 Each row is a cutting pattern with the number of bars to cut that way, the pieces drawn to scale with their lengths, the waste (`w`), and the position of each piece in the piece lists, for example `A5` for the fifth row of the additional rebars.

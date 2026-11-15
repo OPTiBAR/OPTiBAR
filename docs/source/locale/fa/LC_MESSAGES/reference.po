@@ -272,8 +272,8 @@ msgid "The moment diagrams only count the tension steel, so φMn is a little low
 msgstr "نمودارهای لنگر فقط فولاد کششی را حساب می‌کنند، پس φMn کمی کمتر از لنگر مقاوم واقعی است؛ [لنگر مقاوم](../explanation/moment.md) را ببینید."
 
 #: ../../source/reference/outputs.md:43
-msgid "Each kind of object is on its own layer, for example `Typical Rebar Top`, `Additional Rebar Bottom`, `Rebar Text`, `Dimension` or `moment`, so parts of the drawing can be hidden or restyled."
-msgstr "هر نوع شیء روی لایهٔ خودش قرار دارد، مثلاً `Typical Rebar Top`، `Additional Rebar Bottom`، `Rebar Text`، `Dimension` یا `moment`، تا بتوان بخش‌هایی از نقشه را پنهان کرد یا سبکشان را تغییر داد."
+msgid "Each kind of object is on its own layer, for example `Typical Rebar Top`, `Additional Rebar Bottom`, `Rebar Text`, `Dimension`, `Table` or `Moment Resistance`, so parts of the drawing can be hidden or restyled. Every object takes its color and lineweight from its layer, so the drawing prints with its line weights either way: with the lineweights of the layers, or with a color dependent plot style (CTB) that gives each color a pen weight."
+msgstr "هر نوع شیء روی لایهٔ خودش قرار دارد، مثلاً `Typical Rebar Top`، `Additional Rebar Bottom`، `Rebar Text`، `Dimension`، `Table` یا `Moment Resistance`، تا بتوان بخش‌هایی از نقشه را پنهان کرد یا سبکشان را تغییر داد. هر شیء رنگ و ضخامت خطش را از لایه‌اش می‌گیرد، پس نقشه در هر حال با ضخامت‌های خط درست چاپ می‌شود: با ضخامت خط لایه‌ها، یا با یک سبک چاپ وابسته به رنگ (CTB) که به هر رنگ ضخامت قلمی می‌دهد."
 
 #: ../../source/reference/outputs.md:45
 msgid "Below the sheets are the **cutting plans**: one or more portrait sheets per bar diameter, saying how to cut the pieces from 12 m stock bars. Each row is a cutting pattern with the number of bars to cut that way, the pieces drawn to scale with their lengths, the waste (`w`), and the position of each piece in the piece lists, for example `A5` for the fifth row of the additional rebars."

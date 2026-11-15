@@ -1,0 +1,10 @@
+# line endings: LF in the repository and in the working copy, whatever core.autocrlf is set to
+* text=auto eol=lf
+
+# Windows batch files need CRLF
+*.bat text eol=crlf
+
+# binary files: never converted
+*.png binary
+*.accdb binary
+*.mdb binary

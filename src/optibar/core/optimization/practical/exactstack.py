@@ -100,7 +100,7 @@ class Minimization():
                     result_list.append(self.selected_lengths[j])
         return result_list
 
-class StackAlgorithmExact():
+class StackAlgorithm():
     def __init__(self, stack : Stack, selected_lengths: List[float], p: int) -> int:
         """reduces the stack length type to p types. the availale lengths are given in selected_lengths.
 

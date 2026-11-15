@@ -238,7 +238,7 @@ In that row, every cell with $len(PSUB, j) < \infty$ and $R_Q \leq L_j$ is a fea
 (stack-program)=
 #### Integer program for the stacks
 
-The algorithm above is implemented (`StackAlgorithm`), but the app uses an integer program instead (`StackAlgorithmExact`), solved with the HiGHS solver through Pyomo.
+The algorithm above is part of the original design but is not used: the app solves an integer program instead (`StackAlgorithm` in `exactstack.py`), with the HiGHS solver through Pyomo.
 In it, a length type of a stack is a pair of a length and a number of pieces: a 4 m bar and a 16 m bar made of a 12 m piece and a 4 m piece count as different types.
 
 With the pieces $i$ of the stack, their shortest-piece lengths $LS_i$ and numbers of pieces $m_i$, and the lengths of the foundation $LO_j$:

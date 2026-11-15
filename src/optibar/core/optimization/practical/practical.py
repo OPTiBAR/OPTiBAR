@@ -2,7 +2,7 @@ from optibar.core.optimization.practical.errors import NotEnoughTypes
 from optibar.core.components.piece import Piece
 from optibar.core.components.collections import Stack
 
-from .exactstack import StackAlgorithmExact
+from .exactstack import StackAlgorithm
 from .total import TotalAlgorithm
 
 
@@ -37,7 +37,7 @@ class PracticalOptimization():
             for level in self.stacks[strip_name]:
                 excess_list = []
                 for stack in self.stacks[strip_name][level]:
-                    sa = StackAlgorithmExact(stack, selected_lengths, self.stack_num_of_types)
+                    sa = StackAlgorithm(stack, selected_lengths, self.stack_num_of_types)
                     p = sa.run()
                     if p > self.stack_num_of_types:
                         excess_list.append(p)

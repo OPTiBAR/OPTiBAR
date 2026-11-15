@@ -104,7 +104,14 @@ We welcome contributions! To get started:
 3. Create a new branch, make your changes, and **commit** them.
 4. **Push** your branch and open a **pull request**.
 
-Run the tests with `uv run pytest src/optibar/gui/tests src/optibar/core/tests/parser src/optibar/core/tests/sketch`.
+Run the tests as the CI does:
+
+```bash
+uv run pytest src/optibar/core/tests -W error
+uv run pytest src/optibar/gui/tests
+```
+
+The parser tests are skipped when the Microsoft Access ODBC driver is not installed.
 
 ## 📄 License
 

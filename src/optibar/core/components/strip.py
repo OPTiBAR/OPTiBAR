@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Iterator, List
 from .period import Period
 from .mesh import Mesh, Section
-from optibar.core.optimization.practical.stack import Stack
+from .collections import Stack
 from .diagram import Diagram
 from .rebar import Rebar, RebarType
 from .piece import Piece

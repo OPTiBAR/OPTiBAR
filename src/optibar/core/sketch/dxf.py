@@ -74,6 +74,7 @@ LAYERS = {
 }
 SHEAR_LINEWEIGHT = 18 # of the 'Shear Type <id>' layers, one per shear type, in the color of its id
 BYLAYER = 256 # ACI color of an entity that takes the color of its layer
+ROW_SPACING = 0.2 # m, between the drawn rows of a stack of additional rebars
 
 
 def shear_layer(shear_id: int) -> str:
@@ -383,20 +384,22 @@ class DxfDrawing():
         }
         for strip in self.output['strips']:
             line = StripLine(strip['geometry']['mid_line'])
-            width = strip['geometry']['mid_line'][0]['width']
             mesh = strip['mesh']
             for level in ('top', 'bottom'):
                 layer = f'Additional Rebar {level.capitalize()}'
-                for row_number, row in enumerate(mesh['additional'][level]):
+                rows = mesh['additional'][level]
+                for row_number, row in enumerate(rows):
                     bunches = [dict(bunch, continuous=len(piece) > 1) for piece in row for bunch in piece]
-                    self._draw_row(line, width, row_number, bunches, layer, bases[(layer, line.axis)])
+                    # the rows of a stack are centered on the mid line of the strip
+                    offset = (row_number - (len(rows) - 1) / 2) * ROW_SPACING
+                    self._draw_row(line, offset, bunches, layer, bases[(layer, line.axis)])
                 layer = f'Typical Rebar {level.capitalize()}'
                 bunches = [dict(bunch, continuous=False) for bunch in mesh['typical'][level]]
-                self._draw_row(line, width, 1, bunches, layer, bases[(layer, line.axis)])
+                self._draw_row(line, 0, bunches, layer, bases[(layer, line.axis)])
 
-    def _draw_row(self, line: StripLine, width: float, row_number: int, bunches: List[Dict], layer: str, base: Point) -> None:
-        """draws a row of bars along the strip, labelled with number, diameter and length"""
-        dist = 0.2 # spacing between rows
+    def _draw_row(self, line: StripLine, offset: float, bunches: List[Dict], layer: str, base: Point) -> None:
+        """draws a row of bars along the strip, at an offset from its mid line, labelled with number, diameter and length"""
+        dist = ROW_SPACING
         bar_width = dist * 0.04
         shifted = False
         for k, bunch in enumerate(bunches):
@@ -419,7 +422,6 @@ class DxfDrawing():
                 continue # starts beyond the strip
 
             normal = line.normals[segment]
-            offset = (row_number + 1) * dist - 0.5 * width
             up = [normal[0] * offset, normal[1] * offset]
             if shifted:
                 sign = 1 if line.is_start_left else -1

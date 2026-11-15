@@ -91,6 +91,23 @@ class TestDxf():
         labels = len(msp.query('TEXT[layer=="Rebar Text"]'))
         assert labels == sum(drawn_bars(output, level, kind) for level in ('top', 'bottom') for kind in ('typical', 'additional'))
 
+    def test_rows_centered_on_mid_line(self, output, tmp_path, monkeypatch):
+        """the rows of a stack are spaced around the mid line of their strip, typical rebars on it"""
+        offsets = {}
+        draw_row = DxfDrawing._draw_row
+        def record(self, line, offset, bunches, layer, base):
+            offsets.setdefault((id(line), layer), []).append(offset)
+            draw_row(self, line, offset, bunches, layer, base)
+        monkeypatch.setattr(DxfDrawing, '_draw_row', record)
+        DxfDrawing(output).save(tmp_path.joinpath('rows.dxf'))
+        assert any(len(rows) > 1 for rows in offsets.values())
+        for (_, layer), rows in offsets.items():
+            if layer.startswith('Typical'):
+                assert rows == [0]
+            else:
+                assert sum(rows) == pytest.approx(0)
+                assert [b - a for a, b in zip(rows, rows[1:])] == pytest.approx([0.2] * (len(rows) - 1))
+
     def test_dimensions(self, doc, output):
         grid = output['grid']
         grid_dims = len(PLAN_TITLES) * (len(grid['X']) - 1 + len(grid['Y']) - 1)

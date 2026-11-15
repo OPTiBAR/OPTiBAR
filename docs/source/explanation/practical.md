@@ -93,10 +93,9 @@ The greedy algorithm doesn't always find the best solution.
 For $L = [1,2,3,4]$ and $N = [5,4,7,1]$, limited to two lengths, it removes length 2 in the first step and length 1 in the second, which gives $N = [0,0,16,1]$ and a total length of 52.
 Keeping lengths 2 and 4 instead gives $N = [0,9,0,8]$ and a total length of 50.
 
-### Dynamic programming algorithm
+### Two subproblems
 
-The problem is solved directly with dynamic programming, in $O(n^3)$, instead of building an integer model and solving it with a solver.
-It is split into two subproblems: first, $P$ lengths are chosen for the whole foundation (**Total**); then, for every stack, $PSUB$ of these $P$ lengths are chosen (**Stack**).
+The problem is split into two subproblems: first, $P$ lengths are chosen for the whole foundation (**Total**), with dynamic programming in $O(n^3)$; then, for every stack, $PSUB$ of these $P$ lengths are chosen (**Stack**), with an integer program.
 
 #### Choosing the lengths of the foundation
 
@@ -209,36 +208,11 @@ $$
 
 The smallest feasible number is shown in the report and saved as `min_feasible_num`, see [Outputs](../reference/outputs.md).
 
+(stack-program)=
 #### Choosing the lengths of a stack
 
 This subproblem is solved for each stack on its own: out of the $P$ lengths of the foundation, $PSUB$ (**Stack**) are chosen.
-Let $L_p,\ p = 1, \ldots, P$ be the lengths of the foundation, in ascending order; let $R_q,\ q = 1, \ldots, Q$ be the lengths of the pieces of the stack, $\overline{R}_q$ their upper bounds and $N_q$ their numbers.
-
-```{prf:algorithm} Choosing the lengths of a stack, one cell
-:label: stack-algorithm
-
-**Inputs** $i$, $j$: choosing $i$ lengths out of the $j$ shortest lengths
-
-**Output** $len(i,j)$, $ref(i,j)$
-
-1. $minIndex \leftarrow None$, $minSum \leftarrow \infty$
-2. For each $k = i-1, \ldots, j-1$:
-    1. If $i > 1$: $sum \leftarrow len(i-1, k)$, $\underline{L} \leftarrow L_k$
-    2. Else: $sum \leftarrow 0$, $\underline{L} \leftarrow -\infty$
-    3. For each $q = 1, \ldots, Q$ with $\underline{L} < R_q \leq L_j$:
-        1. If $\overline{R}_q \geq L_j$: $sum \leftarrow sum + (L_j - R_q) N_q$
-        2. Else: $sum \leftarrow \infty$
-    4. If $sum < minSum$: $minSum \leftarrow sum$, $minIndex \leftarrow k$
-3. $len(i,j) \leftarrow minSum$, $ref(i,j) \leftarrow minIndex$
-```
-
-As before, the table is computed row by row and from left to right, up to row $PSUB$.
-In that row, every cell with $len(PSUB, j) < \infty$ and $R_Q \leq L_j$ is a feasible solution (every piece of the stack is assigned a chosen length); the one with the least $len$ is the best.
-
-(stack-program)=
-#### Integer program for the stacks
-
-The algorithm above is part of the original design but is not used: the app solves an integer program instead (`StackAlgorithm` in `exactstack.py`), with the HiGHS solver through Pyomo.
+It is an integer program (`StackAlgorithm` in `exactstack.py`), solved with the HiGHS solver through Pyomo.
 In it, a length type of a stack is a pair of a length and a number of pieces: a 4 m bar and a 16 m bar made of a 12 m piece and a 4 m piece count as different types.
 
 With the pieces $i$ of the stack, their shortest-piece lengths $LS_i$ and numbers of pieces $m_i$, and the lengths of the foundation $LO_j$:
@@ -260,7 +234,7 @@ The solver stops within 10% of the optimum.
 If there is no solution with $PSUB$ types, $PSUB$ is increased by one until there is; the stacks that needed more types than allowed are listed in the report as a warning (`excess_stack`).
 
 ```{warning}
-The integer program doesn't use the upper bounds $\overline{R}_q$ of the pieces, so a piece can get a length longer than its upper bound.
+The integer program doesn't use the upper bounds of the pieces (see [Rounding](#rounding)), so a piece can get a length longer than its upper bound.
 ```
 
 Setting the practical periods

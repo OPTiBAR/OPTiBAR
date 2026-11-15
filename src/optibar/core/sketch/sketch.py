@@ -6,7 +6,7 @@ from typing import Dict, List, Union
 import cairo
 
 from . import setting
-from optibar.core.optimization.cut import pattern_text
+from optibar.core.optimization.cut import optimality_text, pattern_text
 
 WIDTH = setting.WIDTH # mm
 HEIGHT = setting.HEIGHT # mm
@@ -55,8 +55,10 @@ class Sketch():
             ("Shear Type Table", self.__get_shear_type_table()),
         ]
         for plan in self.__output.get("cut", []):
-            title = (f"Cutting Plan, diameter {plan['diameter']}: {plan['bars']} bars of {plan['stock_length']:g} m, "
-                f"waste {plan['waste']:g} m (positions as in the DXF piece lists)")
+            optimality = optimality_text(plan)
+            title = (f"Cutting Plan, diameter {plan['diameter']}: {plan['bars']} bars of {plan['stock_length']:g} m"
+                + (f" ({optimality})" if optimality else '')
+                + f", waste {plan['waste']:g} m (positions as in the DXF piece lists)")
             tables.append((title, self.__get_cutting_table(plan)))
         for name, table in tables:
             if len(table) > 1: # skip tables that only have a header

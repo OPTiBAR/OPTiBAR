@@ -47,3 +47,15 @@ class TestSketch():
         Sketch(output).save(short_path)
         Sketch(long_output).save(long_path)
         assert count_pages(long_path) > count_pages(short_path)
+
+    def test_cutting_titles_say_whether_optimal(self, output, tmp_path):
+        """the title of each cutting plan: optimal, or the fewest bars any plan could use"""
+        plans = copy.deepcopy(output)
+        plans['cut'][0].update(optimal=False, lower_bound=plans['cut'][0]['bars'] - 1)
+        path = tmp_path.joinpath('cutting.pdf')
+        Sketch(plans).save(path)
+        titles = [line for page in PdfReader(path).pages for line in page.extract_text().split('\n') if line.startswith('Cutting Plan')]
+        first, *rest = plans['cut']
+        assert f"Cutting Plan, diameter {first['diameter']}: {first['bars']} bars of 12 m (not proven optimal, at least {first['bars'] - 1} bars)" in ' '.join(titles)
+        for plan in rest:
+            assert f"Cutting Plan, diameter {plan['diameter']}: {plan['bars']} bars of 12 m (optimal)" in ' '.join(titles)

@@ -94,6 +94,18 @@ class TestDxf():
         for plan in output['cut']:
             assert any(t.startswith(f"Cutting Plan %%C{plan['diameter']}") for t in texts(doc))
 
+    def test_cutting_sheets_say_whether_optimal(self, output, tmp_path):
+        """under each cutting sheet: optimal, or the fewest bars any plan could use"""
+        plans = copy.deepcopy(output)
+        plans['cut'][0].update(optimal=False, lower_bound=plans['cut'][0]['bars'] - 1)
+        path = tmp_path.joinpath('cutting.dxf')
+        DxfDrawing(plans).save(path)
+        lines = [t for t in texts(ezdxf.readfile(path)) if ' bars of ' in t]
+        first, *rest = plans['cut']
+        assert any(t.startswith(f"{first['bars']} bars of 12 m (not proven optimal, at least {first['bars'] - 1} bars), waste") for t in lines)
+        for plan in rest:
+            assert any(t.startswith(f"{plan['bars']} bars of 12 m (optimal), waste") for t in lines)
+
     def test_bars_beyond_the_strip(self, output, tmp_path):
         """the plugin crashed when a bar or shear zone ran past the end of its strip"""
         broken = copy.deepcopy(output)

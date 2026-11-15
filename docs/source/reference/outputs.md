@@ -49,6 +49,8 @@ Each row is a cutting pattern with the number of bars to cut that way, the piece
 
 The plans use as few stock bars as possible, and every piece is cut exactly as many times as needed. They are solved exactly with an arc-flow integer program, which proves that no plan uses fewer bars. Its linear relaxation is solved first, and the number of bars it gives, rounded up, is a lower bound that is nearly always the optimum, so the integer program can stop as soon as it reaches it.
 
+The line under each sheet gives the number of bars, whether the plan is proven optimal, and the waste. If the time limit stopped the solver before the proof, it says "not proven optimal" with the fewest bars any plan could use. The PDF drawing and the Report show the same.
+
 ## PDF drawing
 
 **PDF Drawing** saves an A4 sketch: one page per strip with its top and bottom additional rebars, followed by the mass summary, the technical specifications, the piece lists and the cutting plans. It is meant for a quick check, the DXF is the detailing map.
@@ -84,6 +86,6 @@ The main parts of `result["data"]` are:
 | `technical_spec` | Materials, covers, the special lengths per diameter, and the numbers of length types used. |
 | `shear_types` | The shear arrangements: diameter, number of legs and spacing. |
 | `areas`, `columns`, `grid` | The foundation outline, openings, columns and grid lines. |
-| `cut` | The cutting plan of every diameter: stock length, number of bars, waste, and the patterns with their pieces. |
+| `cut` | The cutting plan of every diameter: stock length, number of bars, waste, whether the plan is proven optimal (`optimal`) and the fewest bars any plan could use (`lower_bound`), and the patterns with their pieces. |
 
 For an analysis, `result` is a list with the `data` part of every combination, or `{}` where a combination isn't feasible.

@@ -23,6 +23,8 @@ from typing import Dict, List, Sequence, Tuple, Union
 import ezdxf
 from ezdxf.enums import TextEntityAlignment, MTextEntityAlignment
 
+from optibar.core.optimization.cut import optimality_text
+
 Point = Tuple[float, float]
 
 STYLE = 'OPTiBAR'
@@ -846,7 +848,9 @@ class DxfDrawing():
                     self.mtext(header.replace('\n', '\\P'), (x0 + center, top - margin - 0.75 * s), 0.24 * s, width=4 * s, layer='Border', color=2)
                 title = f"Cutting Plan %%C{num(plan['diameter'])}" + (f" ({page + 1}/{pages})" if pages > 1 else '')
                 self.text(title, (x0 + W / 2, top + 0.8 * s), 0.5 * s)
-                self.text(f"{plan['bars']} bars of {num(plan['stock_length'])} m, waste {num(plan['waste'], 2)} m ({num(100 * plan['waste_ratio'], 1)}%)",
+                optimality = optimality_text(plan)
+                self.text(f"{plan['bars']} bars of {num(plan['stock_length'])} m" + (f" ({optimality})" if optimality else '')
+                    + f", waste {num(plan['waste'], 2)} m ({num(100 * plan['waste_ratio'], 1)}%)",
                     (x0 + W / 2, top - 26.8 * s), 0.3 * s)
 
                 # one row per pattern

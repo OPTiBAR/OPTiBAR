@@ -302,3 +302,26 @@ def test_new_file_clears_results(loaded_app):
     assert 'Mass Summary' not in app.log_text()
     assert 'File Parsed Successfully.' in app.log_text()
     assert 'disabled' in app.results.files.save_button.state()
+
+
+def test_cutting_report_optimality():
+    """the report says whether each cutting plan is optimal, else the fewest bars any plan could use"""
+    from optibar.gui.control.body.report import cutting_report
+    pattern = {'number': 10, 'pieces': [{'label': ['A1'], 'length': 6.0}] * 2, 'waste': 0}
+    plan = {'diameter': 25, 'stock_length': 12, 'bars': 10, 'waste': 0.0, 'waste_ratio': 0.0, 'patterns': [pattern]}
+    proven = dict(plan, optimal=True, lower_bound=10)
+    unproven = dict(plan, diameter=18, optimal=False, lower_bound=9)
+    saved_before = dict(plan, diameter=14) # results saved before plans carried their optimality
+
+    overview = [text for _, text in cutting_report([proven, unproven, saved_before])]
+    assert 'Optimal' in overview[2]
+    rows = {line.split()[0]: line for line in overview[4:7]}
+    assert 'yes' in rows['25'] and 'no, ≥ 9' in rows['18'] and '–' in rows['14']
+
+    headings = [text for _, text in cutting_report([proven, unproven, saved_before], overview=False, detailed=True)
+                if text.startswith('Cutting Plan, diameter')]
+    assert headings == [
+        'Cutting Plan, diameter 25 (optimal)',
+        'Cutting Plan, diameter 18 (not proven optimal, at least 9 bars)',
+        'Cutting Plan, diameter 14',
+    ]

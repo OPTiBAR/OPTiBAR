@@ -39,7 +39,7 @@ After a few seconds it says **Status: Finished**, and the button says **Calculat
 
 The results appear in the **Report** box on the right, below the input file.
 They start with the **Mass Summary**: about 9.5 tons of rebars for the sample, of which 4.5 tons are additional rebars.
-Below it are the **Cutting Plans**, with the number of 12 m stock bars of each diameter and the waste.
+Below it are the **Cutting Plans**, with the number of 12 m stock bars of each diameter, whether that number is proven optimal, and the waste.
 
 ![The window with the results](../_static/images/gui_results.png)
 

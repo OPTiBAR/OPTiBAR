@@ -1,6 +1,6 @@
 """builds the text report of a result, shown in the results log and saved as the summary file."""
 from typing import Dict, List, Optional, Sequence, Tuple
-from optibar.core.optimization.cut import pattern_text
+from optibar.core.optimization.cut import optimality_text, pattern_text
 
 # each line is (tag, text), one line of text per item; the tags are styled by LogWindow:
 #   INFO, SUCCESS, WARNING, ERROR   plain messages
@@ -99,8 +99,17 @@ def calc_report(output: Dict) -> Report:
     return report
 
 
+def _optimal_cell(plan: Dict) -> str:
+    """the Optimal column: yes, or the fewest bars any plan could use; a dash for results saved
+    before plans carried it"""
+    if 'optimal' not in plan:
+        return DASH
+    return 'yes' if plan['optimal'] else f"no, ≥ {plan['lower_bound']}"
+
+
 def cutting_report(plans: List[Dict], overview: bool = True, detailed: bool = False) -> Report:
-    """bars and waste of the cutting plan per diameter; with detailed, every pattern too"""
+    """bars and waste of the cutting plan per diameter, and whether it is optimal; with detailed, every
+    pattern too"""
     if not plans:
         return []
     report = []
@@ -108,13 +117,15 @@ def cutting_report(plans: List[Dict], overview: bool = True, detailed: bool = Fa
         stock = plans[0]['stock_length']
         report += _heading('Cutting Plans')
         report += table(
-            ["Diameter (mm)", f"Bars ({stock:g} m)", "Waste (m)", "Waste (%)", "Patterns"],
-            [[plan['diameter'], plan['bars'], float(plan['waste']), 100 * plan['waste_ratio'], len(plan['patterns'])] for plan in plans],
+            ["Diameter (mm)", f"Bars ({stock:g} m)", "Optimal", "Waste (m)", "Waste (%)", "Patterns"],
+            [[plan['diameter'], plan['bars'], _optimal_cell(plan), float(plan['waste']), 100 * plan['waste_ratio'], len(plan['patterns'])]
+             for plan in plans],
             decimals=1,
         )
     if detailed:
         for plan in plans:
-            report += _heading(f"Cutting Plan, diameter {plan['diameter']}")
+            optimality = optimality_text(plan)
+            report += _heading(f"Cutting Plan, diameter {plan['diameter']}" + (f" ({optimality})" if optimality else ''))
             report += table(
                 ['#', 'Bars', 'Pieces (m), position in the piece lists', 'Waste (m)'],
                 [[i, pattern['number'], pattern_text(pattern), f"{pattern['waste']:g}"]

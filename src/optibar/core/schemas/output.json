@@ -443,6 +443,15 @@
                                 "minimum": 0,
                                 "maximum": 1
                             },
+                            "optimal": {
+                                "description": "whether no plan uses fewer bars (proven).",
+                                "type": "boolean"
+                            },
+                            "lower_bound": {
+                                "description": "the fewest bars any plan could use; equal to bars when optimal.",
+                                "type": "integer",
+                                "minimum": 0
+                            },
                             "patterns": {
                                 "type": "array",
                                 "items": {
@@ -482,7 +491,7 @@
                                 }
                             }
                         },
-                        "required": [ "diameter", "stock_length", "bars", "waste", "waste_ratio", "patterns" ]
+                        "required": [ "diameter", "stock_length", "bars", "waste", "waste_ratio", "optimal", "lower_bound", "patterns" ]
                     }
                 },
                 "summary": {

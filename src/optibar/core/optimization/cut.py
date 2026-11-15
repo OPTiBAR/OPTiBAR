@@ -257,13 +257,15 @@ def cutting_plans(data: Dict, stock_length: float = STANDARD_LENGTH) -> List[Dic
     """the cutting plan of every diameter for the "data" part of the engine output.
 
     Each plan lists its patterns, most used first. A pattern is a bar cut into pieces, the last
-    piece being the waste (label "w") when there is any.
+    piece being the waste (label "w") when there is any. "optimal" says whether no plan uses fewer
+    bars, and "lower_bound" is the fewest bars any plan could use: the bars of the plan when optimal.
     """
     plans = []
     for diameter, by_length in sorted(_piece_demand(data['pieces']).items()):
         lengths = sorted(by_length, reverse=True)
         numbers = [by_length[length]['number'] for length in lengths]
-        result = CuttingStock(lengths, numbers, stock_length).get_results()
+        stock = CuttingStock(lengths, numbers, stock_length)
+        result = stock.get_results()
         patterns = []
         for pattern, number in zip(result['patterns'], result['numbers']):
             pieces = []
@@ -282,9 +284,19 @@ def cutting_plans(data: Dict, stock_length: float = STANDARD_LENGTH) -> List[Dic
             'bars': bars,
             'waste': waste,
             'waste_ratio': round(waste / (bars * stock_length), 4) if bars else 0,
+            'optimal': stock.proven_optimal,
+            'lower_bound': bars if stock.proven_optimal else math.ceil(stock.lower_bound - 1e-6),
             'patterns': patterns,
         })
     return plans
+
+
+def optimality_text(plan: Dict) -> str:
+    """'optimal', or the fewest bars any plan could use when the plan is not proven optimal;
+    empty for plans saved before they carried it"""
+    if 'optimal' not in plan:
+        return ''
+    return 'optimal' if plan['optimal'] else f"not proven optimal, at least {plan['lower_bound']} bars"
 
 
 def pattern_text(pattern: Dict) -> str:

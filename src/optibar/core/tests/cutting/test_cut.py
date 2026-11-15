@@ -207,6 +207,24 @@ class TestCuttingPlans():
             assert plan['bars'] == sum(p['number'] for p in plan['patterns'])
             assert plan['waste'] == pytest.approx(sum(p['number'] * p['waste'] for p in plan['patterns']), abs=0.01)
 
+    def test_plans_are_optimal(self, data):
+        """every plan of the foundation is proven optimal: its lower bound is its bars"""
+        for plan in data['cut']:
+            assert plan['optimal'] is True
+            assert plan['lower_bound'] == plan['bars']
+
+    def test_unproven_plan_carries_its_lower_bound(self, data, monkeypatch):
+        """stopped by the time limit, a plan is not optimal and gives the fewest bars any plan could use"""
+        solve = CuttingStock._solve
+        def stopped(self, arcs):
+            flow, _ = solve(self, arcs)
+            self.lower_bound -= 1 # as if the bound were not closed yet
+            return flow, False
+        monkeypatch.setattr(CuttingStock, '_solve', stopped)
+        for plan in cutting_plans(data):
+            assert plan['optimal'] is False
+            assert plan['lower_bound'] == plan['bars'] - 1
+
     def test_labels_follow_the_piece_list_rows(self, data):
         """each label is a row of the piece lists: one row per piece and bend shape"""
         rows = {}

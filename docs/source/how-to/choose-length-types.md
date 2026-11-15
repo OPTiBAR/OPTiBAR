@@ -21,7 +21,7 @@ An analysis runs the detailing for every combination in a range of **Total** and
    The status line shows the progress; an analysis takes longer than a single computation.
 5. Above the report, press **Diagram**, and choose **Total** to plot the mass of all the rebars, or **Additional** for the additional rebars only.
 
-![Mass of the additional rebars of a foundation, for stack 3 and 4 and total 6 to 29](../_static/images/analysis_plot.png)
+![Mass of the additional rebars of the sample foundation, for stack 3 and 4 and total 3 to 25](../_static/images/analysis_plot.svg)
 
 The plot has one curve per Stack number.
 Look for the point where the curve gets steep: below it, every length type you remove costs a lot of steel.

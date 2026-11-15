@@ -63,7 +63,7 @@ You see a row of sheets with the foundation plan.
 The first sheet names the strips; the next ones show the typical and additional rebars, top and bottom, in X and Y; then come the shear zones.
 Zoom into a sheet of additional rebars: every bar is labelled with its number, diameter and length, for example `4Ø25-L=4.8`.
 
-![A plan sheet: top additional rebars of the X direction](../_static/images/dxf_plan.png)
+![A plan sheet: top additional rebars of the X direction](../_static/images/dxf_plan.svg)
 
 To the right of the sheets are the tables with the piece lists and the mass summary, and below them the cutting plans.
 

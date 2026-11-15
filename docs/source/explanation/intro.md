@@ -52,12 +52,12 @@ Why the number of length types matters
 SAFE gives the required steel area as a continuous diagram along each strip.
 Covering it with bars, layer by layer, gives a bar of a different length for every layer:
 
-![The required steel area along a strip (blue) and the bars that cover it](../_static/images/steel_area_diagram.png)
+![The required steel area along a strip (blue) and the bars that cover it](../_static/images/steel_area_diagram.svg)
 
 Done for every strip, this gives tens or hundreds of different lengths in one foundation.
 A drawing like the one below is correct, but it is impractical to cut, place and check:
 
-![Additional rebars of a strip without unified lengths: every bar has its own length](../_static/images/lengths_not_unified.png)
+![Additional rebars of a strip without unified lengths: every bar has its own length](../_static/images/lengths_not_unified.svg)
 
 OPTiBAR takes two limits from the user:
 
@@ -66,7 +66,7 @@ OPTiBAR takes two limits from the user:
 
 Within these limits, it chooses the lengths that add the least steel. The same strip, with at most 4 lengths in a stack:
 
-![The same strip with at most 4 lengths per stack](../_static/images/lengths_stack_4.png)
+![The same strip with at most 4 lengths per stack](../_static/images/lengths_stack_4.svg)
 
 Larger limits save steel but make the foundation harder to build; [an analysis](../how-to/choose-length-types.md) shows the trade-off for a project.
 

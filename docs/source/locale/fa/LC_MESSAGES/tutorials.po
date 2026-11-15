@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-15 13:23+0100\n"
+"POT-Creation-Date: 2026-11-15 21:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fa\n"
@@ -128,8 +128,8 @@ msgid "You see a row of sheets with the foundation plan. The first sheet names t
 msgstr "ردیفی از برگه‌ها با پلان فونداسیون می‌بینید. برگهٔ اول نام نوارها را نشان می‌دهد؛ برگه‌های بعدی میلگردهای سراسری و میلگردهای تقویتی را در بالا و پایین، در جهت X و Y، نشان می‌دهند؛ سپس ناحیه‌های برشی می‌آیند. روی یک برگه از میلگردهای تقویتی بزرگ‌نمایی کنید: کنار هر میلگرد تعداد، قطر و طول آن نوشته شده است، مثلاً `4Ø25-L=4.8`."
 
 #: ../../source/tutorials/first-map.md:66
-msgid "![A plan sheet: top additional rebars of the X direction](../_static/images/dxf_plan.png)"
-msgstr "![یک برگهٔ پلان: میلگردهای تقویتی بالای جهت X](../_static/images/dxf_plan.png)"
+msgid "![A plan sheet: top additional rebars of the X direction](../_static/images/dxf_plan.svg)"
+msgstr "![یک برگهٔ پلان: میلگردهای تقویتی بالای جهت X](../_static/images/dxf_plan.svg)"
 
 #: ../../source/tutorials/first-map.md:66
 msgid "A plan sheet: top additional rebars of the X direction"

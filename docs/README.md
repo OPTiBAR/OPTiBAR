@@ -22,7 +22,16 @@ The pages are in `docs/source`, organized by [Diátaxis](https://diataxis.fr/):
 - `reference`: settings, SAFE input, outputs and detailing rules, to look up.
 - `explanation`: how and why the rebar lengths are calculated.
 
-Images go in `docs/source/_static/images`.
+Images go in `docs/source/_static/images`, as SVG with a white background, except the screenshots of the app (PNG).
+The renders of the DXF drawing and the analysis plot are made from the sample foundation by the scripts in
+`docs/figures`; rerun them after a change to the drawing or the engine (they need the app and the Access ODBC driver):
+
+```console
+> uv run python docs/figures/render_dxf.py
+> uv run python docs/figures/analysis_plot.py
+```
+
+The other diagrams are drawn by hand in SVG.
 
 ## Translations
 

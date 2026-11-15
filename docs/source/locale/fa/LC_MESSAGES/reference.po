@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-15 13:23+0100\n"
+"POT-Creation-Date: 2026-11-15 21:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fa\n"
@@ -212,8 +212,8 @@ msgid "Every bar is labelled with its number, diameter and length, for example `
 msgstr "کنار هر میلگرد تعداد، قطر و طول آن نوشته شده است، مثلاً `4Ø25-L=4.8`، و میلگرد در امتداد خط میانی نوار خود رسم می‌شود."
 
 #: ../../source/reference/outputs.md:19
-msgid "![A plan sheet: top additional rebars of the X direction](../_static/images/dxf_plan.png)"
-msgstr "![یک برگهٔ پلان: میلگردهای تقویتی بالای جهت X](../_static/images/dxf_plan.png)"
+msgid "![A plan sheet: top additional rebars of the X direction](../_static/images/dxf_plan.svg)"
+msgstr "![یک برگهٔ پلان: میلگردهای تقویتی بالای جهت X](../_static/images/dxf_plan.svg)"
 
 #: ../../source/reference/outputs.md:19
 msgid "A plan sheet: top additional rebars of the X direction"
@@ -232,8 +232,8 @@ msgid "**Magenta** (layer `continuous Rebar`): one bar longer than the 12 m stoc
 msgstr "**ارغوانی** (لایهٔ `continuous Rebar`): یک میلگرد بلندتر از طول 12 متری شاخه، که از چند قطعه ساخته شده است. جایی که این قطعه‌ها روی هم می‌افتند، هم‌پوشانی برابر طول وصلهٔ میلگرد است، یعنی 1.3 برابر طول مهاری آن."
 
 #: ../../source/reference/outputs.md:28
-msgid "![Blue bars are separate stacks; the magenta bar is longer than 12 m and spliced](../_static/images/dxf_splice_colors.png)"
-msgstr "![میلگردهای آبی دسته‌های جداگانه‌اند؛ میلگرد ارغوانی بلندتر از 12 متر است و وصله شده است](../_static/images/dxf_splice_colors.png)"
+msgid "![Blue bars are separate stacks; the magenta bar is longer than 12 m and spliced](../_static/images/dxf_splice_colors.svg)"
+msgstr "![میلگردهای آبی دسته‌های جداگانه‌اند؛ میلگرد ارغوانی بلندتر از 12 متر است و وصله شده است](../_static/images/dxf_splice_colors.svg)"
 
 #: ../../source/reference/outputs.md:28
 msgid "Blue bars are separate stacks; the magenta bar is longer than 12 m and spliced"
@@ -244,8 +244,8 @@ msgid "After the sheets come a section of every shear type, with its stirrups an
 msgstr "پس از برگه‌ها، مقطع هر نوع برشی با خاموت‌ها و برچسب آن می‌آید،"
 
 #: ../../source/reference/outputs.md:32
-msgid "![Shear type sections](../_static/images/dxf_sections.png)"
-msgstr "![مقطع‌های انواع برشی](../_static/images/dxf_sections.png)"
+msgid "![Shear type sections](../_static/images/dxf_sections.svg)"
+msgstr "![مقطع‌های انواع برشی](../_static/images/dxf_sections.svg)"
 
 #: ../../source/reference/outputs.md:32
 msgid "Shear type sections"
@@ -256,8 +256,8 @@ msgid "followed by the tables: overlap lengths, number of length types, the piec
 msgstr "و سپس جدول‌ها: طول‌های وصله، تعداد انواع طول، فهرست قطعات هر نوع میلگرد با شکل و وزن آن، خلاصهٔ وزن و حجم بتن. در پایان نمودارهای لنگر هر نوار آمده‌اند، با لنگر مقاوم φMn و لنگر نهایی Mu در طول نوار، بالا و پایین."
 
 #: ../../source/reference/outputs.md:36
-msgid "![The tables](../_static/images/dxf_tables.png)"
-msgstr "![جدول‌ها](../_static/images/dxf_tables.png)"
+msgid "![The tables](../_static/images/dxf_tables.svg)"
+msgstr "![جدول‌ها](../_static/images/dxf_tables.svg)"
 
 #: ../../source/reference/outputs.md:36
 msgid "The tables"
@@ -280,8 +280,8 @@ msgid "Below the sheets are the **cutting plans**: one or more portrait sheets p
 msgstr "زیر برگه‌ها **نقشه‌های برش** آمده‌اند: یک یا چند برگهٔ عمودی برای هر قطر میلگرد، که نشان می‌دهند قطعه‌ها چگونه از شاخه‌های 12 متری بریده شوند. هر ردیف یک الگوی برش است، با تعداد شاخه‌هایی که به آن شکل بریده می‌شوند، قطعه‌ها که با مقیاس و طولشان رسم شده‌اند، پرت (`w`)، و جایگاه هر قطعه در فهرست قطعات، مثلاً `A5` برای ردیف پنجم میلگردهای تقویتی."
 
 #: ../../source/reference/outputs.md:48
-msgid "![A cutting plan](../_static/images/dxf_cutting.png)"
-msgstr "![یک نقشهٔ برش](../_static/images/dxf_cutting.png)"
+msgid "![A cutting plan](../_static/images/dxf_cutting.svg)"
+msgstr "![یک نقشهٔ برش](../_static/images/dxf_cutting.svg)"
 
 #: ../../source/reference/outputs.md:48
 msgid "A cutting plan"

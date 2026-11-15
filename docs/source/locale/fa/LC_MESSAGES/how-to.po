@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-15 13:23+0100\n"
+"POT-Creation-Date: 2026-11-15 21:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fa\n"
@@ -140,12 +140,12 @@ msgid "Above the report, press **Diagram**, and choose **Total** to plot the mas
 msgstr "در بالای گزارش، **Diagram** را بزنید و **Total** را برای رسم وزن همهٔ میلگردها، یا **Additional** را فقط برای میلگردهای تقویتی انتخاب کنید."
 
 #: ../../source/how-to/choose-length-types.md:24
-msgid "![Mass of the additional rebars of a foundation, for stack 3 and 4 and total 6 to 29](../_static/images/analysis_plot.png)"
-msgstr "![وزن میلگردهای تقویتی یک فونداسیون، برای دستهٔ 3 و 4 و کل 6 تا 29](../_static/images/analysis_plot.png)"
+msgid "![Mass of the additional rebars of the sample foundation, for stack 3 and 4 and total 3 to 25](../_static/images/analysis_plot.svg)"
+msgstr "![وزن میلگردهای تقویتی فونداسیون نمونه، برای دستهٔ 3 و 4 و کل 3 تا 25](../_static/images/analysis_plot.svg)"
 
 #: ../../source/how-to/choose-length-types.md:24
-msgid "Mass of the additional rebars of a foundation, for stack 3 and 4 and total 6 to 29"
-msgstr "وزن میلگردهای تقویتی یک فونداسیون، برای دستهٔ 3 و 4 و کل 6 تا 29"
+msgid "Mass of the additional rebars of the sample foundation, for stack 3 and 4 and total 3 to 25"
+msgstr "وزن میلگردهای تقویتی فونداسیون نمونه، برای دستهٔ 3 و 4 و کل 3 تا 25"
 
 #: ../../source/how-to/choose-length-types.md:26
 msgid "The plot has one curve per Stack number. Look for the point where the curve gets steep: below it, every length type you remove costs a lot of steel."

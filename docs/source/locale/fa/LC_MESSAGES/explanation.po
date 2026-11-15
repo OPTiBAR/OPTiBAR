@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-11-15 13:23+0100\n"
+"POT-Creation-Date: 2026-11-15 21:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fa\n"
@@ -116,8 +116,8 @@ msgid "SAFE gives the required steel area as a continuous diagram along each str
 msgstr "SAFE سطح مقطع فولاد لازم را به‌صورت نموداری پیوسته در امتداد هر نوار می‌دهد. پوشاندن آن با میلگردها، لایه به لایه، برای هر لایه میلگردی با طول متفاوت به دست می‌دهد:"
 
 #: ../../source/explanation/intro.md:55
-msgid "![The required steel area along a strip (blue) and the bars that cover it](../_static/images/steel_area_diagram.png)"
-msgstr "![سطح مقطع فولاد لازم در امتداد یک نوار (آبی) و میلگردهایی که آن را می‌پوشانند](../_static/images/steel_area_diagram.png)"
+msgid "![The required steel area along a strip (blue) and the bars that cover it](../_static/images/steel_area_diagram.svg)"
+msgstr "![سطح مقطع فولاد لازم در امتداد یک نوار (آبی) و میلگردهایی که آن را می‌پوشانند](../_static/images/steel_area_diagram.svg)"
 
 #: ../../source/explanation/intro.md:55
 msgid "The required steel area along a strip (blue) and the bars that cover it"
@@ -128,8 +128,8 @@ msgid "Done for every strip, this gives tens or hundreds of different lengths in
 msgstr "اگر این کار برای هر نوار انجام شود، ده‌ها یا صدها طول مختلف در یک فونداسیون به دست می‌آید. نقشه‌ای مانند نقشهٔ زیر درست است، اما بریدن، جاگذاری و بررسی آن عملی نیست:"
 
 #: ../../source/explanation/intro.md:60
-msgid "![Additional rebars of a strip without unified lengths: every bar has its own length](../_static/images/lengths_not_unified.png)"
-msgstr "![میلگردهای تقویتی یک نوار بدون یکسان‌سازی طول‌ها: هر میلگرد طول خاص خود را دارد](../_static/images/lengths_not_unified.png)"
+msgid "![Additional rebars of a strip without unified lengths: every bar has its own length](../_static/images/lengths_not_unified.svg)"
+msgstr "![میلگردهای تقویتی یک نوار بدون یکسان‌سازی طول‌ها: هر میلگرد طول خاص خود را دارد](../_static/images/lengths_not_unified.svg)"
 
 #: ../../source/explanation/intro.md:60
 msgid "Additional rebars of a strip without unified lengths: every bar has its own length"
@@ -152,8 +152,8 @@ msgid "Within these limits, it chooses the lengths that add the least steel. The
 msgstr "در این حدود، طول‌هایی را انتخاب می‌کند که کمترین فولاد را اضافه می‌کنند. همان نوار، با حداکثر 4 طول در هر دسته:"
 
 #: ../../source/explanation/intro.md:69
-msgid "![The same strip with at most 4 lengths per stack](../_static/images/lengths_stack_4.png)"
-msgstr "![همان نوار با حداکثر 4 طول در هر دسته](../_static/images/lengths_stack_4.png)"
+msgid "![The same strip with at most 4 lengths per stack](../_static/images/lengths_stack_4.svg)"
+msgstr "![همان نوار با حداکثر 4 طول در هر دسته](../_static/images/lengths_stack_4.svg)"
 
 #: ../../source/explanation/intro.md:69
 msgid "The same strip with at most 4 lengths per stack"
@@ -206,8 +206,8 @@ msgid "The design of a strip for flexure is checked by SAFE, but the detailing c
 msgstr "طراحی خمشی یک نوار را SAFE بررسی می‌کند، اما آرماتوربندی فولاد را در امتداد نوار تغییر می‌دهد: طول‌های تئوری تا طول‌های لازم امتداد داده می‌شوند و این‌ها گرد و یکسان‌سازی می‌شوند تا طول‌های اجرایی به دست آیند. برای نشان دادن اینکه نوارِ آرماتوربندی‌شده همچنان بارهای خود را تحمل می‌کند، OPTiBAR لنگر مقاوم $\\phi M_n$ هر نوار را، بالا و پایین، کنار لنگر ضریب‌دار $M_u$ از SAFE رسم می‌کند. $\\phi M_n$ باید همه‌جا بالاتر از $M_u$ باشد."
 
 #: ../../source/explanation/moment.md:8
-msgid "![The resisting moment of a cantilever follows its bars; within $L_d$ of a cut bar end it rises linearly](../_static/images/resisting_moment.png)"
-msgstr "![لنگر مقاوم یک طره از میلگردهایش پیروی می‌کند؛ در فاصلهٔ $L_d$ از انتهای بریدهٔ یک میلگرد به‌طور خطی افزایش می‌یابد](../_static/images/resisting_moment.png)"
+msgid "![The resisting moment of a cantilever follows its bars; within $L_d$ of a cut bar end it rises linearly](../_static/images/resisting_moment.svg)"
+msgstr "![لنگر مقاوم یک طره از میلگردهایش پیروی می‌کند؛ در فاصلهٔ $L_d$ از انتهای بریدهٔ یک میلگرد به‌طور خطی افزایش می‌یابد](../_static/images/resisting_moment.svg)"
 
 #: ../../source/explanation/moment.md:8
 msgid "The resisting moment of a cantilever follows its bars; within  of a cut bar end it rises linearly"

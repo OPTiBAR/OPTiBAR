@@ -16,7 +16,7 @@ The drawing is laid out in model space as a row of sheets, each with the foundat
 
 Every bar is labelled with its number, diameter and length, for example `4Ø25-L=4.8`, and follows the mid line of its strip.
 
-![A plan sheet: top additional rebars of the X direction](../_static/images/dxf_plan.png)
+![A plan sheet: top additional rebars of the X direction](../_static/images/dxf_plan.svg)
 
 Additional rebars are drawn in two colors, so the drawing is easier to check:
 
@@ -25,15 +25,15 @@ Additional rebars are drawn in two colors, so the drawing is easier to check:
 - **Magenta** (layer `continuous Rebar`): one bar longer than the 12 m stock length, made of several pieces.
   Where these pieces overlap, the overlap is the overlap length of the bar, 1.3 times its development length.
 
-![Blue bars are separate stacks; the magenta bar is longer than 12 m and spliced](../_static/images/dxf_splice_colors.png)
+![Blue bars are separate stacks; the magenta bar is longer than 12 m and spliced](../_static/images/dxf_splice_colors.svg)
 
 After the sheets come a section of every shear type, with its stirrups and label,
 
-![Shear type sections](../_static/images/dxf_sections.png)
+![Shear type sections](../_static/images/dxf_sections.svg)
 
 followed by the tables: overlap lengths, number of length types, the piece list of every rebar type with its bar shape and weight, the mass summary and the concrete volume. Last are the moment diagrams of every strip, with the resisting moment φMn and the ultimate moment Mu along the strip, top and bottom.
 
-![The tables](../_static/images/dxf_tables.png)
+![The tables](../_static/images/dxf_tables.svg)
 
 A piece list has one row per cut length, so it can have more rows than the number of length types you allowed: a bar longer than 12 m is cut into several pieces, and its last piece has a length of its own.
 The table of a rebar type is left out when the foundation has none of them, for example the thermal rebars.
@@ -45,7 +45,7 @@ Each kind of object is on its own layer, for example `Typical Rebar Top`, `Addit
 Below the sheets are the **cutting plans**: one or more portrait sheets per bar diameter, saying how to cut the pieces from 12 m stock bars.
 Each row is a cutting pattern with the number of bars to cut that way, the pieces drawn to scale with their lengths, the waste (`w`), and the position of each piece in the piece lists, for example `A5` for the fifth row of the additional rebars.
 
-![A cutting plan](../_static/images/dxf_cutting.png)
+![A cutting plan](../_static/images/dxf_cutting.svg)
 
 The plans use as few stock bars as possible, and every piece is cut exactly as many times as needed. They are solved exactly with an arc-flow integer program, which proves that no plan uses fewer bars. Its linear relaxation is solved first, and the number of bars it gives, rounded up, is a lower bound that is nearly always the optimum, so the integer program can stop as soon as it reaches it.
 

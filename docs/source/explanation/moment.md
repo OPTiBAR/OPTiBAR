@@ -5,7 +5,7 @@ The design of a strip for flexure is checked by SAFE, but the detailing changes 
 To show that the detailed strip still carries its loads, OPTiBAR draws the resisting moment $\phi M_n$ of every strip, top and bottom, next to the factored moment $M_u$ from SAFE.
 $\phi M_n$ should be above $M_u$ everywhere.
 
-![The resisting moment of a cantilever follows its bars; within $L_d$ of a cut bar end it rises linearly](../_static/images/resisting_moment.png)
+![The resisting moment of a cantilever follows its bars; within $L_d$ of a cut bar end it rises linearly](../_static/images/resisting_moment.svg)
 
 Effective steel area
 --------------------

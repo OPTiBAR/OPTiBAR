@@ -47,7 +47,7 @@ Each row is a cutting pattern with the number of bars to cut that way, the piece
 
 ![A cutting plan](../_static/images/dxf_cutting.png)
 
-The plans use as few stock bars as possible: the patterns are found by column generation and the number of bars of each pattern by an integer program, so every piece is cut exactly as many times as needed.
+The plans use as few stock bars as possible, and every piece is cut exactly as many times as needed. They are solved exactly with an arc-flow integer program, which proves that no plan uses fewer bars. Its linear relaxation is solved first, and the number of bars it gives, rounded up, is a lower bound that is nearly always the optimum, so the integer program can stop as soon as it reaches it.
 
 ## PDF drawing
 

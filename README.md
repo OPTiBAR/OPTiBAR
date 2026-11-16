@@ -58,6 +58,16 @@ pip install git+https://github.com/OPTiBAR/OPTiBAR
 optibar
 ```
 
+### Building the Windows installer
+
+You can build a Windows installer that doesn't need Python: it installs OPTiBAR with a Start-menu entry and an uninstaller. It needs uv and [Inno Setup 6](https://jrsoftware.org/isinfo.php) (`winget install JRSoftware.InnoSetup`):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File packaging\windows\build.ps1
+```
+
+The script freezes the app with PyInstaller into `dist\OPTiBAR`, then packs it into `dist\installer\OPTiBAR-<version>-Setup.exe`, using the version in `pyproject.toml`. The installer doesn't include the Access ODBC driver, because Microsoft doesn't allow redistributing it. If the driver is missing, the installer offers a link to download it.
+
 ## How to use
 
 ### 🖱️ Desktop app

@@ -29,6 +29,9 @@ build-backend = "hatchling.build"
 packages = ["src/optibar"]
 
 [dependency-groups]
+build = [
+    "pyinstaller>=6.22.3",
+]
 dev = [
     "jsonschema>=4.26.0",
     "pypdf>=7.0.1",

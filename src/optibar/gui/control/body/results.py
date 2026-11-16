@@ -5,13 +5,13 @@ from pathlib import Path
 from tkinter.filedialog import asksaveasfilename
 from tkinter.messagebox import showinfo, showerror
 from typing import Dict
-from optibar.gui.view.body.results import ResultsPane, Diagram
+from optibar.gui.view.body.results import ResultsPane, Diagram, Stat
 from optibar.gui.control.body.log import ReportLog
 from optibar.gui.setting import VERSION
 from optibar.core.sketch.sketch import Sketch
 from optibar.core.sketch.dxf import DxfDrawing
 from optibar.core.export import FORMATS, export
-from .report import calc_report, analysis_report, diagram_data, settings_report, cutting_report
+from .report import calc_report, analysis_report, diagram_data, settings_report, cutting_report, calc_summary, analysis_summary
 
 
 class Result():
@@ -34,33 +34,20 @@ class Result():
         result_data['is_available'].set(False)
 
     def draw_diagram(self, *args):
-        diagram_type = self.files.get_diagram_type()
-        diagram = Diagram(self.root)
+        """the mass of the analysis runs, total or additional, as the diagram window switches"""
         data = diagram_data(self.result_data['data']['result_data'])
-        mass_dict = {}
-        for stack_num in sorted(data.keys()):
-            mass_dict[stack_num] = {
-                'total_num': [],
-                'mass': [],
+        def masses(kinds):
+            return {
+                stack_num: {
+                    'total_num': sorted(data[stack_num]),
+                    'mass': [sum(data[stack_num][total_num][kind] for kind in kinds) for total_num in sorted(data[stack_num])],
+                }
+                for stack_num in sorted(data)
             }
-            for total_num in sorted(data[stack_num].keys()):
-                mass_dict[stack_num]['total_num'].append(total_num)
-                if diagram_type == 'additional':
-                    mass_dict[stack_num]['mass'].append(data[stack_num][total_num]['additional'])
-                elif diagram_type == 'total':
-                    mass = data[stack_num][total_num]['additional']
-                    mass += data[stack_num][total_num]['typical']
-                    mass += data[stack_num][total_num]['thermal']
-                    mass_dict[stack_num]['mass'].append(mass)
-                else:
-                    raise ValueError('diagram type is not valid.')
-        if diagram_type == 'total':
-            title = 'Total Mass'
-        elif diagram_type == 'additional':
-            title = 'Additional Rebar Mass'
-        else:
-            raise ValueError('diagram type is not valid.')
-        diagram.plot(mass_dict, title)
+        Diagram(self.root, {
+            'Total': ('Total Mass', masses(('additional', 'typical', 'thermal'))),
+            'Additional': ('Additional Rebar Mass', masses(('additional',))),
+        })
 
     def result_data_changed(self, *args):
         if self.result_data['is_available'].get() == False:
@@ -70,6 +57,8 @@ class Result():
         self.files.set_button_state('save', '!disabled')
         self.files.set_button_state('export', '!disabled')
         self.report.set_results(self._report())
+        summary = calc_summary if data['calc_type'] == 'calculation' else analysis_summary
+        self.pane.summary.show([Stat(*stat) for stat in summary(data['result_data'])])
         if data['calc_type'] == 'calculation':
             if 'data' in data['result_data']:
                 self.files.set_button_state('pdf', '!disabled')
@@ -190,5 +179,6 @@ class Result():
     def __refresh(self):
         self.result_data['stale'].set(False)
         self.report.set_results([])
+        self.pane.summary.clear()
         for name in ('save', 'export', 'pdf', 'dxf', 'diagram'):
             self.files.set_button_state(name, 'disabled')

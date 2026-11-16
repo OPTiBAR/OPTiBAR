@@ -7,21 +7,22 @@ from typing import Dict, List, Tuple
 
 class Typical(ttk.LabelFrame):
     def __init__(self, parent):
-        ttk.LabelFrame.__init__(self, parent, text='Typical Arrangement')
+        ttk.LabelFrame.__init__(self, parent, text='Typical arrangement')
 
         # widgets
-        entry_label = ttk.Label(self, text='Interval(cm)'+ u' \u24D8')
+        entry_label = ttk.Label(self, text='Interval', cursor='question_arrow')
         CreateToolTip(entry_label, 'interval')
         self.entry = IntEntry(self, 100)
         self.entry.set_value('20')
         entry_label.grid(row=0, column=0, sticky='w')
         self.entry.grid(row=0, column=1, sticky='w')
+        ttk.Label(self, text='cm', style='Unit.TLabel').grid(row=0, column=2, sticky='w')
 
         self.columnconfigure(0,weight=1)
         self.columnconfigure(1,weight=1)
         self.rowconfigure(0, weight=1)
         for child in self.winfo_children(): 
-            child.grid_configure(padx=12, pady=6)
+            child.grid_configure(padx=(0, 12), pady=4)
 
     def get_values(self):
         return {
@@ -31,7 +32,7 @@ class Typical(ttk.LabelFrame):
 
 class Setting(ttk.Frame):
     def __init__(self, parent):
-        ttk.Frame.__init__(self, parent, padding=(4, 8, 4, 4))
+        ttk.Frame.__init__(self, parent, padding=(2, 12, 2, 4))
         self.diameter = Diameter(self)
         self.type_num_calc = TypeNumCalc(self)
         self.type_num_analysis = TypeNumAnalysis(self)
@@ -40,10 +41,10 @@ class Setting(ttk.Frame):
         self.cover = Cover(self)
 
         # geometry: two columns, to fit the settings pane
-        self.diameter.grid(row=0, column=0, sticky='nwes', padx=(0, 8), pady=(0, 8))
-        self.elimination.grid(row=1, column=0, sticky='nwes', padx=(0, 8), pady=(0, 8))
-        self.typical.grid(row=1, column=1, sticky='ewns', padx=(8, 0), pady=(0, 8))
-        self.cover.grid(row=2, column=1, sticky='ewns', padx=(8, 0), pady=(0, 8))
+        self.diameter.grid(row=0, column=0, sticky='nwes', padx=(0, 16), pady=(0, 14))
+        self.elimination.grid(row=1, column=0, sticky='nwes', padx=(0, 16), pady=(0, 14))
+        self.typical.grid(row=1, column=1, sticky='ewns', padx=(16, 0), pady=(0, 14))
+        self.cover.grid(row=2, column=1, sticky='ewns', padx=(16, 0), pady=(0, 14))
         self.set_calc_layout()
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
@@ -52,11 +53,11 @@ class Setting(ttk.Frame):
 
     def set_analysis_layout(self):
         self.type_num_calc.grid_remove()
-        self.type_num_analysis.grid(row=0, column=1, sticky='ewns', padx=(8, 0), pady=(0, 8))
+        self.type_num_analysis.grid(row=0, column=1, sticky='ewns', padx=(16, 0), pady=(0, 14))
 
     def set_calc_layout(self):
         self.type_num_analysis.grid_remove()
-        self.type_num_calc.grid(row=0, column=1, sticky='ewns', padx=(8, 0), pady=(0, 8))
+        self.type_num_calc.grid(row=0, column=1, sticky='ewns', padx=(16, 0), pady=(0, 14))
 
     def get_values(self):
         output = {
@@ -88,9 +89,9 @@ class Elimination(ttk.LabelFrame):
         additional_spinbox.state(['readonly'])
         shear_spinbox = ttk.Spinbox(self, width=10, from_=0, to=5, increment=0.5, textvariable=self.shear_var)
         shear_spinbox.state(['readonly'])
-        additional_label = ttk.Label(self, text='Additional(m)'+ u' \u24D8')
+        additional_label = ttk.Label(self, text='Additional', cursor='question_arrow')
         CreateToolTip(additional_label, 'elim-additional')
-        shear_label = ttk.Label(self, text='Shear(m)'+ u' \u24D8')
+        shear_label = ttk.Label(self, text='Shear', cursor='question_arrow')
         CreateToolTip(shear_label, 'elim-shear')
 
         # geometry
@@ -98,8 +99,10 @@ class Elimination(ttk.LabelFrame):
         additional_spinbox.grid(row=0, column=1, sticky='w')
         shear_label.grid(row=1, column=0, sticky='w')
         shear_spinbox.grid(row=1, column=1, sticky='w')
+        for row in (0, 1):
+            ttk.Label(self, text='m', style='Unit.TLabel').grid(row=row, column=2, sticky='w')
         for child in self.winfo_children(): 
-            child.grid_configure(padx=12, pady=6)
+            child.grid_configure(padx=(0, 12), pady=4)
         self.columnconfigure(0,weight=1)
         self.columnconfigure(1, weight=1)
         self.rowconfigure(0,weight=1)
@@ -117,24 +120,25 @@ class Cover(ttk.LabelFrame):
         ttk.LabelFrame.__init__(self, parent, text='Cover')
         entry = IntEntry(self, 20)
         self.entry = entry
-        label = ttk.Label(self, text='Side Cover(cm)' + u' \u24D8')
+        label = ttk.Label(self, text='Side cover', cursor='question_arrow')
         CreateToolTip(label, 'side-cover')
         label.grid(row=0, column=0, sticky='w')
         entry.grid(row=0,column=1, sticky='w')
+        ttk.Label(self, text='cm', style='Unit.TLabel').grid(row=0, column=2, sticky='w')
         entry.set_value('5')
         self.columnconfigure(0,weight=1)
         self.columnconfigure(1,weight=1)
         self.rowconfigure(0,weight=1)
 
         for child in self.winfo_children(): 
-            child.grid_configure(padx=12, pady=6)
+            child.grid_configure(padx=(0, 12), pady=4)
     def get_value(self):
         return self.entry.get_value()/100
 
 
 class Diameter(ttk.LabelFrame):
     def __init__(self, parent):
-        super().__init__(parent, text='Diameter')
+        super().__init__(parent, text='Diameter (mm)')
         values = REBAR_LIST
 
         self.typical_combo = IntCombo(self, values)
@@ -146,13 +150,13 @@ class Diameter(ttk.LabelFrame):
         self.shear_combo = IntCombo(self, values)
         self.shear_combo.set_value(14)
 
-        typical_label = ttk.Label(self, text='Typical'+ u' \u24D8')
+        typical_label = ttk.Label(self, text='Typical', cursor='question_arrow')
         CreateToolTip(typical_label, 'typical')
-        additional_label = ttk.Label(self, text='Additional'+ u' \u24D8')
+        additional_label = ttk.Label(self, text='Additional', cursor='question_arrow')
         CreateToolTip(additional_label, 'additional')
-        thermal_label = ttk.Label(self, text='Thermal'+ u' \u24D8')
+        thermal_label = ttk.Label(self, text='Thermal', cursor='question_arrow')
         CreateToolTip(thermal_label, 'thermal')
-        shear_label = ttk.Label(self, text='Shear'+ u' \u24D8')
+        shear_label = ttk.Label(self, text='Shear', cursor='question_arrow')
         CreateToolTip(shear_label, 'shear')
 
         # geometry
@@ -169,7 +173,7 @@ class Diameter(ttk.LabelFrame):
         self.shear_combo.grid(row=3, column=1, sticky='w')
         
         for child in self.winfo_children(): 
-            child.grid_configure(padx=12, pady=6)
+            child.grid_configure(padx=(0, 12), pady=4)
         
         for i in range(4):
             self.rowconfigure(i, weight=1)
@@ -186,7 +190,7 @@ class Diameter(ttk.LabelFrame):
     
 class TypeNumCalc(ttk.LabelFrame):
     def __init__(self, parent):
-        super().__init__(parent, text='Number of Types')
+        super().__init__(parent, text='Number of length types')
         self.total_combo = IntCombo(self, range(10,41))
         self.stack_combo = IntCombo(self, range(1,6))
         self.shear_combo = IntCombo(self, range(1,6))
@@ -195,11 +199,11 @@ class TypeNumCalc(ttk.LabelFrame):
         self.stack_combo.set_value(2)
         self.shear_combo.set_value(4)
 
-        total_label = ttk.Label(self, text='Total'+ u' \u24D8')
+        total_label = ttk.Label(self, text='Total', cursor='question_arrow')
         CreateToolTip(total_label, 'total')
-        stack_label = ttk.Label(self, text='Stack'+ u' \u24D8')
+        stack_label = ttk.Label(self, text='Stack', cursor='question_arrow')
         CreateToolTip(stack_label, 'stack')
-        shear_label = ttk.Label(self, text='Shear'+ u' \u24D8')
+        shear_label = ttk.Label(self, text='Shear', cursor='question_arrow')
         CreateToolTip(shear_label, 'type-shear')
 
         # geometry
@@ -213,7 +217,7 @@ class TypeNumCalc(ttk.LabelFrame):
         self.shear_combo.grid(row=2, column=1, sticky='w')
 
         for child in self.winfo_children(): 
-            child.grid_configure(padx=12, pady=6)
+            child.grid_configure(padx=(0, 12), pady=4)
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.rowconfigure(0,weight=1)
@@ -252,7 +256,7 @@ class TypeNumAnalysis(ttk.LabelFrame):
             self.rowconfigure(1, weight=1)
 
             for child in self.winfo_children():
-                child.grid_configure(padx=12, pady=6)
+                child.grid_configure(padx=(0, 12), pady=4)
 
         def from_fun(self, e):
             if self.combo_from.get_value() > self.combo_to.get_value():
@@ -272,7 +276,7 @@ class TypeNumAnalysis(ttk.LabelFrame):
             }
 
     def __init__(self, parent):
-        super().__init__(parent, text='Number of Types')
+        super().__init__(parent, text='Number of length types')
 
         self.total_frame = self.Range(self, title = 'Total', max_diff=10, value_range= range(10,41), initial_values=(10,20))
         self.stack_frame = self.Range(self, title = 'Stack', max_diff=2, value_range= range(1,6), initial_values=(2,4))
@@ -289,7 +293,7 @@ class TypeNumAnalysis(ttk.LabelFrame):
         self.shear_combo.grid(row=2, column=1, sticky='w')
 
         for child in self.winfo_children():
-            child.grid_configure(padx=12, pady=6)
+            child.grid_configure(padx=(0, 12), pady=4)
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.rowconfigure(0,weight=1)

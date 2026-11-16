@@ -182,3 +182,46 @@ def settings_report(config: Dict) -> Report:
         ['Number of shear types', type_value(type_number['shear'])],
     ]
     return _heading('Settings') + table(['Setting', 'Value'], rows)
+
+
+def _tons(mass: float) -> str:
+    return f'{mass:.2f}'
+
+
+def calc_summary(output: Dict) -> List[Tuple[str, str, str, str]]:
+    """the main numbers of a calculation, for the cards above the report: (caption, value, unit, note)"""
+    if 'errors' in output:
+        return []
+    rebar = output['data']['summary']['rebar']
+    level_total = lambda kind: float(rebar[kind]['top']) + float(rebar[kind]['bottom'])
+    longitudinal = sum(level_total(kind) for kind in ('typical', 'thermal', 'additional'))
+    shear = float(rebar['shear'])
+    stats = [('Total steel', _tons(longitudinal + shear), 't', f'incl. {shear:.2f} t shear')]
+    stats.append(('Typical', _tons(level_total('typical')), 't', f"{100 * level_total('typical') / (longitudinal + shear or 1):.0f}% of the total"))
+    if level_total('thermal'):
+        stats.append(('Thermal', _tons(level_total('thermal')), 't', ''))
+    stats.append(('Additional', _tons(level_total('additional')), 't', f"{100 * level_total('additional') / (longitudinal + shear or 1):.0f}% of the total"))
+    plans = output['data'].get('cut', [])
+    if plans:
+        bars = sum(plan['bars'] for plan in plans)
+        stock = sum(plan['bars'] * plan['stock_length'] for plan in plans)
+        waste = sum(float(plan['waste']) for plan in plans)
+        stats.append(('Cutting waste', f'{100 * waste / stock:.1f}' if stock else DASH, '%',
+                      f"{bars} bars of {plans[0]['stock_length']:g} m"))
+    return stats
+
+
+def analysis_summary(results: List[Dict]) -> List[Tuple[str, str, str, str]]:
+    """the main numbers of an analysis: the runs, and the lightest of them"""
+    data = diagram_data(results)
+    runs = [(sum(float(m) for m in masses.values()), float(masses['additional']), stack, total)
+            for stack, by_total in data.items() for total, masses in by_total.items()]
+    stats = [('Feasible runs', str(len(runs)), f'of {len(results)}', 'combinations solved')]
+    if runs:
+        mass, _, stack, total = min(runs)
+        stats.append(('Lightest total', _tons(mass), 't', f'{total} types · stack {stack}'))
+        additional, stack, total = min((r[1], r[2], r[3]) for r in runs)
+        stats.append(('Lightest additional', _tons(additional), 't', f'{total} types · stack {stack}'))
+        heaviest = max(r[0] for r in runs)
+        stats.append(('Saving', _tons(heaviest - mass), 't', 'heaviest − lightest run'))
+    return stats

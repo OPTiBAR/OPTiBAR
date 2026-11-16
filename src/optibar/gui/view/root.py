@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Optional
 
+from optibar.gui.view.body.status import StatusBar
 from optibar.gui.view.body.upload import FileBar
 from optibar.gui.view.body.calculation.notebook import SettingsPane
 from optibar.gui.view.body.results import ResultsPane
@@ -14,7 +15,7 @@ GAP = 12 # px between the cards, and around them
 
 class Root(tk.Tk):
     """one window: the app and the input file across the top, then two cards, the settings on the left
-    and the results on the right
+    and the results on the right, and the status bar at the bottom
 
     Args:
         theme: 'light' or 'dark'; by default the one Windows uses for apps
@@ -33,10 +34,11 @@ class Root(tk.Tk):
         # widgets
         self.menu = MenuBar(self)
         self.menu.view.dark_var.set(theme == 'dark')
-        self.file_bar = FileBar(self)
+        self.status_bar = StatusBar(self)
+        self.file_bar = FileBar(self, self.status_bar)
         body = ttk.Frame(self, style='App.TFrame', padding=(GAP, GAP, GAP, GAP))
         self.panes = ttk.PanedWindow(body, orient=tk.HORIZONTAL)
-        self.settings = SettingsPane(self.panes)
+        self.settings = SettingsPane(self.panes, self.status_bar)
         self.results = ResultsPane(self.panes)
         self.panes.add(self.settings, weight=0)
         self.panes.add(self.results, weight=1)
@@ -44,6 +46,7 @@ class Root(tk.Tk):
         # geometry
         self.file_bar.grid(row=0, column=0, sticky='ew')
         body.grid(row=1, column=0, sticky='ewns')
+        self.status_bar.grid(row=2, column=0, sticky='ew')
         self.panes.grid(row=0, column=0, sticky='ewns')
         body.columnconfigure(0, weight=1)
         body.rowconfigure(0, weight=1)

@@ -5,8 +5,9 @@ from tkinter.filedialog import askopenfilename
 
 from PIL import Image, ImageTk
 
-from optibar.gui.setting import IMAGES_PATH
+from optibar.gui.view.body.status import StatusBar
 from optibar.gui.view.body.tooltip import ToolTip
+from optibar.gui.view.utils.styles import themed_image
 
 # style of the status badge for each kind of status
 STATUS_STYLES = {
@@ -20,26 +21,28 @@ LOGO_SIZE = 30 # px
 
 
 class FileBar(ttk.Frame):
-    """the header of the window: the app name on the left; the input file, its status badge,
-    Open… and Reload on the right. The file shows by its name, the full path is in its tooltip."""
-    def __init__(self, parent):
+    """the header of the window: the app name on the left; the input file, Reload and Open… on the right.
+    The file shows by its name, the full path is in its tooltip; its status is in the status bar."""
+    def __init__(self, parent, status_bar: StatusBar):
         ttk.Frame.__init__(self, parent, padding=(16, 10, 16, 10))
 
         # variables
         self.path_var = tk.StringVar()
-        self.status_var = tk.StringVar()
+        self.status_var = status_bar.file_var
         self.name_var = tk.StringVar()
         self.folder_var = tk.StringVar()
 
         # widgets
-        logo = Image.open(IMAGES_PATH.joinpath('logo.png')).convert('RGBA').resize((LOGO_SIZE, LOGO_SIZE), Image.LANCZOS)
-        self._logo = ImageTk.PhotoImage(logo, master=self)
-        brand = ttk.Label(self, text=' OPTiBAR', image=self._logo, compound='left', style='Brand.TLabel')
+        brand = ttk.Label(self, text=' OPTiBAR', compound='left', style='Brand.TLabel')
+        self.brand = brand
+        self._show_logo()
+        # the gray bars of the logo would vanish on the dark theme, it has a light version
+        self.bind('<<ThemeChanged>>', self._show_logo, add='+')
         file_frame = ttk.Frame(self)
         name_label = ttk.Label(file_frame, textvariable=self.name_var, style='FileName.TLabel')
         folder_label = ttk.Label(file_frame, textvariable=self.folder_var, style='Muted.TLabel')
         self.path_tip = ToolTip(name_label, '')
-        status_label = ttk.Label(self, textvariable=self.status_var, style=STATUS_STYLES['idle'], cursor='hand2')
+        status_label = status_bar.file_label
         status_label.bind('<Button-1>', lambda e: self.event_generate('<<status-clicked>>'))
         browse_button = ttk.Button(self, text="Open…", command=self.browse_fun, style='Accent.TButton')
         load_button = ttk.Button(self, text="Reload", command=self.load_fun)
@@ -52,13 +55,17 @@ class FileBar(ttk.Frame):
         file_frame.grid(row=0, column=1, sticky='we')
         name_label.grid(row=0, column=0, sticky='w')
         folder_label.grid(row=0, column=1, sticky='w', padx=(10, 0))
-        status_label.grid(row=0, column=2, sticky='e', padx=(16, 16))
-        load_button.grid(row=0, column=3, padx=(0, 8))
+        load_button.grid(row=0, column=3, padx=(16, 8))
         browse_button.grid(row=0, column=4)
         self.columnconfigure(1, weight=1)
 
         self.path_var.trace_add('write', self._show_path)
         self._show_path()
+
+    def _show_logo(self, *args) -> None:
+        logo = Image.open(themed_image('logo')).convert('RGBA').resize((LOGO_SIZE, LOGO_SIZE), Image.LANCZOS)
+        self._logo = ImageTk.PhotoImage(logo, master=self)
+        self.brand.configure(image=self._logo)
 
     def _show_path(self, *args) -> None:
         path = self.path_var.get()

@@ -4,6 +4,7 @@ from optibar.gui.view.body.tooltip import CreateToolTip
 from .basic import Setting as BasicSetting
 from .advanced import Setting as AdvancedSetting
 from optibar.gui.view.utils.styles import CARD_PADDING
+from optibar.gui.view.body.status import StatusBar
 
 
 class CalcType(ttk.LabelFrame):
@@ -51,35 +52,31 @@ class Setting(ttk.Notebook):
         return basic
 
 class CalcRequest(ttk.Frame):
-    """the footer of the settings: the state of the run, its progress and the Calculate button"""
-    def __init__(self, parent):
+    """the footer of the settings, the Calculate button; the state of the run and its progress
+    are in the status bar"""
+    def __init__(self, parent, status_bar: StatusBar):
         ttk.Frame.__init__(self, parent)
 
         #variables
         self.button_var = tk.StringVar()
         self.button_var.set('Calculate')
-        self.status_var = tk.StringVar()
+        self.status_var = status_bar.run_var
         self.cut_var = tk.StringVar()
         self.cut_var.set('Not')
 
         
         #widgets
         rule = ttk.Separator(self, orient=tk.HORIZONTAL)
-        status_label = ttk.Label(self, textvariable=self.status_var, style='Status.TLabel')
-        self.progress = ttk.Progressbar(self, mode='determinate', length=200)
+        self.progress = status_bar.progress
         self.calculate_button = ttk.Button(self, textvariable=self.button_var, command=self.calc_fun, style='Accent.TButton', width=16)
 
         #geometry
-        rule.grid(row=0, column=0, columnspan=3, sticky='we', pady=(0, 12))
-        status_label.grid(row=1, column=0, sticky='w')
-        self.progress.grid(row=1, column=1, sticky='e', padx=(12, 12))
-        self.calculate_button.grid(row=1, column=2, sticky='e', ipady=2)
-        self.progress.grid_remove()
-
+        rule.grid(row=0, column=0, sticky='we', pady=(0, 12))
+        self.calculate_button.grid(row=1, column=0, sticky='e', ipady=2)
         self.columnconfigure(0, weight=1)
     
     def set_status(self, value: str) -> None:
-        self.status_var.set('Status: ' + value)
+        self.status_var.set(value)
     
     def set_button_state(self, state: str):
         """toggles the state of the calc botton
@@ -125,7 +122,7 @@ class CalcRequest(ttk.Frame):
 
 class SettingsPane(ttk.Frame):
     """the left pane, a card: the type of request, the settings, and the Calculate button"""
-    def __init__(self, parent):
+    def __init__(self, parent, status_bar: StatusBar):
         # the gray margin to the results card; the card is inside it
         ttk.Frame.__init__(self, parent, style='App.TFrame', padding=(0, 0, 6, 0))
         card = ttk.Frame(self, style='Card.TFrame', padding=CARD_PADDING)
@@ -133,7 +130,7 @@ class SettingsPane(ttk.Frame):
         title = ttk.Label(card, text='Settings', style='Section.TLabel')
         self.calc_type = CalcType(card)
         self.setting = Setting(card)
-        self.request = CalcRequest(card)
+        self.request = CalcRequest(card, status_bar)
 
         # geometry
         card.grid(row=0, column=0, sticky='news')

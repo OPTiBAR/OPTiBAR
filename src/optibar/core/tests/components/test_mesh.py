@@ -441,6 +441,32 @@ class TestSetPiecePractical():
         piece.bend.start = 0.3
         mesh._set_piece_practical(piece)
         assert piece.practical == Period(-0.25,9.25)
+
+    def test_no_bend_positive_both_bend_base(self, mesh, piece_factory):
+        """on a base piece bent at both ends, a piece is placed as without a base piece:
+        inside the strip, 0.05 to 8.95"""
+        def base():
+            base = piece_factory(-0.25, 9.25, 9.5)
+            base.practical = Period(-0.25, 9.25)
+            base.bend.start = 0.3
+            base.bend.end = 0.3
+            return base
+        # reaches the start side
+        piece = piece_factory(0.5, 4, 5)
+        mesh._set_piece_practical(piece, base())
+        assert piece.practical == Period(0.05, 5.05)
+        # reaches the end side
+        piece = piece_factory(5, 8.5, 5)
+        mesh._set_piece_practical(piece, base())
+        assert piece.practical == Period(3.95, 8.95)
+        # reaches neither side
+        piece = piece_factory(3, 6, 4)
+        mesh._set_piece_practical(piece, base())
+        assert piece.practical == Period(2.5, 6.5)
+        # longer than the strip: it stops at the other side too, it doesn't pass it
+        piece = piece_factory(1, 8, 10)
+        mesh._set_piece_practical(piece, base())
+        assert piece.practical == Period(0.05, 8.95)
             
 
 class TestTheoreticalToPractical():

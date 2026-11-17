@@ -6,8 +6,10 @@ The app can't show SVG (Tk and Pillow don't read it), so it has PNG copies, made
 
 - src/optibar/gui/data/images/logo.png: the window icon, the bars of logo-mark.svg, 256 x 256
 - src/optibar/gui/data/images/optibar.png: the About dialog, logo.svg on a 615 x 511 canvas
+- assets/optibar.ico: the icon of the Windows executable and installer, the bars of logo-mark.svg,
+  16 to 256 pixels
 
-Run it after changing logo-mark.svg or logo.svg, and commit the PNGs with the SVGs.
+Run it after changing logo-mark.svg or logo.svg, and commit the PNGs and the ICO with the SVGs.
 """
 import io
 from pathlib import Path
@@ -38,10 +40,13 @@ def on_canvas(image: Image.Image, size: tuple[int, int], fill: float) -> Image.I
 
 def main() -> None:
     # drawn larger than needed, then scaled down: smoother edges
-    on_canvas(render(ASSETS / 'logo-mark.svg', 1024), (256, 256), 0.96).save(IMAGES / 'logo.png', optimize=True)
+    mark = on_canvas(render(ASSETS / 'logo-mark.svg', 1024), (256, 256), 0.96)
+    mark.save(IMAGES / 'logo.png', optimize=True)
+    mark.save(ASSETS / 'optibar.ico', sizes=[(16, 16), (24, 24), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)])
     on_canvas(render(ASSETS / 'logo.svg', 1600), (615, 511), 0.65).save(IMAGES / 'optibar.png', optimize=True)
     for name in ('logo.png', 'optibar.png'):
         print(f'written {IMAGES / name}')
+    print(f'written {ASSETS / "optibar.ico"}')
 
 
 if __name__ == '__main__':

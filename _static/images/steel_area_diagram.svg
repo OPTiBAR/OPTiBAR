@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1430 138" width="1430" height="138">
+  <title>The required steel area along a strip and the bars that cover it</title>
+  <rect width="1430" height="138" fill="#ffffff"/>
+  <rect x="0.5" y="0.5" width="1428" height="136" fill="none" stroke="#999999"/>
+  <g stroke="#999999" stroke-width="2" fill="none">
+    <!-- bars of the left span -->
+    <path d="M290 39.5H578M215 54.5H650M144 69.5H694M107 84.5H718M107 99.5H856M70 114.5H855M34 129.5H855"/>
+    <!-- bars of the right span -->
+    <path d="M905 96.5H1293M905 112.5H1364M905 129.5H1400"/>
+  </g>
+  <g stroke="#0000ff" stroke-width="1.5" fill="none" stroke-linejoin="round">
+    <path d="M138 135L157 131L170 126.5L187 116L209 101L214 97.5L235 86L264 71L288 58.5L306 52.5L315 48.5L319 48.5L345 41.5L357 41L368 38L420 37.5L422 36.5L453 35.5L461 35.5L492 35.5L503 37.5L519 38L529 41L539 41.5L564 46.5L570 52.5L591 67.5L604 71.5L616 76.5L650 83L660 80L664 75.5L681 75.5L692 83L712 98L731 113L735 117L743 123.5L767 128L780 131.5L791 134.5L796 131L800 131L829 135"/>
+    <path d="M957 135L965 134.5L974 131.5L980 131L981 127L988 122L993 105L1001 94.5L1025 95L1028 92.5L1057 93.5L1067 91.5L1086 89.5L1119 88.5L1149 89.5L1200 95L1218 98.5L1248 106.5L1268 110.5L1288 114.5L1323 126.5L1352 135"/>
+  </g>
+</svg>

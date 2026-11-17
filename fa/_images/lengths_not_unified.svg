@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1430 304" width="1430" height="304">
+  <title>Additional rebars of a strip without unified lengths</title>
+  <rect width="1430" height="304" fill="#ffffff"/>
+  <rect x="0.5" y="77.5" width="1428" height="135" fill="none" stroke="#999999" stroke-width="2"/>
+  <!-- bars of the left span -->
+  <path stroke="#0000ff" stroke-width="2" fill="none" d="M283 108.5H563M216 123.5H642M136 138.5H686M99 153.5H710M99 168.5H848M63 183.5H847M26 198.5H847"/>
+  <!-- bars of the right span -->
+  <path stroke="#808080" stroke-width="2" fill="none" d="M897 165.5H1285M897 181.5H1356M897 197.5H1392"/>
+  <!-- leaders: from the bar to the label -->
+  <path stroke="#000000" stroke-width="1" fill="none" d="M216.5 138.5V27.5H236M389.5 108.5V33.5H410M564.5 123.5V31.5H585M754.5 168.5V23.5H775M922.5 197.5V21.5H942M1204.5 165.5V37.5H1224M90.5 198.5V289.5H110M270.5 183.5V287.5H290M541.5 153.5V280.5H561M1144.5 181.5V252.5H1164"/>
+  <g font-family="'Times New Roman', Times, serif" font-size="19" fill="#000000">
+    <text x="238" y="24">2Φ28</text><text x="238" y="42">L=6.91m</text>
+    <text x="412" y="30">1Φ28</text><text x="412" y="48">L=3.62m</text>
+    <text x="587" y="28">1Φ28</text><text x="587" y="46">L=5.46m</text>
+    <text x="777" y="20">1Φ28</text><text x="777" y="38">L=9.4m</text>
+    <text x="944" y="18">2Φ28</text><text x="944" y="36">L=6.22m</text>
+    <text x="1226" y="34">1Φ28</text><text x="1226" y="52">L=4.88m</text>
+    <text x="112" y="286">3Φ28</text><text x="112" y="304">L=10.31m</text>
+    <text x="298" y="284">2Φ28</text><text x="298" y="302">L=9.85m</text>
+    <text x="563" y="277">1Φ28</text><text x="563" y="295">L=7.67m</text>
+    <text x="1166" y="249">1Φ28</text><text x="1166" y="267">L=5.77m</text>
+  </g>
+</svg>

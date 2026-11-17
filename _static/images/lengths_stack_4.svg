@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1430 205" width="1430" height="205">
+  <title>The same strip with at most 4 lengths per stack</title>
+  <rect width="1430" height="205" fill="#ffffff"/>
+  <rect x="0.5" y="68.5" width="1428" height="135" fill="none" stroke="#999999" stroke-width="2"/>
+  <!-- bars of the left span -->
+  <path stroke="#0000ff" stroke-width="2" fill="none" d="M199 148.5H621M127 161.5H637M127 172.5H828M71 184.5H828"/>
+  <!-- bars of the right span -->
+  <path stroke="#808080" stroke-width="2" fill="none" d="M885 161.5H1306M885 172.5H1371M885 184.5H1394"/>
+  <!-- leaders: from the bar to the label -->
+  <path stroke="#000000" stroke-width="1" fill="none" d="M237.5 148.5V33.5H257M350.5 161.5V31.5H370M493.5 172.5V31.5H514M623.5 184.5V26.5H643M924.5 161.5V31.5H944M1065.5 172.5V29.5H1085M1266.5 184.5V25.5H1287"/>
+  <g font-family="'Times New Roman', Times, serif" font-size="19" fill="#000000">
+    <text x="259" y="30">1Φ28</text><text x="259" y="48">L=5.3m</text>
+    <text x="372" y="28">3Φ28</text><text x="372" y="46">L=6.4m</text>
+    <text x="516" y="28">2Φ28</text><text x="516" y="46">L=8.8m</text>
+    <text x="645" y="23">5Φ28</text><text x="645" y="41">L=9.5m</text>
+    <text x="946" y="28">1Φ28</text><text x="946" y="46">L=5.3m</text>
+    <text x="1087" y="26">1Φ28</text><text x="1087" y="44">L=6.1m</text>
+    <text x="1289" y="22">3Φ28</text><text x="1289" y="40">L=6.4m</text>
+  </g>
+</svg>

@@ -1,56 +1,45 @@
 from __future__ import annotations
 from functools import lru_cache
-from pprint import pprint
 from typing import Dict, Union, List, Tuple, Set
-import pyodbc
-import os
-from .errors import TableMissingError, MultipleMaterialError, DriverMissingError
+from .source import TableSource, AccessSource, MemorySource, has_access_driver
+from .errors import TableMissingError
 
-ACCESS_DRIVER = 'Microsoft Access Driver (*.mdb, *.accdb)'
-
-
-def has_access_driver() -> bool:
-    """whether the ODBC driver needed to read SAFE access files is installed"""
-    return ACCESS_DRIVER in pyodbc.drivers()
+__all__ = ['V16Parser', 'TableSource', 'AccessSource', 'MemorySource', 'has_access_driver']
 
 
 class V16Parser():
-    def __init__(self, file_path: str) -> None:
-        if not has_access_driver():
-            raise DriverMissingError()
-        if not os.path.isfile(file_path):
-            raise IOError("database file is not available")
-        # the access driver rejects relative paths
-        file_path = os.path.abspath(file_path)
-        # if not file_path.endswith('.accdb'):
-        #     raise IOError('file format is not accdb')
-        self.conn = pyodbc.connect('Driver={' + ACCESS_DRIVER + '};DBQ=' +
-            file_path  + ';')
-        self.cursor = self.conn.cursor()
-    
+    """reads a SAFE 2016 (v16) model and its design results into the foundation dict.
+
+    Args:
+        source: the path of the Access file (.accdb / .mdb) exported by SAFE,
+            or a TableSource that returns SAFE's tables.
+    """
+    def __init__(self, source: Union[str, TableSource]) -> None:
+        if isinstance(source, str):
+            source = AccessSource(source)
+        self.source = source
+
     def close(self) -> None:
-        # safe to call twice, and after __init__ failed before connecting
-        if getattr(self, 'cursor', None) is not None:
-            self.cursor.close()
-            self.cursor = None
-        if getattr(self, 'conn', None) is not None:
-            self.conn.close()
-            self.conn = None
+        # safe to call twice, and after __init__ failed
+        if getattr(self, 'source', None) is not None:
+            self.source.close()
+            self.source = None
 
     def __del__(self):
         self.close()
-        
-    
+
+    def _read(self, table: str, columns: List[str] = None) -> List[Tuple]:
+        """rows of a table as tuples, in the order of the columns"""
+        rows = self.source.read(table, columns)
+        return [tuple(row.values()) for row in rows]
+
     @lru_cache
     def _extract_unit_conversion(self) -> Dict[str, float]:
         data_dict = {}
-        table_name = '[Program Control]'
-        column_names = ','.join(['CurrUnits'])
-        try:
-            self.cursor.execute('select ' + column_names + ' from '+ table_name)
-        except :
-            raise TableMissingError(table_name)
-        (force_unit_str, length_unit_str, _) =  tuple(map(str.strip, self.cursor.fetchone()[0].split(",")))
+        table_name = 'Program Control'
+        column_names = ['CurrUnits']
+        rows = self._read(table_name, column_names)
+        (force_unit_str, length_unit_str, _) =  tuple(map(str.strip, rows[0][0].split(",")))
         def get_force_coeff(force_unit_str):
             return {
                 'lb': 0.000453592,
@@ -89,15 +78,12 @@ class V16Parser():
         """
         unit_conversion = self._extract_unit_conversion()
         data_dict = {}
-        table_name = '[Grid Lines]'
-        column_names = ','.join(['AxisDir', 'GridID', 'Ordinate'])
-        try:
-            self.cursor.execute('select ' + column_names + ' from '+ table_name)
-        except :
-            raise TableMissingError(table_name)
+        table_name = 'Grid Lines'
+        column_names = ['AxisDir', 'GridID', 'Ordinate']
+        rows = self._read(table_name, column_names)
         data_dict['X'] = []
         data_dict['Y'] = []
-        for row_tuple in self.cursor.fetchall():
+        for row_tuple in rows:
             axis_dir = row_tuple[0]
             grid_id = str(row_tuple[1])
             ordinate = unit_conversion['length'] * row_tuple[2]
@@ -126,15 +112,12 @@ class V16Parser():
         """
         unit_conversion = self._extract_unit_conversion()
         data_dict = {}
-        table_name = '[Concrete Slab Design 01 - Flexural And Shear Data]'
-        column_names = ','.join(['Strip','Station','ConcWidth','FTopArea','FBotArea','FTopMoment','FBotMoment','VArea'])
+        table_name = 'Concrete Slab Design 01 - Flexural And Shear Data'
+        column_names = ['Strip','Station','ConcWidth','FTopArea','FBotArea','FTopMoment','FBotMoment','VArea']
 
-        try:
-            self.cursor.execute('select ' + column_names + ' from '+ table_name)
-        except :
-            raise TableMissingError(table_name)
+        rows = self._read(table_name, column_names)
         
-        for row_tuple in self.cursor.fetchall():
+        for row_tuple in rows:
             strip_name = row_tuple[0]
             station = row_tuple[1] * unit_conversion['length']
             width = row_tuple[2] * unit_conversion['length']
@@ -182,14 +165,11 @@ class V16Parser():
         """
         unit_conversion = self._extract_unit_conversion()
         data_dict = {}
-        table_name = '[Object Geometry - Design Strips]'
-        column_names = ','.join(['Strip','GlobalX','GlobalY','WBLeft','WBRight','WALeft','WARight'])
-        try:
-            self.cursor.execute('select ' + column_names + ' from '+ table_name)
-        except Exception:
-            raise TableMissingError(table_name)
+        table_name = 'Object Geometry - Design Strips'
+        column_names = ['Strip','GlobalX','GlobalY','WBLeft','WBRight','WALeft','WARight']
+        rows = self._read(table_name, column_names)
 
-        for row_tuple in self.cursor.fetchall():
+        for row_tuple in rows:
             strip_name = row_tuple[0]
             x = row_tuple[1] * unit_conversion['length']
             y = row_tuple[2] * unit_conversion['length']
@@ -224,13 +204,10 @@ class V16Parser():
         """
         unit_conversion = self._extract_unit_conversion()
         data_dict = {}
-        table_name = '[Material Properties 03 - Concrete]'
-        column_names = ','.join(['Material','Fc'])
-        try:
-            self.cursor.execute('select ' + column_names + ' from '+ table_name)
-        except :
-            raise TableMissingError(table_name)
-        for row_tuple in self.cursor.fetchall():
+        table_name = 'Material Properties 03 - Concrete'
+        column_names = ['Material','Fc']
+        rows = self._read(table_name, column_names)
+        for row_tuple in rows:
             material_name = row_tuple[0]
             FC = row_tuple[1] * unit_conversion['force'] / (unit_conversion['length'] ** 2)
             data_dict[material_name] = FC
@@ -247,13 +224,10 @@ class V16Parser():
         """
         unit_conversion = self._extract_unit_conversion()
         data_dict = {}
-        table_name = '[Material Properties 04 - Rebar]'
-        column_names = ','.join(['Material','Fy'])
-        try:
-            self.cursor.execute('select ' + column_names + ' from '+ table_name)
-        except :
-            raise TableMissingError(table_name)
-        for row_tuple in self.cursor.fetchall():
+        table_name = 'Material Properties 04 - Rebar'
+        column_names = ['Material','Fy']
+        rows = self._read(table_name, column_names)
+        for row_tuple in rows:
             material_name = row_tuple[0]
             FY = row_tuple[1] * unit_conversion['force'] / (unit_conversion['length'] ** 2)
             data_dict[material_name] = FY
@@ -268,35 +242,30 @@ class V16Parser():
         """
         unit_conversion = self._extract_unit_conversion()
         data_dict = {}
-        table_name = '[Slab Design Overwrites 01 - Strip Based]'
-        # column_names = ','.join(['Strip','RebarMat'])
-        try:
-            self.cursor.execute('select  * from '+ table_name)
-        except :
-            raise TableMissingError(table_name)
-        for row_tuple in self.cursor.fetchall():
-            strip_name = row_tuple[0]
-            rebar_name = row_tuple[6]
-            data_dict[strip_name] = {'rebar':rebar_name}
-            if row_tuple[7] == 'Preferences':
+        table_name = 'Slab Design Overwrites 01 - Strip Based'
+        # all columns: SAFE writes CoverTop and CoverBot only when a strip overwrites the covers
+        rows = self.source.read(table_name)
+        for row in rows:
+            strip_name = row['Strip']
+            data_dict[strip_name] = {'rebar': row['RebarMat']}
+            if row['CoverType'] == 'Preferences':
                 data_dict[strip_name]['covers'] = None
             else:
+                if row.get('CoverTop') is None or row.get('CoverBot') is None:
+                    raise TableMissingError(table_name)
                 data_dict[strip_name]['covers'] = {
-                    'top': row_tuple[8] * unit_conversion['length'],
-                    'bottom': row_tuple[8] * unit_conversion['length'],
+                    'top': row['CoverTop'] * unit_conversion['length'],
+                    'bottom': row['CoverBot'] * unit_conversion['length'],
                 }
         return data_dict
     
     def _extract_cover_preferences(self):
         unit_conversion = self._extract_unit_conversion()
         data_dict = {}
-        table_name = '[Design Preferences 02 - Rebar Cover - Slabs]'
-        column_names = ','.join(['CoverTop','CoverBot'])
-        try:
-            self.cursor.execute('select ' + column_names + ' from '+ table_name)
-        except :
-            raise TableMissingError(table_name)
-        row_tuple = self.cursor.fetchone()
+        table_name = 'Design Preferences 02 - Rebar Cover - Slabs'
+        column_names = ['CoverTop','CoverBot']
+        rows = self._read(table_name, column_names)
+        row_tuple = rows[0]
         data_dict['top'] = row_tuple[0] * unit_conversion['length']
         data_dict['bottom'] = row_tuple[1] * unit_conversion['length']
         return data_dict
@@ -328,14 +297,11 @@ class V16Parser():
         """
         unit_conversion = self._extract_unit_conversion()
         data_dict = {}
-        table_name = '[Slab Properties 02 - Solid Slabs]'
-        column_names = ','.join(['Slab','Thickness','MatProp'])
-        try:
-            self.cursor.execute('select ' + column_names + ' from '+ table_name)
-        except :
-            raise TableMissingError(table_name)
+        table_name = 'Slab Properties 02 - Solid Slabs'
+        column_names = ['Slab','Thickness','MatProp']
+        rows = self._read(table_name, column_names)
         
-        for row_tuple in self.cursor.fetchall():
+        for row_tuple in rows:
             slab_name = row_tuple[0]
             thickness = row_tuple[1] * unit_conversion['length']
             concrete_material = row_tuple[2]
@@ -352,14 +318,11 @@ class V16Parser():
             Dict[int, str]: the key is the index of the area and the value is the corresponding slab's name.
         """
         data_dict = {}
-        table_name = '[Slab Property Assignments]'
-        column_names = ','.join(['Area','SlabProp'])
-        try:
-            self.cursor.execute('select ' + column_names + ' from '+ table_name)
-        except Exception:
-            raise TableMissingError(table_name)
+        table_name = 'Slab Property Assignments'
+        column_names = ['Area','SlabProp']
+        rows = self._read(table_name, column_names)
 
-        for row_tuple in self.cursor.fetchall():
+        for row_tuple in rows:
             area_index = row_tuple[0]
             slab_name = row_tuple[1]
             # if slab name is not available line None ! insert the thickest value
@@ -380,14 +343,11 @@ class V16Parser():
         """
         unit_conversion = self._extract_unit_conversion()
         data_dict = {}
-        table_name = '[Object Geometry - Point Coordinates]'
-        column_names = ','.join(['Point','GlobalX','GlobalY'])
-        try:
-            self.cursor.execute('select ' + column_names + ' from '+ table_name)
-        except Exception:
-            raise TableMissingError(table_name)
+        table_name = 'Object Geometry - Point Coordinates'
+        column_names = ['Point','GlobalX','GlobalY']
+        rows = self._read(table_name, column_names)
         
-        for row_tuple in self.cursor.fetchall():
+        for row_tuple in rows:
             point_index = row_tuple[0]
             x = row_tuple[1] * unit_conversion['length']
             y = row_tuple[2] * unit_conversion['length']
@@ -406,13 +366,10 @@ class V16Parser():
         """
         unit_conversion = self._extract_unit_conversion()
         data_dict = {}
-        table_name = '[Load Assignments - Point Loads]'
-        column_names = ','.join(['Point','XDim','YDim'])
-        try:
-            self.cursor.execute('select ' + column_names + ' from '+ table_name)
-        except Exception:
-            raise TableMissingError(table_name)
-        for row_tuple in self.cursor.fetchall():
+        table_name = 'Load Assignments - Point Loads'
+        column_names = ['Point','XDim','YDim']
+        rows = self._read(table_name, column_names)
+        for row_tuple in rows:
             point = row_tuple[0]
             xdim = row_tuple[1] * unit_conversion['length']
             ydim = row_tuple[2] * unit_conversion['length']
@@ -430,15 +387,12 @@ class V16Parser():
             Dict[int, List[int]]: the key is the index of the area and the value is a list of point index.
         """
         data_dict = {}
-        table_name = '[Object Geometry - Areas 01 - General]'
+        table_name = 'Object Geometry - Areas 01 - General'
         # AreaType is added for Slab
-        column_names = ','.join(['Area','NumPoints','Point1','Point2','Point3','Point4','AreaType'])
-        try:
-            self.cursor.execute('select ' + column_names + ' from '+ table_name)
-        except Exception:
-            raise TableMissingError(table_name)
-        
-        for row_tuple in self.cursor.fetchall():
+        column_names = ['Area','NumPoints','Point1','Point2','Point3','Point4','AreaType']
+        rows = self._read(table_name, column_names)
+
+        for row_tuple in rows:
             # added for slabs
             if row_tuple[6] == 'Wall':
                 continue

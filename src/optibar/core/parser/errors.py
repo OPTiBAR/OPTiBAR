@@ -1,20 +1,20 @@
 TABLE_GROUPS = {
     'model': [
-        '[Program Control]',
-        '[Grid Lines]',
-        '[Object Geometry - Design Strips]',
-        '[Material Properties 03 - Concrete]',
-        '[Material Properties 04 - Rebar]',
-        '[Slab Design Overwrites 01 - Strip Based]',
-        '[Design Preferences 02 - Rebar Cover - Slabs]',
-        '[Slab Properties 02 - Solid Slabs]',
-        '[Slab Property Assignments]',
-        '[Object Geometry - Point Coordinates]',
-        '[Load Assignments - Point Loads]',
-        '[Object Geometry - Areas 01 - General]',
+        'Program Control',
+        'Grid Lines',
+        'Object Geometry - Design Strips',
+        'Material Properties 03 - Concrete',
+        'Material Properties 04 - Rebar',
+        'Slab Design Overwrites 01 - Strip Based',
+        'Design Preferences 02 - Rebar Cover - Slabs',
+        'Slab Properties 02 - Solid Slabs',
+        'Slab Property Assignments',
+        'Object Geometry - Point Coordinates',
+        'Load Assignments - Point Loads',
+        'Object Geometry - Areas 01 - General',
     ],
     'design': [
-        '[Concrete Slab Design 01 - Flexural And Shear Data]',
+        'Concrete Slab Design 01 - Flexural And Shear Data',
     ]
 }
 
@@ -28,7 +28,7 @@ class TableMissingError(Exception):
     """Exception raised when a table is missing.
 
     Attributes:
-        table_name -- input salary which caused the error
+        table_name -- name of the missing table, as SAFE writes it
         message -- explanation of the error
     """
 

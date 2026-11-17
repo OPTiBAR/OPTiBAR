@@ -36,6 +36,25 @@ else:
 The settings are those of the app, in meters; see [Settings](../reference/settings.md).
 The output has the structure of the `result` key of the results file, see [Outputs](../reference/outputs.md#results-file).
 
+## Read the tables from somewhere else
+
+`V16Parser` takes the path of an Access file, or a table source that returns SAFE's tables.
+`MemorySource` holds tables already in memory, for example tables read from another export: a dict from the table name, as SAFE writes it, to a list of rows, each a dict from the column name to the value.
+The tables and columns are those of [SAFE input](../reference/safe-input.md), with values in the units of `Program Control`:
+
+```python
+from optibar.core.parser.parse import V16Parser, MemorySource
+
+tables = {
+    "Program Control": [{"CurrUnits": "Tonf, m, C"}],
+    "Grid Lines": [{"AxisDir": "X", "GridID": "A", "Ordinate": 0.0}, ...],
+    ...
+}
+foundation = V16Parser(MemorySource(tables)).get_foundation()
+```
+
+A missing table or column raises `TableMissingError`, as it does for an Access file.
+
 ## Export the results as tables
 
 `optibar.core.export.export` writes the tables of [Exported tables](../reference/outputs.md#exported-tables) in the format of the file extension: `.xlsx`, `.zip` (CSV files) or `.json`.

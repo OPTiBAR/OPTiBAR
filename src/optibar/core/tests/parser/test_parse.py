@@ -134,7 +134,7 @@ class TestMissingTable():
                 parser.get_foundation()
         finally:
             parser.close()
-        assert tmerr.value.table_name == '[Program Control]'
+        assert tmerr.value.table_name == 'Program Control'
         assert tmerr.value.message == 'Please select "MODEL DEFINITION" tables when exporting access file from CSI SAFE.'
 
 
@@ -151,7 +151,7 @@ class TestPath():
 
 class TestDriver():
     def test_missing_driver(self, monkeypatch):
-        monkeypatch.setattr('optibar.core.parser.parse.has_access_driver', lambda: False)
+        monkeypatch.setattr('optibar.core.parser.source.has_access_driver', lambda: False)
         with pytest.raises(DriverMissingError) as err:
             V16Parser(str(DATA_PATH.joinpath('tonf_m.accdb')))
         assert err.value.url.startswith('https://www.microsoft.com/')

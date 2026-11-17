@@ -251,22 +251,29 @@ The pieces of each stack are placed from the longest to the shortest; each piece
 **Output** The practical period of the piece, with its new length
 
 1. Piece without bends:
-    1. Shorter: take the same amount off both ends.
+    1. Shorter: take the same amount off both ends (and off the theoretical length, where it passes them).
     2. Longer, with a base piece:
-        1. If the base piece has no bends: if the piece reaches one end of the base piece, align it with that end; otherwise add the same amount to both ends.
-        2. If the base piece is bent at one end: try to align the piece with the unbent end of the base piece. If it would pass the side of the strip, try to reach the bent side and bend the piece there. If neither is possible, give the piece the length of the base piece and bend it.
+        1. If the base piece has no bends: if the piece reaches one end of the base piece, align it with that end and add the rest to the other end, up to the other end of the base piece; otherwise add the same amount to both ends.
+        2. If the base piece is bent at one end, take the first that applies:
+            1. If the piece reaches the unbent end of the base piece and, aligned with it, stays inside the strip: align it with that end.
+            2. If the piece reaches the side of the strip on the bent side, with enough left for the bend: bend it there, and add the rest to the other end, up to the end of the base piece.
+            3. If the piece reaches the unbent end of the base piece but, aligned with it, would pass the side: give the piece the length of the base piece and bend it.
+            4. Otherwise, it reaches neither end: add the same amount to both ends; if that passes the side of the strip, stop at the side and add the rest to the other end.
         3. If the base piece is bent at both ends: as without a base piece.
-    3. Longer, without a base piece: if adding to one end reaches the side of the strip, stop at the side and add the rest to the other end; otherwise add the same amount to both ends.
+    3. Longer, without a base piece: if adding to one end reaches the side of the strip, stop at the side and add the rest to the other end, up to the other side; otherwise add the same amount to both ends.
 2. Piece bent at one end:
     1. Shorter: take it off the unbent end.
     2. Longer: add it to the unbent end, up to the side of the strip and the end of the base piece. If the base piece is bent at that end and the piece reaches it, bend the piece there too.
 3. Piece bent at both ends:
     1. Shorter: take it off the end side.
     2. Longer: leave it as it is; this should not happen.
+
+When a piece is bent here, the end of its required length moves to the bent end.
+The cases with a bend at the end are the mirror images of those with a bend at the start: `_place_piece` solves the start, and the end is mirrored onto it.
 ```
 
 ```{warning}
-In case 1.2.2, a piece is bent only to keep the number of length types down.
+In case 1.2.2.3, a piece is bent only to keep the number of length types down.
 This is an exception and should be checked on the drawing.
 In case 3.2, the original design asks for a warning, but the code keeps the length silently.
 ```

@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import List
 from .diagram import Diagram
 from .collections import Container, Stack
-from .piece import Piece
+from .piece import Piece, Bend
 from .rebar import Rebar
 from optibar.core.optimization.required import DominationType, RequiredOptimization
 from .period import Period
@@ -367,180 +367,68 @@ class Mesh():
 
     def _set_piece_practical(self, piece: Piece, base_piece: Piece= None):
         """set practical period based on shortest_piece_length property.
+        See the "Adjusting the length of a piece" algorithm in docs/source/explanation/practical.md.
+
+        A piece or base piece bent only at the end is mirrored (x -> -x) so that
+        `_place_piece` only has to handle bends at the start.
+
         Args:
             base_piece (Piece, optional): the base piece to be considered to revise length.
                 Defaults to None.
         """
-        bounds = self._get_bounds()
-        length_change = piece.shortest_piece_length - piece.get_shortest_piece_length("required")
-        bend_length = piece.rebar.get_bend_length()
-        start = None
-        end = None
+        delta = piece.shortest_piece_length - piece.get_shortest_piece_length("required")
+        required = piece.required
 
-        if piece.bend.start == 0 and piece.bend.end == 0: # no bend
-            if length_change < 0:
-                start = piece.required.start - length_change/2
-                end = piece.required.end + length_change/2
-                piece.required.start = start
-                piece.required.end = end
-                if piece.theoretical.start < start:
-                    piece.theoretical.start = start
-                if piece.theoretical.end > end:
-                    piece.theoretical.end = end
-            else: # length_change >= 0
-                if base_piece is None:
-                    if piece.required.start - length_change <= bounds.start:
-                        start = bounds.start
-                        end  = min(start + piece.required.get_length() + length_change, bounds.end)
-                    elif piece.required.end + length_change >= bounds.end:
-                        end = bounds.end
-                        start = max(end - piece.required.get_length() - length_change, bounds.start)
-                    else: # doesn't reach any of two sides
-                        start = piece.required.start - length_change/2
-                        end  = piece.required.end + length_change/2
-                else: # base piece is not None
-                    if base_piece.bend.start == 0 and base_piece.bend.end == 0:
-                        # base piece is not bended in neighter of it's ends
-                        if piece.required.start - length_change <= base_piece.practical.start:
-                            # reach start of base_piece
-                            start = base_piece.practical.start
-                            end = min(start + piece.required.get_length() + length_change, base_piece.practical.end)
-                        elif piece.required.end + length_change >= base_piece.practical.end:
-                            # reach end of base_piece
-                            end = base_piece.practical.end
-                            start = max(end - piece.required.get_length() - length_change, base_piece.practical.start)
-                        else: # doesn't reach any of two sides of the base piece
-                            start = piece.required.start - length_change/2
-                            end = piece.required.end + length_change/2
-                    elif base_piece.bend.start > 0 and base_piece.bend.end == 0:
-                        # base piece is just bended in the start side
-                        if (piece.required.end + length_change >= base_piece.practical.end) and \
-                            (base_piece.practical.end - piece.required.get_length() - length_change >= bounds.start):
-                            # reaches end of base piece and doesn't exceed the start bound
-                            end = base_piece.practical.end
-                            start = base_piece.practical.end - piece.required.get_length() - length_change
-                        elif piece.required.start - length_change <= bounds.start - bend_length:
-                            # reaches start to be bended and the addition length is sufficient
-                            piece.bend.start = bend_length
-                            start = bounds.start - bend_length
-                            end = min(start + piece.required.get_length() + length_change, base_piece.practical.end)
-                            piece.required.start = start
+        if piece.bend.start > 0 and piece.bend.end > 0:
+            # bent at both ends: already as long as it can be, so it can only get shorter
+            if delta <= 0:
+                required.end += delta
+            piece.practical = Period(required.start, required.end)
+            return
 
-                        elif (piece.required.end + length_change >= base_piece.practical.end) and \
-                            (base_piece.practical.end - piece.required.get_length() - length_change < bounds.start):
-                            # reaches not bended end of the base piece but ecxeeds the start bound
-                            # the piece length should be increased to the base piece length
-                            piece.shortest_piece_length = base_piece.shortest_piece_length
-                            piece.bend.start = bend_length
-                            start = base_piece.practical.start
-                            end = base_piece.practical.end
-                            piece.required.start = start
-                        elif (piece.required.end + length_change < base_piece.practical.end) and \
-                            (piece.required.start - length_change > bounds.start - bend_length):
-                            # doesn't reach any of two ends
-                            if piece.required.start - length_change/2 >= bounds.start:
-                                # doesn't proceed start bound
-                                start = piece.required.start - length_change/2
-                                end = piece.required.end + length_change/2
-                            else:
-                                start = bounds.start
-                                end = start + piece.required.get_length() + length_change
-                    elif base_piece.bend.start == 0 and base_piece.bend.end > 0:
-                        # base piece is just bended in the end side
-                        if (piece.required.start - length_change <= base_piece.practical.start) and \
-                            (base_piece.practical.start + piece.required.get_length() + length_change <= bounds.end):
-                            # reaches start of base piece and doesn't exceed the end bound
-                            start = base_piece.practical.start
-                            end = start + piece.required.get_length() + length_change
-                        elif piece.required.end + length_change >= bounds.end + bend_length:
-                            # reaches end to be bended and the addition length is sufficient
-                            piece.bend.end = bend_length
-                            end = bounds.end + bend_length
-                            start = max(end - piece.required.get_length() - length_change, base_piece.practical.start)
-                            piece.required.end = end
-                        elif (piece.required.start - length_change < base_piece.practical.start) and \
-                            (base_piece.practical.start + piece.required.get_length() + length_change > bounds.end):
-                            # reaches not bended end of the base piece but ecxeeds the end bound
-                            # the piece length should be increased to the base piace length
-                            piece.shortest_piece_length = base_piece.shortest_piece_length
-                            piece.bend.end = bend_length
-                            start = base_piece.practical.start
-                            end = base_piece.practical.end
-                            piece.required.end = end
-                        elif (piece.required.end + length_change < bounds.end + bend_length) and \
-                            (piece.required.start - length_change > base_piece.practical.start):
-                            # doesn't reach any of two ends
-                            if piece.required.end + length_change/2 <= bounds.end:
-                                # doesn't proceed end bound
-                                start = piece.required.start - length_change/2
-                                end = piece.required.end + length_change/2
-                            else:
-                                end = bounds.end
-                                start = end - piece.required.get_length() - length_change
-                    else: # base_piece.bend.start > 0 and base_piece.bend.end > 0
-                        if piece.required.start - length_change <= bounds.start:
-                            start = bounds.start
-                            end = bounds.start + piece.required.get_length() + length_change
-                        elif piece.required.end + length_change >= bounds.end:
-                            end = bounds.end
-                            start = bounds.end - piece.required.get_length() - length_change
-                        else:
-                            start = piece.required.start - length_change/2
-                            end = piece.required.end + length_change/2
-        elif piece.bend.start > 0 and piece.bend.end == 0: # start bend
-            if length_change < 0:
-                piece.required.end += length_change
-                start = piece.required.start
-                end = piece.required.end
-            else: # lenght_change > 0
-                if base_piece is None:
-                    end = min(piece.required.end + length_change, bounds.end)
-                    start = piece.required.start
-                else: # base_piece is not None
-                    if base_piece.bend.end > 0:
-                        if piece.required.end + length_change >= base_piece.practical.end:
-                            end = base_piece.practical.end
-                            start = piece.required.start
-                            piece.bend.end = bend_length
-                            piece.required.end = base_piece.practical.end
-                        else:
-                            end = min(piece.required.end + length_change, bounds.end)
-                            start = piece.required.start
-                    else:
-                        end = min(piece.required.end + length_change, base_piece.practical.end, bounds.end)
-                        start = piece.required.start
-        elif piece.bend.start == 0 and piece.bend.end > 0: # end bend
-            if length_change < 0:
-                piece.required.start -= length_change
-                start = piece.required.start
-                end = piece.required.end
-            else: # lenght_change > 0
-                if base_piece is None:
-                    start = max(piece.required.start - length_change, bounds.start)
-                    end = piece.required.end
-                else: # base_piece is not None
-                    if base_piece.bend.start > 0:
-                        if piece.required.start - length_change <= base_piece.practical.start:
-                            start = base_piece.practical.start
-                            end = piece.required.end
-                            piece.bend.start = bend_length
-                            piece.required.start = base_piece.practical.start
-                        else:
-                            start = max(piece.required.start - length_change, bounds.start)
-                            end = piece.required.end
-                    else:
-                        start = max(piece.required.start - length_change, base_piece.practical.start, bounds.start)
-                        end = piece.required.end
-        else: # both sides are bended
-            if length_change <= 0:
-                piece.required.end += length_change
-                start = piece.required.start
-                end = piece.required.end
-            else:  # lenght_change > 0
-                start = piece.required.start
-                end = piece.required.end
+        if piece.bend.start == 0 and piece.bend.end == 0 and delta < 0:
+            # not bent, shorter: take the same amount off both ends
+            start = required.start - delta/2
+            end = required.end + delta/2
+            required.start = start
+            required.end = end
+            if piece.theoretical.start < start:
+                piece.theoretical.start = start
+            if piece.theoretical.end > end:
+                piece.theoretical.end = end
+            piece.practical = Period(start, end)
+            return
 
-        piece.practical = Period(start, end)
+        base_bend = base_piece.bend if base_piece is not None else Bend()
+        flip = piece.bend.end > 0 or (
+            piece.bend.start == 0 and base_bend.start == 0 and base_bend.end > 0)
+        if flip:
+            frame = lambda p: Period(-p.end, -p.start)
+            swap = lambda b: Bend(b.end, b.start)
+        else:
+            frame = lambda p: Period(p.start, p.end)
+            swap = lambda b: Bend(b.start, b.end)
+
+        local_required = frame(required)
+        local_bend = swap(piece.bend)
+        practical, takes_base_length = _place_piece(
+            required=local_required,
+            bend=local_bend,
+            delta=delta,
+            bounds=frame(self._get_bounds()),
+            base=frame(base_piece.practical) if base_piece is not None else None,
+            base_bend=swap(base_bend),
+            bend_length=piece.rebar.get_bend_length(),
+        )
+
+        # write back in place: required may be the same object as theoretical
+        new_required = frame(local_required)
+        required.start, required.end = new_required.start, new_required.end
+        new_bend = swap(local_bend)
+        piece.bend.start, piece.bend.end = new_bend.start, new_bend.end
+        if takes_base_length:
+            piece.shortest_piece_length = base_piece.shortest_piece_length
+        piece.practical = frame(practical)
 
     def get_stacks(self) -> list[Stack]:
         """returns list if stacks based on their practical period
@@ -765,3 +653,81 @@ class Mesh():
                 return None
         else:
             return None
+
+
+def _snap_or_center(required: Period, delta: float, limits: Period) -> Period:
+    """lengthens `required` by `delta` inside `limits`.
+    If adding all of `delta` to one end reaches that limit, the piece is aligned
+    with it and the rest goes to the other end; otherwise both ends get delta/2.
+    """
+    length = required.get_length()
+    if required.start - delta <= limits.start:
+        start = limits.start
+        return Period(start, min(start + length + delta, limits.end))
+    if required.end + delta >= limits.end:
+        end = limits.end
+        return Period(max(end - length - delta, limits.start), end)
+    return Period(required.start - delta/2, required.end + delta/2)
+
+
+def _place_piece(
+        required: Period,
+        bend: Bend,
+        delta: float,
+        bounds: Period,
+        base: Period | None,
+        base_bend: Bend,
+        bend_length: float,
+    ) -> tuple[Period, bool]:
+    """places a piece that is not bent at its end, and whose base piece, if the piece
+    is not bent, is not bent only at its end. The caller mirrors the other cases.
+    Changes `required` and `bend` in place where the piece gets bent.
+
+    Returns:
+        the practical period, and whether the piece takes the length of the base piece.
+    """
+    length = required.get_length()
+
+    if bend.start > 0:
+        # bent at the start: only the end moves
+        if delta < 0:
+            required.end += delta
+            return Period(required.start, required.end), False
+        if base is None:
+            return Period(required.start, min(required.end + delta, bounds.end)), False
+        if base_bend.end > 0:
+            if required.end + delta >= base.end:
+                # reaches the bent end of the base piece: bend there too
+                bend.end = bend_length
+                required.end = base.end
+                return Period(required.start, base.end), False
+            return Period(required.start, min(required.end + delta, bounds.end)), False
+        return Period(required.start, min(required.end + delta, base.end, bounds.end)), False
+
+    # not bent, longer
+    if base is None or (base_bend.start > 0 and base_bend.end > 0):
+        return _snap_or_center(required, delta, bounds), False
+    if base_bend.start == 0:
+        return _snap_or_center(required, delta, base), False
+
+    # the base piece is bent only at the start
+    reaches_base_end = required.end + delta >= base.end
+    if reaches_base_end and base.end - length - delta >= bounds.start:
+        # align with the unbent end of the base piece
+        return Period(base.end - length - delta, base.end), False
+    if required.start - delta <= bounds.start - bend_length:
+        # long enough to reach the side and be bent there
+        bend.start = bend_length
+        start = bounds.start - bend_length
+        required.start = start
+        return Period(start, min(start + length + delta, base.end)), False
+    if reaches_base_end:
+        # aligned with the base piece it would pass the side: copy the base piece
+        bend.start = bend_length
+        required.start = base.start
+        return Period(base.start, base.end), True
+    # reaches neither end
+    if required.start - delta/2 >= bounds.start:
+        return Period(required.start - delta/2, required.end + delta/2), False
+    start = bounds.start
+    return Period(start, start + length + delta), False

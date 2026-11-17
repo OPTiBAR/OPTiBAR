@@ -16,7 +16,7 @@ requires_driver = pytest.mark.skipif(not has_access_driver(), reason='Microsoft 
 
 def test_startup(app):
     assert 'disabled' in app.request.calculate_button.state()
-    assert app.request.status_var.get() == 'Status: Waiting for input file ...'
+    assert app.request.status_var.get() == 'Waiting for input file ...'
     assert 'disabled' in app.file_bar.load_button.state()
     for name in ('save', 'export', 'pdf', 'dxf', 'diagram'):
         assert 'disabled' in getattr(app.results.files, name + '_button').state()
@@ -58,7 +58,7 @@ def test_load_file(loaded_app):
     app = loaded_app
     assert 'File Parsed Successfully.' in app.log_text()
     assert app.file_bar.status_var.get() == '✓ Loaded'
-    assert app.request.status_var.get() == 'Status: Ready'
+    assert app.request.status_var.get() == 'Ready'
     assert 'disabled' not in app.request.calculate_button.state()
     assert 'disabled' not in app.file_bar.load_button.state()
     assert app.settings.setting.advanced.special_length.get_values()['ld']['bottom'][0] > 0
@@ -68,7 +68,7 @@ def test_load_file(loaded_app):
 @requires_driver
 def test_load_mdb(app):
     app.load(DATA_PATH.joinpath('tonf_m.mdb'))
-    assert app.request.status_var.get() == 'Status: Ready'
+    assert app.request.status_var.get() == 'Ready'
 
 
 @requires_driver
@@ -79,7 +79,7 @@ def test_load_errors(loaded_app):
     assert 'table' in app.log_text().lower()
     # a failed load replaces the loaded project, the calculation needs a new file
     assert 'disabled' in app.request.calculate_button.state()
-    assert app.request.status_var.get() == 'Status: Waiting for input file ...'
+    assert app.request.status_var.get() == 'Waiting for input file ...'
     app.load(DATA_PATH.joinpath('does_not_exist.accdb'))
     assert app.file_bar.status_var.get() == '✗ Not loaded: the file could not be read'
     assert 'unknown error in parsing' in app.log_text()
@@ -107,7 +107,7 @@ def test_open_and_reload(app):
 def run_calculation(app):
     app.set_calc_type('calculation')
     app.calculate()
-    assert app.request.status_var.get() == 'Status: Finished'
+    assert app.request.status_var.get() == 'Finished'
 
 
 def run_analysis(app):
@@ -118,7 +118,7 @@ def run_analysis(app):
     analysis.stack_frame.combo_from.set_value(2)
     analysis.stack_frame.combo_to.set_value(3)
     app.calculate()
-    assert app.request.status_var.get() == 'Status: Finished'
+    assert app.request.status_var.get() == 'Finished'
 
 
 @requires_driver
@@ -269,7 +269,7 @@ def test_stop(loaded_app):
     app.update()
     app.request.event_generate('<<calc-pressed>>')
     app.update()
-    assert app.request.status_var.get() == 'Status: Stopped'
+    assert app.request.status_var.get() == 'Stopped'
     assert app.request.get_button_label() == 'Calculate'
     app.update(2)
     assert 'Mass Summary' not in app.log_text()
@@ -358,3 +358,23 @@ def test_cutting_report_optimality():
         'Cutting Plan, diameter 18 (not proven optimal, at least 9 bars)',
         'Cutting Plan, diameter 14',
     ]
+
+
+def test_labels_take_their_colors_from_their_style(app):
+    """sv-ttk gives every label its own colors (tk_setPalette), which would hide the muted, success and
+    error colors of the label styles; the app clears them, also after a theme change"""
+    def own_colors():
+        labels, stack = [], [app.root]
+        while stack:
+            widget = stack.pop()
+            stack += widget.winfo_children()
+            if widget.winfo_class() == 'TLabel' and (str(widget.cget('foreground')) or str(widget.cget('background'))):
+                labels.append(widget)
+        return labels
+    app.update()
+    assert own_colors() == []
+    for dark in (True, False):
+        app.root.menu.view.dark_var.set(dark)
+        app.root.event_generate('<<toggle-theme>>')
+        app.update(0.2)
+        assert own_colors() == []

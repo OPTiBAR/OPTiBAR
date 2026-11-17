@@ -1,15 +1,13 @@
 import tkinter as tk
 from optibar.gui.view.utils.styles import palette
 
-class CreateToolTip(object):
-    """
-    create a tooltip for a given widget
-    """
-    def __init__(self, widget, widget_key: str):
+class ToolTip(object):
+    """a tooltip with the given text for a widget; no tooltip while the text is empty"""
+    def __init__(self, widget, text: str):
         self.waittime = 500     #miliseconds
         self.wraplength = 320   #pixels
         self.widget = widget
-        self.text = tooltips_dict[widget_key]
+        self.text = text
         self.widget.bind("<Enter>", self.enter)
         self.widget.bind("<Leave>", self.leave)
         self.widget.bind("<ButtonPress>", self.leave)
@@ -34,10 +32,11 @@ class CreateToolTip(object):
             self.widget.after_cancel(id)
 
     def showtip(self, event=None):
-        x = y = 0
-        x, y, cx, cy = self.widget.bbox("insert")
-        x += self.widget.winfo_rootx() + 25
-        y += self.widget.winfo_rooty() + 20
+        if not self.text:
+            return
+        # below the widget, starting at the mouse
+        x = self.widget.winfo_pointerx() + 4
+        y = self.widget.winfo_rooty() + self.widget.winfo_height() + 4
         # creates a toplevel window
         self.tw = tk.Toplevel(self.widget)
         # Leaves only the label and removes the app window
@@ -55,6 +54,12 @@ class CreateToolTip(object):
         self.tw= None
         if tw:
             tw.destroy()
+
+class CreateToolTip(ToolTip):
+    """the tooltip of a setting, by its key in tooltips_dict"""
+    def __init__(self, widget, widget_key: str):
+        super().__init__(widget, tooltips_dict[widget_key])
+
 
 tooltips_dict = {
     'typical': "Typical rebar diameter",

@@ -1,18 +1,29 @@
 import tkinter as tk
 from tkinter import ttk
+from typing import Optional
 
+from optibar.gui.view.body.status import StatusBar
 from optibar.gui.view.body.upload import FileBar
 from optibar.gui.view.body.calculation.notebook import SettingsPane
 from optibar.gui.view.body.results import ResultsPane
 from optibar.gui.view.menu.menu import MenuBar
-from optibar.gui.view.utils.styles import enable_dpi_awareness, set_theme
+from optibar.gui.view.utils.styles import enable_dpi_awareness, set_theme, system_theme
 from optibar.gui.setting import IMAGES_PATH
 
+GAP = 12 # px between the cards, and around them
+
+
 class Root(tk.Tk):
-    """one window: the input file on top, the settings on the left, the results on the right"""
-    def __init__(self, theme: str = 'light'):
+    """one window: the app and the input file across the top, then two cards, the settings on the left
+    and the results on the right, and the status bar at the bottom
+
+    Args:
+        theme: 'light' or 'dark'; by default the one Windows uses for apps
+    """
+    def __init__(self, theme: Optional[str] = None):
         enable_dpi_awareness()
         tk.Tk.__init__(self)
+        theme = theme or system_theme()
         set_theme(self, theme)
 
         # title and icon
@@ -22,20 +33,25 @@ class Root(tk.Tk):
 
         # widgets
         self.menu = MenuBar(self)
-        self.file_bar = FileBar(self)
-        separator = ttk.Separator(self, orient=tk.HORIZONTAL)
-        self.panes = ttk.PanedWindow(self, orient=tk.HORIZONTAL)
-        self.settings = SettingsPane(self.panes)
+        self.menu.view.dark_var.set(theme == 'dark')
+        self.status_bar = StatusBar(self)
+        self.file_bar = FileBar(self, self.status_bar)
+        body = ttk.Frame(self, style='App.TFrame', padding=(GAP, GAP, GAP, GAP))
+        self.panes = ttk.PanedWindow(body, orient=tk.HORIZONTAL)
+        self.settings = SettingsPane(self.panes, self.status_bar)
         self.results = ResultsPane(self.panes)
         self.panes.add(self.settings, weight=0)
         self.panes.add(self.results, weight=1)
 
         # geometry
-        self.file_bar.grid(row=0, column=0, sticky='ew', padx=16, pady=(12, 10))
-        separator.grid(row=1, column=0, sticky='ew')
-        self.panes.grid(row=2, column=0, sticky='ewns', padx=16, pady=12)
+        self.file_bar.grid(row=0, column=0, sticky='ew')
+        body.grid(row=1, column=0, sticky='ewns')
+        self.status_bar.grid(row=2, column=0, sticky='ew')
+        self.panes.grid(row=0, column=0, sticky='ewns')
+        body.columnconfigure(0, weight=1)
+        body.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
-        self.rowconfigure(2, weight=1)
+        self.rowconfigure(1, weight=1)
         self._set_size()
 
     def _set_size(self):

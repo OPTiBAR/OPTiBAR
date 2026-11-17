@@ -1,4 +1,5 @@
 from optibar.gui.view.body.table import Excel
+from optibar.gui.view.body.tooltip import ToolTip
 import tkinter as tk
 from tkinter import ttk
 from optibar.gui.view.utils.common import IntEntry
@@ -20,22 +21,24 @@ class Setting():
         }
 
 class Typical(ttk.Frame):
+    """the Strips page: the typical rebars of single strips and levels, by number and diameter"""
     def __init__(self, parent):
-        ttk.Frame.__init__(self, parent, padding=(4, 8, 4, 4))
+        ttk.Frame.__init__(self, parent, padding=(2, 12, 2, 4))
 
-        hint = ttk.Label(self, style='Muted.TLabel', wraplength=420, justify='left',
-            text='The number and diameter of the typical rebars of single strips and levels, instead of the interval of the Basic page.')
+        title = ttk.Label(self, text='Typical rebars by strip', style='TLabelframe.Label')
+        # a fixed width: wrapping to the page would widen the page, and the hint again
+        hint = ttk.Label(self, style='Muted.TLabel', justify='left', wraplength=440,
+            text='Select a strip and level, then set the number and diameter of its typical rebars. '
+                 'They replace the interval of the Basic page for that strip and level.')
         self.table = Excel(self)
 
         # geometry
-        hint.grid(row=0, column=0, columnspan=2, sticky='w')
-        self.table.grid(row=1,column=0, columnspan=2, sticky='ewns')
-        for child in self.winfo_children(): 
-            child.grid_configure(padx=15, pady=10)
+        title.grid(row=0, column=0, sticky='w')
+        hint.grid(row=1, column=0, sticky='w', pady=(2, 10))
+        self.table.grid(row=2, column=0, sticky='ewns')
         self.columnconfigure(0, weight=1)
-        self.columnconfigure(1,weight=1)
-        self.rowconfigure(1, weight=1)
-    
+        self.rowconfigure(2, weight=1)
+
     def set_strip_names(self, strip_names: List):
         self.table.set_labels(strip_names)
 
@@ -54,8 +57,9 @@ class Typical(ttk.Frame):
 
 
 class SpecialLength(ttk.Frame):
+    """the Special Lengths page: the development length, overlap and bend of each bar diameter"""
     def __init__(self, parent):
-        ttk.Frame.__init__(self, parent, padding=(4, 8, 4, 4))
+        ttk.Frame.__init__(self, parent, padding=(2, 12, 2, 4))
         column_names = (
             'Bottom',
             'Top',
@@ -64,7 +68,7 @@ class SpecialLength(ttk.Frame):
             '90\u00B0',
             '135\u00B0',
         )
-        
+
         entries = {
             'ld': {
                 'bottom': {},
@@ -89,58 +93,59 @@ class SpecialLength(ttk.Frame):
                 for rebar in REBAR_LIST:
                     entries[item][subitem][rebar] = IntEntry(self, upper_bound)
                     entries[item][subitem][rebar].configure(width=5)
-        
+
         self.material_var = tk.StringVar(self)
-        self.material_var.set("f'c: -     f'y: -")
-        material_label = ttk.Label(self, textvariable=self.material_var)
-        ld_label = ttk.Label(self, text='Ld(cm)')
-        overlap_label = ttk.Label(self, text='Overlap(cm)')
-        bend_label = ttk.Label(self, text='Bend(cm)')
+        self.material_var.set('Concrete and steel: open a file first')
+        title = ttk.Label(self, text='Lengths by bar diameter (cm)', style='TLabelframe.Label')
+        material_label = ttk.Label(self, textvariable=self.material_var, style='Muted.TLabel')
+        ld_label = ttk.Label(self, text='Ld', style='TLabelframe.Label')
+        overlap_label = ttk.Label(self, text='Overlap', style='TLabelframe.Label')
+        bend_label = ttk.Label(self, text='Bend', style='TLabelframe.Label')
 
         check_var = tk.BooleanVar(self, False)
         self.check_var = check_var
-        check = ttk.Checkbutton(self, text='Automatic', 
+        check = ttk.Checkbutton(self, text='Automatic', cursor='question_arrow',
                 command=lambda: self.event_generate('<<check-changed>>'), variable=check_var,
                 onvalue=True, offvalue=False
             )
-        reset_button = ttk.Button(self, command=lambda: self.event_generate('<<reset-pressed>>'), text='Reset')
+        ToolTip(check, 'The top Ld and the overlaps follow from the bottom Ld; only the bottom Ld and the bends stay editable.')
+        reset_button = ttk.Button(self, command=lambda: self.event_generate('<<reset-pressed>>'), text='Reset to code values')
 
         # geometry
-        material_label.grid(row=0, column=1, columnspan=6, padx=10, pady=10, sticky='w')
-        ld_label.grid(row=1, column=1, columnspan=2, pady=10)
-        overlap_label.grid(row=1, column=3, columnspan=2, pady=10)
-        bend_label.grid(row=1, column=5, columnspan=2, pady=10)
-        ttk.Label(self, text='Ø (mm)', style='Muted.TLabel').grid(row=2, column=0, padx=(10, 6), pady=2, sticky='e')
+        title.grid(row=0, column=0, columnspan=7, sticky='w')
+        material_label.grid(row=1, column=0, columnspan=7, sticky='w', pady=(2, 10))
+        ld_label.grid(row=2, column=1, columnspan=2, sticky='w', padx=(10, 0), pady=(0, 2))
+        overlap_label.grid(row=2, column=3, columnspan=2, sticky='w', padx=(10, 0), pady=(0, 2))
+        bend_label.grid(row=2, column=5, columnspan=2, sticky='w', padx=(10, 0), pady=(0, 2))
+        ttk.Label(self, text='Ø mm', style='Muted.TLabel').grid(row=3, column=0, padx=(0, 6), pady=(0, 4), sticky='e')
         for i, column in enumerate(column_names):
-            ttk.Label(self, text=column).grid(row=2, column=i+1, pady=2)
-        
+            ttk.Label(self, text=column, style='Muted.TLabel').grid(row=3, column=i+1, sticky='w',
+                padx=(10, 2) if i % 2 == 0 else (2, 10), pady=(0, 4))
+
         for i, rebar in enumerate(REBAR_LIST):
-            ttk.Label(self, text=str(rebar)).grid(row=i+3, column=0, padx=(10, 6), sticky='e')
+            ttk.Label(self, text=str(rebar)).grid(row=i+4, column=0, padx=(0, 6), sticky='e')
         
         for i,rebar in enumerate(REBAR_LIST):
             j = 0
             for item in entries:
                 for subitem in entries[item]:
-                    self.entries[item][subitem][rebar].grid(row=i+3, column=j+1, pady=2)
+                    self.entries[item][subitem][rebar].grid(row=i+4, column=j+1, pady=2)
                     if j%2 == 0:
                         self.entries[item][subitem][rebar].grid(padx=(10,2))
                     else:
                         self.entries[item][subitem][rebar].grid(padx=(2,10))
                     j += 1
-        
-        reset_button.grid(row=len(REBAR_LIST)+3, column=len(column_names)-1, columnspan=2, padx=10, pady=10, sticky='e')
-        check.grid(row=len(REBAR_LIST)+3, column=1, columnspan=2, sticky='w', padx=8, pady=10)
 
-        for i in range(len(REBAR_LIST)+4):
-            self.rowconfigure(i,weight=1)
+        check.grid(row=len(REBAR_LIST)+4, column=1, columnspan=3, sticky='w', padx=8, pady=(12, 0))
+        reset_button.grid(row=len(REBAR_LIST)+4, column=4, columnspan=3, padx=(0, 10), pady=(12, 0), sticky='e')
         # the diameter column keeps its width; the entry columns share the rest
         self.columnconfigure(0, weight=0)
         for j in range(1, len(column_names)+1):
             self.columnconfigure(j,weight=1)
-            
+
     def get_checked(self):
         return self.check_var.get()
-    
+
     def get_values(self) -> Dict[str, Dict[int, int]]:
         output = {
             'diameters': REBAR_LIST
@@ -157,12 +162,12 @@ class SpecialLength(ttk.Frame):
         for item in values:
             for subitem in values[item]:
                 for rebar in values[item][subitem]:
-                    self.entries[item][subitem][rebar].set_value(round(values[item][subitem][rebar]*100)) 
-    
+                    self.entries[item][subitem][rebar].set_value(round(values[item][subitem][rebar]*100))
+
     def set_columns_state(self, state: str):
         for item,subitem in (('ld', 'top'), ('overlap', 'bottom'), ('overlap', 'top')):
             for rebar in REBAR_LIST:
                 self.entries[item][subitem][rebar]['state'] = state
-    
+
     def set_material(self, fy:float, fc:float) -> None:
-        self.material_var.set(f"f'c: {round(fc)} tonf/m²     f'y: {round(fy)} tonf/m²")
+        self.material_var.set(f"Concrete f'c {round(fc)} tonf/m²  ·  Steel fy {round(fy)} tonf/m²")

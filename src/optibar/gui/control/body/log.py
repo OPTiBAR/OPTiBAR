@@ -36,6 +36,6 @@ class ReportLog():
         elif not self.input:
             log.write_lines([
                 ('MUTED', 'To start, open the Access file exported from SAFE:'),
-                ('MUTED', 'File > Open, or the Open… button above.'),
+                ('MUTED', 'File > Open, or the Open… button at the top right.'),
             ])
         log.text.yview_moveto(0)

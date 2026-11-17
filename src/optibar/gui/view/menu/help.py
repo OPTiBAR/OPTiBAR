@@ -4,7 +4,8 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 import webbrowser
 from optibar.gui.view.utils.common import Popup
-from optibar.gui.setting import VERSION, REPO_URL, IMAGES_PATH
+from optibar.gui.setting import VERSION, REPO_URL
+from optibar.gui.view.utils.styles import themed_image
 
 class HelpMenu(tk.Menu):
     def __init__(self, parent, root):
@@ -18,7 +19,7 @@ class About(Popup):
         main = self.main
 
         # widgets
-        optibar_img = Image.open(IMAGES_PATH.joinpath('optibar.png')).convert("RGBA").resize((120,100))
+        optibar_img = Image.open(themed_image('optibar')).convert("RGBA").resize((120,100))
         main.optibar_image = ImageTk.PhotoImage(optibar_img)
         logo_label = ttk.Label(main, image=main.optibar_image)
         version_label = ttk.Label(main, text='Software Version: ' + VERSION)

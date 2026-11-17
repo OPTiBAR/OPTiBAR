@@ -3,24 +3,24 @@ from tkinter import ttk
 from optibar.gui.view.body.tooltip import CreateToolTip
 from .basic import Setting as BasicSetting
 from .advanced import Setting as AdvancedSetting
+from optibar.gui.view.utils.styles import CARD_PADDING
+from optibar.gui.view.body.status import StatusBar
 
 
 class CalcType(ttk.LabelFrame):
     def __init__(self, parent):
-        ttk.LabelFrame.__init__(self, parent, text='Type of Request')
+        ttk.LabelFrame.__init__(self, parent, text='Type of request')
         # variable and widget
         self.type_var = tk.StringVar()
         self.type_var.set('calculation')
-        computation_radio = ttk.Radiobutton(self, text='Computation'+ u' \u24D8', variable=self.type_var, value='calculation', command=self.changed_fun)
+        computation_radio = ttk.Radiobutton(self, text='Computation', cursor='question_arrow', variable=self.type_var, value='calculation', command=self.changed_fun)
         CreateToolTip(computation_radio, 'computation')
-        analysis_radio = ttk.Radiobutton(self, text='Analysis'+ u' \u24D8', variable=self.type_var, value='analysis', command=self.changed_fun)
+        analysis_radio = ttk.Radiobutton(self, text='Analysis', cursor='question_arrow', variable=self.type_var, value='analysis', command=self.changed_fun)
         CreateToolTip(analysis_radio, 'analysis')
         self.analysis_radio = analysis_radio
         # geometry
-        computation_radio.grid(row=0, column=0, sticky='w')
-        analysis_radio.grid(row=0, column=1, sticky='w')
-        for child in self.winfo_children():
-            child.grid_configure(padx=12, pady=8)
+        computation_radio.grid(row=0, column=0, sticky='w', padx=(0, 24), pady=(4, 0))
+        analysis_radio.grid(row=0, column=1, sticky='w', pady=(4, 0))
 
     def get_value(self):
         return self.type_var.get()
@@ -51,35 +51,32 @@ class Setting(ttk.Notebook):
         basic['special_lengths'] = advanced['special_lengths']
         return basic
 
-class CalcRequest(ttk.LabelFrame):
-    def __init__(self, parent):
-        ttk.LabelFrame.__init__(self, parent, text='Request')
-        
+class CalcRequest(ttk.Frame):
+    """the footer of the settings, the Calculate button; the state of the run and its progress
+    are in the status bar"""
+    def __init__(self, parent, status_bar: StatusBar):
+        ttk.Frame.__init__(self, parent)
+
         #variables
         self.button_var = tk.StringVar()
         self.button_var.set('Calculate')
-        self.status_var = tk.StringVar()
+        self.status_var = status_bar.run_var
         self.cut_var = tk.StringVar()
         self.cut_var.set('Not')
 
         
         #widgets
-        status_label = ttk.Label(self, textvariable=self.status_var)
-        self.progress = ttk.Progressbar(self, mode='determinate', length=220)
-        self.calculate_button = ttk.Button(self, textvariable=self.button_var, command=self.calc_fun, style='Accent.TButton', width=12)
-        
-        #geometry
-        status_label.grid(row=0, column=0, sticky='w')
-        self.progress.grid(row=0, column=1, sticky='e')
-        self.calculate_button.grid(row=0, column=2, sticky='e')
-        self.progress.grid_remove()
+        rule = ttk.Separator(self, orient=tk.HORIZONTAL)
+        self.progress = status_bar.progress
+        self.calculate_button = ttk.Button(self, textvariable=self.button_var, command=self.calc_fun, style='Accent.TButton', width=16)
 
+        #geometry
+        rule.grid(row=0, column=0, sticky='we', pady=(0, 12))
+        self.calculate_button.grid(row=1, column=0, sticky='e', ipady=2)
         self.columnconfigure(0, weight=1)
-        for child in self.winfo_children(): 
-            child.grid_configure(padx=10, pady=8)
     
     def set_status(self, value: str) -> None:
-        self.status_var.set('Status: ' + value)
+        self.status_var.set(value)
     
     def set_button_state(self, state: str):
         """toggles the state of the calc botton
@@ -124,17 +121,24 @@ class CalcRequest(ttk.LabelFrame):
 
 
 class SettingsPane(ttk.Frame):
-    """the left pane: the type of request, the settings, and the Calculate button"""
-    def __init__(self, parent):
-        ttk.Frame.__init__(self, parent)
+    """the left pane, a card: the type of request, the settings, and the Calculate button"""
+    def __init__(self, parent, status_bar: StatusBar):
+        # the gray margin to the results card; the card is inside it
+        ttk.Frame.__init__(self, parent, style='App.TFrame', padding=(0, 0, 6, 0))
+        card = ttk.Frame(self, style='Card.TFrame', padding=CARD_PADDING)
 
-        self.calc_type = CalcType(self)
-        self.setting = Setting(self)
-        self.request = CalcRequest(self)
+        title = ttk.Label(card, text='Settings', style='Section.TLabel')
+        self.calc_type = CalcType(card)
+        self.setting = Setting(card)
+        self.request = CalcRequest(card, status_bar)
 
         # geometry
-        self.calc_type.grid(row=0, column=0, sticky='news', pady=(0, 8))
-        self.setting.grid(row=1, column=0, sticky='news', pady=(0, 8))
-        self.request.grid(row=2, column=0, sticky='news')
+        card.grid(row=0, column=0, sticky='news')
+        title.grid(row=0, column=0, sticky='w', pady=(0, 8))
+        self.calc_type.grid(row=1, column=0, sticky='news', pady=(0, 14))
+        self.setting.grid(row=2, column=0, sticky='news', pady=(0, 14))
+        self.request.grid(row=3, column=0, sticky='news')
+        card.columnconfigure(0, weight=1)
+        card.rowconfigure(2, weight=1)
         self.columnconfigure(0, weight=1)
-        self.rowconfigure(1, weight=1)
+        self.rowconfigure(0, weight=1)

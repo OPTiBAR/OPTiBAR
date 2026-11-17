@@ -48,7 +48,7 @@ class App():
         # moment, likely while a virus scanner holds them; creating a window per test hits this
         for attempt in range(5):
             try:
-                return Root()
+                return Root(theme='light') # the tests expect the light theme first, whatever Windows uses
             except tk.TclError as e:
                 error = e
                 time.sleep(0.5 * (attempt + 1))

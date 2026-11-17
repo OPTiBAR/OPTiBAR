@@ -1,6 +1,13 @@
 import tkinter as tk
+from pathlib import Path
 from tkinter import ttk
 from tkinter.filedialog import askopenfilename
+
+from PIL import Image, ImageTk
+
+from optibar.gui.view.body.status import StatusBar
+from optibar.gui.view.body.tooltip import ToolTip
+from optibar.gui.view.utils.styles import themed_image
 
 # style of the status badge for each kind of status
 STATUS_STYLES = {
@@ -10,36 +17,65 @@ STATUS_STYLES = {
     'warning': 'Warning.TLabel',
     'error': 'Error.TLabel',
 }
+LOGO_SIZE = 30 # px
 
 
 class FileBar(ttk.Frame):
-    """the input file across the top of the window: its path, Open..., Reload and a status badge"""
-    def __init__(self, parent):
-        ttk.Frame.__init__(self, parent)
+    """the header of the window: the app name on the left; the input file, Reload and Open… on the right.
+    The file shows by its name, the full path is in its tooltip; its status is in the status bar."""
+    def __init__(self, parent, status_bar: StatusBar):
+        ttk.Frame.__init__(self, parent, padding=(16, 10, 16, 10))
 
         # variables
         self.path_var = tk.StringVar()
-        self.status_var = tk.StringVar()
+        self.status_var = status_bar.file_var
+        self.name_var = tk.StringVar()
+        self.folder_var = tk.StringVar()
 
         # widgets
-        label = ttk.Label(self, text='Input file')
-        path_entry = ttk.Entry(self, textvariable=self.path_var, state='readonly', width=20)
+        brand = ttk.Label(self, text=' OPTiBAR', compound='left', style='Brand.TLabel')
+        self.brand = brand
+        self._show_logo()
+        # the gray bars of the logo would vanish on the dark theme, it has a light version
+        self.bind('<<ThemeChanged>>', self._show_logo, add='+')
+        file_frame = ttk.Frame(self)
+        name_label = ttk.Label(file_frame, textvariable=self.name_var, style='FileName.TLabel')
+        folder_label = ttk.Label(file_frame, textvariable=self.folder_var, style='Muted.TLabel')
+        self.path_tip = ToolTip(name_label, '')
+        status_label = status_bar.file_label
+        status_label.bind('<Button-1>', lambda e: self.event_generate('<<status-clicked>>'))
         browse_button = ttk.Button(self, text="Open…", command=self.browse_fun, style='Accent.TButton')
         load_button = ttk.Button(self, text="Reload", command=self.load_fun)
-        status_label = ttk.Label(self, textvariable=self.status_var, style=STATUS_STYLES['idle'], cursor='hand2')
-        status_label.bind('<Button-1>', lambda e: self.event_generate('<<status-clicked>>'))
         self.browse_button = browse_button
         self.load_button = load_button
         self.status_label = status_label
 
         # geometry
-        label.grid(row=0, column=0, padx=(0, 8), sticky='w')
-        path_entry.grid(row=0, column=1, padx=(0, 8), sticky='we')
-        browse_button.grid(row=0, column=2, padx=(0, 8))
-        load_button.grid(row=0, column=3, padx=(0, 16))
-        status_label.grid(row=0, column=4, sticky='w')
-        self.columnconfigure(1, weight=3)
-        self.columnconfigure(4, weight=2, minsize=220)
+        brand.grid(row=0, column=0, sticky='w', padx=(0, 32))
+        file_frame.grid(row=0, column=1, sticky='we')
+        name_label.grid(row=0, column=0, sticky='w')
+        folder_label.grid(row=0, column=1, sticky='w', padx=(10, 0))
+        load_button.grid(row=0, column=3, padx=(16, 8))
+        browse_button.grid(row=0, column=4)
+        self.columnconfigure(1, weight=1)
+
+        self.path_var.trace_add('write', self._show_path)
+        self._show_path()
+
+    def _show_logo(self, *args) -> None:
+        logo = Image.open(themed_image('logo')).convert('RGBA').resize((LOGO_SIZE, LOGO_SIZE), Image.LANCZOS)
+        self._logo = ImageTk.PhotoImage(logo, master=self)
+        self.brand.configure(image=self._logo)
+
+    def _show_path(self, *args) -> None:
+        path = self.path_var.get()
+        if path:
+            self.name_var.set(Path(path).name)
+            self.folder_var.set(_shorten(str(Path(path).parent), 70))
+        else:
+            self.name_var.set('No input file')
+            self.folder_var.set('Open the Access file that SAFE exports (.accdb or .mdb)')
+        self.path_tip.text = path
 
     def load_fun(self):
         """generates an event when the file should be (re)loaded"""
@@ -72,3 +108,8 @@ class FileBar(ttk.Frame):
         if file_path:
             self.path_var.set(file_path)
             self.load_fun()
+
+
+def _shorten(text: str, length: int) -> str:
+    """the end of a long path, which tells more than its start"""
+    return text if len(text) <= length else '…' + text[-(length - 1):]

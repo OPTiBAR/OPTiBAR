@@ -1,22 +1,36 @@
+import re
 import tkinter as tk
 import webbrowser
 from tkinter import font, ttk
-from typing import List
+from typing import List, Sequence, Tuple
 from optibar.gui.view.utils.styles import palette, report_font
 
 INDENT = 4
+# the report's tables come as lines of cells padded with spaces, at least this many between two cells
+CELL_GAP = re.compile(r' {3,}')
+NUMBER = re.compile(r'^[-+]?[\d.,]+%?$')
+DASHES = ('-', '–')
+TABLE_LINES = ('RULE', 'ROW', 'ROW_ALT', 'TOTAL')
+COLUMN_SPACE = 36 # px between the columns of a table
+TABLE_MARGIN = 6 # px before the first column, also the padding of the striped rows
 
-class LogWindow(ttk.LabelFrame):
+
+class LogWindow(ttk.Frame):
+    """the report: messages, section headings, and tables laid out with tab stops, so they read
+    like tables in a proportional font, not like columns of a terminal"""
     def __init__(self, parent):
-        ttk.LabelFrame.__init__(self, parent, text='Report', padding=(12, 8))
+        ttk.Frame.__init__(self, parent)
 
-        mono = report_font()
+        body = report_font()
         self._fonts = {
-            'bold': font.Font(family=mono.cget('family'), size=mono.cget('size'), weight='bold'),
-            'heading': font.Font(family='Segoe UI', size=mono.cget('size') + 2, weight='bold'),
+            'body': body,
+            'bold': font.Font(family=body.cget('family') + ' Semibold', size=body.cget('size')),
+            'heading': font.Font(family='Segoe UI Semibold', size=body.cget('size') + 3),
+            'mono': font.Font(family='Consolas', size=body.cget('size')),
         }
-        text = tk.Text(self, wrap= "none", width=40, relief='flat', borderwidth=0, highlightthickness=1,
-            padx=12, pady=10, font=mono, state='disabled')
+        self._tables = 0
+        text = tk.Text(self, wrap= "none", width=40, relief='flat', borderwidth=0, highlightthickness=0,
+            padx=4, pady=4, font=body, state='disabled', spacing1=1, spacing3=1)
         self.text = text
         yscroll = ttk.Scrollbar(self, orient = 'vertical', command = text.yview)
         xscroll = ttk.Scrollbar(self, orient = 'horizontal', command = text.xview)
@@ -24,6 +38,9 @@ class LogWindow(ttk.LabelFrame):
         text['xscrollcommand'] = xscroll.set
         text.grid(column = 0, row = 0, sticky = 'nwes')
         xscroll.grid(column = 0, row = 1, sticky = 'we', pady=(4, 0))
+        # only shown when needed
+        self._autohide(xscroll, 'x')
+        self._autohide(yscroll, 'y')
         yscroll.grid(column = 1, row = 0, sticky = 'ns', padx=(4, 0))
         self.grid_columnconfigure(0, weight = 1)
         self.grid_rowconfigure(0, weight = 1)
@@ -38,6 +55,15 @@ class LogWindow(ttk.LabelFrame):
         self._apply_colors()
         self.bind('<<ThemeChanged>>', self._apply_colors)
 
+    def _autohide(self, scrollbar: ttk.Scrollbar, axis: str) -> None:
+        def set(first, last):
+            if float(first) <= 0 and float(last) >= 1:
+                scrollbar.grid_remove()
+            else:
+                scrollbar.grid()
+            scrollbar.set(first, last)
+        self.text[axis + 'scrollcommand'] = set
+
     def _open_link(self, event) -> None:
         start, end = self.text.tag_prevrange('LINK', f'@{event.x},{event.y} + 1c')
         webbrowser.open(self.text.get(start, end).strip())
@@ -45,19 +71,21 @@ class LogWindow(ttk.LabelFrame):
     def _apply_colors(self, *args) -> None:
         colors = palette()
         self.text.configure(background=colors['text_bg'], foreground=colors['text_fg'], insertbackground=colors['text_fg'],
-            highlightbackground=colors['border'], highlightcolor=colors['border'], selectbackground=colors['link'])
+            selectbackground=colors['link'])
         self.text.tag_configure('ERROR', foreground=colors['error'])
         self.text.tag_configure('WARNING', foreground=colors['warning'])
         self.text.tag_configure('SUCCESS', foreground=colors['success'])
         self.text.tag_configure('INFO', foreground=colors['text_fg'])
         # report sections and tables, see gui/control/body/report.py
-        self.text.tag_configure('HEADING', foreground=colors['text_fg'], font=self._fonts['heading'], spacing1=6)
-        self.text.tag_configure('WARNING_HEADING', foreground=colors['warning'], font=self._fonts['heading'], spacing1=6)
-        self.text.tag_configure('TABLE_HEAD', foreground=colors['text_fg'], font=self._fonts['bold'])
-        self.text.tag_configure('RULE', foreground=colors['border'])
-        self.text.tag_configure('ROW', foreground=colors['text_fg'], spacing1=2, spacing3=2)
-        self.text.tag_configure('ROW_ALT', foreground=colors['text_fg'], background=colors['stripe'], spacing1=2, spacing3=2)
-        self.text.tag_configure('TOTAL', foreground=colors['text_fg'], font=self._fonts['bold'])
+        self.text.tag_configure('HEADING', foreground=colors['text_fg'], font=self._fonts['heading'], spacing1=10)
+        self.text.tag_configure('WARNING_HEADING', foreground=colors['warning'], font=self._fonts['heading'], spacing1=10)
+        self.text.tag_configure('TABLE_HEAD', foreground=colors['muted'], font=self._fonts['bold'], spacing3=6)
+        self.text.tag_configure('RULE', foreground=colors['border'], font=self._fonts['mono'])
+        self.text.tag_configure('ROW', foreground=colors['text_fg'], spacing1=4, spacing3=4)
+        self.text.tag_configure('ROW_ALT', foreground=colors['text_fg'], background=colors['stripe'], spacing1=4, spacing3=4)
+        self.text.tag_configure('TOTAL', foreground=colors['text_fg'], font=self._fonts['bold'], spacing1=8)
+        # a table that couldn't be split into cells keeps its padded columns
+        self.text.tag_configure('MONO', font=self._fonts['mono'])
         self.text.tag_configure('MUTED', foreground=colors['muted'])
         self.text.tag_configure('LINK', foreground=colors['link'], underline=True)
     
@@ -79,11 +107,49 @@ class LogWindow(ttk.LabelFrame):
         self._write(data_str, 'WARNING', indent)
 
     def write_lines(self, lines: List) -> None:
-        """writes (tag, text) pairs, tag being one of SUCCESS, INFO, WARNING, ERROR"""
-        for tag, data_str in lines:
-            self._write(data_str, tag, 0)
+        """writes (tag, text) pairs, tag being one of SUCCESS, INFO, WARNING, ERROR, or one of the
+        lines of a table: TABLE_HEAD, then RULE, ROW, ROW_ALT and TOTAL lines"""
+        i = 0
+        while i < len(lines):
+            if lines[i][0] == 'TABLE_HEAD':
+                end = i + 1
+                while end < len(lines) and lines[end][0] in TABLE_LINES:
+                    end += 1
+                self._write_table(lines[i:end])
+                i = end
+            else:
+                self._write(lines[i][1], lines[i][0], 0)
+                i += 1
 
-    def _write(self, data_str: str, tag:str, indent: int):
+    def _write_table(self, lines: Sequence[Tuple[str, str]]) -> None:
+        """a table of the report, its cells at tab stops: numbers right-aligned, text left-aligned"""
+        rows = [(tag, CELL_GAP.split(text.strip())) for tag, text in lines if tag != 'RULE']
+        columns = len(rows[0][1])
+        if any(len(cells) != columns for _, cells in rows):
+            for tag, text in lines:
+                self._write(text, (tag, 'MONO'), 0)
+            return
+        body = [cells for tag, cells in rows[1:]]
+        numeric = [
+            all(NUMBER.match(cells[i]) or cells[i] in DASHES for cells in body)
+            and any(NUMBER.match(cells[i]) for cells in body)
+            for i in range(columns)
+        ]
+        fonts = {'TABLE_HEAD': self._fonts['bold'], 'TOTAL': self._fonts['bold']}
+        widths = [max(fonts.get(tag, self._fonts['body']).measure(cells[i]) for tag, cells in rows) for i in range(columns)]
+        tabs, x = [], TABLE_MARGIN
+        for i in range(columns):
+            tabs += [x + widths[i], 'right'] if numeric[i] else [x, 'left']
+            x += widths[i] + COLUMN_SPACE
+        # a last stop, so every striped row is as wide as the table
+        tabs += [x - COLUMN_SPACE + TABLE_MARGIN, 'left']
+        self._tables += 1
+        table_tag = f'TABLE_{self._tables}'
+        self.text.tag_configure(table_tag, tabs=tabs)
+        for tag, cells in rows:
+            self._write('\t' + '\t'.join(cells) + '\t', (tag, table_tag), 0)
+
+    def _write(self, data_str: str, tag, indent: int):
         self.text['state'] = 'normal'
         info_str = indent * INDENT * ' ' + data_str
         # the newline stays untagged, so a striped row is shaded as wide as its table, not the whole box

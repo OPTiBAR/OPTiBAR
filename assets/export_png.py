@@ -6,10 +6,12 @@ The app can't show SVG (Tk and Pillow don't read it), so it has PNG copies, made
 
 - src/optibar/gui/data/images/logo.png: the window icon, the bars of logo-mark.svg, 256 x 256
 - src/optibar/gui/data/images/optibar.png: the About dialog, logo.svg on a 615 x 511 canvas
+- logo-dark.png and optibar-dark.png: the same for the dark theme, from logo-mark-dark.svg and logo-dark.svg
 - assets/optibar.ico: the icon of the Windows executable and installer, the bars of logo-mark.svg,
   16 to 256 pixels
 
-Run it after changing logo-mark.svg or logo.svg, and commit the PNGs and the ICO with the SVGs.
+logo-mark-dark.svg is logo-mark.svg with the gray of logo-dark.svg (#c8c8c8 for #303030).
+Run it after changing the SVGs, and commit the PNGs and the ICO with them.
 """
 import io
 from pathlib import Path
@@ -44,7 +46,9 @@ def main() -> None:
     mark.save(IMAGES / 'logo.png', optimize=True)
     mark.save(ASSETS / 'optibar.ico', sizes=[(16, 16), (24, 24), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)])
     on_canvas(render(ASSETS / 'logo.svg', 1600), (615, 511), 0.65).save(IMAGES / 'optibar.png', optimize=True)
-    for name in ('logo.png', 'optibar.png'):
+    on_canvas(render(ASSETS / 'logo-mark-dark.svg', 1024), (256, 256), 0.96).save(IMAGES / 'logo-dark.png', optimize=True)
+    on_canvas(render(ASSETS / 'logo-dark.svg', 1600), (615, 511), 0.65).save(IMAGES / 'optibar-dark.png', optimize=True)
+    for name in ('logo.png', 'optibar.png', 'logo-dark.png', 'optibar-dark.png'):
         print(f'written {IMAGES / name}')
     print(f'written {ASSETS / "optibar.ico"}')
 
